@@ -1,0 +1,56 @@
+{
+  "week_ending": "2026-12-27",
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2026-12-21",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 19
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-22",
+      "start": "08:30",
+      "end": "12:00",
+      "km": 0
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-23",
+      "start": "16:00",
+      "end": "18:00",
+      "km": 3,
+      "ambiguous": "Added in the Thu 24 entry as 'Yesterday I also forgot ... Mrs B 4-6pm'; read as Wed 23 Dec, overriding 'Wed 23rd: nothing'."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-24",
+      "start": "13:00",
+      "end": "17:00",
+      "km": 11
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-25",
+      "start": "09:00",
+      "end": "13:00",
+      "km": 20
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-26",
+      "start": "07:00",
+      "end": "09:00",
+      "km": 0
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-26",
+      "start": "18:00",
+      "end": "21:30",
+      "km": 24,
+      "ambiguous": "'till about 9.30, call it 9.30' -> 21:30."
+    }
+  ]
+}

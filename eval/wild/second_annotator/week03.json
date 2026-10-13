@@ -1,0 +1,54 @@
+{
+  "week_ending": "2026-11-22",
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-11-16",
+      "start": "09:00",
+      "end": "13:00",
+      "km": 16
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-17",
+      "start": "13:00",
+      "end": "16:00",
+      "km": 11
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-18",
+      "start": "10:00",
+      "end": "13:00",
+      "km": 0
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-20",
+      "start": "16:00",
+      "end": "20:30",
+      "km": 25
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-21",
+      "start": "09:00",
+      "end": "12:00",
+      "km": 6
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-21",
+      "start": "17:00",
+      "end": "19:30",
+      "km": 0
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-22",
+      "start": "14:00",
+      "end": "18:00",
+      "km": 14
+    }
+  ]
+}

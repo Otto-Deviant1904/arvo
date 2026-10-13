@@ -1,0 +1,47 @@
+{
+  "week_ending": "2027-01-03",
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-12-28",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 13
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-30",
+      "start": "09:00",
+      "end": "12:30",
+      "km": 0
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-31",
+      "start": "11:00",
+      "end": "15:00",
+      "km": 8
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-31",
+      "start": "19:00",
+      "end": "23:00",
+      "km": 31
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-01",
+      "start": "08:00",
+      "end": "11:00",
+      "km": 0
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-01-02",
+      "start": "09:30",
+      "end": "13:00",
+      "km": 12
+    }
+  ]
+}

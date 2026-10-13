@@ -116,3 +116,7 @@ The diaries are synthetic and written by the same person who wrote the conventio
 messier. 42 RP notes is a small set: one note moves a per-type F1 by a lot. The photo set is rendered, not
 photographed. Gold invoice lines inherit any bug in `arvo.pricing` (the line metrics measure what
 extraction errors cost, not whether the engine is right).
+
+## Wild set label check
+
+The wild gold (`eval/wild/weekNN.gold.json`) was written by one AI agent from the diary texts it wrote. A second agent, a different model that saw only the diary texts, the roster and the holiday list (never the gold), labelled all 8 weeks blind: `eval/wild/second_annotator/`. The two agreed on 58 of 58 shifts on every scored field (participant, date, start, end, km). Ambiguities the second annotator noted ("till about 4", "pree" for Pri, "Yesterday I also forgot ...") were resolved the same way by both.

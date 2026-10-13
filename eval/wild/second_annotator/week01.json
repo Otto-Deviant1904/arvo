@@ -1,0 +1,57 @@
+{
+  "week_ending": "2026-10-25",
+  "ambiguous": "Month/year not stated ('week of the 19th'); read as Mon 19 Oct 2026 (nearest Monday-the-19th before the Nov 2026 weeks), week ending Sun 2026-10-25. Jan 2026 (Mon 19 Jan) is the other candidate.",
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-10-19",
+      "start": "12:00",
+      "end": "16:00",
+      "km": 22,
+      "ambiguous": "Month/year not stated ('week of the 19th'); read as Mon 19 Oct 2026 (nearest Monday-the-19th before the Nov 2026 weeks), week ending Sun 2026-10-25. Jan 2026 (Mon 19 Jan) is the other candidate. End 'till about 4' taken as 16:00."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-21",
+      "start": "08:30",
+      "end": "11:00",
+      "km": 0
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-21",
+      "start": "14:00",
+      "end": "17:00",
+      "km": 6
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-22",
+      "start": "13:00",
+      "end": "16:00",
+      "km": 14,
+      "ambiguous": "'1-4ish, say 4' -> 16:00."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-24",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 31
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-24",
+      "start": "18:00",
+      "end": "21:30",
+      "km": 18
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-25",
+      "start": "08:00",
+      "end": "11:00",
+      "km": 9
+    }
+  ]
+}
