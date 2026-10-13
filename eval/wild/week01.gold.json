@@ -1,0 +1,113 @@
+{
+  "week": "week01",
+  "week_ending": "2026-10-25",
+  "seed": null,
+  "style": {"wild": "prose_runon", "headings": false, "h24": false},
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-10-19",
+      "start": "12:00",
+      "end": "16:00",
+      "km": 22,
+      "note": "we did the Southland thing and I drove him home after",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "from lunch (12) till about 4",
+      "day_text": "Monday",
+      "rp_note_id": null,
+      "gold_note": "'from lunch (12)' gives 12:00 explicitly; 'about 4' read as 16:00. '22 k all up' = 22 km."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-21",
+      "start": "08:30",
+      "end": "11:00",
+      "km": 0,
+      "note": "shower + brekkie + meds sorted, no driving, I walked over",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8.30 to 11",
+      "day_text": "Wednesday",
+      "rp_note_id": null,
+      "gold_note": "'no driving, I walked over' = 0 km."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-21",
+      "start": "14:00",
+      "end": "17:00",
+      "km": 6,
+      "note": "took her to the chemist and then the cemetery",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "in the arvo 2 till 5",
+      "day_text": "Wednesday",
+      "rp_note_id": null,
+      "gold_note": "'Mrs B' = Rosa Bianchi. 'in the arvo' pins 2-5 to pm. 'kms 6' = 6 km."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-22",
+      "start": "13:00",
+      "end": "16:00",
+      "km": 14,
+      "note": "bunnings run and the park",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "1-4ish, say 4",
+      "day_text": "Thursday",
+      "rp_note_id": null,
+      "gold_note": "'1-4ish, say 4' -> 13:00-16:00; 'drove 14' = 14 km."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-24",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 31,
+      "note": "footy clinic",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "from 10 till 2",
+      "day_text": "Saturday",
+      "rp_note_id": null,
+      "gold_note": "'T.O.' = Thomas Okafor."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-24",
+      "start": "18:00",
+      "end": "21:30",
+      "km": 18,
+      "note": "movie night at Hoyts",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "6 till 9.30pm",
+      "day_text": "Saturday",
+      "rp_note_id": null,
+      "gold_note": "Same Saturday as the Tom shift ('then straight over to Jake's'). Crosses 8pm but Saturday rate applies."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-25",
+      "start": "08:00",
+      "end": "11:00",
+      "km": 9,
+      "note": "church and a coffee after",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "8-11",
+      "day_text": "Sunday morning",
+      "rp_note_id": null,
+      "gold_note": "'9k' = 9 km."
+    }
+  ],
+  "rp": [],
+  "non_shifts": [
+    "Tuesday nothing.",
+    "Friday off, dentist 3pm (me), then couch.",
+    "invoice Bayside!!"
+  ]
+}

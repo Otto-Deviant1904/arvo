@@ -1,0 +1,111 @@
+{
+  "week": "week05",
+  "week_ending": "2026-12-27",
+  "seed": null,
+  "style": {"wild": "relative_refs_xmas", "headings": true, "h24": false},
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2026-12-21",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 19,
+      "note": "last minute present shopping at Chaddy. absolute zoo.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10-2",
+      "day_text": "Mon 21 Dec",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-22",
+      "start": "08:30",
+      "end": "12:00",
+      "km": 0,
+      "note": "shower + hair + we wrapped presents, no driving.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8.30-12",
+      "day_text": "The next day",
+      "rp_note_id": null,
+      "gold_note": "'The next day' after the Mon 21 Dec entry = Tue 2026-12-22. 'no driving' = 0 km."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-23",
+      "start": "16:00",
+      "end": "18:00",
+      "km": 3,
+      "note": "meds + dinner",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "4-6pm",
+      "day_text": "Yesterday (inside the Thu 24 entry)",
+      "rp_note_id": null,
+      "gold_note": "'Yesterday I also forgot to write down Mrs B 4-6pm' appears inside the Thu 24 entry, so it is Wed 2026-12-23. This overrides the earlier 'Wed 23rd: nothing'. 'kms 3' = 3 km."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-24",
+      "start": "13:00",
+      "end": "17:00",
+      "km": 11,
+      "note": "christmas eve carols at the park then home.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "1-5pm",
+      "day_text": "Thu 24",
+      "rp_note_id": null,
+      "gold_note": "'drove 11 k' = 11 km."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-25",
+      "start": "09:00",
+      "end": "13:00",
+      "km": 20,
+      "note": "opened presents w/ him at his mums then drove him to his dad's. this morning was mental.",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "9-1",
+      "day_text": "Fri 25/12 (christmas day!!)",
+      "rp_note_id": null,
+      "gold_note": "Christmas Day 2026-12-25 is a Victorian public holiday. 'this morning' refers to this same dated shift."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-26",
+      "start": "07:00",
+      "end": "09:00",
+      "km": 0,
+      "note": "brekkie shift before her family picked her up for Daylesford",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "7-9am",
+      "day_text": "Sat 26",
+      "rp_note_id": null,
+      "gold_note": "Boxing Day Sat 2026-12-26 is listed as a Victorian public holiday (public holiday rate, not Saturday)."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-26",
+      "start": "18:00",
+      "end": "21:30",
+      "km": 24,
+      "note": "boxing day test at his cousins",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "6pm till about 9.30, call it 9.30",
+      "day_text": "Sat 26",
+      "rp_note_id": null,
+      "gold_note": "'till about 9.30, call it 9.30' -> the worker fixes the end at 21:30. Boxing Day public holiday. '24 k' = 24 km."
+    }
+  ],
+  "rp": [],
+  "non_shifts": [
+    "Wed 23rd: nothing. Nonna's family took her to Daylesford for the week? no - they go Boxing day, see below.",
+    "Sun 27th: slept. nothing."
+  ]
+}

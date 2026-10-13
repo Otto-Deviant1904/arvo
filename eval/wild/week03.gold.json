@@ -1,0 +1,110 @@
+{
+  "week": "week03",
+  "week_ending": "2026-11-22",
+  "seed": null,
+  "style": {"wild": "corrections_strikethrough", "headings": true, "h24": false},
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-11-16",
+      "start": "09:00",
+      "end": "13:00",
+      "km": 16,
+      "note": "swimming + lunch. forgot the detour to his mum's.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9-1",
+      "day_text": "Mon 16 Nov",
+      "rp_note_id": null,
+      "gold_note": "'12km. ~~12~~ 16km' - the 12 is struck through and corrected to 16 km."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-17",
+      "start": "13:00",
+      "end": "16:00",
+      "km": 11,
+      "note": "shopping at Chadstone.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "1-4",
+      "day_text": "Tue 17th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-18",
+      "start": "10:00",
+      "end": "13:00",
+      "km": 0,
+      "note": "she cancelled the last hour. personal care + walk, no driving",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10-2. actually 10-1",
+      "day_text": "Wed",
+      "rp_note_id": null,
+      "gold_note": "'10-2. actually 10-1, she cancelled the last hour' -> 10:00-13:00. 'Wed' with no date is the Wed between Tue 17th and Thu 19/11 = 2026-11-18."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-20",
+      "start": "16:00",
+      "end": "20:30",
+      "km": 25,
+      "note": "dinner at his brother's then dropped him home.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "4pm - ~~8~~ 8.30pm",
+      "day_text": "Thu 19/11 ... wait no that was Fri not Thu",
+      "rp_note_id": null,
+      "gold_note": "Written under 'Thu 19/11' but corrected in the next line: 'wait no that was Fri not Thu. Thursday I did nothing.' -> Fri 2026-11-20. End '~~8~~ 8.30pm' = 20:30. Crosses 8pm."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-21",
+      "start": "09:00",
+      "end": "12:00",
+      "km": 6,
+      "note": "hair appt + bank",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "9 to 12",
+      "day_text": "Sat 21st",
+      "rp_note_id": null,
+      "gold_note": "First of two Mrs B shifts that day; 'morning kms 6'."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-21",
+      "start": "17:00",
+      "end": "19:30",
+      "km": 0,
+      "note": "ambo came for the neighbour, stayed on",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "then again 5 till ~~7~~ 7.30pm",
+      "day_text": "Sat 21st",
+      "rp_note_id": null,
+      "gold_note": "'then again 5 till ~~7~~ 7.30pm' = second shift 17:00-19:30 (7 struck, 7.30 stands). 'evening 0 didnt drive' = 0 km."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-22",
+      "start": "14:00",
+      "end": "18:00",
+      "km": 14,
+      "note": "Bunnings + kick of the footy.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "2-6",
+      "day_text": "Sun",
+      "rp_note_id": null,
+      "gold_note": "Written as 'Jake 2-6' then corrected: 'sorry wrong person that was Tommy not Jake' -> participant is Tom, not Jake."
+    }
+  ],
+  "rp": [],
+  "non_shifts": [
+    "Thursday I did nothing."
+  ]
+}

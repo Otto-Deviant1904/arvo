@@ -1,0 +1,98 @@
+{
+  "week": "week06",
+  "week_ending": "2027-01-03",
+  "seed": null,
+  "style": {"wild": "mixed_date_formats_cancelled_year_rollover", "headings": false, "h24": false},
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-12-28",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 13,
+      "note": "beach (Mordi), public hol so double check the rate",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "10-2",
+      "day_text": "28/12",
+      "rp_note_id": null,
+      "gold_note": "'28/12' with no day name or year; the week ends Sun 3 Jan 2027 so this is Mon 2026-12-28, the Boxing Day additional public holiday in Victoria."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-30",
+      "start": "09:00",
+      "end": "12:30",
+      "km": 0,
+      "note": "shower + brekkie + the physio exercises, walked over",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9-12.30",
+      "day_text": "30 Dec",
+      "rp_note_id": null,
+      "gold_note": "'walked over' = 0 km. Wed 30 Dec 2026."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-31",
+      "start": "11:00",
+      "end": "15:00",
+      "km": 8,
+      "note": "her family back from Daylesford, did lunch + a drive down to the bay",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "11am till 3",
+      "day_text": "31/12",
+      "rp_note_id": null,
+      "gold_note": "Thu 31 Dec 2026. '8 k' = 8 km."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-31",
+      "start": "19:00",
+      "end": "23:00",
+      "km": 31,
+      "note": "NYE fireworks at Docklands (parking!!!)",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "7pm-11pm",
+      "day_text": "31/12 ... Then NYE",
+      "rp_note_id": null,
+      "gold_note": "Same 31/12 line as the Mrs B shift ('Then NYE Jake ...'). Crosses 8pm, ends before midnight so not overnight. 'drove 31 k' = 31 km."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-01",
+      "start": "08:00",
+      "end": "11:00",
+      "km": 0,
+      "note": "brekkie + meds + a walk. new years day",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "8 - 11",
+      "day_text": "1 Jan",
+      "rp_note_id": null,
+      "gold_note": "New Year's Day Fri 2027-01-01 is a Victorian public holiday. '0km'."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-01-02",
+      "start": "09:30",
+      "end": "13:00",
+      "km": 12,
+      "note": "back from being sick, took him for a haircut and the op shop",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "9.30-1",
+      "day_text": "Sat 2nd",
+      "rp_note_id": null,
+      "gold_note": "'T.O.' = Thomas Okafor. '12 kms' = 12 km."
+    }
+  ],
+  "rp": [],
+  "non_shifts": [
+    "Tue 29th Tom cancelled, sick. (cancelled - not a shift)",
+    "3/1 nothing. invoice Bayside + Northside before the 10th!!"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "week": "week08",
+  "week_ending": "2027-02-21",
+  "seed": null,
+  "style": {"wild": "notes_app_evening_only_cancelled", "headings": false, "h24": false},
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2027-02-15",
+      "start": "09:00",
+      "end": "12:00",
+      "km": 7,
+      "note": "gym + coles",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9-12",
+      "day_text": "mon",
+      "rp_note_id": null,
+      "gold_note": "Header 'feb 15 - 21' has no year; week ending Sun 21 Feb 2027. '7 k' = 7 km."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-15",
+      "start": "13:00",
+      "end": "15:30",
+      "km": 0,
+      "note": "shower hair meds, walked.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "1-3.30",
+      "day_text": "mon",
+      "rp_note_id": null,
+      "gold_note": "'then Pri 1-3.30' on the same mon line, after the 9-12 Jake shift so 1-3.30 is pm. 'walked' = 0 km."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-16",
+      "start": "10:00",
+      "end": "13:00",
+      "km": 13,
+      "note": "dr appt at Bentleigh then lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10 till 1",
+      "day_text": "tues 16th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-02-18",
+      "start": "20:00",
+      "end": "23:00",
+      "km": 0,
+      "note": "late one, watched the game at his place after his mum went out. his mum dropped me home",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8pm-11pm",
+      "day_text": "18/2",
+      "rp_note_id": null,
+      "gold_note": "'18/2' with no day name = Thu 2027-02-18. Starts at 20:00 so entirely evening. '0 km his mum dropped me home' = 0 km. 'Tommy' = Tom."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-19",
+      "start": "14:00",
+      "end": "18:15",
+      "km": 19,
+      "note": "fishing at Mordi pier (caught nothing lol).",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2 - 6.15",
+      "day_text": "fri 19 feb",
+      "rp_note_id": null,
+      "gold_note": "'tax guy rang, need to send invoices for jan STILL' is a personal aside, not a shift."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-20",
+      "start": "08:00",
+      "end": "12:00",
+      "km": 4,
+      "note": "market + cleaned the kitchen.",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "8-12",
+      "day_text": "sat",
+      "rp_note_id": null,
+      "gold_note": "'4 k' = 4 km. 'Tom cancelled, sick' on the same line is a cancellation, not a shift."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-21",
+      "start": "17:00",
+      "end": "20:00",
+      "km": 0,
+      "note": "dinner + meds didnt drive",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "5pm till 8pm",
+      "day_text": "sun 21",
+      "rp_note_id": null,
+      "gold_note": "'didnt drive' = 0 km."
+    }
+  ],
+  "rp": [],
+  "non_shifts": [
+    "wed - nothing (car at the mechanic)",
+    "tax guy rang, need to send invoices for jan STILL",
+    "Tom cancelled, sick"
+  ]
+}

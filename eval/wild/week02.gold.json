@@ -1,0 +1,111 @@
+{
+  "week": "week02",
+  "week_ending": "2026-11-08",
+  "seed": null,
+  "style": {"wild": "voice_to_text", "headings": false, "h24": false},
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-11-02",
+      "start": "10:00",
+      "end": "14:00",
+      "km": 9,
+      "note": "took him to centrelink then maccas",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10 till 2",
+      "day_text": "monday the second",
+      "rp_note_id": null,
+      "gold_note": "'drove 9 k' = 9 km."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-03",
+      "start": "09:30",
+      "end": "13:30",
+      "km": 14,
+      "note": "shopping at highpoint he wanted to watch the race at the pub we did not",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "9 30 till 1 30",
+      "day_text": "tuesday cup day",
+      "rp_note_id": null,
+      "gold_note": "Melbourne Cup Tue 2026-11-03 is a Victorian public holiday. Dictated '9 30 till 1 30' = 09:30-13:30."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-04",
+      "start": "07:30",
+      "end": "10:30",
+      "km": 0,
+      "note": "shower brekkie meds walked no driving",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "7 30 till 10 30",
+      "day_text": "wednesday",
+      "rp_note_id": null,
+      "gold_note": "'pree' is a dictation error for 'Pri' = Priya."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-05",
+      "start": "14:00",
+      "end": "17:30",
+      "km": 18,
+      "note": "physio and then woollies",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2 till 5 30",
+      "day_text": "thursday",
+      "rp_note_id": null,
+      "gold_note": "'odo 45213 to 45231' = 18 km."
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-05",
+      "start": "18:00",
+      "end": "21:30",
+      "km": 11,
+      "note": "footy club dinner i forgot to put that in",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "6 till 9 30 pm",
+      "day_text": "thursday night",
+      "rp_note_id": null,
+      "gold_note": "Appended at the end of the diary ('also tom thursday night'), belongs to Thu 5 Nov. Crosses 8pm."
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-07",
+      "start": "17:00",
+      "end": "21:00",
+      "km": 22,
+      "note": "bowling again",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "5 till 9 pm",
+      "day_text": "saturday",
+      "rp_note_id": null,
+      "gold_note": "'twenty two k' spelled out = 22 km."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-08",
+      "start": "09:00",
+      "end": "12:30",
+      "km": 0,
+      "note": "church no car her grandson drove",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "9 till 12 30",
+      "day_text": "sunday",
+      "rp_note_id": null,
+      "gold_note": "'no car her grandson drove' = 0 km."
+    }
+  ],
+  "rp": [],
+  "non_shifts": [
+    "friday nothing friday"
+  ]
+}
