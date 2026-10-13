@@ -163,7 +163,11 @@ def price_shift(shift: Shift, participant: Participant) -> tuple[list[InvoiceLin
         cw = calendar_au.coverage_warning(day)
         if cw:
             warnings.append(f"{where}: {cw}")
-        warnings.extend(calendar_au.data_warnings(date.fromisoformat(day).year))  # same text every shift: deduped
+        d = date.fromisoformat(day)
+        # An undeclared holiday (the AFL Grand Final Friday) can only fall on a Friday in late
+        # September or early October, so only warn for shifts that could be on it.
+        if d.weekday() == 4 and (9, 1) <= (d.month, d.day) <= (10, 15):
+            warnings.extend(calendar_au.data_warnings(d.year))  # same text every shift: deduped
     if prices.period_for(shift.date) is not prices.period_for(last_day):
         warnings.append(f"{where}: shift crosses a price-period change; priced at the prices of {shift.date}")
 

@@ -1,0 +1,1064 @@
+{
+ "model": "gemma4:e4b",
+ "split": "test",
+ "n_weeks": 16,
+ "weeks": [
+  "week09",
+  "week10",
+  "week11",
+  "week12",
+  "week13",
+  "week14",
+  "week15",
+  "week16",
+  "week17",
+  "week18",
+  "week19",
+  "week20",
+  "week21",
+  "week22",
+  "week23",
+  "week24"
+ ],
+ "args": {
+  "set": "synthetic",
+  "split": "test",
+  "limit": null,
+  "images": true,
+  "skip_baseline": false,
+  "rp_all": true
+ },
+ "extraction": {
+  "n_gold": 119,
+  "n_pred": 118,
+  "recall": 0.9664,
+  "precision": 0.9746,
+  "field_accuracy": {
+   "participant": 0.9916,
+   "date": 0.9664,
+   "start": 0.9748,
+   "end": 0.9664,
+   "km": 0.9916
+  },
+  "exact_match": 0.9328,
+  "exact_by_kind": {
+   "overnight": {
+    "n": 1,
+    "exact": 0.0
+   },
+   "public_holiday": {
+    "n": 8,
+    "exact": 1.0
+   },
+   "saturday": {
+    "n": 12,
+    "exact": 1.0
+   },
+   "sunday": {
+    "n": 13,
+    "exact": 0.8462
+   },
+   "weekday_cross_20": {
+    "n": 22,
+    "exact": 0.9545
+   },
+   "weekday_day": {
+    "n": 57,
+    "exact": 0.9298
+   },
+   "weekday_evening": {
+    "n": 6,
+    "exact": 1.0
+   }
+  }
+ },
+ "invoice": {
+  "weeks": 16,
+  "n_gold_lines": 202,
+  "n_pred_lines": 201,
+  "line_precision": 0.9552,
+  "line_recall": 0.9505,
+  "line_f1": 0.9529,
+  "weeks_total_exact": 10,
+  "weeks_lines_exact": 10,
+  "abs_error_sum": 3118.35,
+  "abs_error_mean": 194.9,
+  "gold_dollars": 38583.78
+ },
+ "invoice_by_week": [
+  {
+   "week": "week09",
+   "n_gold": 14,
+   "n_pred": 14,
+   "matched": 14,
+   "gold_total": 2749.56,
+   "pred_total": 2749.56,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week10",
+   "n_gold": 15,
+   "n_pred": 15,
+   "matched": 15,
+   "gold_total": 2320.15,
+   "pred_total": 2320.15,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week11",
+   "n_gold": 17,
+   "n_pred": 17,
+   "matched": 17,
+   "gold_total": 3445.56,
+   "pred_total": 3445.56,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week12",
+   "n_gold": 8,
+   "n_pred": 8,
+   "matched": 8,
+   "gold_total": 1801.2,
+   "pred_total": 1801.2,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week13",
+   "n_gold": 13,
+   "n_pred": 13,
+   "matched": 13,
+   "gold_total": 3485.39,
+   "pred_total": 3485.39,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week14",
+   "n_gold": 12,
+   "n_pred": 12,
+   "matched": 12,
+   "gold_total": 2371.4,
+   "pred_total": 2371.4,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week15",
+   "n_gold": 7,
+   "n_pred": 7,
+   "matched": 7,
+   "gold_total": 1703.65,
+   "pred_total": 1703.65,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week16",
+   "n_gold": 14,
+   "n_pred": 14,
+   "matched": 11,
+   "gold_total": 2116.96,
+   "pred_total": 2046.14,
+   "abs_error": 70.82,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week17",
+   "n_gold": 11,
+   "n_pred": 11,
+   "matched": 10,
+   "gold_total": 1895.1,
+   "pred_total": 1911.95,
+   "abs_error": 16.85,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week18",
+   "n_gold": 15,
+   "n_pred": 15,
+   "matched": 13,
+   "gold_total": 3082.12,
+   "pred_total": 2917.34,
+   "abs_error": 164.78,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week19",
+   "n_gold": 9,
+   "n_pred": 9,
+   "matched": 8,
+   "gold_total": 1923.97,
+   "pred_total": 2914.81,
+   "abs_error": 990.84,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week20",
+   "n_gold": 12,
+   "n_pred": 11,
+   "matched": 11,
+   "gold_total": 2389.77,
+   "pred_total": 2045.22,
+   "abs_error": 344.55,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week21",
+   "n_gold": 15,
+   "n_pred": 15,
+   "matched": 15,
+   "gold_total": 2366.28,
+   "pred_total": 2366.28,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week22",
+   "n_gold": 17,
+   "n_pred": 17,
+   "matched": 15,
+   "gold_total": 3084.79,
+   "pred_total": 4615.3,
+   "abs_error": 1530.51,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week23",
+   "n_gold": 10,
+   "n_pred": 10,
+   "matched": 10,
+   "gold_total": 1999.47,
+   "pred_total": 1999.47,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week24",
+   "n_gold": 13,
+   "n_pred": 13,
+   "matched": 13,
+   "gold_total": 1848.41,
+   "pred_total": 1848.41,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  }
+ ],
+ "code_only": false,
+ "invoice_model_alone": {
+  "weeks": 16,
+  "n_gold_lines": 202,
+  "n_pred_lines": 178,
+  "line_precision": 0.5618,
+  "line_recall": 0.495,
+  "line_f1": 0.5263,
+  "weeks_total_exact": 0,
+  "weeks_lines_exact": 0,
+  "abs_error_sum": 5262.64,
+  "abs_error_mean": 328.92,
+  "gold_dollars": 38583.78
+ },
+ "invoice_model_alone_by_week": [
+  {
+   "week": "week09",
+   "n_gold": 14,
+   "n_pred": 14,
+   "matched": 10,
+   "gold_total": 2749.56,
+   "pred_total": 2549.97,
+   "abs_error": 199.59,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week10",
+   "n_gold": 15,
+   "n_pred": 13,
+   "matched": 7,
+   "gold_total": 2320.15,
+   "pred_total": 1888.22,
+   "abs_error": 431.93,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week11",
+   "n_gold": 17,
+   "n_pred": 15,
+   "matched": 7,
+   "gold_total": 3445.56,
+   "pred_total": 3398.67,
+   "abs_error": 46.89,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week12",
+   "n_gold": 8,
+   "n_pred": 8,
+   "matched": 7,
+   "gold_total": 1801.2,
+   "pred_total": 1639.06,
+   "abs_error": 162.14,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week13",
+   "n_gold": 13,
+   "n_pred": 12,
+   "matched": 5,
+   "gold_total": 3485.39,
+   "pred_total": 2342.23,
+   "abs_error": 1143.16,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week14",
+   "n_gold": 12,
+   "n_pred": 10,
+   "matched": 6,
+   "gold_total": 2371.4,
+   "pred_total": 2279.02,
+   "abs_error": 92.38,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week15",
+   "n_gold": 7,
+   "n_pred": 7,
+   "matched": 2,
+   "gold_total": 1703.65,
+   "pred_total": 1464.2,
+   "abs_error": 239.45,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week16",
+   "n_gold": 14,
+   "n_pred": 11,
+   "matched": 6,
+   "gold_total": 2116.96,
+   "pred_total": 1646.15,
+   "abs_error": 470.81,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week17",
+   "n_gold": 11,
+   "n_pred": 7,
+   "matched": 5,
+   "gold_total": 1895.1,
+   "pred_total": 1249.98,
+   "abs_error": 645.12,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week18",
+   "n_gold": 15,
+   "n_pred": 14,
+   "matched": 8,
+   "gold_total": 3082.12,
+   "pred_total": 2757.06,
+   "abs_error": 325.06,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week19",
+   "n_gold": 9,
+   "n_pred": 8,
+   "matched": 4,
+   "gold_total": 1923.97,
+   "pred_total": 1921.39,
+   "abs_error": 2.58,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week20",
+   "n_gold": 12,
+   "n_pred": 12,
+   "matched": 8,
+   "gold_total": 2389.77,
+   "pred_total": 2049.62,
+   "abs_error": 340.15,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week21",
+   "n_gold": 15,
+   "n_pred": 11,
+   "matched": 6,
+   "gold_total": 2366.28,
+   "pred_total": 2192.17,
+   "abs_error": 174.11,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week22",
+   "n_gold": 17,
+   "n_pred": 17,
+   "matched": 7,
+   "gold_total": 3084.79,
+   "pred_total": 2300.21,
+   "abs_error": 784.58,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week23",
+   "n_gold": 10,
+   "n_pred": 8,
+   "matched": 6,
+   "gold_total": 1999.47,
+   "pred_total": 1993.13,
+   "abs_error": 6.34,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week24",
+   "n_gold": 13,
+   "n_pred": 11,
+   "matched": 6,
+   "gold_total": 1848.41,
+   "pred_total": 1650.06,
+   "abs_error": 198.35,
+   "total_exact": false,
+   "lines_exact": false
+  }
+ ],
+ "model_alone_note": "",
+ "rp": {
+  "gemma": {
+   "detection": {
+    "overall": {
+     "tp": 14,
+     "fp": 2,
+     "fn": 1,
+     "precision": 0.875,
+     "recall": 0.9333,
+     "f1": 0.9032
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "chemical": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     },
+     "mechanical": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.6667,
+      "f1": 0.8
+     },
+     "physical": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     }
+    },
+    "any_type_note_level": {
+     "tp": 15,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.9375,
+     "recall": 1.0,
+     "f1": 0.9677
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 13,
+     "fp": 2,
+     "fn": 1,
+     "precision": 0.8667,
+     "recall": 0.9286,
+     "f1": 0.8966
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "chemical": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     },
+     "mechanical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667
+     },
+     "physical": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     }
+    },
+    "any_type_note_level": {
+     "tp": 14,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.9333,
+     "recall": 1.0,
+     "f1": 0.9655
+    }
+   },
+   "hard_negatives_flagged": "1/13",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "14/14",
+   "authorised_marked_authorised": "1/1",
+   "n_flags": 16,
+   "n_flag_keys": 16,
+   "dropped_by_quote_check": 0
+  },
+  "keyword_baseline": {
+   "detection": {
+    "overall": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 12,
+     "precision": 0.6,
+     "recall": 0.2,
+     "f1": 0.3
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 2,
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "environmental": {
+      "tp": 2,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.6667,
+      "recall": 0.6667,
+      "f1": 0.6667
+     }
+    },
+    "any_type_note_level": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 12,
+     "precision": 0.6,
+     "recall": 0.2,
+     "f1": 0.3
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 11,
+     "precision": 0.6,
+     "recall": 0.2143,
+     "f1": 0.3158
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 2,
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "environmental": {
+      "tp": 2,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.6667,
+      "recall": 0.6667,
+      "f1": 0.6667
+     }
+    },
+    "any_type_note_level": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 11,
+     "precision": 0.6,
+     "recall": 0.2143,
+     "f1": 0.3158
+    }
+   },
+   "hard_negatives_flagged": "2/13",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "2/3",
+   "authorised_marked_authorised": "0/1",
+   "n_flags": 5,
+   "n_flag_keys": 5
+  },
+  "n_labelled_notes": 28,
+  "n_notes_with_text": 108
+ },
+ "rp_all": {
+  "gemma": {
+   "detection": {
+    "overall": {
+     "tp": 20,
+     "fp": 3,
+     "fn": 2,
+     "precision": 0.8696,
+     "recall": 0.9091,
+     "f1": 0.8889
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1": 0.8571
+     },
+     "chemical": {
+      "tp": 5,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.8333,
+      "recall": 1.0,
+      "f1": 0.9091
+     },
+     "mechanical": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.8,
+      "f1": 0.8889
+     },
+     "physical": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 4,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.6667,
+      "recall": 1.0,
+      "f1": 0.8
+     }
+    },
+    "any_type_note_level": {
+     "tp": 22,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.9565,
+     "recall": 1.0,
+     "f1": 0.9778
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 18,
+     "fp": 3,
+     "fn": 2,
+     "precision": 0.8571,
+     "recall": 0.9,
+     "f1": 0.878
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1": 0.8571
+     },
+     "chemical": {
+      "tp": 4,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.8889
+     },
+     "mechanical": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1": 0.8571
+     },
+     "physical": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 4,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.6667,
+      "recall": 1.0,
+      "f1": 0.8
+     }
+    },
+    "any_type_note_level": {
+     "tp": 20,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.9524,
+     "recall": 1.0,
+     "f1": 0.9756
+    }
+   },
+   "hard_negatives_flagged": "1/20",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "20/20",
+   "authorised_marked_authorised": "2/2",
+   "n_flags": 23,
+   "n_flag_keys": 23,
+   "dropped_by_quote_check": 0
+  },
+  "keyword_baseline": {
+   "detection": {
+    "overall": {
+     "tp": 8,
+     "fp": 5,
+     "fn": 14,
+     "precision": 0.6154,
+     "recall": 0.3636,
+     "f1": 0.4571
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4
+     },
+     "chemical": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714
+     },
+     "mechanical": {
+      "tp": 1,
+      "fp": 2,
+      "fn": 4,
+      "precision": 0.3333,
+      "recall": 0.2,
+      "f1": 0.25
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4
+     },
+     "environmental": {
+      "tp": 3,
+      "fp": 3,
+      "fn": 1,
+      "precision": 0.5,
+      "recall": 0.75,
+      "f1": 0.6
+     }
+    },
+    "any_type_note_level": {
+     "tp": 8,
+     "fp": 5,
+     "fn": 14,
+     "precision": 0.6154,
+     "recall": 0.3636,
+     "f1": 0.4571
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 6,
+     "fp": 5,
+     "fn": 14,
+     "precision": 0.5455,
+     "recall": 0.3,
+     "f1": 0.3871
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4
+     },
+     "chemical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 2,
+      "fn": 4,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4
+     },
+     "environmental": {
+      "tp": 3,
+      "fp": 3,
+      "fn": 1,
+      "precision": 0.5,
+      "recall": 0.75,
+      "f1": 0.6
+     }
+    },
+    "any_type_note_level": {
+     "tp": 6,
+     "fp": 5,
+     "fn": 14,
+     "precision": 0.5455,
+     "recall": 0.3,
+     "f1": 0.3871
+    }
+   },
+   "hard_negatives_flagged": "5/20",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "7/8",
+   "authorised_marked_authorised": "1/2",
+   "n_flags": 13,
+   "n_flag_keys": 13
+  },
+  "n_notes": 42
+ },
+ "images": {
+  "extraction": {
+   "n_gold": 30,
+   "n_pred": 31,
+   "recall": 0.9667,
+   "precision": 0.9355,
+   "field_accuracy": {
+    "participant": 1.0,
+    "date": 0.9667,
+    "start": 0.9667,
+    "end": 0.9333,
+    "km": 0.9667
+   },
+   "exact_match": 0.9,
+   "exact_by_kind": {
+    "public_holiday": {
+     "n": 4,
+     "exact": 1.0
+    },
+    "saturday": {
+     "n": 3,
+     "exact": 1.0
+    },
+    "sunday": {
+     "n": 4,
+     "exact": 1.0
+    },
+    "weekday_cross_20": {
+     "n": 5,
+     "exact": 0.8
+    },
+    "weekday_day": {
+     "n": 11,
+     "exact": 0.8182
+    },
+    "weekday_evening": {
+     "n": 3,
+     "exact": 1.0
+    }
+   }
+  },
+  "invoice": {
+   "weeks": 4,
+   "n_gold_lines": 56,
+   "n_pred_lines": 55,
+   "line_precision": 0.9273,
+   "line_recall": 0.9107,
+   "line_f1": 0.9189,
+   "weeks_total_exact": 2,
+   "weeks_lines_exact": 2,
+   "abs_error_sum": 344.65,
+   "abs_error_mean": 86.16,
+   "gold_dollars": 10718.19
+  }
+ },
+ "latency": {
+  "extract_per_diary": {
+   "n": 16,
+   "mean_s": 8.902,
+   "p95_s": 12.018
+  },
+  "rp_per_note": {
+   "n": 108,
+   "mean_s": 0.496,
+   "p95_s": 1.188
+  },
+  "image_per_diary": {
+   "n": 4,
+   "mean_s": 9.693,
+   "p95_s": 11.379
+  },
+  "model_alone_per_diary": {
+   "n": 16,
+   "mean_s": 10.374,
+   "p95_s": 15.174
+  },
+  "rp_all_per_note": {
+   "n": 42,
+   "mean_s": 0.784,
+   "p95_s": 1.217
+  }
+ },
+ "errors": [],
+ "wall_s": 433.9
+}

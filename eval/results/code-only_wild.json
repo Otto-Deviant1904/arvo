@@ -1,0 +1,334 @@
+{
+ "model": "code-only",
+ "split": "wild",
+ "n_weeks": 8,
+ "weeks": [
+  "week01",
+  "week02",
+  "week03",
+  "week04",
+  "week05",
+  "week06",
+  "week07",
+  "week08"
+ ],
+ "args": {
+  "set": "wild",
+  "split": "wild",
+  "limit": null,
+  "images": false,
+  "skip_baseline": false,
+  "rp_all": false
+ },
+ "extraction": {
+  "n_gold": 58,
+  "n_pred": 30,
+  "recall": 0.4828,
+  "precision": 0.9333,
+  "field_accuracy": {
+   "participant": 0.5172,
+   "date": 0.4828,
+   "start": 0.5172,
+   "end": 0.4483,
+   "km": 0.4655
+  },
+  "exact_match": 0.3966,
+  "exact_by_kind": {
+   "public_holiday": {
+    "n": 8,
+    "exact": 0.375
+   },
+   "saturday": {
+    "n": 9,
+    "exact": 0.4444
+   },
+   "sunday": {
+    "n": 7,
+    "exact": 0.2857
+   },
+   "weekday_cross_20": {
+    "n": 4,
+    "exact": 0.25
+   },
+   "weekday_day": {
+    "n": 29,
+    "exact": 0.4138
+   },
+   "weekday_evening": {
+    "n": 1,
+    "exact": 1.0
+   }
+  }
+ },
+ "invoice": {
+  "weeks": 8,
+  "n_gold_lines": 99,
+  "n_pred_lines": 47,
+  "line_precision": 0.8723,
+  "line_recall": 0.4141,
+  "line_f1": 0.5616,
+  "weeks_total_exact": 0,
+  "weeks_lines_exact": 0,
+  "abs_error_sum": 9658.74,
+  "abs_error_mean": 1207.34,
+  "gold_dollars": 19484.73
+ },
+ "invoice_by_week": [
+  {
+   "week": "week01",
+   "n_gold": 13,
+   "n_pred": 0,
+   "matched": 0,
+   "gold_total": 2195.8,
+   "pred_total": 0.0,
+   "abs_error": 2195.8,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week02",
+   "n_gold": 12,
+   "n_pred": 7,
+   "matched": 4,
+   "gold_total": 2664.85,
+   "pred_total": 1592.73,
+   "abs_error": 1072.12,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week03",
+   "n_gold": 12,
+   "n_pred": 5,
+   "matched": 4,
+   "gold_total": 2275.37,
+   "pred_total": 842.51,
+   "abs_error": 1432.86,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week04",
+   "n_gold": 15,
+   "n_pred": 10,
+   "matched": 10,
+   "gold_total": 2788.23,
+   "pred_total": 1970.17,
+   "abs_error": 818.06,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week05",
+   "n_gold": 12,
+   "n_pred": 6,
+   "matched": 4,
+   "gold_total": 2622.43,
+   "pred_total": 1391.46,
+   "abs_error": 1230.97,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week06",
+   "n_gold": 10,
+   "n_pred": 8,
+   "matched": 8,
+   "gold_total": 2446.1,
+   "pred_total": 2143.86,
+   "abs_error": 302.24,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week07",
+   "n_gold": 14,
+   "n_pred": 4,
+   "matched": 4,
+   "gold_total": 2453.36,
+   "pred_total": 492.46,
+   "abs_error": 1960.9,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week08",
+   "n_gold": 11,
+   "n_pred": 7,
+   "matched": 7,
+   "gold_total": 2038.59,
+   "pred_total": 1392.8,
+   "abs_error": 645.79,
+   "total_exact": false,
+   "lines_exact": false
+  }
+ ],
+ "code_only": true,
+ "invoice_model_alone": null,
+ "invoice_model_alone_by_week": [],
+ "model_alone_note": "n/a (code-only)",
+ "rp": {
+  "gemma": null,
+  "keyword_baseline": {
+   "detection": {
+    "overall": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "physical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "environmental": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    },
+    "any_type_note_level": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "physical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "environmental": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    },
+    "any_type_note_level": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    }
+   },
+   "hard_negatives_flagged": "0/0",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "0/0",
+   "authorised_marked_authorised": "0/0",
+   "n_flags": 0,
+   "n_flag_keys": 0
+  },
+  "n_labelled_notes": 0,
+  "n_notes_with_text": 58
+ },
+ "rp_all": null,
+ "images": null,
+ "latency": {
+  "extract_per_diary": {
+   "n": 8,
+   "mean_s": 0.003,
+   "p95_s": 0.01
+  },
+  "rp_per_note": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  },
+  "image_per_diary": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  },
+  "model_alone_per_diary": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  },
+  "rp_all_per_note": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  }
+ },
+ "errors": [],
+ "wall_s": 0.0
+}
