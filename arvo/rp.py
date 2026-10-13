@@ -41,26 +41,28 @@ SYSTEM_PROMPT = (
     "Report only what the note says was done to the participant. Most notes contain none."
 )
 
-RUBRIC = """THE FIVE REGULATED RESTRICTIVE PRACTICES (use only these types):
-- seclusion: the person is left alone in a room or space they cannot leave, or believe they cannot leave.
-- chemical: a medication given mainly to change behaviour, not to treat a diagnosed illness or condition.
-- mechanical: a device used to stop or limit movement because of behaviour (e.g. bed rails, splints, lap belt, harness, mittens).
-- physical: physical force to stop, hold or subdue the person's movement because of behaviour (e.g. holding wrists, pinning down, a restraint hold).
-- environmental: stopping free access to places or things (e.g. locking the pantry or fridge, taking their phone away, locking doors so they cannot leave).
+RUBRIC = """THE FIVE REGULATED RESTRICTIVE PRACTICES (NDIS rules; use only these types):
+- seclusion: the person is alone in a room or space and cannot leave, is stopped from leaving, or is made to believe they may not leave (e.g. shutting them in a room).
+- chemical: a medication or substance used mainly to influence behaviour (e.g. a PRN given early when the plan does not allow it). Not medication prescribed to treat a diagnosed illness or condition.
+- mechanical: a device used to prevent, restrict or subdue movement mainly to influence behaviour (e.g. bed rails). Not a device used for therapy or a non-behavioural reason.
+- physical: physical force to prevent, restrict or subdue movement of the body or part of it, mainly to influence behaviour (e.g. holding wrists). Not a reflexive guiding hand away from harm.
+- environmental: restricting free access to parts of their environment, or to items or activities (e.g. locking the pantry, taking their phone away).
+
+A practice that is authorised in the participant's behaviour support plan is STILL a restrictive practice: flag it, with authorised_in_bsp true.
 
 NOT restrictive practices (never flag these):
-- offering choices, redirection, verbal de-escalation, giving the person space
+- offering choices, redirection, verbal de-escalation
 - the person chose to go to their room
-- holding the person's hand to cross a road safely, at their request
-- a PRN medication given and recorded as per the plan, when that PRN is in the authorised list below
-- ordinary support: meals, shopping, outings, prompting, regular prescribed medication (e.g. Webster pack)"""
+- holding the person's hand to cross a road, at their request
+- holding the person's phone because they asked
+- ordinary daily support: meals, shopping, outings, prompting"""
 
 INSTRUCTIONS = """For each restrictive practice in the note give:
 - evidence_quote: the sentence from the note that shows it, copied character for character
 - explanation: one plain-English sentence saying what was restricted and why it is that type
 - rp_type: one of seclusion, chemical, mechanical, physical, environmental
 - harm_mentioned: true only if the note mentions injury, pain, bruising or harm to anyone
-- authorised_in_bsp: true only if this practice is in the authorised list above
+- authorised_in_bsp: true only if this practice is in the authorised list above and was used as that plan says
 If the note has no restrictive practice, return {"flags": []}."""
 
 
@@ -89,10 +91,14 @@ def _as_bool(v) -> bool:
     return bool(v)
 
 
-def report_deadline(iso_date: str, harm: bool) -> tuple[str, str | None]:
-    """(report_by, warning). Harm -> 24h window; else 5 business days via arvo.calendar_au if present."""
+def report_deadline(iso_date: str, harm: bool, authorised: bool = False) -> tuple[str, str | None]:
+    """(report_by, warning). Harm -> 24 hours. Authorised use without harm is not a reportable incident
+    (record it; registered providers report it monthly) -> "". Otherwise 5 business days via
+    arvo.calendar_au when that module is importable, else ""."""
     if harm:
         return f"within 24 hours of {iso_date}", None
+    if authorised:
+        return "", None
     try:
         from arvo.calendar_au import add_business_days
     except ImportError:
@@ -116,7 +122,7 @@ def validate_flag(raw: dict, shift: Shift, participant: Participant | None) -> t
         return None, f"{where}: model quote not found in note, flag dropped ({rp_type}: {quote[:80]!r})"
     harm = _as_bool(raw.get("harm_mentioned"))
     authorised = _as_bool(raw.get("authorised_in_bsp")) and bool(participant and participant.bsp_authorised)
-    report_by, warn = report_deadline(shift.date, harm)
+    report_by, warn = report_deadline(shift.date, harm, authorised)
     flag = RPFlag(participant_id=shift.participant_id, date=shift.date, rp_type=rp_type,
                   evidence_quote=span, harm_mentioned=harm, authorised_in_bsp=authorised,
                   report_by=report_by, explanation=str(raw.get("explanation") or "").strip())

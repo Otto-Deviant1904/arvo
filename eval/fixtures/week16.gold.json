@@ -1,0 +1,117 @@
+{
+  "week": "week16",
+  "week_ending": "2027-01-17",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.2,
+    "typo_p": 0.15
+  },
+  "image": "week16.png",
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-11",
+      "start": "09:15",
+      "end": "12:15",
+      "km": 2,
+      "note": "church then lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "09:15 til 12.15",
+      "day_text": "Mon 11/1",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-11",
+      "start": "20:00",
+      "end": "21:30",
+      "km": 13,
+      "note": "drove him to his cousin's",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8PM to 9:30pm",
+      "day_text": "Mon 11th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-12",
+      "start": "08:30",
+      "end": "14:00",
+      "km": 36,
+      "note": "gym then lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8.30 to 2 pm",
+      "day_text": "Tue",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-12",
+      "start": "19:00",
+      "end": "22:30",
+      "km": 5,
+      "note": "physio exercises + lunch",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "7 pm until 10:30pm",
+      "day_text": "Tues 12th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-01-15",
+      "start": "16:30",
+      "end": "22:00",
+      "km": 30,
+      "note": "Tom wouldn't give the remote back so I wrapped both arms round him on the couch and kept him there till he let go of it.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "from 4:30pm to 10:00",
+      "day_text": "the 15th",
+      "rp_note_id": "rp13"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-16",
+      "start": "10:00",
+      "end": "13:00",
+      "km": 7,
+      "note": "brekkie, changed the bed",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "10 till 1pm",
+      "day_text": "SAT",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-17",
+      "start": "09:30",
+      "end": "11:15",
+      "km": 4,
+      "note": "shower + brkekie",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "9:30 till 11:15 am",
+      "day_text": "Sun 17th",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp13",
+      "participant_id": "tom",
+      "date": "2027-01-15",
+      "text": "Tom wouldn't give the remote back so I wrapped both arms round him on the couch and kept him there till he let go of it.",
+      "is_rp": true,
+      "rp_type": "physical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

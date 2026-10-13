@@ -1,0 +1,140 @@
+{
+  "week": "week21",
+  "week_ending": "2027-02-21",
+  "seed": 2026,
+  "style": {
+    "headings": true,
+    "h24": false,
+    "emoji_p": 0.12,
+    "typo_p": 0.08
+  },
+  "image": "week21.png",
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-16",
+      "start": "08:00",
+      "end": "10:00",
+      "km": 0,
+      "note": "dinner + pjs",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8-10",
+      "day_text": "tue",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-17",
+      "start": "09:15",
+      "end": "11:45",
+      "km": 21,
+      "note": "bowling w/ his mates",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9:15 till 11:45",
+      "day_text": "Wednesday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-02-18",
+      "start": "11:00",
+      "end": "14:30",
+      "km": 7,
+      "note": "gym",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "11 - 2:30pm",
+      "day_text": "18/2",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-18",
+      "start": "17:45",
+      "end": "21:45",
+      "km": 2,
+      "note": "Priya wanted to sit in the car on her own for a bit after the shops, door open, I waited on the bench nearby.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "5:45 pm - 9:45",
+      "day_text": "18/2",
+      "rp_note_id": "neg20"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-19",
+      "start": "07:15",
+      "end": "10:15",
+      "km": 8,
+      "note": "Mrs B wanted a nap so I pulled the curtains and left her bedroom door open.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "quarter past 7 - quarter past 10",
+      "day_text": "Fri 19/2",
+      "rp_note_id": "neg10"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-19",
+      "start": "20:15",
+      "end": "22:45",
+      "km": 32,
+      "note": "op shopping",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8:15PM–10.45",
+      "day_text": "Fri 19/2",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-20",
+      "start": "10:30",
+      "end": "16:00",
+      "km": 38,
+      "note": "op shopping",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "10:30 till 4PM",
+      "day_text": "Sat 20/2",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-21",
+      "start": "14:00",
+      "end": "16:30",
+      "km": 20,
+      "note": "drove him to his cousin's",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "2pm till 4:30pm",
+      "day_text": "21/2",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg20",
+      "participant_id": "priya",
+      "date": "2027-02-18",
+      "text": "Priya wanted to sit in the car on her own for a bit after the shops, door open, I waited on the bench nearby.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg10",
+      "participant_id": "nonna",
+      "date": "2027-02-19",
+      "text": "Mrs B wanted a nap so I pulled the curtains and left her bedroom door open.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

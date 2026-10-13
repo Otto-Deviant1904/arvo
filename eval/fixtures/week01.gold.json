@@ -1,0 +1,166 @@
+{
+  "week": "week01",
+  "week_ending": "2026-10-04",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.2,
+    "typo_p": 0.08
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2026-09-28",
+      "start": "08:00",
+      "end": "09:30",
+      "km": 0,
+      "note": "brekkie, changed the bed",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8 am-9:30",
+      "day_text": "MON",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-09-29",
+      "start": "09:30",
+      "end": "13:00",
+      "km": 27,
+      "note": "bus training into the city",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9:30 am to 1",
+      "day_text": "TUES",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-09-29",
+      "start": "14:30",
+      "end": "16:30",
+      "km": 23,
+      "note": "Bunnings + footy",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half 2 to half 4",
+      "day_text": "Tues 29/9",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-09-30",
+      "start": "08:30",
+      "end": "10:30",
+      "km": 11,
+      "note": "nails + movie",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8:30am til 10:30am",
+      "day_text": "30 Sep",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-09-30",
+      "start": "12:30",
+      "end": "15:30",
+      "km": 29,
+      "note": "bowling w/ his mates. Jake did his own seatbelt and picked the music on the drive home.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "12:30-half 3",
+      "day_text": "30 Sep",
+      "rp_note_id": "neg08"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-01",
+      "start": "18:00",
+      "end": "20:30",
+      "km": 0,
+      "note": "podiatrist appt. She wants the front door locked at night cos she's scared of break-ins, so I locked it on my way out like she asked. She has her own key on the hook.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "6–8:30",
+      "day_text": "1/10",
+      "rp_note_id": "neg11"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-02",
+      "start": "09:00",
+      "end": "11:15",
+      "km": 31,
+      "note": "basketball at the stadium",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9 till 11:15",
+      "day_text": "FRI",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-02",
+      "start": "13:30",
+      "end": "19:00",
+      "km": 29,
+      "note": "bus training into the city",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half past 1 to 7:00",
+      "day_text": "Fri 2nd",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-03",
+      "start": "10:00",
+      "end": "12:30",
+      "km": 8,
+      "note": "library + walk",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "10-half past 12",
+      "day_text": "Saturday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-04",
+      "start": "10:00",
+      "end": "12:00",
+      "km": 3,
+      "note": "dinner + pjs",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "10 until 12 pm",
+      "day_text": "sunday",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg08",
+      "participant_id": "jake",
+      "date": "2026-09-30",
+      "text": "Jake did his own seatbelt and picked the music on the drive home.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg11",
+      "participant_id": "nonna",
+      "date": "2026-10-01",
+      "text": "She wants the front door locked at night cos she's scared of break-ins, so I locked it on my way out like she asked. She has her own key on the hook.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

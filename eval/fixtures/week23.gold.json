@@ -1,0 +1,114 @@
+{
+  "week": "week23",
+  "week_ending": "2027-03-07",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": true,
+    "emoji_p": 0.2,
+    "typo_p": 0.08
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2027-03-02",
+      "start": "10:45",
+      "end": "14:00",
+      "km": 25,
+      "note": "sohps + lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10:45-14:00",
+      "day_text": "Tues 2nd",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-03-04",
+      "start": "11:00",
+      "end": "16:00",
+      "km": 24,
+      "note": "Tom was really wound up so I gave him a couple of his mum's anxiety pills, he slept most of the arvo.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "11:00-16:00",
+      "day_text": "THURS",
+      "rp_note_id": "rp06"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-03-04",
+      "start": "18:30",
+      "end": "22:00",
+      "km": 2,
+      "note": "Priya strapped her new watch on and showed everyone at the cafe.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "18:30 - 22:00",
+      "day_text": "thurs",
+      "rp_note_id": "neg02"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-03-05",
+      "start": "09:30",
+      "end": "12:30",
+      "km": 0,
+      "note": "groceries + cooking",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "09:30 - 12:30",
+      "day_text": "FRI",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-03-05",
+      "start": "16:30",
+      "end": "19:15",
+      "km": 0,
+      "note": "shower + tea",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "16:30-19:15",
+      "day_text": "the 5th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-03-06",
+      "start": "13:00",
+      "end": "19:00",
+      "km": 14,
+      "note": "watched the footy at the pub (lemonade)",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "13:00 till 19:00",
+      "day_text": "SAT",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp06",
+      "participant_id": "tom",
+      "date": "2027-03-04",
+      "text": "Tom was really wound up so I gave him a couple of his mum's anxiety pills, he slept most of the arvo.",
+      "is_rp": true,
+      "rp_type": "chemical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg02",
+      "participant_id": "priya",
+      "date": "2027-03-04",
+      "text": "Priya strapped her new watch on and showed everyone at the cafe.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

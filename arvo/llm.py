@@ -108,7 +108,9 @@ def chat(
         "stream": False,
         "think": False,
         "format": schema,
-        "options": {"temperature": 0, **(options or {})},
+        # Same num_ctx on every call: changing it forces Ollama to reload the model.
+        # 8192 fits a busy fortnight of shifts plus the reply; Ollama's default is 4096.
+        "options": {"temperature": 0, "num_ctx": 8192, **(options or {})},
     }
     send = transport or _transport
 

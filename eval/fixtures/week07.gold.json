@@ -1,0 +1,114 @@
+{
+  "week": "week07",
+  "week_ending": "2026-11-15",
+  "seed": 2026,
+  "style": {
+    "headings": true,
+    "h24": false,
+    "emoji_p": 0.12,
+    "typo_p": 0.08
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "priya",
+      "date": "2026-11-09",
+      "start": "17:30",
+      "end": "21:45",
+      "km": 4,
+      "note": "groceries + cooking",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "5:30pm til 9:45pm",
+      "day_text": "mon",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-11",
+      "start": "20:00",
+      "end": "23:00",
+      "km": 0,
+      "note": "Chaddy shopping",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8pm-11pm",
+      "day_text": "Wed 11/11",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-12",
+      "start": "09:30",
+      "end": "11:30",
+      "km": 7,
+      "note": "shower + meds prompt",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half 9 till 11:30am",
+      "day_text": "Thurs 12/11",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-13",
+      "start": "19:00",
+      "end": "01:00",
+      "km": 8,
+      "note": "concert in the city",
+      "kind": "overnight",
+      "overnight": true,
+      "time_text": "7pm - 1",
+      "day_text": "Friday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-14",
+      "start": "08:30",
+      "end": "14:00",
+      "km": 26,
+      "note": "cooked spag bol together. Fridge door seal is broken again, told his mum so she can ring the landlord.",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "half 8-2",
+      "day_text": "saturday",
+      "rp_note_id": "neg04"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-15",
+      "start": "18:00",
+      "end": "19:45",
+      "km": 0,
+      "note": "Gave Priya her as-needed lorazepam 0.5mg at 6.30, distress score was 5 so as per her plan, settled by 7.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "6pm till quarter to 8",
+      "day_text": "sunday",
+      "rp_note_id": "rp21"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg04",
+      "participant_id": "jake",
+      "date": "2026-11-14",
+      "text": "Fridge door seal is broken again, told his mum so she can ring the landlord.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "rp21",
+      "participant_id": "priya",
+      "date": "2026-11-15",
+      "text": "Gave Priya her as-needed lorazepam 0.5mg at 6.30, distress score was 5 so as per her plan, settled by 7.",
+      "is_rp": true,
+      "rp_type": "chemical",
+      "authorised_in_bsp": true,
+      "harm_mentioned": false
+    }
+  ]
+}

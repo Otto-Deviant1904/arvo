@@ -1,0 +1,91 @@
+{
+  "week": "week12",
+  "week_ending": "2026-12-20",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.2,
+    "typo_p": 0.03
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-14",
+      "start": "15:00",
+      "end": "20:30",
+      "km": 2,
+      "note": "brekkie, changed the bed. We walked arm in arm to the bakery the way she likes.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "3–8:30",
+      "day_text": "14 Dec",
+      "rp_note_id": "neg03"
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-15",
+      "start": "17:00",
+      "end": "22:15",
+      "km": 33,
+      "note": "gym",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "5:00 - quarter past 10",
+      "day_text": "Tuesday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-16",
+      "start": "20:30",
+      "end": "22:30",
+      "km": 0,
+      "note": "nails + movie",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8:30pm-10:30",
+      "day_text": "wed",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-19",
+      "start": "12:00",
+      "end": "15:00",
+      "km": 22,
+      "note": "bus training into the city",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "noon to 3pm",
+      "day_text": "saturday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-20",
+      "start": "11:00",
+      "end": "14:00",
+      "km": 0,
+      "note": "shower + brekkie",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "11:00-2",
+      "day_text": "SUN",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg03",
+      "participant_id": "nonna",
+      "date": "2026-12-14",
+      "text": "We walked arm in arm to the bakery the way she likes.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

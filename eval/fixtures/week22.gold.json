@@ -1,0 +1,166 @@
+{
+  "week": "week22",
+  "week_ending": "2027-02-28",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.08
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-22",
+      "start": "09:30",
+      "end": "13:00",
+      "km": 0,
+      "note": "shower + brekkie",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9.30 - 1",
+      "day_text": "Monday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-02-22",
+      "start": "14:15",
+      "end": "19:45",
+      "km": 13,
+      "note": "job club. Tom's not allowed in the shed with his drum kit till he's paid his mum back, I kept the key on me.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2:15 until 7:45pm",
+      "day_text": "Mon",
+      "rp_note_id": "rp19"
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-02-23",
+      "start": "11:30",
+      "end": "15:15",
+      "km": 24,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "11:30 - 3:15pm",
+      "day_text": "23/2",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-02-24",
+      "start": "12:30",
+      "end": "18:30",
+      "km": 16,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "from 12:30 pm until 6:30pm",
+      "day_text": "Wednesday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-24",
+      "start": "20:15",
+      "end": "22:00",
+      "km": 28,
+      "note": "drove him to his cousin's",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8:15pm to 10pm",
+      "day_text": "Wed 24/2",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-25",
+      "start": "11:30",
+      "end": "15:00",
+      "km": 5,
+      "note": "cooked dinner, did washing",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half past 11 - 3pm",
+      "day_text": "Thu",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-26",
+      "start": "07:15",
+      "end": "09:00",
+      "km": 0,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "qtr past 7 till 9am",
+      "day_text": "Fri 26th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-02-26",
+      "start": "11:30",
+      "end": "15:30",
+      "km": 38,
+      "note": "bowling w/ his mates. Jake kicked off after lunch so I sat against his bedroom door from the hallway till he'd quietened down, maybe 15 mins.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "11:30 until half past 3",
+      "day_text": "Friday",
+      "rp_note_id": "rp01"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-27",
+      "start": "08:30",
+      "end": "11:15",
+      "km": 0,
+      "note": "church then lunch",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "8:30 to 11.15am",
+      "day_text": "27/2",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-28",
+      "start": "07:45",
+      "end": "11:15",
+      "km": 8,
+      "note": "shower + meds prompt",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "7:45 - 11.15am",
+      "day_text": "Sun",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp19",
+      "participant_id": "tom",
+      "date": "2027-02-22",
+      "text": "Tom's not allowed in the shed with his drum kit till he's paid his mum back, I kept the key on me.",
+      "is_rp": true,
+      "rp_type": "environmental",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "rp01",
+      "participant_id": "jake",
+      "date": "2027-02-26",
+      "text": "Jake kicked off after lunch so I sat against his bedroom door from the hallway till he'd quietened down, maybe 15 mins.",
+      "is_rp": true,
+      "rp_type": "seclusion",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "week": "week02",
+  "week_ending": "2026-10-11",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.2,
+    "typo_p": 0.15
+  },
+  "image": "week02.png",
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-05",
+      "start": "10:00",
+      "end": "13:30",
+      "km": 9,
+      "note": "She kept trying to pull her stockings off so I leant on her knees to keep her legs still while I got them back on.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10-1:30",
+      "day_text": "Monday",
+      "rp_note_id": "rp15"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-06",
+      "start": "08:30",
+      "end": "11:00",
+      "km": 0,
+      "note": "library + walk",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8.30 to 11am",
+      "day_text": "Tue",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-07",
+      "start": "12:00",
+      "end": "14:00",
+      "km": 29,
+      "note": "Jake asked for his weighted blanket for his rest after lunch and took it off himself when he got up.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "noon-2PM",
+      "day_text": "Weds",
+      "rp_note_id": "neg13"
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-07",
+      "start": "15:15",
+      "end": "22:00",
+      "km": 25,
+      "note": "Centrelink appt",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "quarter past 3 til 10",
+      "day_text": "Wed 7/10",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-08",
+      "start": "08:00",
+      "end": "13:00",
+      "km": 14,
+      "note": "bus training into the city",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "08:00 to 1pm",
+      "day_text": "Thurs 8th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-08",
+      "start": "20:30",
+      "end": "22:15",
+      "km": 2,
+      "note": "bedtime routine",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8:30 pm-10:15",
+      "day_text": "thurs",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-09",
+      "start": "08:30",
+      "end": "10:45",
+      "km": 0,
+      "note": "dinner + pjs",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8:30–10:45am",
+      "day_text": "Fri",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-09",
+      "start": "16:30",
+      "end": "18:30",
+      "km": 0,
+      "note": "brekkie, changed the bed",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half past 4–6:30",
+      "day_text": "Fri",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-11",
+      "start": "08:30",
+      "end": "10:30",
+      "km": 0,
+      "note": "shower + brekkie",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "8:30 am-10.30",
+      "day_text": "sun",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp15",
+      "participant_id": "nonna",
+      "date": "2026-10-05",
+      "text": "She kept trying to pull her stockings off so I leant on her knees to keep her legs still while I got them back on.",
+      "is_rp": true,
+      "rp_type": "physical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg13",
+      "participant_id": "jake",
+      "date": "2026-10-07",
+      "text": "Jake asked for his weighted blanket for his rest after lunch and took it off himself when he got up.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

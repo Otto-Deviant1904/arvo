@@ -1,0 +1,153 @@
+{
+  "week": "week05",
+  "week_ending": "2026-11-01",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.08
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "priya",
+      "date": "2026-10-26",
+      "start": "09:00",
+      "end": "11:30",
+      "km": 3,
+      "note": "cooked dinner, did washing",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9am till half 11",
+      "day_text": "Mon 26th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-26",
+      "start": "16:00",
+      "end": "18:45",
+      "km": 9,
+      "note": "groceries + cooking",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "4pm-6:45 pm",
+      "day_text": "26/10",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-27",
+      "start": "10:00",
+      "end": "12:00",
+      "km": 0,
+      "note": "nails + movie",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10–12pm",
+      "day_text": "Tues 27/10",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-27",
+      "start": "14:30",
+      "end": "18:00",
+      "km": 20,
+      "note": "Bunnings + fotoy",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "from 2.30pm till 6",
+      "day_text": "27/10",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-28",
+      "start": "09:15",
+      "end": "12:45",
+      "km": 0,
+      "note": "church then lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9:15-12.45",
+      "day_text": "Wed 28/10",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-28",
+      "start": "14:00",
+      "end": "18:00",
+      "km": 9,
+      "note": "nails + movie",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2-6:00",
+      "day_text": "28/10",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-30",
+      "start": "18:00",
+      "end": "21:00",
+      "km": 0,
+      "note": "drove him to his cousin's",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "6 til 9",
+      "day_text": "Fri 30th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-31",
+      "start": "12:00",
+      "end": "14:45",
+      "km": 11,
+      "note": "bus training into the city. Bus driver told Tom off for being loud, he went quiet and sat up the back by himself. We talked it through after.",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "12 pm til 2:45pm",
+      "day_text": "31/10",
+      "rp_note_id": "neg18"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-01",
+      "start": "12:00",
+      "end": "16:30",
+      "km": 5,
+      "note": "Priya's not allowed to the Friday disco this week because of how she spoke to her mum, I rang and cancelled her spot.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "12 noon–4:30",
+      "day_text": "Sun 1st",
+      "rp_note_id": "rp20"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg18",
+      "participant_id": "tom",
+      "date": "2026-10-31",
+      "text": "Bus driver told Tom off for being loud, he went quiet and sat up the back by himself. We talked it through after.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "rp20",
+      "participant_id": "priya",
+      "date": "2026-11-01",
+      "text": "Priya's not allowed to the Friday disco this week because of how she spoke to her mum, I rang and cancelled her spot.",
+      "is_rp": true,
+      "rp_type": "environmental",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

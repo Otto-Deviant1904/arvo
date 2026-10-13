@@ -1,0 +1,140 @@
+{
+  "week": "week17",
+  "week_ending": "2027-01-24",
+  "seed": 2026,
+  "style": {
+    "headings": true,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.03
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "priya",
+      "date": "2027-01-18",
+      "start": "18:00",
+      "end": "20:30",
+      "km": 6,
+      "note": "meal prep for the week",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "6:00 till half past 8",
+      "day_text": "Mon 18th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-20",
+      "start": "10:00",
+      "end": "12:00",
+      "km": 0,
+      "note": "dinner + pjs",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10am til 12:00",
+      "day_text": "Wed 20th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-21",
+      "start": "08:00",
+      "end": "10:15",
+      "km": 0,
+      "note": "bedtime routine",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8am–10:15",
+      "day_text": "Thur",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-21",
+      "start": "17:30",
+      "end": "21:30",
+      "km": 9,
+      "note": "nails + movie",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "half past 5-half past 9",
+      "day_text": "Thur",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-22",
+      "start": "07:00",
+      "end": "09:15",
+      "km": 10,
+      "note": "made her lunch, hung wahsing",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "7 - 9:15",
+      "day_text": "the 22nd",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-22",
+      "start": "10:00",
+      "end": "13:30",
+      "km": 0,
+      "note": "Jake went for his brother so I got him onto the lounge room floor and lay across his back until he settled.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10–1:30",
+      "day_text": "the 22nd",
+      "rp_note_id": "rp14"
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-01-23",
+      "start": "13:00",
+      "end": "15:00",
+      "km": 0,
+      "note": "Centrelink appt",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "1pm-3",
+      "day_text": "23/1",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-01-24",
+      "start": "09:30",
+      "end": "12:30",
+      "km": 0,
+      "note": "Kept the back door keyed so she couldn't wander while I hung the washing out.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "9:30 - 12.30pm",
+      "day_text": "Sun 24th",
+      "rp_note_id": "rp18"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp14",
+      "participant_id": "jake",
+      "date": "2027-01-22",
+      "text": "Jake went for his brother so I got him onto the lounge room floor and lay across his back until he settled.",
+      "is_rp": true,
+      "rp_type": "physical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "rp18",
+      "participant_id": "nonna",
+      "date": "2027-01-24",
+      "text": "Kept the back door keyed so she couldn't wander while I hung the washing out.",
+      "is_rp": true,
+      "rp_type": "environmental",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

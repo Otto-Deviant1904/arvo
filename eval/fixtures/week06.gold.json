@@ -1,0 +1,140 @@
+{
+  "week": "week06",
+  "week_ending": "2026-11-08",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.08
+  },
+  "image": "week06.png",
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-02",
+      "start": "08:00",
+      "end": "11:30",
+      "km": 9,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8 am-11:30",
+      "day_text": "Mnday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-03",
+      "start": "10:45",
+      "end": "13:15",
+      "km": 0,
+      "note": "Cup Day BBQ at the neighbours",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "10.45-1:15",
+      "day_text": "Tues (Cup Day)",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-03",
+      "start": "13:45",
+      "end": "17:00",
+      "km": 0,
+      "note": "Cup Day BBQ at the neighbours",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "1:45 to 5pm",
+      "day_text": "Tues 3rd",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-04",
+      "start": "14:15",
+      "end": "17:00",
+      "km": 0,
+      "note": "park + dog walk",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2:15-5",
+      "day_text": "WED",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-05",
+      "start": "15:00",
+      "end": "22:30",
+      "km": 0,
+      "note": "Priya was screaming so I put her out in the back courtyard by herself and held the sliding door closed till she stopped. She scraped her knuckles on the flyscreen.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "3p - 10:30",
+      "day_text": "5 Nov",
+      "rp_note_id": "rp04"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-07",
+      "start": "13:00",
+      "end": "19:00",
+      "km": 10,
+      "note": "",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "1pm till 7 pm",
+      "day_text": "sat",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-08",
+      "start": "10:00",
+      "end": "15:30",
+      "km": 10,
+      "note": "",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "10-3:30pm",
+      "day_text": "SUN",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-08",
+      "start": "19:00",
+      "end": "22:30",
+      "km": 6,
+      "note": "shower + berkkie. Did the strap up on her recliner so she'd stop getting up and wandering, she had a red mark on her tummy from it later.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "7pm-10:30pm",
+      "day_text": "SUN",
+      "rp_note_id": "rp09"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp04",
+      "participant_id": "priya",
+      "date": "2026-11-05",
+      "text": "Priya was screaming so I put her out in the back courtyard by herself and held the sliding door closed till she stopped. She scraped her knuckles on the flyscreen.",
+      "is_rp": true,
+      "rp_type": "seclusion",
+      "authorised_in_bsp": false,
+      "harm_mentioned": true
+    },
+    {
+      "note_id": "rp09",
+      "participant_id": "nonna",
+      "date": "2026-11-08",
+      "text": "Did the strap up on her recliner so she'd stop getting up and wandering, she had a red mark on her tummy from it later.",
+      "is_rp": true,
+      "rp_type": "mechanical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": true
+    }
+  ]
+}

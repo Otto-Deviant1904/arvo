@@ -1,0 +1,130 @@
+{
+  "week": "week24",
+  "week_ending": "2027-03-14",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.03
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2027-03-09",
+      "start": "07:15",
+      "end": "09:15",
+      "km": 0,
+      "note": "dinner + pjs",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "7:15 til 9.15",
+      "day_text": "tues",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-03-10",
+      "start": "11:30",
+      "end": "14:30",
+      "km": 5,
+      "note": "made her lunch, hung washing. Mrs B dozed off in her chair after lunch so I popped a blanket over her.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "11:30 - half 2",
+      "day_text": "Wendsday",
+      "rp_note_id": "neg15"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-03-10",
+      "start": "15:00",
+      "end": "17:30",
+      "km": 0,
+      "note": "Bunnings + footy",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "3pm - 5:30",
+      "day_text": "Wed 10th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-03-11",
+      "start": "09:30",
+      "end": "12:30",
+      "km": 0,
+      "note": "brekkie, chnaged the bed",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half 9 - 12:30pm",
+      "day_text": "THURS",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-03-12",
+      "start": "11:30",
+      "end": "14:30",
+      "km": 13,
+      "note": "gym",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half past 11–2:30",
+      "day_text": "Friday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-03-12",
+      "start": "21:00",
+      "end": "22:30",
+      "km": 17,
+      "note": "",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "9pm till half 10",
+      "day_text": "FRI",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-03-13",
+      "start": "10:00",
+      "end": "13:00",
+      "km": 36,
+      "note": "park + dog walk",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "10am - 1",
+      "day_text": "Saturday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-03-14",
+      "start": "10:00",
+      "end": "12:30",
+      "km": 19,
+      "note": "",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "10-12.30",
+      "day_text": "sunday",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg15",
+      "participant_id": "nonna",
+      "date": "2027-03-10",
+      "text": "Mrs B dozed off in her chair after lunch so I popped a blanket over her.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

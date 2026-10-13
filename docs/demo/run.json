@@ -1,0 +1,253 @@
+{
+  "placeholder": true,
+  "placeholder_note": "Hand-written sample so the page renders. Rates are illustrative, not the 2026-27 price limits. Replace with a real run.",
+  "week_ending": "2026-10-11",
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-10-05",
+      "start": "09:30",
+      "end": "14:30",
+      "km": 14,
+      "note": "Bunnings then lunch at the bakery. 14km. good day, v chatty",
+      "source_quote": "Mon - Jake 9:30 to 2:30",
+      "warnings": []
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-06",
+      "start": "07:00",
+      "end": "09:00",
+      "km": 0,
+      "note": "shower + brekky. bit teary early, settled w music",
+      "source_quote": "Tues - Priya 7-9am",
+      "warnings": []
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-06",
+      "start": "15:00",
+      "end": "20:30",
+      "km": 12,
+      "note": "footy training at the oval then tea. 12km",
+      "source_quote": "Tues arvo - Jake 3 till 8:30ish",
+      "warnings": [
+        "approximate end time '8:30ish' read as 20:30"
+      ]
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-07",
+      "start": "18:00",
+      "end": "21:00",
+      "km": 0,
+      "note": "dinner, meds, bed. Bed rails up as per plan",
+      "source_quote": "Wed - Nonna 6pm-9pm",
+      "warnings": []
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-08",
+      "start": "10:00",
+      "end": "13:00",
+      "km": 8,
+      "note": "shopping at Coles, 8km. He kept going back to the pantry after lunch. I locked the pantry so he'd stop snacking. Upset for 10 min then fine",
+      "source_quote": "Thu - Tom 10-1",
+      "warnings": []
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-10",
+      "start": "10:00",
+      "end": "16:00",
+      "km": 0,
+      "note": "Melb Museum, train in so no km",
+      "source_quote": "Sat - Jake 10 - 4",
+      "warnings": []
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-11",
+      "start": "08:00",
+      "end": "11:00",
+      "km": 0,
+      "note": "brekky, shower, tidy up. Pri v anxious, score 5, gave PRN lorazepam 0.5 as per BSP, calm after 30 min",
+      "source_quote": "Sun - Pri 8-11",
+      "warnings": []
+    }
+  ],
+  "lines": [
+    {
+      "participant_id": "jake",
+      "date": "2026-10-05",
+      "item_number": "04_104_0125_6_1",
+      "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+      "start": "09:30",
+      "end": "14:30",
+      "quantity": 5.0,
+      "unit": "H",
+      "unit_price": 70.23,
+      "total": 351.15,
+      "rule": "Weekday daytime: starts and ends between 06:00 and 20:00 on a weekday"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-05",
+      "item_number": "04_799_0125_6_1",
+      "item_name": "Provider travel - non-labour costs",
+      "start": "",
+      "end": "",
+      "quantity": 14.0,
+      "unit": "km",
+      "unit_price": 0.99,
+      "total": 13.86,
+      "rule": "Provider travel: 14 km written in the diary for this shift"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-06",
+      "item_number": "01_011_0107_1_1",
+      "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+      "start": "07:00",
+      "end": "09:00",
+      "quantity": 2.0,
+      "unit": "H",
+      "unit_price": 70.23,
+      "total": 140.46,
+      "rule": "Weekday daytime: starts and ends between 06:00 and 20:00 on a weekday"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-06",
+      "item_number": "04_103_0125_6_1",
+      "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+      "start": "15:00",
+      "end": "20:30",
+      "quantity": 5.5,
+      "unit": "H",
+      "unit_price": 77.38,
+      "total": 425.59,
+      "rule": "Weekday evening: shift ends after 20:00, so the whole shift is at the evening rate"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-06",
+      "item_number": "04_799_0125_6_1",
+      "item_name": "Provider travel - non-labour costs",
+      "start": "",
+      "end": "",
+      "quantity": 12.0,
+      "unit": "km",
+      "unit_price": 0.99,
+      "total": 11.88,
+      "rule": "Provider travel: 12 km written in the diary for this shift"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-07",
+      "item_number": "01_015_0107_1_1",
+      "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+      "start": "18:00",
+      "end": "21:00",
+      "quantity": 3.0,
+      "unit": "H",
+      "unit_price": 77.38,
+      "total": 232.14,
+      "rule": "Weekday evening: shift ends after 20:00, so the whole shift is at the evening rate"
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-08",
+      "item_number": "04_104_0125_6_1",
+      "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+      "start": "10:00",
+      "end": "13:00",
+      "quantity": 3.0,
+      "unit": "H",
+      "unit_price": 70.23,
+      "total": 210.69,
+      "rule": "Weekday daytime: starts and ends between 06:00 and 20:00 on a weekday"
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-10-08",
+      "item_number": "04_799_0125_6_1",
+      "item_name": "Provider travel - non-labour costs",
+      "start": "",
+      "end": "",
+      "quantity": 8.0,
+      "unit": "km",
+      "unit_price": 0.99,
+      "total": 7.92,
+      "rule": "Provider travel: 8 km written in the diary for this shift"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-10-10",
+      "item_number": "04_105_0125_6_1",
+      "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+      "start": "10:00",
+      "end": "16:00",
+      "quantity": 6.0,
+      "unit": "H",
+      "unit_price": 98.83,
+      "total": 592.98,
+      "rule": "Saturday rate: shift date is a Saturday"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-11",
+      "item_number": "01_014_0107_1_1",
+      "item_name": "Assistance With Self-Care Activities - Standard - Sunday",
+      "start": "08:00",
+      "end": "11:00",
+      "quantity": 3.0,
+      "unit": "H",
+      "unit_price": 127.43,
+      "total": 382.29,
+      "rule": "Sunday rate: shift date is a Sunday"
+    }
+  ],
+  "flags": [
+    {
+      "participant_id": "tom",
+      "date": "2026-10-08",
+      "rp_type": "environmental",
+      "evidence_quote": "I locked the pantry so he'd stop snacking.",
+      "harm_mentioned": false,
+      "authorised_in_bsp": false,
+      "report_by": "2026-10-15",
+      "explanation": "Locking the pantry stops Tom getting to food in his own home, which is an environmental restraint, and it is not in a behaviour support plan."
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-10-11",
+      "rp_type": "chemical",
+      "evidence_quote": "Pri v anxious, score 5, gave PRN lorazepam 0.5 as per BSP, calm after 30 min",
+      "harm_mentioned": false,
+      "authorised_in_bsp": true,
+      "report_by": "2026-10-16",
+      "explanation": "PRN lorazepam given to settle distress is a chemical restraint. Her plan authorises it at a distress score of 4 or more."
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-10-07",
+      "rp_type": "mechanical",
+      "evidence_quote": "Bed rails up as per plan",
+      "harm_mentioned": false,
+      "authorised_in_bsp": true,
+      "report_by": "2026-10-14",
+      "explanation": "Bed rails stop Rosa getting out of bed on her own, which is a mechanical restraint. Her plan authorises them overnight for falls risk."
+    }
+  ],
+  "warnings": [
+    "Fri 9 Oct: 'nil (sick)' has no times, so no shift was created"
+  ],
+  "model": "gemma4:e4b",
+  "timings": {
+    "extract_s": 21.7,
+    "pricing_s": 0.004,
+    "rp_s": 8.9,
+    "total_s": 30.6
+  }
+}

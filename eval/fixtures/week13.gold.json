@@ -1,0 +1,127 @@
+{
+  "week": "week13",
+  "week_ending": "2026-12-27",
+  "seed": 2026,
+  "style": {
+    "headings": true,
+    "h24": false,
+    "emoji_p": 0.12,
+    "typo_p": 0.03
+  },
+  "image": "week13.png",
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2026-12-21",
+      "start": "14:30",
+      "end": "18:00",
+      "km": 18,
+      "note": "fishing at the pier. Tom was swearing at everyone so I made him stay in the garage on his own and kept the roller door down till he said sorry.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "half 2-18:00",
+      "day_text": "21 Dec",
+      "rp_note_id": "rp02"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-22",
+      "start": "20:00",
+      "end": "22:15",
+      "km": 0,
+      "note": "haircut then Kmart",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "8pm–quarter past 10",
+      "day_text": "tue",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-25",
+      "start": "08:00",
+      "end": "14:00",
+      "km": 11,
+      "note": "Centrelink appt",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "8AM till 2",
+      "day_text": "Christmas Day",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-25",
+      "start": "14:30",
+      "end": "17:00",
+      "km": 37,
+      "note": "Xmas lunch",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "2:30-5",
+      "day_text": "Christmas Day",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-26",
+      "start": "10:00",
+      "end": "12:45",
+      "km": 15,
+      "note": "park + dog walk",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "10-12:45",
+      "day_text": "Saturday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-26",
+      "start": "14:15",
+      "end": "18:15",
+      "km": 9,
+      "note": "Boxing Day sales",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "2:15pm-6:15",
+      "day_text": "Saturday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-27",
+      "start": "18:00",
+      "end": "21:15",
+      "km": 30,
+      "note": "haircut then Kmart. Gave Jake his usual night meds at 8 off the chart.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "6 - 9:15",
+      "day_text": "Sunday",
+      "rp_note_id": "neg16"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp02",
+      "participant_id": "tom",
+      "date": "2026-12-21",
+      "text": "Tom was swearing at everyone so I made him stay in the garage on his own and kept the roller door down till he said sorry.",
+      "is_rp": true,
+      "rp_type": "seclusion",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg16",
+      "participant_id": "jake",
+      "date": "2026-12-27",
+      "text": "Gave Jake his usual night meds at 8 off the chart.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

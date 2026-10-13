@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Arvo turns an NDIS support worker's weekly shift diary into invoices, on the worker's own laptop.">
+<title>Arvo: shift diary to NDIS invoices</title>
+<script>
+  // Hosted demo only: load the typeface from Google Fonts. The local app
+  // (127.0.0.1) makes no requests beyond its own API and uses system fonts.
+  (function () {
+    if (/^(127\.0\.0\.1|localhost|\[::1\]|)$/.test(location.hostname)) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;600&family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap';
+    document.head.appendChild(l);
+  })();
+</script>
+<style>
+:root {
+  --bg: #EDF1EF;
+  --surface: #FFFFFF;
+  --surface-2: #F6F8F7;
+  --ink: #17232A;
+  --muted: #53616A;
+  --line: #D3DBD7;
+  --rule: rgba(47, 107, 90, 0.11);
+  --accent: #2F6B5A;
+  --accent-hover: #255647;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E1EEE8;
+  --focus: #2457C5;
+  --flag: #A3201B;
+  --flag-bg: #FCEEEC;
+  --flag-line: #EFC3BE;
+  --hl: rgba(255, 99, 77, 0.30);
+  --warn: #774800;
+  --warn-bg: #FFF3D9;
+  --warn-line: #EBCF93;
+  --ok: #2C7A4E;
+  --shadow: 0 1px 2px rgba(23, 35, 42, 0.06), 0 4px 16px rgba(23, 35, 42, 0.05);
+  --font: "Atkinson Hyperlegible Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F1417;
+    --surface: #161D21;
+    --surface-2: #1B2328;
+    --ink: #E2E8E5;
+    --muted: #9AA7A2;
+    --line: #2B363C;
+    --rule: rgba(134, 201, 177, 0.10);
+    --accent: #86C9B1;
+    --accent-hover: #A2D8C4;
+    --accent-ink: #0B1A15;
+    --accent-soft: #1C2D27;
+    --focus: #8AB4FF;
+    --flag: #FFA49A;
+    --flag-bg: #251513;
+    --flag-line: #5A2A25;
+    --hl: rgba(255, 112, 92, 0.38);
+    --warn: #F1C46B;
+    --warn-bg: #251E10;
+    --warn-line: #5C4620;
+    --ok: #7FD1A0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1rem/1.5 var(--font);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+h1, h2, h3, h4, p { margin: 0; }
+button, input, textarea, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.mono { font-family: var(--mono); font-size: 0.9375em; }
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.muted { color: var(--muted); }
+.skip {
+  position: absolute; left: 1rem; top: -3rem; z-index: 10;
+  background: var(--surface); color: var(--ink); padding: 0.5rem 0.75rem; border-radius: 6px;
+}
+.skip:focus { top: 0.75rem; }
+
+/* ---------- header */
+.top {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  max-width: 1280px; width: 100%; margin: 0 auto;
+  padding: 1.25rem 2rem 1.125rem;
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; min-width: 0; }
+.brand h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.purpose { color: var(--muted); max-width: 46ch; }
+.pill {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.3125rem 0.875rem 0.3125rem 0.75rem;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  font-size: 0.875rem; font-weight: 600;
+}
+.pill .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--muted); flex: none; }
+.pill[data-state="ok"] .dot { background: var(--ok); }
+.pill[data-state="warn"] { border-color: var(--warn-line); background: var(--warn-bg); color: var(--warn); }
+.pill[data-state="warn"] .dot { background: var(--warn); }
+.pill[data-state="demo"] { background: var(--surface-2); }
+.pill[data-state="checking"] .dot { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.25; } }
+
+/* ---------- layout */
+.desk {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(300px, 390px) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+  max-width: 1280px; width: 100%; margin: 0 auto;
+  padding: 1.5rem 2rem 2.5rem;
+}
+.input-panel { position: sticky; top: 1rem; }
+.results { container: results / inline-size; min-width: 0; display: grid; gap: 1.25rem; }
+.results:focus { outline: none; }
+.results:focus-visible { outline: 3px solid var(--focus); outline-offset: 6px; }
+
+/* ---------- form */
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.input-card { padding: 1.25rem; display: grid; gap: 1.125rem; }
+.field { display: grid; gap: 0.375rem; }
+.field > label, .label-row label { font-weight: 600; }
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.hint { color: var(--muted); font-size: 0.875rem; }
+input[type="date"] {
+  width: 100%; max-width: 14rem;
+  padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--surface);
+}
+textarea {
+  --lh: 1.75rem;
+  width: 100%;
+  min-height: calc(var(--lh) * 11 + 1rem);
+  resize: vertical;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--line); border-radius: 8px;
+  line-height: var(--lh);
+  background-color: var(--surface);
+  background-image: linear-gradient(to bottom, transparent calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px));
+  background-size: 100% var(--lh);
+  background-position: 0 0.5rem;
+  background-attachment: local;
+}
+textarea::placeholder { color: var(--muted); opacity: 0.8; }
+input[type="date"]:focus-visible, textarea:focus-visible { border-color: var(--focus); outline-offset: 0; }
+.link-btn {
+  background: none; border: 0; padding: 0.125rem 0; cursor: pointer;
+  color: var(--accent); font-weight: 600; font-size: 0.9375rem;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.link-btn:hover { text-decoration-thickness: 2px; }
+.drop {
+  display: grid; gap: 0.125rem; justify-items: center; text-align: center;
+  padding: 1rem; border: 1.5px dashed var(--line); border-radius: 8px;
+  background: var(--surface-2); cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.drop:hover, .drop.is-over { border-color: var(--accent); background: var(--accent-soft); }
+.drop:focus-within { outline: 3px solid var(--focus); outline-offset: 2px; }
+.drop-title { font-weight: 600; }
+.drop-sub { color: var(--muted); font-size: 0.875rem; }
+.photo-chosen {
+  display: flex; align-items: center; gap: 0.875rem;
+  padding: 0.625rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2);
+}
+.photo-chosen img { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; flex: none; background: var(--line); }
+.photo-chosen p { font-size: 0.875rem; overflow-wrap: anywhere; }
+.run-row { display: flex; align-items: center; gap: 0.875rem; flex-wrap: wrap; }
+.btn-primary {
+  appearance: none; border: 0; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700;
+  min-height: 2.75rem;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-primary[aria-disabled="true"] { background: var(--line); color: var(--muted); cursor: not-allowed; }
+.btn-primary[aria-busy="true"] { cursor: progress; }
+.elapsed { font-family: var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.run-status { font-size: 0.875rem; color: var(--muted); min-height: 1.3em; }
+.run-status:empty { display: none; }
+.run-error {
+  font-size: 0.9375rem; color: var(--flag); background: var(--flag-bg);
+  border: 1px solid var(--flag-line); border-radius: 8px; padding: 0.625rem 0.75rem;
+}
+.note-box {
+  font-size: 0.875rem; color: var(--muted);
+  border-top: 1px solid var(--line); padding-top: 0.875rem;
+}
+.note-box.is-nudged { color: var(--ink); }
+.note-box code, .run-status code, .empty code {
+  font-family: var(--mono); font-size: 0.875em;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 0 0.3em;
+}
+
+/* ---------- results shared */
+.panel { padding: 1.25rem; }
+.sec-head { display: grid; gap: 0.25rem; margin-bottom: 0.875rem; }
+.sec-head h3 { font-size: 1.125rem; font-weight: 700; }
+.sec-head p { color: var(--muted); font-size: 0.9375rem; }
+.empty { padding: 1.5rem 1.25rem; display: grid; gap: 0.75rem; }
+.empty h3 { font-size: 1.125rem; }
+.empty ul { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.375rem; color: var(--muted); }
+
+.summary { padding: 1rem 1.25rem; display: grid; gap: 0.625rem; }
+.summary-week { font-weight: 700; }
+.summary-stats { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.375rem 1.5rem; }
+.summary-stats li { display: flex; align-items: baseline; gap: 0.375rem; color: var(--muted); }
+.summary-stats strong { color: var(--ink); font-size: 1.125rem; font-variant-numeric: tabular-nums; }
+.summary-stats .is-flag strong { color: var(--flag); }
+.placeholder-note {
+  font-size: 0.875rem; color: var(--warn); background: var(--warn-bg);
+  border: 1px solid var(--warn-line); border-radius: 6px; padding: 0.375rem 0.625rem;
+}
+
+/* ---------- flags (the red panel) */
+.flags {
+  background: var(--flag-bg); border: 1px solid var(--flag-line); border-left: 5px solid var(--flag);
+  border-radius: var(--radius); padding: 1.25rem;
+}
+.flags .sec-head h3 { color: var(--flag); font-size: 1.25rem; }
+.flags .sec-head p { color: var(--ink); }
+.flag-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.875rem; }
+.flag {
+  background: var(--surface); border: 1px solid var(--flag-line); border-radius: 8px;
+  padding: 1rem 1.125rem; display: grid; gap: 0.625rem;
+}
+.flag[data-authorised="true"] { border-color: var(--line); }
+.flag-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; }
+.flag-type { font-weight: 700; font-size: 1.0625rem; }
+.chip {
+  font-size: 0.8125rem; font-weight: 600; padding: 0.125rem 0.625rem; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+}
+.chip.is-no { border-color: var(--flag-line); color: var(--flag); background: var(--flag-bg); }
+.flag-who { color: var(--muted); }
+.flag-who strong { color: var(--ink); }
+.flag-note {
+  margin: 0; padding: 0.625rem 0.875rem;
+  border-left: 3px solid var(--line); background: var(--surface-2); border-radius: 0 6px 6px 0;
+  font-size: 1rem; line-height: 1.7; overflow-wrap: anywhere;
+}
+mark.evidence {
+  color: inherit;
+  background: linear-gradient(100deg, transparent 0.4em, var(--hl) 0.55em, var(--hl) calc(100% - 0.4em), transparent calc(100% - 0.2em)),
+              linear-gradient(to bottom, transparent 62%, var(--hl) 62%);
+  padding: 0.1em 0.25em; margin: 0 -0.1em;
+  border-radius: 0.6em 0.2em 0.5em 0.25em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  font-weight: 600;
+}
+.flag-why { font-size: 0.9375rem; }
+.flag-plan { font-size: 0.875rem; color: var(--muted); }
+.flag-facts { margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; font-size: 0.9375rem; }
+.flag-facts div { display: grid; }
+.flag-facts dt { font-size: 0.8125rem; color: var(--muted); }
+.flag-facts dd { margin: 0; font-weight: 600; }
+.flag-facts .is-deadline dd { color: var(--flag); }
+.flag-foot {
+  margin-top: 1rem; padding-top: 0.875rem; border-top: 1px solid var(--flag-line);
+  font-size: 0.9375rem; font-weight: 600;
+}
+.flags-none { padding: 1rem 1.25rem; display: grid; gap: 0.25rem; }
+.flags-none h3 { font-size: 1rem; }
+.flags-none p { color: var(--muted); font-size: 0.9375rem; }
+
+/* ---------- tables */
+.table-wrap { overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.tbl th {
+  text-align: left; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; padding: 0.5rem 0.625rem; border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.tbl th.num { text-align: right; }
+.tbl td { padding: 0.625rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tbl tbody tr:last-child td { border-bottom: 0; }
+.tbl tr.has-warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
+.who-unmatched { color: var(--warn); font-weight: 600; }
+.c-date, .c-time { white-space: nowrap; }
+.note-text { overflow-wrap: anywhere; }
+.src { font-size: 0.8125rem; color: var(--muted); margin-top: 0.25rem; overflow-wrap: anywhere; }
+.warn-inline {
+  display: inline-block; margin-top: 0.375rem; font-size: 0.875rem;
+  color: var(--warn); background: var(--warn-bg); border: 1px solid var(--warn-line);
+  border-radius: 6px; padding: 0.0625rem 0.5rem;
+}
+.warn-inline b, .warn-list b { font-weight: 700; }
+.warn-list {
+  list-style: none; margin: 0 0 0.875rem; padding: 0.625rem 0.875rem; display: grid; gap: 0.25rem;
+  color: var(--warn); background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+/* ---------- invoices */
+.inv-list { display: grid; gap: 1rem; }
+.inv { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.inv-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1rem;
+  padding: 0.75rem 0.875rem; background: var(--surface-2); border-bottom: 1px solid var(--line);
+}
+.inv-head h4 { font-size: 1.0625rem; }
+.inv-meta { font-size: 0.875rem; color: var(--muted); }
+.btn-secondary {
+  appearance: none; cursor: pointer; font-weight: 600; font-size: 0.9375rem;
+  background: var(--surface); color: var(--accent); border: 1.5px solid var(--accent);
+  border-radius: 8px; padding: 0.4375rem 0.875rem; min-height: 2.5rem;
+}
+.btn-secondary:hover { background: var(--accent-soft); }
+.inv .tbl td, .inv .tbl th { padding-left: 0.875rem; padding-right: 0.875rem; }
+.item-no { display: block; font-family: var(--mono); font-size: 0.875rem; white-space: nowrap; }
+.item-name { display: block; font-size: 0.8125rem; color: var(--muted); }
+.why {
+  appearance: none; background: none; cursor: pointer; white-space: nowrap;
+  border: 1px solid var(--line); border-radius: 6px; padding: 0.125rem 0.5rem;
+  font-size: 0.8125rem; color: var(--muted);
+}
+.why[aria-expanded="true"] { color: var(--ink); border-color: var(--muted); }
+.rule-row td { background: var(--surface-2); font-size: 0.875rem; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.rule-label { font-weight: 600; }
+.inv tfoot th, .inv tfoot td { border-top: 1px solid var(--line); border-bottom: 0; padding-top: 0.625rem; padding-bottom: 0.625rem; }
+.inv tfoot th { text-transform: none; letter-spacing: 0; font-size: 0.9375rem; color: var(--ink); text-align: right; }
+.inv tfoot td { font-weight: 700; }
+.grand {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  margin-top: 1rem; padding-top: 0.875rem; border-top: 2px solid var(--ink);
+}
+.grand strong { font-size: 1.25rem; }
+
+/* tables become label/value stacks when the results column is narrow */
+@container results (max-width: 620px) {
+  .stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .stack, .stack tbody, .stack tfoot, .stack tr, .stack td, .stack tfoot th { display: block; width: auto; }
+  .stack tbody tr { padding: 0.625rem 0; border-bottom: 1px solid var(--line); }
+  .stack tbody tr:last-child { border-bottom: 0; }
+  .stack td { border: 0; padding: 0.1875rem 0; display: flex; justify-content: space-between; gap: 1rem; text-align: right; }
+  .stack td::before { content: attr(data-label); color: var(--muted); font-size: 0.8125rem; text-align: left; flex: none; }
+  .stack td.wide { display: block; text-align: left; }
+  .stack td.wide::before { display: block; }
+  .stack td.why-cell { justify-content: flex-end; }
+  .stack td.why-cell::before { content: none; }
+  .stack tr.has-warn { box-shadow: inset 3px 0 0 var(--warn); padding-left: 0.75rem; }
+  .stack tr.has-warn td:first-child { box-shadow: none; }
+  .stack tr.rule-row { padding: 0; }
+  .stack tr.rule-row td { display: block; text-align: left; padding: 0.5rem 0.625rem; border-radius: 6px; }
+  .stack tr.rule-row td::before { content: none; }
+  .stack tfoot tr { display: flex; justify-content: space-between; border-top: 1px solid var(--line); }
+  .stack tfoot th, .stack tfoot td { border: 0; }
+  .inv .stack td, .inv .stack th { padding-left: 0.875rem; padding-right: 0.875rem; }
+  .shifts-tbl.stack tbody tr { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.125rem 0.625rem; }
+  .shifts-tbl.stack td { display: block; padding: 0; text-align: left; }
+  .shifts-tbl.stack td::before { content: none; }
+  .shifts-tbl.stack td.c-date { font-weight: 700; }
+  .shifts-tbl.stack td.c-km::after { content: " km"; }
+  .shifts-tbl.stack td.no-km { display: none; }
+  .shifts-tbl.stack td.wide { flex-basis: 100%; margin-top: 0.25rem; }
+  .inv-tbl.stack tbody tr:not(.rule-row) {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 0.25rem 0.625rem; align-items: baseline;
+    grid-template-areas: "date time total" "item item item" "qty rate why"; padding: 0.75rem 0.875rem;
+  }
+  .inv .inv-tbl.stack tbody tr:not(.rule-row) td { display: block; padding: 0; text-align: left; }
+  .inv-tbl.stack td::before { content: none; }
+  .inv-tbl.stack td.c-date { grid-area: date; font-weight: 700; }
+  .inv-tbl.stack td.c-time { grid-area: time; }
+  .inv .inv-tbl.stack tbody td.c-total { grid-area: total; text-align: right; font-weight: 700; }
+  .inv-tbl.stack td.wide { grid-area: item; }
+  .inv-tbl.stack td.c-qty { grid-area: qty; }
+  .inv-tbl.stack td.c-rate { grid-area: rate; color: var(--muted); }
+  .inv-tbl.stack td.c-rate::before { content: "× "; }
+  .inv-tbl.stack td.why-cell { grid-area: why; }
+  .stack tfoot td.why-cell { display: none; }
+}
+
+/* ---------- footer */
+.foot {
+  border-top: 1px solid var(--line);
+  max-width: 1280px; width: 100%; margin: 0 auto; padding: 1rem 2rem 1.5rem;
+  display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; justify-content: space-between;
+  font-size: 0.875rem; color: var(--muted);
+}
+.foot strong { color: var(--ink); }
+.run-meta { font-family: var(--mono); font-size: 0.8125rem; }
+
+/* ---------- narrow screens */
+@media (max-width: 900px) {
+  .desk { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .input-panel { position: static; }
+}
+@media (max-width: 560px) {
+  .top { padding: 1rem 1rem 0.875rem; }
+  .desk { padding: 1rem 1rem 2rem; }
+  .foot { padding: 1rem; }
+  .input-card, .panel, .flags { padding: 1rem; }
+  .flag { padding: 0.875rem; }
+  .btn-primary { width: 100%; }
+  .run-row { gap: 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+@media print {
+  .input-panel, .skip, .pill, .inv-head button, .why { display: none !important; }
+  .desk { display: block; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#results">Skip to results</a>
+
+<header class="top">
+  <div class="brand">
+    <h1>Arvo</h1>
+    <p class="purpose">Sunday-night invoicing for NDIS support work. Gemma reads your diary on this laptop; code does the pricing.</p>
+  </div>
+  <p class="pill" id="status" data-state="checking" role="status">
+    <span class="dot" aria-hidden="true"></span><span id="status-text">Looking for the local app…</span>
+  </p>
+</header>
+
+<main class="desk">
+  <section class="input-panel" aria-labelledby="input-h">
+    <h2 id="input-h" class="sr-only">Your week</h2>
+    <form id="run-form" class="card input-card" novalidate>
+      <div class="field">
+        <label for="week-ending">Week ending</label>
+        <input type="date" id="week-ending" name="week_ending" required aria-describedby="week-hint">
+        <p class="hint" id="week-hint">Usually the Sunday just gone.</p>
+      </div>
+
+      <div class="field">
+        <div class="label-row">
+          <label for="diary">Shift diary</label>
+          <button type="button" class="link-btn" id="sample-btn">Use sample diary</button>
+        </div>
+        <textarea id="diary" name="diary_text" rows="11" spellcheck="false" aria-describedby="diary-hint"
+          placeholder="Tues - Jake 3 till 8:30ish, Bunnings + footy, 12km"></textarea>
+        <p class="hint" id="diary-hint">Paste it the way you wrote it. Shorthand, typos and “ish” times are fine.</p>
+      </div>
+
+      <div class="field">
+        <label class="drop" id="drop" for="photo">
+          <input type="file" id="photo" class="sr-only" accept="image/png,image/jpeg,image/webp,image/gif">
+          <span class="drop-title">or drop a photo of your paper diary</span>
+          <span class="drop-sub">JPG or PNG. Or click to choose one.</span>
+        </label>
+        <div class="photo-chosen" id="photo-chosen" hidden>
+          <img id="photo-thumb" alt="">
+          <div>
+            <p id="photo-name"></p>
+            <button type="button" class="link-btn" id="photo-remove">Remove photo</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="run-row">
+        <button type="submit" class="btn-primary" id="run-btn">Read and price this week</button>
+        <span class="elapsed" id="elapsed" aria-hidden="true"></span>
+      </div>
+      <p class="run-status" id="run-status" role="status" aria-live="polite"></p>
+      <p class="run-error" id="run-error" role="alert" hidden></p>
+      <p class="note-box" id="setup-note" hidden></p>
+    </form>
+  </section>
+
+  <section class="results" id="results" aria-labelledby="results-h" tabindex="-1">
+    <h2 id="results-h" class="sr-only">Results</h2>
+
+    <div class="card empty" id="empty">
+      <h3>Nothing to check yet</h3>
+      <p>Paste this week’s diary or add a photo, then press <strong>Read and price this week</strong>. You’ll get:</p>
+      <ul>
+        <li>notes to check before you invoice, with the exact sentence highlighted</li>
+        <li>every shift as Gemma read it, so a wrong time is easy to spot</li>
+        <li>invoice lines priced by code, ready to print per participant</li>
+      </ul>
+    </div>
+
+    <div class="card summary" id="summary" hidden></div>
+    <section id="flags" aria-labelledby="flags-h" hidden></section>
+    <section class="card panel" id="shifts" aria-labelledby="shifts-h" hidden></section>
+    <section class="card panel" id="invoices" aria-labelledby="invoices-h" hidden></section>
+  </section>
+</main>
+
+<footer class="foot">
+  <p><strong>Nothing you type here leaves this computer.</strong></p>
+  <p class="run-meta" id="run-meta"></p>
+</footer>
+
+<noscript><p style="padding:1rem">Arvo needs JavaScript turned on. It runs only on this computer.</p></noscript>
+
+<script>
+(() => {
+'use strict';
+
+// ------------------------------------------------------------------ constants
+const SAMPLE_WEEK = '2026-10-11';
+const SAMPLE_DIARY = `wk ending sun 11/10
+
+Mon - Jake 9:30 to 2:30, Bunnings then lunch at the bakery. 14km. good day, v chatty
+Tues - Priya 7-9am, shower + brekky. bit teary early, settled w music
+Tues arvo - Jake 3 till 8:30ish, footy training at the oval then tea. 12km
+Wed - Nonna 6pm-9pm dinner, meds, bed. Bed rails up as per plan
+Thu - Tom 10-1 shopping at Coles, 8km. He kept going back to the pantry after lunch. I locked the pantry so he'd stop snacking. Upset for 10 min then fine
+Fri - nil (sick)
+Sat - Jake 10 - 4 Melb Museum, train in so no km
+Sun - Pri 8-11 brekky, shower, tidy up. Pri v anxious, score 5, gave PRN lorazepam 0.5 as per BSP, calm after 30 min
+`;
+const DEMO_TIP = 'Running a diary needs the local app. On your laptop: python -m arvo serve';
+const RP_LABELS = {
+  seclusion: 'Seclusion',
+  chemical: 'Chemical restraint',
+  mechanical: 'Mechanical restraint',
+  physical: 'Physical restraint',
+  environmental: 'Environmental restraint',
+};
+const TIMING_LABELS = { extract_s: 'read', pricing_s: 'priced', rp_s: 'flag check', total_s: 'total' };
+const FLAG_FOOTER = 'Arvo flags, it does not decide. Talk to your provider or the NDIS Commission.';
+const INVOICE_CSP = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:">';
+
+const state = {
+  mode: 'checking',      // 'local' | 'demo'
+  model: '',
+  worker: null,
+  people: new Map(),     // participant id -> roster entry
+  order: [],             // roster order of participant ids
+  image: null,           // { b64, name }
+  thumbUrl: '',
+  running: false,
+  result: null,
+  weekEnding: '',
+};
+
+// ------------------------------------------------------------------ DOM helpers
+// Every piece of diary/model text goes in through textContent or text nodes. Never as markup.
+const $ = (id) => document.getElementById(id);
+function h(tag, props, ...kids) {
+  const node = document.createElement(tag);
+  if (props) {
+    for (const [k, v] of Object.entries(props)) {
+      if (v === null || v === undefined || v === false) continue;
+      if (k === 'class') node.className = v;
+      else if (k === 'text') node.textContent = String(v);
+      else if (k.startsWith('on') && typeof v === 'function') node.addEventListener(k.slice(2), v);
+      else node.setAttribute(k, v === true ? '' : String(v));
+    }
+  }
+  for (const kid of kids.flat(Infinity)) {
+    if (kid === null || kid === undefined || kid === false || kid === '') continue;
+    node.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+  }
+  return node;
+}
+
+// ------------------------------------------------------------------ formatting
+const money = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD' });
+const fmtMoney = (x) => money.format(Number(x) || 0);
+const toCents = (x) => Math.round((Number(x) || 0) * 100);
+const pad = (n) => String(n).padStart(2, '0');
+const isoDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+function parseISO(s) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2}))?/.exec(String(s || ''));
+  if (!m) return null;
+  return new Date(+m[1], +m[2] - 1, +m[3], m[4] ? +m[4] : 0, m[5] ? +m[5] : 0);
+}
+function fmtDate(s, withYear) {
+  const d = parseISO(s);
+  if (!d) return String(s || '');
+  const opts = { weekday: 'short', day: 'numeric', month: 'short' };
+  if (withYear) opts.year = 'numeric';
+  return d.toLocaleDateString('en-AU', opts);
+}
+function fmtDeadline(s) {
+  const d = parseISO(s);
+  if (!d) return String(s || '');
+  let out = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  if (/[T ]\d{2}:\d{2}/.test(s)) out += ', ' + d.toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' });
+  return out;
+}
+function lastSunday(from) {
+  const d = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  d.setDate(d.getDate() - d.getDay());
+  return isoDate(d);
+}
+function sundayOnOrAfter(iso) {
+  const d = parseISO(iso);
+  if (!d) return '';
+  d.setDate(d.getDate() + ((7 - d.getDay()) % 7));
+  return isoDate(d);
+}
+const personName = (id) => {
+  const p = state.people.get(id);
+  return p ? p.name : (id || 'Not matched to your roster');
+};
+const timeRange = (a, b) => (a && b ? `${a}–${b}` : '—');
+function fmtQty(line) {
+  const q = Number(line.quantity) || 0;
+  return line.unit === 'km'
+    ? `${q.toLocaleString('en-AU', { maximumFractionDigits: 1 })} km`
+    : `${q.toFixed(2)} h`;
+}
+const byDateTime = (a, b) => `${a.date} ${a.start || '99'}`.localeCompare(`${b.date} ${b.start || '99'}`);
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+// ------------------------------------------------------------------ network
+async function fetchJSON(url, { timeout = 4000, ...opts } = {}) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), timeout);
+  try {
+    const res = await fetch(url, { cache: 'no-store', ...opts, signal: ctl.signal });
+    let data = null;
+    try { data = await res.json(); } catch (_) { data = null; }
+    if (!res.ok) {
+      const err = new Error((data && data.error) || `The local app answered ${res.status}.`);
+      err.status = res.status;
+      throw err;
+    }
+    if (data === null || typeof data !== 'object') throw new Error(`${url} did not return JSON.`);
+    return data;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+async function fetchText(url) {
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(String(res.status));
+  return res.text();
+}
+
+// ------------------------------------------------------------------ status + messages
+function setPill(kind, text) {
+  $('status').dataset.state = kind;
+  $('status-text').textContent = text;
+}
+function showError(msg) {
+  const el = $('run-error');
+  el.textContent = msg;
+  el.hidden = false;
+}
+function clearError() {
+  $('run-error').hidden = true;
+  $('run-error').textContent = '';
+}
+function setNote(...parts) {
+  const el = $('setup-note');
+  el.replaceChildren(...parts.map((p) => (p instanceof Node ? p : document.createTextNode(p))));
+  el.hidden = parts.length === 0;
+}
+
+function setRoster(r) {
+  if (!r || typeof r !== 'object') return;
+  state.worker = r.worker && typeof r.worker === 'object' ? r.worker : null;
+  const ps = Array.isArray(r.participants) ? r.participants : [];
+  state.people = new Map(ps.filter((p) => p && p.id).map((p) => [String(p.id), p]));
+  state.order = [...state.people.keys()];
+}
+
+// ------------------------------------------------------------------ modes
+async function enterLocal(health) {
+  state.mode = 'local';
+  state.model = String(health.model || 'gemma4:e4b');
+  if (health.ollama_up === false) {
+    setPill('warn', 'Local app running. Ollama is not running');
+    setNote('Start Ollama, then press Read and price this week. Your diary still stays on this laptop.');
+  } else if (health.model_available === false) {
+    setPill('warn', `Running on your laptop: ${state.model} (not downloaded)`);
+    setNote('Download the model once, then come back: ', h('code', null, `ollama pull ${state.model}`));
+  } else {
+    setPill('ok', `Running on your laptop: ${state.model}`);
+  }
+  try { setRoster(await fetchJSON('/api/roster')); } catch (_) { /* names fall back to ids */ }
+}
+
+async function enterDemo() {
+  state.mode = 'demo';
+  setPill('demo', 'Demo mode: showing a saved run');
+  const btn = $('run-btn');
+  btn.setAttribute('aria-disabled', 'true');
+  btn.title = DEMO_TIP;
+  setNote('This is a saved run on a public page. To read your own diary, run ',
+    h('code', null, 'python -m arvo serve'), ' on your laptop and open the address it prints.');
+
+  const [run, roster, diary] = await Promise.allSettled([
+    fetchJSON('demo/run.json', { timeout: 8000 }),
+    fetchJSON('demo/roster.json', { timeout: 8000 }),
+    fetchText('demo/diary.txt'),
+  ]);
+  if (roster.status === 'fulfilled') setRoster(roster.value);
+  $('diary').value = diary.status === 'fulfilled' && diary.value.trim() ? diary.value : SAMPLE_DIARY;
+  if (run.status !== 'fulfilled') {
+    $('empty').replaceChildren(
+      h('h3', null, 'The saved run could not be loaded'),
+      h('p', null, 'Open this page from a web server (not as a file), or run ',
+        h('code', null, 'python -m arvo serve'), ' to use Arvo on your own diary.'));
+    return;
+  }
+  const data = run.value;
+  const shifts = Array.isArray(data.shifts) ? data.shifts : [];
+  const we = typeof data.week_ending === 'string' && parseISO(data.week_ending)
+    ? data.week_ending
+    : sundayOnOrAfter(shifts.map((s) => s.date).filter(Boolean).sort().pop() || '');
+  if (we) $('week-ending').value = we;
+  state.weekEnding = we || $('week-ending').value;
+  updateWeekHint();
+  render(data);
+}
+
+// ------------------------------------------------------------------ input handling
+function updateWeekHint() {
+  const d = parseISO($('week-ending').value);
+  const hint = $('week-hint');
+  if (d && d.getDay() !== 0) {
+    hint.textContent = `That’s a ${d.toLocaleDateString('en-AU', { weekday: 'long' })}. Weeks usually end on a Sunday.`;
+  } else {
+    hint.textContent = 'Usually the Sunday just gone.';
+  }
+}
+
+async function imageToBase64(file) {
+  // Phone photos are large. Shrink on this computer before sending to the local app.
+  const MAX_SIDE = 2000;
+  let blob = file;
+  if (typeof createImageBitmap === 'function') {
+    try {
+      const bmp = await createImageBitmap(file);
+      const scale = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
+      if (scale < 1 || file.size > 3 * 1024 * 1024) {
+        const c = document.createElement('canvas');
+        c.width = Math.round(bmp.width * scale);
+        c.height = Math.round(bmp.height * scale);
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        blob = await new Promise((res, rej) => c.toBlob((b) => (b ? res(b) : rej(new Error('encode'))), 'image/jpeg', 0.9));
+      }
+      if (bmp.close) bmp.close();
+    } catch (_) { /* send the original file */ }
+  }
+  const dataUrl = await new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => res(String(fr.result));
+    fr.onerror = () => rej(fr.error);
+    fr.readAsDataURL(blob);
+  });
+  return dataUrl.slice(dataUrl.indexOf(',') + 1);
+}
+
+async function setPhoto(file) {
+  clearError();
+  if (!file) return;
+  if (!/^image\/(png|jpe?g|webp|gif)$/i.test(file.type)) {
+    showError('That file is not a JPG or PNG photo. Take a photo of the diary page and try again.');
+    return;
+  }
+  try {
+    const b64 = await imageToBase64(file);
+    if (!b64 || b64.length > 9.5 * 1024 * 1024) throw new Error('size');
+    state.image = { b64, name: file.name };
+    if (state.thumbUrl) URL.revokeObjectURL(state.thumbUrl);
+    state.thumbUrl = URL.createObjectURL(file);
+    $('photo-thumb').src = state.thumbUrl;
+    const kb = Math.round((b64.length * 3) / 4 / 1024);
+    $('photo-name').textContent = `${file.name} · ${kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB'} · Arvo will read this photo`;
+    $('photo-chosen').hidden = false;
+    $('drop').hidden = true;
+    $('photo-remove').focus();
+  } catch (_) {
+    showError('Arvo could not read that photo. Try a JPG or PNG under 7 MB.');
+  }
+}
+
+function clearPhoto() {
+  state.image = null;
+  if (state.thumbUrl) URL.revokeObjectURL(state.thumbUrl);
+  state.thumbUrl = '';
+  $('photo-thumb').removeAttribute('src');
+  $('photo').value = '';
+  $('photo-chosen').hidden = true;
+  $('drop').hidden = false;
+  $('photo').focus();
+}
+
+// ------------------------------------------------------------------ running
+let tick = null;
+function startProgress() {
+  state.running = true;
+  const btn = $('run-btn');
+  const t0 = performance.now();
+  btn.setAttribute('aria-busy', 'true');
+  btn.textContent = 'Reading your diary…';
+  $('run-status').textContent = 'Gemma is reading your diary on this laptop. This usually takes 10 to 40 seconds.';
+  const paint = () => {
+    const s = Math.floor((performance.now() - t0) / 1000);
+    $('elapsed').textContent = `${s} s`;
+    if (s === 45) $('run-status').textContent = 'Still reading. Long weeks and photos take longer. Keep this tab open.';
+  };
+  paint();
+  tick = setInterval(paint, 250);
+}
+function stopProgress() {
+  state.running = false;
+  clearInterval(tick);
+  const btn = $('run-btn');
+  btn.removeAttribute('aria-busy');
+  btn.textContent = 'Read and price this week';
+  $('elapsed').textContent = '';
+}
+
+async function onRun(ev) {
+  ev.preventDefault();
+  if (state.mode !== 'local') {
+    const note = $('setup-note');
+    note.classList.add('is-nudged');
+    $('run-status').textContent = DEMO_TIP;
+    return;
+  }
+  if (state.running) return;
+  clearError();
+  const weekEnding = $('week-ending').value;
+  const diary = $('diary').value;
+  if (!weekEnding) { showError('Choose the week-ending date first.'); $('week-ending').focus(); return; }
+  if (!diary.trim() && !state.image) { showError('Paste your diary or add a photo first.'); $('diary').focus(); return; }
+
+  const body = { diary_text: diary, week_ending: weekEnding };
+  if (state.image) body.image_b64 = state.image.b64;
+  startProgress();
+  try {
+    const data = await fetchJSON('/api/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      timeout: 15 * 60 * 1000,
+    });
+    state.weekEnding = weekEnding;
+    $('run-status').textContent = `Done. ${plural((data.shifts || []).length, 'shift', 'shifts')} read, ${plural((data.flags || []).length, 'note', 'notes')} to check.`;
+    render(data);
+    $('results').focus();
+  } catch (e) {
+    $('run-status').textContent = '';
+    if (e.name === 'AbortError') showError('The run took too long and was stopped. Try a shorter diary or a clearer photo.');
+    else if (e instanceof TypeError) showError('Arvo could not reach the local app. Is python -m arvo serve still running?');
+    else showError(e.message || 'Something went wrong in the local app.');
+  } finally {
+    stopProgress();
+  }
+}
+
+// ------------------------------------------------------------------ rendering
+function sectionHead(id, title, sub) {
+  return h('div', { class: 'sec-head' }, h('h3', { id }, title), sub ? h('p', null, sub) : null);
+}
+
+function render(data) {
+  state.result = data;
+  const shifts = Array.isArray(data.shifts) ? data.shifts : [];
+  const lines = Array.isArray(data.lines) ? data.lines : [];
+  const flags = Array.isArray(data.flags) ? data.flags : [];
+  const warnings = Array.isArray(data.warnings) ? data.warnings : [];
+  $('empty').hidden = true;
+  renderSummary(data, shifts, lines, flags);
+  renderFlags(flags, shifts);
+  renderShifts(shifts, warnings);
+  renderInvoices(lines);
+  renderMeta(data);
+}
+
+function renderSummary(data, shifts, lines, flags) {
+  const box = $('summary');
+  const people = new Set(lines.map((l) => l.participant_id));
+  const total = lines.reduce((a, l) => a + toCents(l.total), 0) / 100;
+  const stat = (value, label, cls) => h('li', { class: cls || null }, h('strong', null, value), label);
+  const we = state.weekEnding || $('week-ending').value;
+  box.replaceChildren(
+    h('p', { class: 'summary-week' }, we ? `Week ending ${fmtDate(we, true)}` : 'This week'),
+    h('ul', { class: 'summary-stats' },
+      stat(shifts.length, shifts.length === 1 ? 'shift' : 'shifts'),
+      stat(people.size, people.size === 1 ? 'invoice' : 'invoices'),
+      stat(fmtMoney(total), 'to invoice'),
+      stat(flags.length, flags.length === 1 ? 'note to check' : 'notes to check', flags.length ? 'is-flag' : '')),
+    data.placeholder
+      ? h('p', { class: 'placeholder-note' }, 'Placeholder data: a hand-written sample, not a real model run. Rates are illustrative.')
+      : null);
+  box.hidden = false;
+}
+
+function findNote(flag, shifts) {
+  const same = shifts.filter((s) => s.participant_id === flag.participant_id && s.date === flag.date);
+  const q = String(flag.evidence_quote || '').toLowerCase();
+  const hit = same.find((s) => q && String(s.note || '').toLowerCase().includes(q));
+  return (hit || same[0] || {}).note || '';
+}
+
+function quoteWithEvidence(note, quote) {
+  const bq = h('blockquote', { class: 'flag-note' });
+  const text = String(note || '');
+  const q = String(quote || '');
+  const at = q ? text.toLowerCase().indexOf(q.toLowerCase()) : -1;
+  if (at < 0) {
+    bq.append(h('mark', { class: 'evidence' }, q || text));
+    return bq;
+  }
+  bq.append(text.slice(0, at), h('mark', { class: 'evidence' }, text.slice(at, at + q.length)), text.slice(at + q.length));
+  return bq;
+}
+
+function renderFlags(flags, shifts) {
+  const sec = $('flags');
+  sec.hidden = false;
+  if (!flags.length) {
+    sec.className = 'card flags-none';
+    sec.replaceChildren(
+      h('h3', { id: 'flags-h' }, 'No possible restrictive practices found'),
+      h('p', null, 'Arvo checked every shift note. It can miss things, so read your notes the way you normally would.'));
+    return;
+  }
+  sec.className = 'flags';
+  const sorted = [...flags].sort((a, b) =>
+    (a.authorised_in_bsp === b.authorised_in_bsp ? 0 : a.authorised_in_bsp ? 1 : -1) || byDateTime(a, b));
+  const unauth = flags.filter((f) => !f.authorised_in_bsp).length;
+  const sub = `${plural(flags.length, 'note describes', 'notes describe')} a possible restrictive practice` +
+    (unauth ? `, ${unauth} not authorised in a behaviour support plan.` : '.') +
+    ' Read each one before you send invoices.';
+  const list = h('ul', { class: 'flag-list' });
+  for (const f of sorted) {
+    const authorised = !!f.authorised_in_bsp;
+    const person = state.people.get(f.participant_id);
+    const planText = authorised && person && Array.isArray(person.bsp_authorised) ? person.bsp_authorised.join('; ') : '';
+    list.append(h('li', { class: 'flag', 'data-authorised': String(authorised) },
+      h('div', { class: 'flag-top' },
+        h('span', { class: 'flag-type' }, RP_LABELS[f.rp_type] || String(f.rp_type || 'Possible restrictive practice')),
+        h('span', { class: authorised ? 'chip' : 'chip is-no' }, `Authorised in BSP: ${authorised ? 'Yes' : 'No'}`)),
+      h('p', { class: 'flag-who' }, h('strong', null, personName(f.participant_id)), ` · ${fmtDate(f.date)}`),
+      quoteWithEvidence(findNote(f, shifts), f.evidence_quote),
+      f.explanation ? h('p', { class: 'flag-why' }, f.explanation) : null,
+      planText ? h('p', { class: 'flag-plan' }, `Their plan says: “${planText}”`) : null,
+      h('dl', { class: 'flag-facts' },
+        h('div', { class: 'is-deadline' }, h('dt', null, 'Report by'), h('dd', null, f.report_by ? fmtDeadline(f.report_by) : 'No deadline worked out')),
+        h('div', null, h('dt', null, 'Harm or injury mentioned'), h('dd', null, f.harm_mentioned ? 'Yes' : 'No')))));
+  }
+  sec.replaceChildren(
+    sectionHead('flags-h', 'Check before you invoice', sub),
+    list,
+    h('p', { class: 'flag-foot' }, FLAG_FOOTER));
+}
+
+function renderShifts(shifts, warnings) {
+  const sec = $('shifts');
+  sec.hidden = false;
+  const parts = [sectionHead('shifts-h', 'What Gemma read',
+    'Read by the model from your diary. Check names, dates and times before you invoice.')];
+  if (warnings.length) {
+    parts.push(h('ul', { class: 'warn-list', 'aria-label': 'Things to check' },
+      warnings.map((w) => h('li', null, h('b', null, 'Check: '), String(w)))));
+  }
+  if (!shifts.length) {
+    parts.push(h('p', { class: 'muted' }, 'No shifts found. Check that the week-ending date matches the diary.'));
+    sec.replaceChildren(...parts);
+    return;
+  }
+  const tbody = h('tbody');
+  for (const s of [...shifts].sort(byDateTime)) {
+    const warns = Array.isArray(s.warnings) ? s.warnings : [];
+    const matched = state.people.has(s.participant_id) || (!state.people.size && s.participant_id);
+    tbody.append(h('tr', { class: warns.length ? 'has-warn' : null },
+      h('td', { 'data-label': 'Date', class: 'c-date' }, fmtDate(s.date)),
+      h('td', { 'data-label': 'Participant', class: 'c-who' },
+        matched ? personName(s.participant_id) : h('span', { class: 'who-unmatched' }, s.participant_id ? `${s.participant_id} (not on roster)` : 'Not matched to your roster')),
+      h('td', { 'data-label': 'Time', class: 'mono c-time' }, timeRange(s.start, s.end)),
+      h('td', { 'data-label': 'km', class: Number(s.km) ? 'num c-km' : 'num c-km no-km' }, Number(s.km) ? String(s.km) : '—'),
+      h('td', { 'data-label': 'From your diary', class: 'wide' },
+        h('div', { class: 'note-text' }, s.note || '—'),
+        s.source_quote ? h('div', { class: 'src' }, 'Times read from: ', h('span', { class: 'mono' }, `“${s.source_quote}”`)) : null,
+        warns.map((w) => h('div', null, h('span', { class: 'warn-inline' }, h('b', null, 'Check: '), String(w)))))));
+  }
+  parts.push(h('div', { class: 'table-wrap' },
+    h('table', { class: 'tbl stack shifts-tbl' },
+      h('caption', { class: 'sr-only' }, 'Shifts as read by the model'),
+      h('thead', null, h('tr', null,
+        h('th', { scope: 'col' }, 'Date'), h('th', { scope: 'col' }, 'Participant'), h('th', { scope: 'col' }, 'Time'),
+        h('th', { scope: 'col', class: 'num' }, 'km'), h('th', { scope: 'col' }, 'From your diary'))),
+      tbody)));
+  sec.replaceChildren(...parts);
+}
+
+function renderInvoices(lines) {
+  const sec = $('invoices');
+  sec.hidden = false;
+  const parts = [sectionHead('invoices-h', 'Invoice lines',
+    'Priced by code against the NDIS price limits. The model never picks a price or an item number.')];
+  if (!lines.length) {
+    parts.push(h('p', { class: 'muted' }, 'No invoice lines this week. Check the shifts above and the notes to check.'));
+    sec.replaceChildren(...parts);
+    return;
+  }
+  const groups = new Map();
+  for (const l of lines) {
+    const id = String(l.participant_id || '');
+    if (!groups.has(id)) groups.set(id, []);
+    groups.get(id).push(l);
+  }
+  const ids = [...state.order.filter((id) => groups.has(id)), ...[...groups.keys()].filter((id) => !state.order.includes(id))];
+  const list = h('div', { class: 'inv-list' });
+  let grand = 0;
+  ids.forEach((id, gi) => {
+    const rows = [...groups.get(id)].sort(byDateTime);
+    const sub = rows.reduce((a, l) => a + toCents(l.total), 0);
+    grand += sub;
+    const p = state.people.get(id);
+    const meta = p ? [p.ndis_number ? `NDIS ${p.ndis_number}` : '', p.plan_manager || ''].filter(Boolean).join(' · ') : '';
+    const tbody = h('tbody');
+    rows.forEach((l, ri) => {
+      const ruleId = `rule-${gi}-${ri}`;
+      const ruleRow = l.rule
+        ? h('tr', { class: 'rule-row', id: ruleId, hidden: true },
+            h('td', { colspan: '7' }, h('span', { class: 'rule-label' }, 'Why this price: '), String(l.rule)))
+        : null;
+      const why = l.rule
+        ? h('button', { type: 'button', class: 'why', 'aria-expanded': 'false', 'aria-controls': ruleId, title: String(l.rule),
+            onclick: (ev) => {
+              const open = ev.currentTarget.getAttribute('aria-expanded') !== 'true';
+              ev.currentTarget.setAttribute('aria-expanded', String(open));
+              ruleRow.hidden = !open;
+            } }, 'Why', h('span', { class: 'sr-only' }, ` this price, ${l.item_number} on ${fmtDate(l.date)}`))
+        : null;
+      tbody.append(h('tr', { title: l.rule ? String(l.rule) : null },
+        h('td', { 'data-label': 'Date', class: 'c-date' }, fmtDate(l.date)),
+        h('td', { 'data-label': 'Item', class: 'wide' },
+          h('span', { class: 'item-no' }, l.item_number || '—'), h('span', { class: 'item-name' }, l.item_name || '')),
+        h('td', { 'data-label': 'Time', class: 'mono c-time' }, l.unit === 'km' ? '—' : timeRange(l.start, l.end)),
+        h('td', { 'data-label': 'Qty', class: 'num c-qty' }, fmtQty(l)),
+        h('td', { 'data-label': 'Rate', class: 'num c-rate' }, fmtMoney(l.unit_price)),
+        h('td', { 'data-label': 'Total', class: 'num c-total' }, fmtMoney(l.total)),
+        h('td', { class: 'why-cell' }, why)));
+      if (ruleRow) tbody.append(ruleRow);
+    });
+    list.append(h('article', { class: 'inv', 'aria-labelledby': `inv-${gi}` },
+      h('header', { class: 'inv-head' },
+        h('div', null, h('h4', { id: `inv-${gi}` }, personName(id)), meta ? h('p', { class: 'inv-meta' }, meta) : null),
+        h('button', { type: 'button', class: 'btn-secondary', onclick: () => openInvoice(id) },
+          'Print invoice', h('span', { class: 'sr-only' }, ` for ${personName(id)}`))),
+      h('div', { class: 'table-wrap' },
+        h('table', { class: 'tbl stack inv-tbl' },
+          h('caption', { class: 'sr-only' }, `Invoice lines for ${personName(id)}`),
+          h('thead', null, h('tr', null,
+            h('th', { scope: 'col' }, 'Date'), h('th', { scope: 'col' }, 'Item'), h('th', { scope: 'col' }, 'Time'),
+            h('th', { scope: 'col', class: 'num' }, 'Qty'), h('th', { scope: 'col', class: 'num' }, 'Rate'),
+            h('th', { scope: 'col', class: 'num' }, 'Total'), h('th', { scope: 'col' }, h('span', { class: 'sr-only' }, 'Why this price')))),
+          tbody,
+          h('tfoot', null, h('tr', null,
+            h('th', { scope: 'row', colspan: '5' }, 'Subtotal'),
+            h('td', { class: 'num' }, fmtMoney(sub / 100)),
+            h('td', { class: 'why-cell' })))))));
+  });
+  parts.push(list, h('p', { class: 'grand' },
+    h('span', null, `Total across ${plural(ids.length, 'invoice', 'invoices')}`),
+    h('strong', { class: 'num' }, fmtMoney(grand / 100))));
+  sec.replaceChildren(...parts);
+}
+
+function renderMeta(data) {
+  const t = data.timings && typeof data.timings === 'object' ? data.timings : {};
+  const bits = [];
+  if (data.model) bits.push(`Model ${data.model}`);
+  for (const [k, label] of Object.entries(TIMING_LABELS)) {
+    const v = Number(t[k]);
+    if (Number.isFinite(v) && (k !== 'pricing_s' || v >= 0.05)) bits.push(`${label} ${v.toFixed(1)} s`);
+  }
+  if (state.mode === 'demo') bits.push(data.placeholder ? 'saved run (placeholder)' : 'saved run');
+  $('run-meta').textContent = bits.join(' · ');
+}
+
+// ------------------------------------------------------------------ invoices
+function lockDown(html) {
+  // Server-made invoice HTML opens with scripts switched off.
+  if (/<head[^>]*>/i.test(html)) return html.replace(/<head[^>]*>/i, (m) => m + INVOICE_CSP);
+  if (/<html[^>]*>/i.test(html)) return html.replace(/<html[^>]*>/i, (m) => `${m}<head>${INVOICE_CSP}</head>`);
+  return INVOICE_CSP + html;
+}
+
+const INVOICE_CSS = `
+  body { font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif; color: #111; margin: 2.5rem auto; max-width: 52rem; padding: 0 1.5rem; }
+  h1 { font-size: 1.75rem; margin: 0 0 .25rem; } h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: #555; margin: 0 0 .25rem; }
+  p { margin: .1rem 0; } .top { display: flex; justify-content: space-between; gap: 2rem; margin-bottom: 1.75rem; }
+  .from { text-align: right; } .to { margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+  th, td { text-align: left; padding: .45rem .5rem; border-bottom: 1px solid #ddd; vertical-align: top; }
+  th { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: #555; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .mono { font-family: ui-monospace, Menlo, Consolas, monospace; } .desc { color: #555; font-size: .85em; }
+  tfoot td, tfoot th { border-bottom: 0; border-top: 2px solid #111; font-weight: 700; font-size: 1rem; color: #111; }
+  .small { color: #666; font-size: .8rem; margin-top: 2rem; }
+  @media print { body { margin: 0 auto; } }
+`;
+
+function buildInvoiceHTML(id) {
+  const lines = (state.result && Array.isArray(state.result.lines) ? state.result.lines : [])
+    .filter((l) => String(l.participant_id || '') === id).sort(byDateTime);
+  const p = state.people.get(id) || { name: personName(id) };
+  const w = state.worker || {};
+  const we = state.weekEnding || $('week-ending').value;
+  const no = `ARVO-${String(we || '').replace(/-/g, '')}-${String(id || 'UNMATCHED').toUpperCase()}`;
+  const total = lines.reduce((a, l) => a + toCents(l.total), 0) / 100;
+  const doc = document.implementation.createHTMLDocument(`Invoice ${no} · ${p.name}`);
+  doc.head.prepend(h('meta', { charset: 'utf-8' }));
+  doc.head.append(h('style', { text: INVOICE_CSS }));
+  doc.body.append(
+    h('div', { class: 'top' },
+      h('div', null,
+        h('h1', null, 'Invoice'),
+        h('p', null, `Invoice no. ${no}`),
+        h('p', null, `Date ${fmtDate(isoDate(new Date()), true)}`),
+        we ? h('p', null, `Supports for the week ending ${fmtDate(we, true)}`) : null),
+      h('div', { class: 'from' },
+        h('p', null, h('strong', null, w.name || 'Support worker')),
+        w.abn ? h('p', null, `ABN ${w.abn}`) : null,
+        w.email ? h('p', null, w.email) : null,
+        w.phone ? h('p', null, w.phone) : null)),
+    h('div', { class: 'to' },
+      h('h2', null, 'Bill to'),
+      h('p', null, h('strong', null, p.name)),
+      p.ndis_number ? h('p', null, `NDIS number ${p.ndis_number}`) : null,
+      p.plan_manager ? h('p', null, `Plan manager: ${p.plan_manager}`) : null),
+    h('table', null,
+      h('thead', null, h('tr', null,
+        h('th', null, 'Date'), h('th', null, 'Support item'), h('th', null, 'Time'),
+        h('th', { class: 'num' }, 'Qty'), h('th', { class: 'num' }, 'Rate'), h('th', { class: 'num' }, 'Total'))),
+      h('tbody', null, lines.map((l) => h('tr', null,
+        h('td', null, fmtDate(l.date, true)),
+        h('td', null, h('span', { class: 'mono' }, l.item_number || ''), h('div', { class: 'desc' }, l.item_name || '')),
+        h('td', { class: 'mono' }, l.unit === 'km' ? '' : timeRange(l.start, l.end)),
+        h('td', { class: 'num' }, fmtQty(l)),
+        h('td', { class: 'num' }, fmtMoney(l.unit_price)),
+        h('td', { class: 'num' }, fmtMoney(l.total))))),
+      h('tfoot', null, h('tr', null, h('th', { colspan: '5' }, 'Total (GST-free)'), h('td', { class: 'num' }, fmtMoney(total))))),
+    w.bank ? h('p', null, `Payment: ${w.bank}`) : null,
+    h('p', { class: 'small' }, 'GST-free NDIS supports. Prepared with Arvo on the support worker’s own computer.'));
+  return '<!doctype html>\n' + doc.documentElement.outerHTML;
+}
+
+function openInvoice(id) {
+  clearError();
+  const server = state.result && state.result.invoices_html ? state.result.invoices_html[id] : null;
+  const html = typeof server === 'string' && server.trim() ? lockDown(server) : buildInvoiceHTML(id);
+  const url = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+  const win = window.open(url, '_blank');
+  if (!win) {
+    URL.revokeObjectURL(url);
+    showError('Your browser blocked the invoice window. Allow pop-ups for this page, then press Print invoice again.');
+    return;
+  }
+  let tries = 0;
+  const wait = setInterval(() => {
+    tries += 1;
+    try {
+      if (win.closed || tries > 60) { clearInterval(wait); return; }
+      if (win.location.href === url && win.document.readyState === 'complete') {
+        clearInterval(wait);
+        win.focus();
+        win.print();
+      }
+    } catch (_) { clearInterval(wait); }
+  }, 100);
+  setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
+}
+
+// ------------------------------------------------------------------ wiring
+function wire() {
+  $('week-ending').value = lastSunday(new Date());
+  $('week-ending').addEventListener('change', updateWeekHint);
+  $('sample-btn').addEventListener('click', () => {
+    $('diary').value = SAMPLE_DIARY;
+    $('week-ending').value = SAMPLE_WEEK;
+    updateWeekHint();
+    $('diary').focus();
+    $('diary').setSelectionRange(0, 0);
+    $('diary').scrollTop = 0;
+  });
+  $('run-form').addEventListener('submit', onRun);
+  $('photo').addEventListener('change', (e) => setPhoto(e.target.files && e.target.files[0]));
+  $('photo-remove').addEventListener('click', clearPhoto);
+
+  const drop = $('drop');
+  ['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('is-over'); }));
+  ['dragleave', 'dragend'].forEach((t) => drop.addEventListener(t, () => drop.classList.remove('is-over')));
+  drop.addEventListener('drop', (e) => {
+    e.preventDefault();
+    drop.classList.remove('is-over');
+    setPhoto(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
+  });
+  // A photo dropped just outside the box should not navigate away from the page.
+  window.addEventListener('dragover', (e) => e.preventDefault());
+  window.addEventListener('drop', (e) => e.preventDefault());
+}
+
+async function init() {
+  wire();
+  updateWeekHint();
+  let health = null;
+  try { health = await fetchJSON('/api/health', { timeout: 2500 }); } catch (_) { health = null; }
+  if (health && health.ok) await enterLocal(health);
+  else await enterDemo();
+}
+
+init();
+})();
+</script>
+</body>
+</html>

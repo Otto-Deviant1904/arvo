@@ -1,0 +1,140 @@
+{
+  "week": "week18",
+  "week_ending": "2027-01-31",
+  "seed": 2026,
+  "style": {
+    "headings": true,
+    "h24": false,
+    "emoji_p": 0.12,
+    "typo_p": 0.25
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2027-01-25",
+      "start": "14:30",
+      "end": "18:30",
+      "km": 0,
+      "note": "swimming",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2:30-6:30",
+      "day_text": "mon",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-01-26",
+      "start": "08:00",
+      "end": "10:45",
+      "km": 21,
+      "note": "Aus Day at the beach",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "8 till 10:45",
+      "day_text": "TUES",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-26",
+      "start": "14:00",
+      "end": "17:30",
+      "km": 26,
+      "note": "Aus Day at the beach",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "2pm - 5:30",
+      "day_text": "TUES",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-27",
+      "start": "17:30",
+      "end": "21:45",
+      "km": 16,
+      "note": "Bunnings + footy",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "5:30 till 9:45",
+      "day_text": "Wed 27/1",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-01-28",
+      "start": "08:00",
+      "end": "11:15",
+      "km": 35,
+      "note": "Tom asked me to hang on to his wallet at the footy so he wouldn't lose it again.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8-11:15am",
+      "day_text": "Thursday",
+      "rp_note_id": "neg06"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-28",
+      "start": "17:30",
+      "end": "20:45",
+      "km": 27,
+      "note": "basketball at the satdium",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "5:30 - quarter to 9",
+      "day_text": "Thursday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-29",
+      "start": "16:00",
+      "end": "21:00",
+      "km": 12,
+      "note": "Prompted Priya with her usual tablets after tea, signed the med chart.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "4-9 pm",
+      "day_text": "Firday",
+      "rp_note_id": "neg09"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-31",
+      "start": "09:30",
+      "end": "12:15",
+      "km": 11,
+      "note": "cooked dinner, did washing",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "9:30 to 12:15pm",
+      "day_text": "Sunday",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg06",
+      "participant_id": "tom",
+      "date": "2027-01-28",
+      "text": "Tom asked me to hang on to his wallet at the footy so he wouldn't lose it again.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg09",
+      "participant_id": "priya",
+      "date": "2027-01-29",
+      "text": "Prompted Priya with her usual tablets after tea, signed the med chart.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "week": "week19",
+  "week_ending": "2027-02-07",
+  "seed": 2026,
+  "style": {
+    "headings": true,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.15
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-01",
+      "start": "08:00",
+      "end": "09:30",
+      "km": 9,
+      "note": "dnner + pjs",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8-9.30",
+      "day_text": "Mon.",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-01",
+      "start": "10:30",
+      "end": "16:30",
+      "km": 0,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10:30 - half past 4",
+      "day_text": "Mon.",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2027-02-02",
+      "start": "07:15",
+      "end": "09:15",
+      "km": 0,
+      "note": "Walked to the letterbox with her frame, hip protectors on as usual.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "from 7:15 to 9:15",
+      "day_text": "Tue",
+      "rp_note_id": "neg07"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-03",
+      "start": "21:00",
+      "end": "01:30",
+      "km": 0,
+      "note": "she was unwell so I stayed late",
+      "kind": "overnight",
+      "overnight": true,
+      "time_text": "9 pm-half 1",
+      "day_text": "Wed",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2027-02-04",
+      "start": "10:30",
+      "end": "15:30",
+      "km": 18,
+      "note": "Held the ladder while Tom changed the globe in the hallway.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10:30am to 3:30",
+      "day_text": "Thur",
+      "rp_note_id": "neg05"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-02-04",
+      "start": "16:00",
+      "end": "21:30",
+      "km": 13,
+      "note": "helped w/ shower, hair",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "4pm till 9:30 pm",
+      "day_text": "Thur",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg07",
+      "participant_id": "nonna",
+      "date": "2027-02-02",
+      "text": "Walked to the letterbox with her frame, hip protectors on as usual.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg05",
+      "participant_id": "tom",
+      "date": "2027-02-04",
+      "text": "Held the ladder while Tom changed the globe in the hallway.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

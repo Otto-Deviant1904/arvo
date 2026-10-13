@@ -1,0 +1,101 @@
+{
+  "week": "week15",
+  "week_ending": "2027-01-10",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.15
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2027-01-05",
+      "start": "12:30",
+      "end": "15:30",
+      "km": 7,
+      "note": "Bunnings + footy",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "12:30pm till half 3",
+      "day_text": "TUES",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-05",
+      "start": "18:00",
+      "end": "20:30",
+      "km": 0,
+      "note": "Put Priya's onesie on back to front at bedtime so she can't get at the zip and undress overnight.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "6-8.30",
+      "day_text": "Tue",
+      "rp_note_id": "rp12"
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-06",
+      "start": "15:30",
+      "end": "21:30",
+      "km": 20,
+      "note": "Jake wouldn't sit still at the dentist so I gave him two of his hayfever tablets so he'd be dopey. He was wobbly on the stairs after and fell, grazed his elbow.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "half 3 til 9:30pm",
+      "day_text": "Wed",
+      "rp_note_id": "rp08"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2027-01-08",
+      "start": "13:00",
+      "end": "18:30",
+      "km": 0,
+      "note": "meal prep for the week",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "1pm to 6:30pm",
+      "day_text": "Friday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-09",
+      "start": "09:30",
+      "end": "13:00",
+      "km": 0,
+      "note": "pool then macacs",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "9:30am till 1:00",
+      "day_text": "Saturday",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp12",
+      "participant_id": "priya",
+      "date": "2027-01-05",
+      "text": "Put Priya's onesie on back to front at bedtime so she can't get at the zip and undress overnight.",
+      "is_rp": true,
+      "rp_type": "mechanical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "rp08",
+      "participant_id": "jake",
+      "date": "2027-01-06",
+      "text": "Jake wouldn't sit still at the dentist so I gave him two of his hayfever tablets so he'd be dopey. He was wobbly on the stairs after and fell, grazed his elbow.",
+      "is_rp": true,
+      "rp_type": "chemical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": true
+    }
+  ]
+}

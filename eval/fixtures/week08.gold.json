@@ -1,0 +1,117 @@
+{
+  "week": "week08",
+  "week_ending": "2026-11-22",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": true,
+    "emoji_p": 0.0,
+    "typo_p": 0.03
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-17",
+      "start": "08:00",
+      "end": "09:30",
+      "km": 9,
+      "note": "made her lunch, hung washing",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "08:00–09:30",
+      "day_text": "Tuseday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-17",
+      "start": "16:45",
+      "end": "18:30",
+      "km": 0,
+      "note": "shower + meds prompt",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "16:45-18:30",
+      "day_text": "Tues 17th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-17",
+      "start": "21:00",
+      "end": "23:30",
+      "km": 0,
+      "note": "library + walk",
+      "kind": "weekday_evening",
+      "overnight": false,
+      "time_text": "21:00 till 23:30",
+      "day_text": "Tues",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-11-19",
+      "start": "10:00",
+      "end": "14:45",
+      "km": 17,
+      "note": "park + dog walk",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10:00-14:45",
+      "day_text": "Thurs 19th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-21",
+      "start": "10:45",
+      "end": "13:45",
+      "km": 3,
+      "note": "",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "10:45 til 13:45",
+      "day_text": "Sat 21st",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-22",
+      "start": "10:45",
+      "end": "12:45",
+      "km": 14,
+      "note": "hleped w/ shower, hair",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "10:45-12:45",
+      "day_text": "SUN",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-22",
+      "start": "16:00",
+      "end": "21:00",
+      "km": 31,
+      "note": "shops + lunch. Knotted Tom's jumper sleeves behind the chair so he'd stay sitting down for tea.",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "16:00 till 21:00",
+      "day_text": "22/11",
+      "rp_note_id": "rp11"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp11",
+      "participant_id": "tom",
+      "date": "2026-11-22",
+      "text": "Knotted Tom's jumper sleeves behind the chair so he'd stay sitting down for tea.",
+      "is_rp": true,
+      "rp_type": "mechanical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

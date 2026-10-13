@@ -1,0 +1,166 @@
+{
+  "week": "week11",
+  "week_ending": "2026-12-13",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.25
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2026-12-07",
+      "start": "10:00",
+      "end": "15:00",
+      "km": 19,
+      "note": "shops + lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "10am till 3pm",
+      "day_text": "Mnday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-07",
+      "start": "18:00",
+      "end": "20:30",
+      "km": 0,
+      "note": "laundry + lunch",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "6:00 til half 8",
+      "day_text": "Mon.",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-08",
+      "start": "14:15",
+      "end": "17:45",
+      "km": 20,
+      "note": "Put the padlock back on the fridge so he can't graze between meals.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "2:15 till 5:45",
+      "day_text": "tue",
+      "rp_note_id": "rp17"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-09",
+      "start": "09:30",
+      "end": "11:45",
+      "km": 11,
+      "note": "helped w/ shower, hair",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9:30am-11:45",
+      "day_text": "Wed 9th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-09",
+      "start": "16:45",
+      "end": "19:45",
+      "km": 4,
+      "note": "helped w/ shower, hair",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "from 4:45 till 7:45",
+      "day_text": "weds",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-11",
+      "start": "07:00",
+      "end": "09:30",
+      "km": 4,
+      "note": "made her lunch, hung wahsing",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "7-9:30",
+      "day_text": "Fri",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-11",
+      "start": "16:00",
+      "end": "22:30",
+      "km": 19,
+      "note": "",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "4 pm till half 10",
+      "day_text": "11/12",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-12",
+      "start": "11:45",
+      "end": "17:00",
+      "km": 33,
+      "note": "Tom said he'd rather stay in and watch the cricket than go to the gym, so we stayed in.",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "11:45 - 5pm",
+      "day_text": "the 12th",
+      "rp_note_id": "neg14"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-13",
+      "start": "08:00",
+      "end": "10:00",
+      "km": 0,
+      "note": "made her lunch, hung washing",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "8–10",
+      "day_text": "13/12",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-12-13",
+      "start": "12:30",
+      "end": "17:00",
+      "km": 0,
+      "note": "groceries + cooking",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "12.30 - 5pm",
+      "day_text": "Sunday",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp17",
+      "participant_id": "jake",
+      "date": "2026-12-08",
+      "text": "Put the padlock back on the fridge so he can't graze between meals.",
+      "is_rp": true,
+      "rp_type": "environmental",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg14",
+      "participant_id": "tom",
+      "date": "2026-12-12",
+      "text": "Tom said he'd rather stay in and watch the cricket than go to the gym, so we stayed in.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

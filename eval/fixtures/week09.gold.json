@@ -1,0 +1,140 @@
+{
+  "week": "week09",
+  "week_ending": "2026-11-29",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.08
+  },
+  "image": "week09.png",
+  "shifts": [
+    {
+      "participant_id": "tom",
+      "date": "2026-11-23",
+      "start": "15:15",
+      "end": "20:30",
+      "km": 15,
+      "note": "",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "3:15 till 8:30",
+      "day_text": "Mon 23rd",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-24",
+      "start": "09:15",
+      "end": "13:30",
+      "km": 5,
+      "note": "helped w/ shower, hair",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9:15am - 1:30",
+      "day_text": "tue",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-11-25",
+      "start": "09:30",
+      "end": "11:30",
+      "km": 21,
+      "note": "job club",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9:30 till 11:30",
+      "day_text": "Wed 25th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-25",
+      "start": "18:00",
+      "end": "19:00",
+      "km": 0,
+      "note": "Put the sides up on Nonna's bed before I left tonight, as per her plan for falls.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "6pm-7",
+      "day_text": "wed",
+      "rp_note_id": "rp22"
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-26",
+      "start": "12:00",
+      "end": "16:30",
+      "km": 0,
+      "note": "laundry + lunch",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "12 noon-half 4",
+      "day_text": "Thursday",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-27",
+      "start": "17:00",
+      "end": "21:00",
+      "km": 13,
+      "note": "Priya didn't want her shower so we left it and tried again after tea, she was fine then.",
+      "kind": "weekday_cross_20",
+      "overnight": false,
+      "time_text": "5 til 9pm",
+      "day_text": "Friday",
+      "rp_note_id": "neg17"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-11-28",
+      "start": "07:30",
+      "end": "10:00",
+      "km": 10,
+      "note": "made her lunch, hung washing",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "7:30am - 10am",
+      "day_text": "28/11",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "priya",
+      "date": "2026-11-29",
+      "start": "12:00",
+      "end": "18:00",
+      "km": 12,
+      "note": "tidy up, cooked curry",
+      "kind": "sunday",
+      "overnight": false,
+      "time_text": "12 pm-6pm",
+      "day_text": "the 29th",
+      "rp_note_id": null
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "rp22",
+      "participant_id": "nonna",
+      "date": "2026-11-25",
+      "text": "Put the sides up on Nonna's bed before I left tonight, as per her plan for falls.",
+      "is_rp": true,
+      "rp_type": "mechanical",
+      "authorised_in_bsp": true,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "neg17",
+      "participant_id": "priya",
+      "date": "2026-11-27",
+      "text": "Priya didn't want her shower so we left it and tried again after tea, she was fine then.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

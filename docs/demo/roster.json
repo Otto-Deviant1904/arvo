@@ -1,0 +1,47 @@
+{
+  "worker": {
+    "name": "Mel Tran",
+    "abn": "12 345 678 901",
+    "email": "mel.support@example.com",
+    "phone": "0400 000 000",
+    "bank": "BSB 000-000  Acc 00000000"
+  },
+  "participants": [
+    {
+      "id": "jake",
+      "name": "Jake Morrison",
+      "ndis_number": "430000001",
+      "aliases": ["Jake", "J", "Jakey"],
+      "support_type": "community",
+      "plan_manager": "Bayside Plan Partners (example)",
+      "bsp_authorised": []
+    },
+    {
+      "id": "priya",
+      "name": "Priya Raman",
+      "ndis_number": "430000002",
+      "aliases": ["Priya", "P", "Pri"],
+      "support_type": "self_care",
+      "plan_manager": "Self-managed",
+      "bsp_authorised": ["PRN lorazepam 0.5mg as per behaviour support plan when distress score is 4 or more"]
+    },
+    {
+      "id": "tom",
+      "name": "Thomas Okafor",
+      "ndis_number": "430000003",
+      "aliases": ["Tom", "Tommy", "T.O."],
+      "support_type": "community",
+      "plan_manager": "Northside Plan Management (example)",
+      "bsp_authorised": []
+    },
+    {
+      "id": "nonna",
+      "name": "Rosa Bianchi",
+      "ndis_number": "430000004",
+      "aliases": ["Rosa", "Nonna", "Mrs B"],
+      "support_type": "self_care",
+      "plan_manager": "Bayside Plan Partners (example)",
+      "bsp_authorised": ["bed rails up overnight as per behaviour support plan (falls risk)"]
+    }
+  ]
+}

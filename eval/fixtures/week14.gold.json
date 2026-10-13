@@ -1,0 +1,127 @@
+{
+  "week": "week14",
+  "week_ending": "2027-01-03",
+  "seed": 2026,
+  "style": {
+    "headings": false,
+    "h24": false,
+    "emoji_p": 0.0,
+    "typo_p": 0.25
+  },
+  "image": null,
+  "shifts": [
+    {
+      "participant_id": "jake",
+      "date": "2026-12-28",
+      "start": "08:30",
+      "end": "10:30",
+      "km": 18,
+      "note": "",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "8:30 till 10:30am",
+      "day_text": "MON",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "tom",
+      "date": "2026-12-28",
+      "start": "13:00",
+      "end": "17:30",
+      "km": 9,
+      "note": "",
+      "kind": "public_holiday",
+      "overnight": false,
+      "time_text": "1 pm-5:30pm",
+      "day_text": "Mon 28th",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-30",
+      "start": "09:00",
+      "end": "11:00",
+      "km": 7,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "9 til 11",
+      "day_text": "weds",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-31",
+      "start": "08:00",
+      "end": "10:00",
+      "km": 0,
+      "note": "shower + brekkie",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "8 - 10 am",
+      "day_text": "Thur",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2026-12-31",
+      "start": "13:00",
+      "end": "16:30",
+      "km": 26,
+      "note": "Jake wanted the bathroom door locked while he showered for privacy, he unlocked it himself after.",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "1pm-4.30",
+      "day_text": "Thursday",
+      "rp_note_id": "neg19"
+    },
+    {
+      "participant_id": "nonna",
+      "date": "2026-12-31",
+      "start": "17:15",
+      "end": "18:45",
+      "km": 0,
+      "note": "",
+      "kind": "weekday_day",
+      "overnight": false,
+      "time_text": "5:15-6:45pm",
+      "day_text": "31/12",
+      "rp_note_id": null
+    },
+    {
+      "participant_id": "jake",
+      "date": "2027-01-02",
+      "start": "14:00",
+      "end": "19:30",
+      "km": 18,
+      "note": "Gave him the extra half tablet so he'd settle before tea.",
+      "kind": "saturday",
+      "overnight": false,
+      "time_text": "2pm to half 7",
+      "day_text": "2/1",
+      "rp_note_id": "rp05"
+    }
+  ],
+  "rp": [
+    {
+      "note_id": "neg19",
+      "participant_id": "jake",
+      "date": "2026-12-31",
+      "text": "Jake wanted the bathroom door locked while he showered for privacy, he unlocked it himself after.",
+      "is_rp": false,
+      "rp_type": null,
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    },
+    {
+      "note_id": "rp05",
+      "participant_id": "jake",
+      "date": "2027-01-02",
+      "text": "Gave him the extra half tablet so he'd settle before tea.",
+      "is_rp": true,
+      "rp_type": "chemical",
+      "authorised_in_bsp": false,
+      "harm_mentioned": false
+    }
+  ]
+}

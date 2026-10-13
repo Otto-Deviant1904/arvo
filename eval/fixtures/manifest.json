@@ -1,0 +1,200 @@
+{
+  "seed": 2026,
+  "weeks": [
+    {
+      "week": "week01",
+      "week_ending": "2026-10-04",
+      "n_shifts": 10,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week02",
+      "week_ending": "2026-10-11",
+      "n_shifts": 9,
+      "n_rp_notes": 2,
+      "image": "week02.png"
+    },
+    {
+      "week": "week03",
+      "week_ending": "2026-10-18",
+      "n_shifts": 6,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week04",
+      "week_ending": "2026-10-25",
+      "n_shifts": 10,
+      "n_rp_notes": 1,
+      "image": null
+    },
+    {
+      "week": "week05",
+      "week_ending": "2026-11-01",
+      "n_shifts": 9,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week06",
+      "week_ending": "2026-11-08",
+      "n_shifts": 8,
+      "n_rp_notes": 2,
+      "image": "week06.png"
+    },
+    {
+      "week": "week07",
+      "week_ending": "2026-11-15",
+      "n_shifts": 6,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week08",
+      "week_ending": "2026-11-22",
+      "n_shifts": 7,
+      "n_rp_notes": 1,
+      "image": null
+    },
+    {
+      "week": "week09",
+      "week_ending": "2026-11-29",
+      "n_shifts": 8,
+      "n_rp_notes": 2,
+      "image": "week09.png"
+    },
+    {
+      "week": "week10",
+      "week_ending": "2026-12-06",
+      "n_shifts": 8,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week11",
+      "week_ending": "2026-12-13",
+      "n_shifts": 10,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week12",
+      "week_ending": "2026-12-20",
+      "n_shifts": 5,
+      "n_rp_notes": 1,
+      "image": null
+    },
+    {
+      "week": "week13",
+      "week_ending": "2026-12-27",
+      "n_shifts": 7,
+      "n_rp_notes": 2,
+      "image": "week13.png"
+    },
+    {
+      "week": "week14",
+      "week_ending": "2027-01-03",
+      "n_shifts": 7,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week15",
+      "week_ending": "2027-01-10",
+      "n_shifts": 5,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week16",
+      "week_ending": "2027-01-17",
+      "n_shifts": 7,
+      "n_rp_notes": 1,
+      "image": "week16.png"
+    },
+    {
+      "week": "week17",
+      "week_ending": "2027-01-24",
+      "n_shifts": 8,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week18",
+      "week_ending": "2027-01-31",
+      "n_shifts": 8,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week19",
+      "week_ending": "2027-02-07",
+      "n_shifts": 6,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week20",
+      "week_ending": "2027-02-14",
+      "n_shifts": 8,
+      "n_rp_notes": 1,
+      "image": null
+    },
+    {
+      "week": "week21",
+      "week_ending": "2027-02-21",
+      "n_shifts": 8,
+      "n_rp_notes": 2,
+      "image": "week21.png"
+    },
+    {
+      "week": "week22",
+      "week_ending": "2027-02-28",
+      "n_shifts": 10,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week23",
+      "week_ending": "2027-03-07",
+      "n_shifts": 6,
+      "n_rp_notes": 2,
+      "image": null
+    },
+    {
+      "week": "week24",
+      "week_ending": "2027-03-14",
+      "n_shifts": 8,
+      "n_rp_notes": 1,
+      "image": null
+    }
+  ],
+  "counts": {
+    "weeks": 24,
+    "shifts": 184,
+    "shift_kinds": {
+      "overnight": 2,
+      "public_holiday": 10,
+      "saturday": 19,
+      "sunday": 23,
+      "weekday_cross_20": 29,
+      "weekday_day": 89,
+      "weekday_evening": 12
+    },
+    "same_day_doubles": 8,
+    "rp_notes": 42,
+    "rp_unauthorised_by_type": {
+      "seclusion": 4,
+      "chemical": 4,
+      "mechanical": 4,
+      "physical": 4,
+      "environmental": 4
+    },
+    "rp_authorised": 2,
+    "rp_harm_mentioned": 4,
+    "hard_negatives": 20,
+    "images": 6
+  },
+  "holiday_check": []
+}
