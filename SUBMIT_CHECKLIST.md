@@ -9,11 +9,8 @@ Deadline: Sunday 18 October 2026, 11:59 PM PDT = Monday 19 October, about 5:59 P
 ## 1. Repo public + demo page: DONE (13 Oct)
 Repo: https://github.com/Otto-Deviant1904/arvo  Demo: https://otto-deviant1904.github.io/arvo/
 
-## 2. Run the Gemma smoke test on GitHub Actions (optional, for the Copilot/Actions category, ~20-40 min of runner time)
-```bash
-gh workflow run "gemma smoke test" -R Otto-Deviant1904/arvo
-```
-Then link the run in the post: it shows Gemma running on a CPU-only GitHub runner with no API key.
+## 2. Gemma smoke test on GitHub Actions: DONE
+Run 38347559687 (gemma4:e2b on a CPU-only runner, passed) is linked in the post.
 
 ## 3. Find a first user (this is where the bonus points are)
 Ideal: anyone you know who does NDIS support work on an ABN, or who used to. Lots of students in Melbourne do. Also good: a plan manager, a support coordinator, or someone who invoices for a family member's supports.
