@@ -29,7 +29,7 @@ jobs:
         run: |
           (ollama serve > ollama.log 2>&1 &)
           for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break; sleep 2; done
-          ollama pull "${{ inputs.model }}"
+          ollama pull "${{ inputs.model }}" > pull.log 2>&1 && tail -n 2 pull.log
       - name: Run Arvo on one diary
         run: |
           uv run python -m arvo process eval/fixtures/week09.txt \
