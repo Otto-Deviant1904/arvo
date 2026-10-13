@@ -29,7 +29,9 @@ Arvo does the Sunday-night job and asks the awkward question. Type, photograph o
 
 https://otto-deviant1904.github.io/arvo/ [TODO: confirm live]
 
-![Arvo's demo page: the week's diary on the left; on the right, 7 shifts, 4 invoices, $3,063.07 to invoice, 3 notes to check, above a red "Check before you invoice" panel](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/hero.png)
+![Screen recording: the week's diary goes in, "Read and price this week" is pressed, and the red restrictive-practice panel, the shifts Gemma read and the per-participant invoice lines appear](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/arvo-demo.gif)
+
+*A live run on my laptop: 13.6 seconds from button to invoices. The wait is sped up in the recording; the counter on the button shows real seconds. Video: [`docs/img/arvo-demo.mp4`](https://github.com/Otto-Deviant1904/arvo/blob/main/docs/img/arvo-demo.mp4).*
 
 The page shows a saved run of `gemma4:e4b` on the week in `docs/demo/diary.txt`: 7 shifts, 10 invoice lines, 3 flags, 13.3 seconds end to end on a laptop RTX 4050 (6 GB). It calls no model; it is `docs/demo/run.json` rendered. To run your own diary: `ollama pull gemma4:e4b` (a 6.6 GB download; on a 6 GB card Ollama keeps what doesn't fit in system RAM), clone, `python -m arvo serve`. Python 3.12 standard library, no other dependencies.
 
