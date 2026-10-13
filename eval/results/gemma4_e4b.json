@@ -1,0 +1,375 @@
+{
+ "model": "gemma4:e4b",
+ "n_weeks": 2,
+ "weeks": [
+  "week01",
+  "week02"
+ ],
+ "args": {
+  "limit": 2,
+  "images": false,
+  "skip_baseline": true
+ },
+ "extraction": {
+  "n_gold": 19,
+  "n_pred": 17,
+  "recall": 0.8947,
+  "precision": 1.0,
+  "field_accuracy": {
+   "participant": 0.8947,
+   "date": 0.8947,
+   "start": 0.8947,
+   "end": 0.8421,
+   "km": 0.6842
+  },
+  "exact_match": 0.6316,
+  "exact_by_kind": {
+   "saturday": {
+    "n": 1,
+    "exact": 1.0
+   },
+   "sunday": {
+    "n": 2,
+    "exact": 1.0
+   },
+   "weekday_cross_20": {
+    "n": 2,
+    "exact": 1.0
+   },
+   "weekday_day": {
+    "n": 13,
+    "exact": 0.5385
+   },
+   "weekday_evening": {
+    "n": 1,
+    "exact": 0.0
+   }
+  }
+ },
+ "invoice": {
+  "weeks": 2,
+  "n_gold_lines": 32,
+  "n_pred_lines": 26,
+  "line_precision": 0.9615,
+  "line_recall": 0.7812,
+  "line_f1": 0.8621,
+  "weeks_total_exact": 0,
+  "weeks_lines_exact": 0,
+  "abs_error_sum": 499.79,
+  "abs_error_mean": 249.9,
+  "gold_dollars": 4644.69
+ },
+ "invoice_by_week": [
+  {
+   "week": "week01",
+   "n_gold": 18,
+   "n_pred": 16,
+   "matched": 16,
+   "gold_total": 2341.13,
+   "pred_total": 2219.87,
+   "abs_error": 121.26,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week02",
+   "n_gold": 14,
+   "n_pred": 10,
+   "matched": 9,
+   "gold_total": 2303.56,
+   "pred_total": 2682.09,
+   "abs_error": 378.53,
+   "total_exact": false,
+   "lines_exact": false
+  }
+ ],
+ "invoice_model_alone": null,
+ "invoice_model_alone_by_week": [],
+ "model_alone_note": "skipped (--skip-baseline)",
+ "rp": {
+  "gemma": {
+   "detection": {
+    "overall": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    },
+    "any_type_note_level": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    },
+    "any_type_note_level": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0
+    }
+   },
+   "hard_negatives_flagged": "0/3",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "1/1",
+   "authorised_marked_authorised": "0/0",
+   "n_flags": 1,
+   "n_flag_keys": 1,
+   "dropped_by_quote_check": 0
+  },
+  "keyword_baseline": {
+   "detection": {
+    "overall": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "physical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "environmental": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": null,
+      "f1": null
+     }
+    },
+    "any_type_note_level": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "physical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "environmental": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": null,
+      "f1": null
+     }
+    },
+    "any_type_note_level": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    }
+   },
+   "hard_negatives_flagged": "1/3",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "0/0",
+   "authorised_marked_authorised": "0/0",
+   "n_flags": 1,
+   "n_flag_keys": 1
+  },
+  "n_labelled_notes": 4,
+  "n_notes_with_text": 19
+ },
+ "images": null,
+ "latency": {
+  "extract_per_diary": {
+   "n": 2,
+   "mean_s": 9.848,
+   "p95_s": 10.381
+  },
+  "rp_per_note": {
+   "n": 19,
+   "mean_s": 0.512,
+   "p95_s": 1.198
+  },
+  "image_per_diary": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  },
+  "model_alone_per_diary": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  }
+ },
+ "errors": [],
+ "wall_s": 29.4
+}

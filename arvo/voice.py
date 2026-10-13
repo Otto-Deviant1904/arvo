@@ -20,7 +20,7 @@ import sys
 import time
 import wave
 from array import array
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from . import llm
@@ -210,11 +210,25 @@ def memo_date(path: str | Path, use_mtime: bool = True) -> date | None:
     return None
 
 
+_YESTERDAY_RE = re.compile(r"\b(yesterday|last night)\b", re.I)
+
+
+def _day(d: date) -> str:
+    return f"{WEEKDAY_ABBR[d.weekday()]} {d.isoformat()}"
+
+
 def memo_line(text: str, recorded: date | None) -> str:
+    """'[memo recorded Tue 2026-10-06] <transcript>'. Code does the date arithmetic for 'yesterday' /
+    'last night': the heading then names the shift day (and only that weekday), because the model
+    otherwise reads the recording date as the shift date."""
     text = re.sub(r"\s+", " ", text or "").strip()
     if recorded is None:
         return text
-    return f"[memo recorded {WEEKDAY_ABBR[recorded.weekday()]} {recorded.isoformat()}] {text}"
+    m = _YESTERDAY_RE.search(text)
+    if m:
+        return (f'[{_day(recorded - timedelta(days=1))} (said "{m.group(1).lower()}" in a memo recorded '
+                f'{recorded.isoformat()})] {text}')
+    return f"[memo recorded {_day(recorded)}] {text}"
 
 
 def memos_to_diary(paths, model: str = llm.DEFAULT_MODEL, *, vocab: list[str] | tuple[str, ...] = (),

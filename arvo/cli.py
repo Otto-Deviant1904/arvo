@@ -96,17 +96,24 @@ def render(result) -> str:
 
 def cmd_process(args) -> int:
     from .pipeline import run
+    from .voice import AUDIO_EXTS, VoiceError
 
-    path = Path(args.diary)
-    if not path.is_file():
-        print(f"error: no such file {path}", file=sys.stderr)
+    paths = [Path(p) for p in (args.diary if isinstance(args.diary, list) else [args.diary])]
+    for path in paths:
+        if not path.is_file():
+            print(f"error: no such file {path}", file=sys.stderr)
+            return 2
+    audio = [str(p) for p in paths if p.suffix.lower() in AUDIO_EXTS]
+    if (audio and len(audio) != len(paths)) or (not audio and len(paths) > 1):
+        print("error: give one diary (.txt or photo), or one or more voice memos", file=sys.stderr)
         return 2
-    is_image = path.suffix.lower() in IMAGE_EXTS
-    diary_text = "" if is_image else path.read_text(encoding="utf-8")
+    path = paths[0]
+    is_image = not audio and path.suffix.lower() in IMAGE_EXTS
+    diary_text = "" if (is_image or audio) else path.read_text(encoding="utf-8")
     try:
         result = run(diary_text, args.roster, args.week_ending, model=args.model,
-                     image_path=str(path) if is_image else None)
-    except llm.LLMError as e:
+                     image_path=str(path) if is_image else None, audio_paths=audio or None)
+    except (llm.LLMError, VoiceError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 1
     print(render(result))
@@ -155,8 +162,9 @@ def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="arvo", description="NDIS shift diary -> invoice lines + restrictive-practice flags (local Gemma).")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("process", help="read one diary (text or photo) and print shifts, lines, flags")
-    p.add_argument("diary", help="diary .txt, or a photo (.png/.jpg) of a handwritten diary")
+    p = sub.add_parser("process", help="read one diary (text, photo or voice memos) and print shifts, lines, flags")
+    p.add_argument("diary", nargs="+", help="diary .txt, or a photo (.png/.jpg) of a handwritten diary, "
+                                            "or one or more voice memos (.m4a/.wav/.ogg/...), one per shift")
     p.add_argument("--week-ending", default=_last_sunday(), help="YYYY-MM-DD, last day of the week (default: last Sunday)")
     p.add_argument("--roster", default=str(DEFAULT_ROSTER), help="roster JSON (default: data/roster.example.json)")
     p.add_argument("--model", default=llm.DEFAULT_MODEL, help=f"Ollama model (default {llm.DEFAULT_MODEL})")

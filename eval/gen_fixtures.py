@@ -883,7 +883,7 @@ def generate(out_dir: Path = FIXTURES, seed: int = SEED, images: bool = True, n_
             image = f"{name}.png"
             render_png(text, out_dir / image, random.Random(f"{seed}-png-{w}"))
         gold = {"week": name, "week_ending": days[-1].isoformat(), "seed": seed, "style": style,
-                "image": image if w in IMAGE_WEEKS else None,
+                "image": f"{name}.png" if w in IMAGE_WEEKS else None,
                 "shifts": [g.gold() for g in shifts], "rp": rp_gold}
         (out_dir / f"{name}.txt").write_text(text, encoding="utf-8")
         (out_dir / f"{name}.gold.json").write_text(json.dumps(gold, indent=2, ensure_ascii=False) + "\n",

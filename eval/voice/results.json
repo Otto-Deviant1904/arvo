@@ -1,0 +1,783 @@
+{
+  "model": "gemma4:e4b",
+  "week_ending": "2026-10-11",
+  "summary": {
+    "all": {
+      "memos": 12,
+      "wer": 0.0366,
+      "wer_raw": 0.1701,
+      "participant": 1.0,
+      "date": 1.0,
+      "start": 1.0,
+      "end": 1.0,
+      "km": 0.9167,
+      "note": 1.0,
+      "rp": 1.0,
+      "all_fields": 0.9167
+    },
+    "clean": {
+      "memos": 10,
+      "wer": 0.0439,
+      "wer_raw": 0.18,
+      "participant": 1.0,
+      "date": 1.0,
+      "start": 1.0,
+      "end": 1.0,
+      "km": 0.9,
+      "note": 1.0,
+      "rp": 1.0,
+      "all_fields": 0.9
+    },
+    "car noise": {
+      "memos": 2,
+      "wer": 0.0,
+      "wer_raw": 0.1207,
+      "participant": 1.0,
+      "date": 1.0,
+      "start": 1.0,
+      "end": 1.0,
+      "km": 1.0,
+      "note": 1.0,
+      "rp": 1.0,
+      "all_fields": 1.0
+    },
+    "en_GB-alan-medium": {
+      "memos": 6,
+      "wer": 0.0122,
+      "wer_raw": 0.1504,
+      "participant": 1.0,
+      "date": 1.0,
+      "start": 1.0,
+      "end": 1.0,
+      "km": 1.0,
+      "note": 1.0,
+      "rp": 1.0,
+      "all_fields": 1.0
+    },
+    "en_GB-jenny_dioco-medium": {
+      "memos": 6,
+      "wer": 0.0609,
+      "wer_raw": 0.1898,
+      "participant": 1.0,
+      "date": 1.0,
+      "start": 1.0,
+      "end": 1.0,
+      "km": 0.8333,
+      "note": 1.0,
+      "rp": 1.0,
+      "all_fields": 0.8333
+    },
+    "timing": {
+      "transcribe_s_per_memo": 0.92,
+      "end_to_end_s_per_memo": 2.99,
+      "audio_s_per_memo": 10.11,
+      "extra_or_missing_shifts": 0
+    }
+  },
+  "memos": [
+    {
+      "id": "alan-1",
+      "voice": "en_GB-alan-medium",
+      "noise_snr_db": null,
+      "duration_s": 6.84,
+      "transcribe_s": 1.089,
+      "script": "Jake, Monday, three till half eight. Footy training, then Maccas on the way home. Twelve k's.",
+      "transcript": "Jake, Monday, 3 till half 8. Footy training, then Maccas on the way home. 12 km.",
+      "wer": 0.0,
+      "wer_raw": 0.25,
+      "gold": {
+        "alias": "Jake",
+        "participant_id": "jake",
+        "day": "Monday",
+        "date": "2026-10-05",
+        "start": "15:00",
+        "end": "20:30",
+        "km": 12,
+        "note": "Footy training, then Maccas on the way home.",
+        "rp_type": null
+      },
+      "extracted": {
+        "participant_id": "jake",
+        "date": "2026-10-05",
+        "start": "15:00",
+        "end": "20:30",
+        "km": 12.0,
+        "note": "Footy training, then Maccas on the way home. 12 km.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "alan-2",
+      "voice": "en_GB-alan-medium",
+      "noise_snr_db": null,
+      "duration_s": 8.25,
+      "transcribe_s": 0.989,
+      "script": "Priya, Tuesday morning, nine till one. Helped her with the shower and brekkie, then we did the washing together. No k's today.",
+      "transcript": "Priya Tuesday morning, 9 till 1, helped her with the shower and brekkie. Then we did the washing together. No case today.",
+      "wer": 0.0455,
+      "wer_raw": 0.1364,
+      "gold": {
+        "alias": "Priya",
+        "participant_id": "priya",
+        "day": "Tuesday",
+        "date": "2026-10-06",
+        "start": "09:00",
+        "end": "13:00",
+        "km": 0,
+        "note": "Helped her with the shower and brekkie, then we did the washing together.",
+        "rp_type": null
+      },
+      "extracted": {
+        "participant_id": "priya",
+        "date": "2026-10-06",
+        "start": "09:00",
+        "end": "13:00",
+        "km": 0.0,
+        "note": "helped her with the shower and brekkie. Then we did the washing together. No case today.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "alan-3",
+      "voice": "en_GB-alan-medium",
+      "noise_snr_db": null,
+      "duration_s": 14.54,
+      "transcribe_s": 1.099,
+      "script": "Tommy, Wednesday arvo, quarter past two till quarter to six. Went to Bunnings and the library, eighteen k's. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+      "transcript": "Tommy, Wednesday arvo, quarter past 2 till quarter to 6. Went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+      "wer": 0.0,
+      "wer_raw": 0.1026,
+      "gold": {
+        "alias": "Tommy",
+        "participant_id": "tom",
+        "day": "Wednesday",
+        "date": "2026-10-07",
+        "start": "14:15",
+        "end": "17:45",
+        "km": 18,
+        "note": "Went to Bunnings and the library. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+        "rp_type": "physical"
+      },
+      "extracted": {
+        "participant_id": "tom",
+        "date": "2026-10-07",
+        "start": "14:15",
+        "end": "17:45",
+        "km": 18.0,
+        "note": "Went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "alan-4",
+      "voice": "en_GB-alan-medium",
+      "noise_snr_db": null,
+      "duration_s": 10.14,
+      "transcribe_s": 0.88,
+      "script": "Mrs B, Thursday, seven in the morning till half past ten. Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+      "transcript": "Mrs B, Thursday, 7 in the morning till half past 10. Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+      "wer": 0.0,
+      "wer_raw": 0.08,
+      "gold": {
+        "alias": "Mrs B",
+        "participant_id": "nonna",
+        "day": "Thursday",
+        "date": "2026-10-08",
+        "start": "07:00",
+        "end": "10:30",
+        "km": 0,
+        "note": "Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+        "rp_type": null
+      },
+      "extracted": {
+        "participant_id": "nonna",
+        "date": "2026-10-08",
+        "start": "07:00",
+        "end": "10:30",
+        "km": 0.0,
+        "note": "Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "alan-5",
+      "voice": "en_GB-alan-medium",
+      "noise_snr_db": 12.0,
+      "duration_s": 12.56,
+      "transcribe_s": 0.849,
+      "script": "Jake again, four till nine tonight. Movies and dinner in the city, twenty five k's. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+      "transcript": "Jake again, 4 till 9 tonight. Movies and dinner in the city, 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+      "wer": 0.0,
+      "wer_raw": 0.1389,
+      "gold": {
+        "alias": "Jake",
+        "participant_id": "jake",
+        "day": "Friday",
+        "date": "2026-10-09",
+        "start": "16:00",
+        "end": "21:00",
+        "km": 25,
+        "note": "Movies and dinner in the city. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+        "rp_type": "environmental"
+      },
+      "extracted": {
+        "participant_id": "jake",
+        "date": "2026-10-09",
+        "start": "16:00",
+        "end": "21:00",
+        "km": 25.0,
+        "note": "Movies and dinner in the city, 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "alan-6",
+      "voice": "en_GB-alan-medium",
+      "noise_snr_db": null,
+      "duration_s": 12.24,
+      "transcribe_s": 1.017,
+      "script": "Priya, yesterday, ten till two thirty. Shopping at Chadstone, eight k's. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for ten minutes to calm down.",
+      "transcript": "Priya, yesterday, 10 till 2:30, shopping at Chadston, 8 km. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for 10 minutes to calm down.",
+      "wer": 0.0278,
+      "wer_raw": 0.1944,
+      "gold": {
+        "alias": "Priya",
+        "participant_id": "priya",
+        "day": "Saturday",
+        "date": "2026-10-10",
+        "start": "10:00",
+        "end": "14:30",
+        "km": 8,
+        "note": "Shopping at Chadstone. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for ten minutes to calm down.",
+        "rp_type": "seclusion"
+      },
+      "extracted": {
+        "participant_id": "priya",
+        "date": "2026-10-10",
+        "start": "10:00",
+        "end": "14:30",
+        "km": 8.0,
+        "note": "shopping at Chadston, 8 km. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for 10 minutes to calm down.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "jenny-1",
+      "voice": "en_GB-jenny_dioco-medium",
+      "noise_snr_db": null,
+      "duration_s": 4.85,
+      "transcribe_s": 0.634,
+      "script": "Jake, Monday, three till half eight. Footy training, then Maccas on the way home. Twelve k's.",
+      "transcript": "Jake Monday, 3 till half 8. Physi training, then Maccas on the way home. 12 km.",
+      "wer": 0.0625,
+      "wer_raw": 0.3125,
+      "gold": {
+        "alias": "Jake",
+        "participant_id": "jake",
+        "day": "Monday",
+        "date": "2026-10-05",
+        "start": "15:00",
+        "end": "20:30",
+        "km": 12,
+        "note": "Footy training, then Maccas on the way home.",
+        "rp_type": null
+      },
+      "extracted": {
+        "participant_id": "jake",
+        "date": "2026-10-05",
+        "start": "15:00",
+        "end": "20:30",
+        "km": 12.0,
+        "note": "Physi training, then Maccas on the way home. 12 km.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "jenny-2",
+      "voice": "en_GB-jenny_dioco-medium",
+      "noise_snr_db": null,
+      "duration_s": 7.59,
+      "transcribe_s": 0.747,
+      "script": "Priya, Tuesday morning, nine till one. Helped her with the shower and brekkie, then we did the washing together. No k's today.",
+      "transcript": "Priya, Tuesday morning, 9 till 1, help chair with the shower and brekkie. Then we did the washing together. No case today.",
+      "wer": 0.1364,
+      "wer_raw": 0.2273,
+      "gold": {
+        "alias": "Priya",
+        "participant_id": "priya",
+        "day": "Tuesday",
+        "date": "2026-10-06",
+        "start": "09:00",
+        "end": "13:00",
+        "km": 0,
+        "note": "Helped her with the shower and brekkie, then we did the washing together.",
+        "rp_type": null
+      },
+      "extracted": {
+        "participant_id": "priya",
+        "date": "2026-10-06",
+        "start": "09:00",
+        "end": "13:00",
+        "km": 0.0,
+        "note": "help chair with the shower and brekkie. Then we did the washing together. No case today.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "jenny-3",
+      "voice": "en_GB-jenny_dioco-medium",
+      "noise_snr_db": 12.0,
+      "duration_s": 12.38,
+      "transcribe_s": 0.834,
+      "script": "Tommy, Wednesday arvo, quarter past two till quarter to six. Went to Bunnings and the library, eighteen k's. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+      "transcript": "Tommy, Wednesday arvo, quarter past 2 till quarter to 6, went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+      "wer": 0.0,
+      "wer_raw": 0.1026,
+      "gold": {
+        "alias": "Tommy",
+        "participant_id": "tom",
+        "day": "Wednesday",
+        "date": "2026-10-07",
+        "start": "14:15",
+        "end": "17:45",
+        "km": 18,
+        "note": "Went to Bunnings and the library. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+        "rp_type": "physical"
+      },
+      "extracted": {
+        "participant_id": "tom",
+        "date": "2026-10-07",
+        "start": "14:15",
+        "end": "17:45",
+        "km": 18.0,
+        "note": "went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "jenny-4",
+      "voice": "en_GB-jenny_dioco-medium",
+      "noise_snr_db": null,
+      "duration_s": 8.95,
+      "transcribe_s": 0.854,
+      "script": "Mrs B, Thursday, seven in the morning till half past ten. Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+      "transcript": "Mrs B, Thursday, 7 in the morning till half past 10. Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+      "wer": 0.0,
+      "wer_raw": 0.08,
+      "gold": {
+        "alias": "Mrs B",
+        "participant_id": "nonna",
+        "day": "Thursday",
+        "date": "2026-10-08",
+        "start": "07:00",
+        "end": "10:30",
+        "km": 0,
+        "note": "Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+        "rp_type": null
+      },
+      "extracted": {
+        "participant_id": "nonna",
+        "date": "2026-10-08",
+        "start": "07:00",
+        "end": "10:30",
+        "km": 0.0,
+        "note": "Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "jenny-5",
+      "voice": "en_GB-jenny_dioco-medium",
+      "noise_snr_db": null,
+      "duration_s": 11.32,
+      "transcribe_s": 1.032,
+      "script": "Jake again, four till nine tonight. Movies and dinner in the city, twenty five k's. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+      "transcript": "Jake again, 4 till 9 tonight. Movies and dinner in the city. 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it. So I've taken it.",
+      "wer": 0.0,
+      "wer_raw": 0.1389,
+      "gold": {
+        "alias": "Jake",
+        "participant_id": "jake",
+        "day": "Friday",
+        "date": "2026-10-09",
+        "start": "16:00",
+        "end": "21:00",
+        "km": 25,
+        "note": "Movies and dinner in the city. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+        "rp_type": "environmental"
+      },
+      "extracted": {
+        "participant_id": "jake",
+        "date": "2026-10-09",
+        "start": "16:00",
+        "end": "21:00",
+        "km": 25.0,
+        "note": "Movies and dinner in the city. 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it. So I've taken it.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": true,
+        "note": true,
+        "rp": true
+      }
+    },
+    {
+      "id": "jenny-6",
+      "voice": "en_GB-jenny_dioco-medium",
+      "noise_snr_db": null,
+      "duration_s": 11.61,
+      "transcribe_s": 0.989,
+      "script": "Priya, yesterday, ten till two thirty. Shopping at Chadstone, eight k's. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for ten minutes to calm down.",
+      "transcript": "Priya, yesterday, 10 till 2:30, chopping a chestnut, AK's, she wouldn't stop yelling in the car, so I put the child lock on and left her in there for 10 minutes to calm down.",
+      "wer": 0.1667,
+      "wer_raw": 0.2778,
+      "gold": {
+        "alias": "Priya",
+        "participant_id": "priya",
+        "day": "Saturday",
+        "date": "2026-10-10",
+        "start": "10:00",
+        "end": "14:30",
+        "km": 8,
+        "note": "Shopping at Chadstone. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for ten minutes to calm down.",
+        "rp_type": "seclusion"
+      },
+      "extracted": {
+        "participant_id": "priya",
+        "date": "2026-10-10",
+        "start": "10:00",
+        "end": "14:30",
+        "km": 0.0,
+        "note": "chopping a chestnut, AK's, she wouldn't stop yelling in the car, so I put the child lock on and left her in there for 10 minutes to calm down.",
+        "warnings": []
+      },
+      "correct": {
+        "participant": true,
+        "date": true,
+        "start": true,
+        "end": true,
+        "km": false,
+        "note": true,
+        "rp": true
+      }
+    }
+  ],
+  "runs": [
+    {
+      "voice": "en_GB-alan-medium",
+      "diary": "[memo recorded Mon 2026-10-05] Jake, Monday, 3 till half 8. Footy training, then Maccas on the way home. 12 km.\n[memo recorded Tue 2026-10-06] Priya Tuesday morning, 9 till 1, helped her with the shower and brekkie. Then we did the washing together. No case today.\n[memo recorded Wed 2026-10-07] Tommy, Wednesday arvo, quarter past 2 till quarter to 6. Went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.\n[memo recorded Thu 2026-10-08] Mrs B, Thursday, 7 in the morning till half past 10. Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.\n[memo recorded Fri 2026-10-09] Jake again, 4 till 9 tonight. Movies and dinner in the city, 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.\n[Sat 2026-10-10 (said \"yesterday\" in a memo recorded 2026-10-11)] Priya, yesterday, 10 till 2:30, shopping at Chadston, 8 km. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for 10 minutes to calm down.",
+      "transcribe_s": 5.96,
+      "pipeline_s": 12.43,
+      "timings": {
+        "extract_s": 7.637,
+        "pricing_s": 0.022,
+        "rp_s": 4.769,
+        "total_s": 12.428,
+        "rp_calls": 6,
+        "extract_prompt_tokens": 1054,
+        "extract_eval_tokens": 819,
+        "load_s": 0.025
+      },
+      "warnings": [],
+      "shifts": [
+        {
+          "participant_id": "jake",
+          "date": "2026-10-05",
+          "start": "15:00",
+          "end": "20:30",
+          "km": 12.0,
+          "note": "Footy training, then Maccas on the way home. 12 km.",
+          "source_quote": "Jake, Monday, 3 till half 8",
+          "warnings": []
+        },
+        {
+          "participant_id": "priya",
+          "date": "2026-10-06",
+          "start": "09:00",
+          "end": "13:00",
+          "km": 0.0,
+          "note": "helped her with the shower and brekkie. Then we did the washing together. No case today.",
+          "source_quote": "Priya Tuesday morning, 9 till 1",
+          "warnings": []
+        },
+        {
+          "participant_id": "tom",
+          "date": "2026-10-07",
+          "start": "14:15",
+          "end": "17:45",
+          "km": 18.0,
+          "note": "Went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+          "source_quote": "Tommy, Wednesday arvo, quarter past 2 till quarter to 6",
+          "warnings": []
+        },
+        {
+          "participant_id": "nonna",
+          "date": "2026-10-08",
+          "start": "07:00",
+          "end": "10:30",
+          "km": 0.0,
+          "note": "Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+          "source_quote": "Mrs B, Thursday, 7 in the morning till half past 10",
+          "warnings": []
+        },
+        {
+          "participant_id": "jake",
+          "date": "2026-10-09",
+          "start": "16:00",
+          "end": "21:00",
+          "km": 25.0,
+          "note": "Movies and dinner in the city, 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it.",
+          "source_quote": "Jake again, 4 till 9 tonight",
+          "warnings": []
+        },
+        {
+          "participant_id": "priya",
+          "date": "2026-10-10",
+          "start": "10:00",
+          "end": "14:30",
+          "km": 8.0,
+          "note": "shopping at Chadston, 8 km. She wouldn't stop yelling in the car, so I put the child locks on and left her in there for 10 minutes to calm down.",
+          "source_quote": "Priya, yesterday, 10 till 2:30",
+          "warnings": []
+        }
+      ],
+      "flags": [
+        {
+          "participant_id": "tom",
+          "date": "2026-10-07",
+          "rp_type": "physical",
+          "evidence_quote": "so I held both his arms down by his sides until he settled",
+          "harm_mentioned": false,
+          "authorised_in_bsp": false,
+          "report_by": "2026-10-14",
+          "explanation": "The support worker used physical force to hold Thomas's arms down to help him calm down."
+        },
+        {
+          "participant_id": "jake",
+          "date": "2026-10-09",
+          "rp_type": "environmental",
+          "evidence_quote": "His mum wants his Xbox controller kept in my car all week so he can't play it, so I've taken it",
+          "harm_mentioned": false,
+          "authorised_in_bsp": false,
+          "report_by": "2026-10-16",
+          "explanation": "Access to the Xbox controller was restricted by being kept in the support worker's car."
+        },
+        {
+          "participant_id": "priya",
+          "date": "2026-10-10",
+          "rp_type": "seclusion",
+          "evidence_quote": "She wouldn't stop yelling in the car, so I put the child locks on and left her in there for 10 minutes to calm down",
+          "harm_mentioned": false,
+          "authorised_in_bsp": false,
+          "report_by": "2026-10-16",
+          "explanation": "The participant was prevented from leaving the car by using child locks to manage her yelling."
+        }
+      ]
+    },
+    {
+      "voice": "en_GB-jenny_dioco-medium",
+      "diary": "[memo recorded Mon 2026-10-05] Jake Monday, 3 till half 8. Physi training, then Maccas on the way home. 12 km.\n[memo recorded Tue 2026-10-06] Priya, Tuesday morning, 9 till 1, help chair with the shower and brekkie. Then we did the washing together. No case today.\n[memo recorded Wed 2026-10-07] Tommy, Wednesday arvo, quarter past 2 till quarter to 6, went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.\n[memo recorded Thu 2026-10-08] Mrs B, Thursday, 7 in the morning till half past 10. Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.\n[memo recorded Fri 2026-10-09] Jake again, 4 till 9 tonight. Movies and dinner in the city. 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it. So I've taken it.\n[Sat 2026-10-10 (said \"yesterday\" in a memo recorded 2026-10-11)] Priya, yesterday, 10 till 2:30, chopping a chestnut, AK's, she wouldn't stop yelling in the car, so I put the child lock on and left her in there for 10 minutes to calm down.",
+      "transcribe_s": 5.09,
+      "pipeline_s": 12.42,
+      "timings": {
+        "extract_s": 7.703,
+        "pricing_s": 0.001,
+        "rp_s": 4.716,
+        "total_s": 12.421,
+        "rp_calls": 6,
+        "extract_prompt_tokens": 1052,
+        "extract_eval_tokens": 822,
+        "load_s": 0.031
+      },
+      "warnings": [],
+      "shifts": [
+        {
+          "participant_id": "jake",
+          "date": "2026-10-05",
+          "start": "15:00",
+          "end": "20:30",
+          "km": 12.0,
+          "note": "Physi training, then Maccas on the way home. 12 km.",
+          "source_quote": "Jake Monday, 3 till half 8",
+          "warnings": []
+        },
+        {
+          "participant_id": "priya",
+          "date": "2026-10-06",
+          "start": "09:00",
+          "end": "13:00",
+          "km": 0.0,
+          "note": "help chair with the shower and brekkie. Then we did the washing together. No case today.",
+          "source_quote": "Priya, Tuesday morning, 9 till 1",
+          "warnings": []
+        },
+        {
+          "participant_id": "tom",
+          "date": "2026-10-07",
+          "start": "14:15",
+          "end": "17:45",
+          "km": 18.0,
+          "note": "went to Bunnings and the library, 18 km. He got really worked up at the checkout, so I held both his arms down by his sides until he settled.",
+          "source_quote": "Tommy, Wednesday arvo, quarter past 2 till quarter to 6",
+          "warnings": []
+        },
+        {
+          "participant_id": "nonna",
+          "date": "2026-10-08",
+          "start": "07:00",
+          "end": "10:30",
+          "km": 0.0,
+          "note": "Breakfast, meds prompt, and a slow walk around the block. Nothing else to report.",
+          "source_quote": "Mrs B, Thursday, 7 in the morning till half past 10",
+          "warnings": []
+        },
+        {
+          "participant_id": "jake",
+          "date": "2026-10-09",
+          "start": "16:00",
+          "end": "21:00",
+          "km": 25.0,
+          "note": "Movies and dinner in the city. 25 km. His mum wants his Xbox controller kept in my car all week so he can't play it. So I've taken it.",
+          "source_quote": "Jake again, 4 till 9 tonight",
+          "warnings": []
+        },
+        {
+          "participant_id": "priya",
+          "date": "2026-10-10",
+          "start": "10:00",
+          "end": "14:30",
+          "km": 0.0,
+          "note": "chopping a chestnut, AK's, she wouldn't stop yelling in the car, so I put the child lock on and left her in there for 10 minutes to calm down.",
+          "source_quote": "Priya, yesterday, 10 till 2:30",
+          "warnings": []
+        }
+      ],
+      "flags": [
+        {
+          "participant_id": "tom",
+          "date": "2026-10-07",
+          "rp_type": "physical",
+          "evidence_quote": "so I held both his arms down by his sides until he settled",
+          "harm_mentioned": false,
+          "authorised_in_bsp": false,
+          "report_by": "2026-10-14",
+          "explanation": "The support worker used physical force to hold Thomas's arms down to help him calm down."
+        },
+        {
+          "participant_id": "jake",
+          "date": "2026-10-09",
+          "rp_type": "environmental",
+          "evidence_quote": "His mum wants his Xbox controller kept in my car all week so he can't play it. So I've taken it",
+          "harm_mentioned": false,
+          "authorised_in_bsp": false,
+          "report_by": "2026-10-16",
+          "explanation": "The participant was prevented from accessing his Xbox controller, which is a restriction on an item."
+        },
+        {
+          "participant_id": "priya",
+          "date": "2026-10-10",
+          "rp_type": "seclusion",
+          "evidence_quote": "so I put the child lock on and left her in there for 10 minutes to calm down",
+          "harm_mentioned": false,
+          "authorised_in_bsp": false,
+          "report_by": "2026-10-16",
+          "explanation": "The participant was prevented from leaving the car by using a child lock to manage her yelling."
+        }
+      ]
+    }
+  ]
+}
