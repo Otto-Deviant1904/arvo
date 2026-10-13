@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import difflib
 import re
+import time
 from datetime import date, timedelta
 
 from . import llm
@@ -901,3 +902,14 @@ def extract_shifts(diary_text: str, roster, week_ending: str, model: str = llm.D
         warns.append("photo input: notes and km could not be checked against typed text; review them")
     meta["raw_count"] = len(items)
     return shifts, warns, meta
+
+
+def extract_shifts_code_only(diary_text: str, roster, week_ending: str) -> tuple[list[Shift], list[str], dict]:
+    """Baseline with NO model call: the deterministic reader alone (validate_shifts with no model items,
+    so recover_skipped reads every line). Same return shape as extract_shifts."""
+    t0 = time.perf_counter()
+    if not (diary_text or "").strip():
+        return [], ["diary is empty"], {"model": "code-only", "total_s": 0.0}
+    shifts, warns = validate_shifts([], diary_text, as_participants(roster), week_window(week_ending))
+    warns = [w for w in warns if "added by code" not in w]  # every shift is code-read here; not news
+    return shifts, warns, {"model": "code-only", "total_s": round(time.perf_counter() - t0, 4)}

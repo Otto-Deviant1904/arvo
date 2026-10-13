@@ -1,253 +1,260 @@
 {
-  "placeholder": true,
-  "placeholder_note": "Hand-written sample so the page renders. Rates are illustrative, not the 2026-27 price limits. Replace with a real run.",
-  "week_ending": "2026-10-11",
-  "shifts": [
-    {
-      "participant_id": "jake",
-      "date": "2026-10-05",
-      "start": "09:30",
-      "end": "14:30",
-      "km": 14,
-      "note": "Bunnings then lunch at the bakery. 14km. good day, v chatty",
-      "source_quote": "Mon - Jake 9:30 to 2:30",
-      "warnings": []
-    },
-    {
-      "participant_id": "priya",
-      "date": "2026-10-06",
-      "start": "07:00",
-      "end": "09:00",
-      "km": 0,
-      "note": "shower + brekky. bit teary early, settled w music",
-      "source_quote": "Tues - Priya 7-9am",
-      "warnings": []
-    },
-    {
-      "participant_id": "jake",
-      "date": "2026-10-06",
-      "start": "15:00",
-      "end": "20:30",
-      "km": 12,
-      "note": "footy training at the oval then tea. 12km",
-      "source_quote": "Tues arvo - Jake 3 till 8:30ish",
-      "warnings": [
-        "approximate end time '8:30ish' read as 20:30"
-      ]
-    },
-    {
-      "participant_id": "nonna",
-      "date": "2026-10-07",
-      "start": "18:00",
-      "end": "21:00",
-      "km": 0,
-      "note": "dinner, meds, bed. Bed rails up as per plan",
-      "source_quote": "Wed - Nonna 6pm-9pm",
-      "warnings": []
-    },
-    {
-      "participant_id": "tom",
-      "date": "2026-10-08",
-      "start": "10:00",
-      "end": "13:00",
-      "km": 8,
-      "note": "shopping at Coles, 8km. He kept going back to the pantry after lunch. I locked the pantry so he'd stop snacking. Upset for 10 min then fine",
-      "source_quote": "Thu - Tom 10-1",
-      "warnings": []
-    },
-    {
-      "participant_id": "jake",
-      "date": "2026-10-10",
-      "start": "10:00",
-      "end": "16:00",
-      "km": 0,
-      "note": "Melb Museum, train in so no km",
-      "source_quote": "Sat - Jake 10 - 4",
-      "warnings": []
-    },
-    {
-      "participant_id": "priya",
-      "date": "2026-10-11",
-      "start": "08:00",
-      "end": "11:00",
-      "km": 0,
-      "note": "brekky, shower, tidy up. Pri v anxious, score 5, gave PRN lorazepam 0.5 as per BSP, calm after 30 min",
-      "source_quote": "Sun - Pri 8-11",
-      "warnings": []
-    }
-  ],
-  "lines": [
-    {
-      "participant_id": "jake",
-      "date": "2026-10-05",
-      "item_number": "04_104_0125_6_1",
-      "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
-      "start": "09:30",
-      "end": "14:30",
-      "quantity": 5.0,
-      "unit": "H",
-      "unit_price": 70.23,
-      "total": 351.15,
-      "rule": "Weekday daytime: starts and ends between 06:00 and 20:00 on a weekday"
-    },
-    {
-      "participant_id": "jake",
-      "date": "2026-10-05",
-      "item_number": "04_799_0125_6_1",
-      "item_name": "Provider travel - non-labour costs",
-      "start": "",
-      "end": "",
-      "quantity": 14.0,
-      "unit": "km",
-      "unit_price": 0.99,
-      "total": 13.86,
-      "rule": "Provider travel: 14 km written in the diary for this shift"
-    },
-    {
-      "participant_id": "priya",
-      "date": "2026-10-06",
-      "item_number": "01_011_0107_1_1",
-      "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
-      "start": "07:00",
-      "end": "09:00",
-      "quantity": 2.0,
-      "unit": "H",
-      "unit_price": 70.23,
-      "total": 140.46,
-      "rule": "Weekday daytime: starts and ends between 06:00 and 20:00 on a weekday"
-    },
-    {
-      "participant_id": "jake",
-      "date": "2026-10-06",
-      "item_number": "04_103_0125_6_1",
-      "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
-      "start": "15:00",
-      "end": "20:30",
-      "quantity": 5.5,
-      "unit": "H",
-      "unit_price": 77.38,
-      "total": 425.59,
-      "rule": "Weekday evening: shift ends after 20:00, so the whole shift is at the evening rate"
-    },
-    {
-      "participant_id": "jake",
-      "date": "2026-10-06",
-      "item_number": "04_799_0125_6_1",
-      "item_name": "Provider travel - non-labour costs",
-      "start": "",
-      "end": "",
-      "quantity": 12.0,
-      "unit": "km",
-      "unit_price": 0.99,
-      "total": 11.88,
-      "rule": "Provider travel: 12 km written in the diary for this shift"
-    },
-    {
-      "participant_id": "nonna",
-      "date": "2026-10-07",
-      "item_number": "01_015_0107_1_1",
-      "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
-      "start": "18:00",
-      "end": "21:00",
-      "quantity": 3.0,
-      "unit": "H",
-      "unit_price": 77.38,
-      "total": 232.14,
-      "rule": "Weekday evening: shift ends after 20:00, so the whole shift is at the evening rate"
-    },
-    {
-      "participant_id": "tom",
-      "date": "2026-10-08",
-      "item_number": "04_104_0125_6_1",
-      "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
-      "start": "10:00",
-      "end": "13:00",
-      "quantity": 3.0,
-      "unit": "H",
-      "unit_price": 70.23,
-      "total": 210.69,
-      "rule": "Weekday daytime: starts and ends between 06:00 and 20:00 on a weekday"
-    },
-    {
-      "participant_id": "tom",
-      "date": "2026-10-08",
-      "item_number": "04_799_0125_6_1",
-      "item_name": "Provider travel - non-labour costs",
-      "start": "",
-      "end": "",
-      "quantity": 8.0,
-      "unit": "km",
-      "unit_price": 0.99,
-      "total": 7.92,
-      "rule": "Provider travel: 8 km written in the diary for this shift"
-    },
-    {
-      "participant_id": "jake",
-      "date": "2026-10-10",
-      "item_number": "04_105_0125_6_1",
-      "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
-      "start": "10:00",
-      "end": "16:00",
-      "quantity": 6.0,
-      "unit": "H",
-      "unit_price": 98.83,
-      "total": 592.98,
-      "rule": "Saturday rate: shift date is a Saturday"
-    },
-    {
-      "participant_id": "priya",
-      "date": "2026-10-11",
-      "item_number": "01_014_0107_1_1",
-      "item_name": "Assistance With Self-Care Activities - Standard - Sunday",
-      "start": "08:00",
-      "end": "11:00",
-      "quantity": 3.0,
-      "unit": "H",
-      "unit_price": 127.43,
-      "total": 382.29,
-      "rule": "Sunday rate: shift date is a Sunday"
-    }
-  ],
-  "flags": [
-    {
-      "participant_id": "tom",
-      "date": "2026-10-08",
-      "rp_type": "environmental",
-      "evidence_quote": "I locked the pantry so he'd stop snacking.",
-      "harm_mentioned": false,
-      "authorised_in_bsp": false,
-      "report_by": "2026-10-15",
-      "explanation": "Locking the pantry stops Tom getting to food in his own home, which is an environmental restraint, and it is not in a behaviour support plan."
-    },
-    {
-      "participant_id": "priya",
-      "date": "2026-10-11",
-      "rp_type": "chemical",
-      "evidence_quote": "Pri v anxious, score 5, gave PRN lorazepam 0.5 as per BSP, calm after 30 min",
-      "harm_mentioned": false,
-      "authorised_in_bsp": true,
-      "report_by": "2026-10-16",
-      "explanation": "PRN lorazepam given to settle distress is a chemical restraint. Her plan authorises it at a distress score of 4 or more."
-    },
-    {
-      "participant_id": "nonna",
-      "date": "2026-10-07",
-      "rp_type": "mechanical",
-      "evidence_quote": "Bed rails up as per plan",
-      "harm_mentioned": false,
-      "authorised_in_bsp": true,
-      "report_by": "2026-10-14",
-      "explanation": "Bed rails stop Rosa getting out of bed on her own, which is a mechanical restraint. Her plan authorises them overnight for falls risk."
-    }
-  ],
-  "warnings": [
-    "Fri 9 Oct: 'nil (sick)' has no times, so no shift was created"
-  ],
-  "model": "gemma4:e4b",
-  "timings": {
-    "extract_s": 21.7,
-    "pricing_s": 0.004,
-    "rp_s": 8.9,
-    "total_s": 30.6
+ "shifts": [
+  {
+   "participant_id": "tom",
+   "date": "2026-11-02",
+   "start": "09:30",
+   "end": "13:30",
+   "km": 18.0,
+   "note": "shopping at Northland, 18km. All good, he picked his own lunch.",
+   "source_quote": "Tom 9:30-1:30",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-11-03",
+   "start": "15:00",
+   "end": "20:30",
+   "km": 0.0,
+   "note": "Footy training then tea at his place. Locked the pantry so he would stop snacking before dinner, he was pretty upset about it.",
+   "source_quote": "Jake 3 till 8:30ish",
+   "warnings": [
+    "approximate time in '3 till 8:30ish': check start/end"
+   ]
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-04",
+   "start": "10:00",
+   "end": "14:00",
+   "km": 0.0,
+   "note": "Distress score 5 after the phone call with her sister. Gave PRN lorazepam 0.5mg as per plan at 11:15, recorded in the med chart. Settled by lunch.",
+   "source_quote": "Pri 10-2",
+   "warnings": []
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-05",
+   "start": "08:00",
+   "end": "12:00",
+   "km": 0.0,
+   "note": "shower, breakfast, Webster pack meds. Chatty today.",
+   "source_quote": "Nonna 8 till 12",
+   "warnings": []
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-05",
+   "start": "19:00",
+   "end": "21:30",
+   "km": 0.0,
+   "note": "dinner + bed. Bed rails up as per plan.",
+   "source_quote": "Mrs B again 7pm-9:30pm",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-11-07",
+   "start": "14:30",
+   "end": "18:00",
+   "km": 9.0,
+   "note": "offered him a choice between the park and the pool, he picked the pool. 9km",
+   "source_quote": "Jakey half 2 to 6",
+   "warnings": []
+  },
+  {
+   "participant_id": "tom",
+   "date": "2026-11-08",
+   "start": "10:00",
+   "end": "15:00",
+   "km": 22.0,
+   "note": "footy at Princes Park then lunch, 22 km. He asked me to hang onto his phone during the game.",
+   "source_quote": "T.O. 10-3",
+   "warnings": []
   }
+ ],
+ "lines": [
+  {
+   "participant_id": "tom",
+   "date": "2026-11-02",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "09:30",
+   "end": "13:30",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 294.32,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2026-11-02",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 18.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 17.82,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-11-03",
+   "item_number": "04_102_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Public Holiday",
+   "start": "15:00",
+   "end": "20:30",
+   "quantity": 5.5,
+   "unit": "H",
+   "unit_price": 163.46,
+   "total": 899.03,
+   "rule": "Melbourne Cup is a Victorian public holiday: Public Holiday rate"
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-04",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "10:00",
+   "end": "14:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 294.32,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-05",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "08:00",
+   "end": "12:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 294.32,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-05",
+   "item_number": "01_015_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+   "start": "19:00",
+   "end": "21:30",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 202.68,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-11-07",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "14:30",
+   "end": "18:00",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 362.39,
+   "rule": "Saturday rate: shift is on a Saturday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-11-07",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 9.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 8.91,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2026-11-08",
+   "item_number": "04_106_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Sunday",
+   "start": "10:00",
+   "end": "15:00",
+   "quantity": 5.0,
+   "unit": "H",
+   "unit_price": 133.5,
+   "total": 667.5,
+   "rule": "Sunday rate: shift is on a Sunday"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2026-11-08",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 22.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 21.78,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  }
+ ],
+ "flags": [
+  {
+   "participant_id": "jake",
+   "date": "2026-11-03",
+   "rp_type": "environmental",
+   "evidence_quote": "Locked the pantry so he would stop snacking before dinner",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-11-10",
+   "explanation": "Access to the pantry was restricted to prevent snacking."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-04",
+   "rp_type": "chemical",
+   "evidence_quote": "Gave PRN lorazepam 0.5mg as per plan at 11:15, recorded in the med chart",
+   "harm_mentioned": false,
+   "authorised_in_bsp": true,
+   "report_by": "",
+   "explanation": "A PRN lorazepam was given to influence behaviour when distress was high."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-05",
+   "rp_type": "mechanical",
+   "evidence_quote": "Bed rails up as per plan",
+   "harm_mentioned": false,
+   "authorised_in_bsp": true,
+   "report_by": "",
+   "explanation": "Bed rails were used to restrict movement as per the behaviour support plan."
+  }
+ ],
+ "warnings": [],
+ "model": "gemma4:e4b",
+ "timings": {
+  "extract_s": 8.618,
+  "pricing_s": 0.023,
+  "rp_s": 4.686,
+  "total_s": 13.327,
+  "rp_calls": 7,
+  "extract_prompt_tokens": 1004,
+  "extract_eval_tokens": 924,
+  "load_s": 0.035
+ },
+ "invoices_html": {
+  "jake": "<!doctype html>\n<html lang=\"en-AU\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Invoice ARVO-20261108-JAKE - Jake Morrison</title>\n<style>\n:root { --ink:#1d2329; --muted:#5d6873; --line:#d9dee3; --head:#f3f5f7; }\n* { box-sizing:border-box; }\nbody { margin:0; background:#fff; color:var(--ink); font:14px/1.45 system-ui,-apple-system,\"Segoe UI\",Roboto,Arial,sans-serif; }\n.page { max-width:900px; margin:24px auto; padding:32px 36px; }\nheader { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; border-bottom:2px solid var(--ink); padding-bottom:16px; }\nh1 { margin:0 0 4px; font-size:26px; letter-spacing:.02em; }\n.muted { color:var(--muted); }\n.meta { text-align:right; }\n.meta div, .party div { margin:2px 0; }\n.parties { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0; }\n.party h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 6px; }\n.table-wrap { overflow-x:auto; }\ntable { width:100%; border-collapse:collapse; margin-top:8px; }\nth, td { border-bottom:1px solid var(--line); padding:7px 6px; vertical-align:top; text-align:left; }\nth { background:var(--head); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }\ntd.num, th.num { text-align:right; white-space:nowrap; }\ntd.code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; white-space:nowrap; }\n.rule { color:var(--muted); font-size:12px; margin-top:2px; }\ntfoot td { border-bottom:none; font-weight:700; font-size:16px; padding-top:12px; }\n.notes { margin-top:24px; display:grid; gap:10px; }\n.notes p { margin:0; }\nfooter { margin-top:28px; padding-top:10px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }\n@media (max-width:640px) { .page { padding:16px; margin:0; } .parties { grid-template-columns:1fr; } .meta { text-align:left; }\n  table { font-size:12.5px; } }\n@media print {\n  @page { size:A4; margin:14mm; }\n  body { font-size:11.5px; }\n  .page { margin:0; padding:0; max-width:none; }\n  tr { break-inside:avoid; }\n  th { -webkit-print-color-adjust:exact; print-color-adjust:exact; }\n}\n</style>\n</head>\n<body>\n<div class=\"page\">\n<header>\n  <div><h1>Invoice</h1><div class=\"muted\">NDIS supports for Jake Morrison</div></div>\n  <div class=\"meta\">\n    <div><span class=\"muted\">Invoice number:</span> <strong>ARVO-20261108-JAKE</strong></div>\n    <div><span class=\"muted\">Invoice date:</span> Tue 13 Oct 2026</div>\n    <div><span class=\"muted\">Support period:</span> Tue 03 Nov 2026 to Sat 07 Nov 2026</div>\n  </div>\n</header>\n<section class=\"parties\">\n  <div class=\"party\"><h2>From (provider)</h2><div><strong>Mel Tran</strong></div><div><span class=\"muted\">ABN:</span> 12 345 678 901</div><div><span class=\"muted\">Email:</span> mel.support@example.com</div><div><span class=\"muted\">Phone:</span> 0400 000 000</div></div>\n  <div class=\"party\"><h2>For (participant)</h2><div><strong>Jake Morrison</strong></div><div><span class=\"muted\">NDIS number:</span> 430000001</div><div><span class=\"muted\">Plan manager:</span> Bayside Plan Partners (example)</div></div>\n</section>\n<div class=\"table-wrap\"><table>\n  <thead><tr><th>Date</th><th>Support item</th><th>Item name</th><th>Claim type</th><th class=\"num\">Start&ndash;end</th>\n  <th class=\"num\">Qty</th><th>Unit</th><th class=\"num\">Unit price</th><th class=\"num\">Total</th></tr></thead>\n  <tbody>\n<tr><td>Tue 03 Nov 2026</td><td class=\"code\">04_102_0125_6_1</td><td>Access Community Social and Rec Activ - Standard - Public Holiday<div class=\"rule\">Melbourne Cup is a Victorian public holiday: Public Holiday rate</div></td><td>Direct service</td><td class=\"num\">15:00&ndash;20:30</td><td class=\"num\">5.50</td><td>H</td><td class=\"num\">$163.46</td><td class=\"num\">$899.03</td></tr>\n<tr><td>Sat 07 Nov 2026</td><td class=\"code\">04_105_0125_6_1</td><td>Access Community Social and Rec Activ - Standard - Saturday<div class=\"rule\">Saturday rate: shift is on a Saturday</div></td><td>Direct service</td><td class=\"num\">14:30&ndash;18:00</td><td class=\"num\">3.50</td><td>H</td><td class=\"num\">$103.54</td><td class=\"num\">$362.39</td></tr>\n<tr><td>Sat 07 Nov 2026</td><td class=\"code\">04_590_0125_6_1</td><td>Activity Based Transport<div class=\"rule\">Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit.</div></td><td>Activity based transport</td><td class=\"num\">&mdash;</td><td class=\"num\">9.00</td><td>km</td><td class=\"num\">$0.99</td><td class=\"num\">$8.91</td></tr>\n  </tbody>\n  <tfoot><tr><td colspan=\"8\" class=\"num\">Total (AUD)</td><td class=\"num\">$1,270.33</td></tr></tfoot>\n</table></div>\n<section class=\"notes\">\n  <p><strong>GST:</strong> GST component $0.00. Most NDIS supports are GST-free. &ldquo;Any maximum amount specified in this document already includes any Goods and Services Tax (GST).&rdquo; (NDIS Pricing Schedule 2026-27 (effective 2026-09-24), Part 1 s1.2, PDF p4)</p>\n  <p><strong>Payment:</strong> BSB 000-000  Acc 00000000. Please quote ARVO-20261108-JAKE.</p>\n</section>\n<footer>Prepared with Arvo. Prices: NDIS Pricing Schedule 2026-27 (National, Victoria)</footer>\n</div>\n</body>\n</html>\n",
+  "priya": "<!doctype html>\n<html lang=\"en-AU\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Invoice ARVO-20261108-PRIYA - Priya Raman</title>\n<style>\n:root { --ink:#1d2329; --muted:#5d6873; --line:#d9dee3; --head:#f3f5f7; }\n* { box-sizing:border-box; }\nbody { margin:0; background:#fff; color:var(--ink); font:14px/1.45 system-ui,-apple-system,\"Segoe UI\",Roboto,Arial,sans-serif; }\n.page { max-width:900px; margin:24px auto; padding:32px 36px; }\nheader { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; border-bottom:2px solid var(--ink); padding-bottom:16px; }\nh1 { margin:0 0 4px; font-size:26px; letter-spacing:.02em; }\n.muted { color:var(--muted); }\n.meta { text-align:right; }\n.meta div, .party div { margin:2px 0; }\n.parties { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0; }\n.party h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 6px; }\n.table-wrap { overflow-x:auto; }\ntable { width:100%; border-collapse:collapse; margin-top:8px; }\nth, td { border-bottom:1px solid var(--line); padding:7px 6px; vertical-align:top; text-align:left; }\nth { background:var(--head); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }\ntd.num, th.num { text-align:right; white-space:nowrap; }\ntd.code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; white-space:nowrap; }\n.rule { color:var(--muted); font-size:12px; margin-top:2px; }\ntfoot td { border-bottom:none; font-weight:700; font-size:16px; padding-top:12px; }\n.notes { margin-top:24px; display:grid; gap:10px; }\n.notes p { margin:0; }\nfooter { margin-top:28px; padding-top:10px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }\n@media (max-width:640px) { .page { padding:16px; margin:0; } .parties { grid-template-columns:1fr; } .meta { text-align:left; }\n  table { font-size:12.5px; } }\n@media print {\n  @page { size:A4; margin:14mm; }\n  body { font-size:11.5px; }\n  .page { margin:0; padding:0; max-width:none; }\n  tr { break-inside:avoid; }\n  th { -webkit-print-color-adjust:exact; print-color-adjust:exact; }\n}\n</style>\n</head>\n<body>\n<div class=\"page\">\n<header>\n  <div><h1>Invoice</h1><div class=\"muted\">NDIS supports for Priya Raman</div></div>\n  <div class=\"meta\">\n    <div><span class=\"muted\">Invoice number:</span> <strong>ARVO-20261108-PRIYA</strong></div>\n    <div><span class=\"muted\">Invoice date:</span> Tue 13 Oct 2026</div>\n    <div><span class=\"muted\">Support period:</span> Wed 04 Nov 2026 to Wed 04 Nov 2026</div>\n  </div>\n</header>\n<section class=\"parties\">\n  <div class=\"party\"><h2>From (provider)</h2><div><strong>Mel Tran</strong></div><div><span class=\"muted\">ABN:</span> 12 345 678 901</div><div><span class=\"muted\">Email:</span> mel.support@example.com</div><div><span class=\"muted\">Phone:</span> 0400 000 000</div></div>\n  <div class=\"party\"><h2>For (participant)</h2><div><strong>Priya Raman</strong></div><div><span class=\"muted\">NDIS number:</span> 430000002</div><div><span class=\"muted\">Plan manager:</span> Self-managed</div></div>\n</section>\n<div class=\"table-wrap\"><table>\n  <thead><tr><th>Date</th><th>Support item</th><th>Item name</th><th>Claim type</th><th class=\"num\">Start&ndash;end</th>\n  <th class=\"num\">Qty</th><th>Unit</th><th class=\"num\">Unit price</th><th class=\"num\">Total</th></tr></thead>\n  <tbody>\n<tr><td>Wed 04 Nov 2026</td><td class=\"code\">01_011_0107_1_1</td><td>Assistance With Self-Care Activities - Standard - Weekday Daytime<div class=\"rule\">Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday</div></td><td>Direct service</td><td class=\"num\">10:00&ndash;14:00</td><td class=\"num\">4.00</td><td>H</td><td class=\"num\">$73.58</td><td class=\"num\">$294.32</td></tr>\n  </tbody>\n  <tfoot><tr><td colspan=\"8\" class=\"num\">Total (AUD)</td><td class=\"num\">$294.32</td></tr></tfoot>\n</table></div>\n<section class=\"notes\">\n  <p><strong>GST:</strong> GST component $0.00. Most NDIS supports are GST-free. &ldquo;Any maximum amount specified in this document already includes any Goods and Services Tax (GST).&rdquo; (NDIS Pricing Schedule 2026-27 (effective 2026-09-24), Part 1 s1.2, PDF p4)</p>\n  <p><strong>Payment:</strong> BSB 000-000  Acc 00000000. Please quote ARVO-20261108-PRIYA.</p>\n</section>\n<footer>Prepared with Arvo. Prices: NDIS Pricing Schedule 2026-27 (National, Victoria)</footer>\n</div>\n</body>\n</html>\n",
+  "tom": "<!doctype html>\n<html lang=\"en-AU\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Invoice ARVO-20261108-TOM - Thomas Okafor</title>\n<style>\n:root { --ink:#1d2329; --muted:#5d6873; --line:#d9dee3; --head:#f3f5f7; }\n* { box-sizing:border-box; }\nbody { margin:0; background:#fff; color:var(--ink); font:14px/1.45 system-ui,-apple-system,\"Segoe UI\",Roboto,Arial,sans-serif; }\n.page { max-width:900px; margin:24px auto; padding:32px 36px; }\nheader { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; border-bottom:2px solid var(--ink); padding-bottom:16px; }\nh1 { margin:0 0 4px; font-size:26px; letter-spacing:.02em; }\n.muted { color:var(--muted); }\n.meta { text-align:right; }\n.meta div, .party div { margin:2px 0; }\n.parties { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0; }\n.party h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 6px; }\n.table-wrap { overflow-x:auto; }\ntable { width:100%; border-collapse:collapse; margin-top:8px; }\nth, td { border-bottom:1px solid var(--line); padding:7px 6px; vertical-align:top; text-align:left; }\nth { background:var(--head); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }\ntd.num, th.num { text-align:right; white-space:nowrap; }\ntd.code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; white-space:nowrap; }\n.rule { color:var(--muted); font-size:12px; margin-top:2px; }\ntfoot td { border-bottom:none; font-weight:700; font-size:16px; padding-top:12px; }\n.notes { margin-top:24px; display:grid; gap:10px; }\n.notes p { margin:0; }\nfooter { margin-top:28px; padding-top:10px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }\n@media (max-width:640px) { .page { padding:16px; margin:0; } .parties { grid-template-columns:1fr; } .meta { text-align:left; }\n  table { font-size:12.5px; } }\n@media print {\n  @page { size:A4; margin:14mm; }\n  body { font-size:11.5px; }\n  .page { margin:0; padding:0; max-width:none; }\n  tr { break-inside:avoid; }\n  th { -webkit-print-color-adjust:exact; print-color-adjust:exact; }\n}\n</style>\n</head>\n<body>\n<div class=\"page\">\n<header>\n  <div><h1>Invoice</h1><div class=\"muted\">NDIS supports for Thomas Okafor</div></div>\n  <div class=\"meta\">\n    <div><span class=\"muted\">Invoice number:</span> <strong>ARVO-20261108-TOM</strong></div>\n    <div><span class=\"muted\">Invoice date:</span> Tue 13 Oct 2026</div>\n    <div><span class=\"muted\">Support period:</span> Mon 02 Nov 2026 to Sun 08 Nov 2026</div>\n  </div>\n</header>\n<section class=\"parties\">\n  <div class=\"party\"><h2>From (provider)</h2><div><strong>Mel Tran</strong></div><div><span class=\"muted\">ABN:</span> 12 345 678 901</div><div><span class=\"muted\">Email:</span> mel.support@example.com</div><div><span class=\"muted\">Phone:</span> 0400 000 000</div></div>\n  <div class=\"party\"><h2>For (participant)</h2><div><strong>Thomas Okafor</strong></div><div><span class=\"muted\">NDIS number:</span> 430000003</div><div><span class=\"muted\">Plan manager:</span> Northside Plan Management (example)</div></div>\n</section>\n<div class=\"table-wrap\"><table>\n  <thead><tr><th>Date</th><th>Support item</th><th>Item name</th><th>Claim type</th><th class=\"num\">Start&ndash;end</th>\n  <th class=\"num\">Qty</th><th>Unit</th><th class=\"num\">Unit price</th><th class=\"num\">Total</th></tr></thead>\n  <tbody>\n<tr><td>Mon 02 Nov 2026</td><td class=\"code\">04_104_0125_6_1</td><td>Access Community Social and Rec Activ - Standard - Weekday Daytime<div class=\"rule\">Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday</div></td><td>Direct service</td><td class=\"num\">09:30&ndash;13:30</td><td class=\"num\">4.00</td><td>H</td><td class=\"num\">$73.58</td><td class=\"num\">$294.32</td></tr>\n<tr><td>Mon 02 Nov 2026</td><td class=\"code\">04_590_0125_6_1</td><td>Activity Based Transport<div class=\"rule\">Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit.</div></td><td>Activity based transport</td><td class=\"num\">&mdash;</td><td class=\"num\">18.00</td><td>km</td><td class=\"num\">$0.99</td><td class=\"num\">$17.82</td></tr>\n<tr><td>Sun 08 Nov 2026</td><td class=\"code\">04_106_0125_6_1</td><td>Access Community Social and Rec Activ - Standard - Sunday<div class=\"rule\">Sunday rate: shift is on a Sunday</div></td><td>Direct service</td><td class=\"num\">10:00&ndash;15:00</td><td class=\"num\">5.00</td><td>H</td><td class=\"num\">$133.50</td><td class=\"num\">$667.50</td></tr>\n<tr><td>Sun 08 Nov 2026</td><td class=\"code\">04_590_0125_6_1</td><td>Activity Based Transport<div class=\"rule\">Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit.</div></td><td>Activity based transport</td><td class=\"num\">&mdash;</td><td class=\"num\">22.00</td><td>km</td><td class=\"num\">$0.99</td><td class=\"num\">$21.78</td></tr>\n  </tbody>\n  <tfoot><tr><td colspan=\"8\" class=\"num\">Total (AUD)</td><td class=\"num\">$1,001.42</td></tr></tfoot>\n</table></div>\n<section class=\"notes\">\n  <p><strong>GST:</strong> GST component $0.00. Most NDIS supports are GST-free. &ldquo;Any maximum amount specified in this document already includes any Goods and Services Tax (GST).&rdquo; (NDIS Pricing Schedule 2026-27 (effective 2026-09-24), Part 1 s1.2, PDF p4)</p>\n  <p><strong>Payment:</strong> BSB 000-000  Acc 00000000. Please quote ARVO-20261108-TOM.</p>\n</section>\n<footer>Prepared with Arvo. Prices: NDIS Pricing Schedule 2026-27 (National, Victoria)</footer>\n</div>\n</body>\n</html>\n",
+  "nonna": "<!doctype html>\n<html lang=\"en-AU\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Invoice ARVO-20261108-NONNA - Rosa Bianchi</title>\n<style>\n:root { --ink:#1d2329; --muted:#5d6873; --line:#d9dee3; --head:#f3f5f7; }\n* { box-sizing:border-box; }\nbody { margin:0; background:#fff; color:var(--ink); font:14px/1.45 system-ui,-apple-system,\"Segoe UI\",Roboto,Arial,sans-serif; }\n.page { max-width:900px; margin:24px auto; padding:32px 36px; }\nheader { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; border-bottom:2px solid var(--ink); padding-bottom:16px; }\nh1 { margin:0 0 4px; font-size:26px; letter-spacing:.02em; }\n.muted { color:var(--muted); }\n.meta { text-align:right; }\n.meta div, .party div { margin:2px 0; }\n.parties { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0; }\n.party h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 6px; }\n.table-wrap { overflow-x:auto; }\ntable { width:100%; border-collapse:collapse; margin-top:8px; }\nth, td { border-bottom:1px solid var(--line); padding:7px 6px; vertical-align:top; text-align:left; }\nth { background:var(--head); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }\ntd.num, th.num { text-align:right; white-space:nowrap; }\ntd.code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; white-space:nowrap; }\n.rule { color:var(--muted); font-size:12px; margin-top:2px; }\ntfoot td { border-bottom:none; font-weight:700; font-size:16px; padding-top:12px; }\n.notes { margin-top:24px; display:grid; gap:10px; }\n.notes p { margin:0; }\nfooter { margin-top:28px; padding-top:10px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }\n@media (max-width:640px) { .page { padding:16px; margin:0; } .parties { grid-template-columns:1fr; } .meta { text-align:left; }\n  table { font-size:12.5px; } }\n@media print {\n  @page { size:A4; margin:14mm; }\n  body { font-size:11.5px; }\n  .page { margin:0; padding:0; max-width:none; }\n  tr { break-inside:avoid; }\n  th { -webkit-print-color-adjust:exact; print-color-adjust:exact; }\n}\n</style>\n</head>\n<body>\n<div class=\"page\">\n<header>\n  <div><h1>Invoice</h1><div class=\"muted\">NDIS supports for Rosa Bianchi</div></div>\n  <div class=\"meta\">\n    <div><span class=\"muted\">Invoice number:</span> <strong>ARVO-20261108-NONNA</strong></div>\n    <div><span class=\"muted\">Invoice date:</span> Tue 13 Oct 2026</div>\n    <div><span class=\"muted\">Support period:</span> Thu 05 Nov 2026 to Thu 05 Nov 2026</div>\n  </div>\n</header>\n<section class=\"parties\">\n  <div class=\"party\"><h2>From (provider)</h2><div><strong>Mel Tran</strong></div><div><span class=\"muted\">ABN:</span> 12 345 678 901</div><div><span class=\"muted\">Email:</span> mel.support@example.com</div><div><span class=\"muted\">Phone:</span> 0400 000 000</div></div>\n  <div class=\"party\"><h2>For (participant)</h2><div><strong>Rosa Bianchi</strong></div><div><span class=\"muted\">NDIS number:</span> 430000004</div><div><span class=\"muted\">Plan manager:</span> Bayside Plan Partners (example)</div></div>\n</section>\n<div class=\"table-wrap\"><table>\n  <thead><tr><th>Date</th><th>Support item</th><th>Item name</th><th>Claim type</th><th class=\"num\">Start&ndash;end</th>\n  <th class=\"num\">Qty</th><th>Unit</th><th class=\"num\">Unit price</th><th class=\"num\">Total</th></tr></thead>\n  <tbody>\n<tr><td>Thu 05 Nov 2026</td><td class=\"code\">01_011_0107_1_1</td><td>Assistance With Self-Care Activities - Standard - Weekday Daytime<div class=\"rule\">Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday</div></td><td>Direct service</td><td class=\"num\">08:00&ndash;12:00</td><td class=\"num\">4.00</td><td>H</td><td class=\"num\">$73.58</td><td class=\"num\">$294.32</td></tr>\n<tr><td>Thu 05 Nov 2026</td><td class=\"code\">01_015_0107_1_1</td><td>Assistance With Self-Care Activities - Standard - Weekday Evening<div class=\"rule\">Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))</div></td><td>Direct service</td><td class=\"num\">19:00&ndash;21:30</td><td class=\"num\">2.50</td><td>H</td><td class=\"num\">$81.07</td><td class=\"num\">$202.68</td></tr>\n  </tbody>\n  <tfoot><tr><td colspan=\"8\" class=\"num\">Total (AUD)</td><td class=\"num\">$497.00</td></tr></tfoot>\n</table></div>\n<section class=\"notes\">\n  <p><strong>GST:</strong> GST component $0.00. Most NDIS supports are GST-free. &ldquo;Any maximum amount specified in this document already includes any Goods and Services Tax (GST).&rdquo; (NDIS Pricing Schedule 2026-27 (effective 2026-09-24), Part 1 s1.2, PDF p4)</p>\n  <p><strong>Payment:</strong> BSB 000-000  Acc 00000000. Please quote ARVO-20261108-NONNA.</p>\n</section>\n<footer>Prepared with Arvo. Prices: NDIS Pricing Schedule 2026-27 (National, Victoria)</footer>\n</div>\n</body>\n</html>\n"
+ },
+ "week_ending": "2026-11-08",
+ "saved_note": "A real run of gemma4:e4b on a laptop (RTX 4050), saved so this page works without the app."
 }

@@ -9,7 +9,8 @@ import types
 import pytest
 
 from arvo import llm
-from arvo.extract import (dates_from_day_written, extract_shifts, find_verbatim, km_figures, match_alias,
+from arvo.extract import (dates_from_day_written, extract_shifts, extract_shifts_code_only, find_verbatim,
+                          km_figures, match_alias,
                           parse_written_times, reconcile_times, time_ranges, week_window)
 from arvo.models import Shift
 from arvo.rp import screen_notes
@@ -266,6 +267,16 @@ def test_extract_recovers_skipped_line_but_not_cancelled_or_note_times(fake_llm,
         ("priya", "2026-11-08", "14:00", "16:00", 3)]
     assert "added by code" in shifts[0].warnings[0] and len(warns) == 2
     assert time_ranges("half past 4\u20136:30")[0][2:] == ((4, 30, False), (6, 30, False))
+
+
+def test_extract_code_only_makes_no_model_call(fake_llm, roster):
+    shifts, warns, meta = extract_shifts_code_only(DIARY, roster, WEEK)
+    assert fake_llm.calls == [] and meta["model"] == "code-only" and meta["total_s"] >= 0
+    assert [(s.participant_id, s.date, s.start, s.end, s.km) for s in shifts] == [
+        ("jake", "2026-11-03", "15:00", "20:30", 12), ("priya", "2026-11-04", "09:00", "13:00", 0),
+        ("jake", "2026-11-05", "10:00", "14:00", 0)]
+    assert shifts[2].note == "Locked the pantry so he would stop snacking." and warns == []
+    assert extract_shifts_code_only("  ", roster, WEEK)[:2] == ([], ["diary is empty"])
 
 
 # ----------------------------------------------------------------------------- rp
