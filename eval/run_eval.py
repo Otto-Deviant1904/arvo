@@ -584,7 +584,7 @@ def summary_md(results: list[dict], split: str = "all") -> str:
         L += ["", f"## Restrictive-practice flags: held-out note set (all {n} notes in rp_notes.jsonl, any split)", ""]
         _rp_table(L, results, "rp_all")
     if any(r.get("images") for r in results):
-        L += ["", "## Photos of a paper diary (6 handwriting PNGs)", "",
+        L += ["", "## Photos of a paper diary (handwriting-style PNGs in this split)", "",
               "| model | gold/pred shifts | recall | precision | exact shift | weeks total right to the cent | "
               "mean abs $ error / week |", "|---|---|---|---|---|---|---|"]
         for r in results:

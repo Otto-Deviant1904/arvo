@@ -69,7 +69,7 @@ Detection F1 by type (detected/positives):
 | gemma4:e2b | 40.0% (1/4) | 88.9% (4/5) | n/a (0/5) | 33.3% (1/4) | n/a (0/4) |
 | gemma4:e4b | 85.7% (3/4) | 90.9% (5/5) | 88.9% (4/5) | 100.0% (4/4) | 80.0% (4/4) |
 
-## Photos of a paper diary (6 handwriting PNGs)
+## Photos of a paper diary (handwriting-style PNGs in this split)
 
 | model | gold/pred shifts | recall | precision | exact shift | weeks total right to the cent | mean abs $ error / week |
 |---|---|---|---|---|---|---|

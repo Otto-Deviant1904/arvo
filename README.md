@@ -66,7 +66,19 @@ each shift note ──> Gemma 4 e4b ──> possible restrictive practice ──
 
 ## Results
 
-RESULTS_PLACEHOLDER
+All numbers below are from held-out data, run once on frozen code (git tag `eval-freeze-1`). Prompts and code were tuned only on 8 synthetic dev weeks. Full tables: `eval/results/summary_test.md`, `eval/results/summary_wild.md`, `eval/voice/heldout/RESULTS.md`. Method: `eval/README.md`.
+
+| Held-out set | What it is | Gemma 4 e4b + code (Arvo) | Baselines |
+|---|---|---|---|
+| Synthetic test split | 16 template-generated weeks, 119 shifts | 93.3% of shifts exactly right; invoice line recall 95.0%; 10/16 weeks right to the cent | code-only parser 91.6% exact; Gemma pricing the week itself: 0/16 weeks right, line recall 49.5% |
+| Wild diaries | 8 free-form weeks, 58 shifts (prose, dictation, corrections, odometers); gold checked by a blind second annotator (58/58 agreement) | 75.9% of shifts exactly right; $121 mean error per week; 2/8 weeks right to the cent | code-only parser 39.7% exact, $1,207 per week; Gemma pricing alone $366 per week, 0/8 weeks |
+| Restrictive-practice notes | 42 notes: 22 restrictive practices (20 unauthorised, 2 authorised), 20 innocent notes with trap words | detection F1 88.9% (precision 87.0%, recall 90.9%); 1/20 innocent notes flagged | keyword list F1 45.7%, 5/20 innocent notes flagged; `gemma4:e2b` F1 41.4% |
+| Photos of a paper diary | 4 test weeks as handwriting-style images | 90.0% of shifts exactly right; 2/4 weeks right to the cent | `gemma4:e2b` 76.7% |
+| Voice memos | 10 memos, synthetic voice not used in development | 6/10 memos with every field right; participant, date and start 10/10; word error rate 12.0% | |
+
+Speed on a laptop with an RTX 4050 (6 GB): about 9 s to read a week, 0.5 s per note, 13 s end to end for the demo week. A CPU-only GitHub Actions runner with `gemma4:e2b` takes about 6 minutes per week.
+
+What the held-out runs taught: on the wild diaries most wrong shifts were the code guardrails overriding a correct model answer (zeroing km the model had read from "twenty two k", re-parsing dictated "9 30 till 1 30" as 09:00-13:00, moving a shift dated "Sundy" to the previous heading). The guardrails had been tuned on 8 template weeks. See `eval/results/postfix/` for the fix and its (no longer held-out) numbers.
 
 ## Data sources
 
