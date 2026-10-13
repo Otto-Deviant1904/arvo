@@ -84,7 +84,7 @@ I measured what happens without the split. Give Gemma e4b the diary, the roster,
 
 ### The evaluation
 
-Everything in the eval is synthetic. No real participant data was used anywhere. The 24 template diary weeks come from `eval/gen_fixtures.py`, with gold labels from the generator, never from a model. The 8 "wild" weeks were written by a different AI agent imitating the way tired people write: run-on prose, dictation with no punctuation, strike-through corrections, "Pri same as Tuesday", "odo 45213 to 45231". A second model that never saw the gold labelled all 8 weeks blind and agreed on 58 of 58 shifts. The voice memos are Piper TTS voices, not phone recordings. The 42 restrictive-practice notes were written for this eval; a test fails if any 5-word run of one appears in the prompt.
+Everything in the eval is synthetic. No real participant data was used anywhere. The 24 template diary weeks come from `eval/gen_fixtures.py`, with gold labels from the generator, never from a model. The 8 "wild" weeks were written by a different AI agent imitating the way tired people write: run-on prose, dictation with no punctuation, strike-through corrections, "Pri same as Tuesday", "odo 45213 to 45231". A second model that never saw the gold labelled all 8 weeks blind and agreed on 58 of 58 shifts. The voice memos are Piper TTS voices, not phone recordings. The 42 restrictive-practice notes were written for this eval by another agent; a test fails if any 5-word run of one appears in the prompt.
 
 Prompts and code were tuned on 8 dev weeks only. Everything else was run once, on code frozen at git tag `eval-freeze-1`, with the result files copied into `eval/results/frozen/` under SHA-256 sums. On dev, Gemma e4b scored 100% exact shifts and 8 of 8 weeks to the cent. That overstated it, as dev numbers do.
 
@@ -137,7 +137,7 @@ The dev weeks stayed at 100%. Two things got worse, and they are the cost of the
 - Synthetic everything: diaries, photos (rendered, not photographed), voices (no Australian accent, no ums). A real worker's diary will be messier.
 - 42 notes is a small set. One note moves a per-type F1 a lot.
 - Prices change. An award change takes effect 1 December 2026 and the Schedule will be updated. Update the JSON, not the code.
-- Registered or unregistered matters. The 5-business-day duty belongs to registered providers. An unregistered sole trader must not use regulated restrictive practices at all, and no official source gives her a deadline for reporting her own. So Arvo says "talk to your provider or the NDIS Commission". It flags; it does not decide. It is not legal or compliance advice.
+- Registered or unregistered matters. The 5-business-day duty belongs to registered providers. An unregistered sole trader must not use regulated restrictive practices at all, and no official source gives her a deadline for reporting her own. So Arvo labels the date as the registered provider's deadline and gives unregistered workers the Commission's contact details. It flags; it does not decide. It is not legal or compliance advice.
 
 ## Why Does Open Innovation Matter?
 
