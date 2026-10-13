@@ -78,7 +78,7 @@ All numbers below are from held-out data, run once on frozen code (git tag `eval
 
 Speed on a laptop with an RTX 4050 (6 GB): about 9 s to read a week, 0.5 s per note, 13 s end to end for the demo week. A CPU-only GitHub Actions runner with `gemma4:e2b` takes about 6 minutes per week.
 
-What the held-out runs taught: many wrong shifts were the code guardrails overriding a correct model answer. On the wild diaries, code zeroed km the model had read from "twenty two k" and re-parsed dictated "9 30 till 1 30" as 09:00-13:00; on the test split, a line ending in the misspelt "Sundy" made code move a correctly dated shift to the previous heading's day. The guardrails had been tuned on 8 template weeks. See `eval/results/postfix/` for the fix and its (no longer held-out) numbers.
+What the held-out runs taught: many wrong shifts were the code guardrails overriding a correct model answer. On the wild diaries, code zeroed km the model had read from "twenty two k" and re-parsed dictated "9 30 till 1 30" as 09:00-13:00; on the test split, a line ending in the misspelt "Sundy" made code move a correctly dated shift to the previous heading's day. The guardrails had been tuned on 8 template weeks. The fix: code overrules the model only when its own reading is unambiguous and the model's value is impossible; otherwise the model's value stands and the disagreement becomes a warning. After the fix (no longer held out, since the fix was made while looking at these errors): test 95.0% exact shifts and 11/16 weeks to the cent; wild 94.8% and 7/8; voice 8/10 memos. Files: `eval/results/postfix/`, `eval/voice/heldout/postfix/`.
 
 ## Data sources
 

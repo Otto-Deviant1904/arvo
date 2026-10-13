@@ -120,10 +120,14 @@ The numbers after that change are not held out any more: I had seen these errors
 
 | | Frozen (held out) | After the fix (not held out) |
 |---|---|---|
-| Test split, exact shifts | 93.3% | [TODO POSTFIX: test exact shifts] |
-| Test split, weeks right to the cent | 10/16 | [TODO POSTFIX: test weeks to the cent] |
-| Wild, exact shifts | 75.9% | [TODO POSTFIX: wild exact shifts] |
-| Wild, mean $ error per week | $121 | [TODO POSTFIX: wild $ per week] |
+| Test split, exact shifts | 93.3% | 95.0% |
+| Test split, weeks right to the cent | 10/16 | 11/16 |
+| Wild, exact shifts | 75.9% | 94.8% |
+| Wild, weeks right to the cent | 2/8 | 7/8 |
+| Wild, mean $ error per week | $121 | $68 |
+| Voice memos with every field right | 6/10 | 8/10 |
+
+The dev weeks stayed at 100%. Two things got worse, and they are the cost of the rule. In one test week the model put a shift on the wrong day and a heading would have caught it; now the heading only raises a check, and this time it raised none. In one wild week the model skipped two shifts and the code's fallback added one back on the Thursday, missing the correction on the next line ("that was Fri not Thu"). The wild number is the one I would trust least: I fixed the code while looking at those exact diaries. Files: `eval/results/postfix/`, `eval/voice/heldout/postfix/`.
 
 ### Limits
 
