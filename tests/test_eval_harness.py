@@ -296,3 +296,72 @@ def test_run_model_offline_with_split_and_rp_all(tmp_path, monkeypatch):
     md = ev.summary_md([r], "dev")
     assert md.startswith("# Arvo eval summary: dev split (weeks 01-08)")
     assert "tuned only on dev weeks 1-8" in md and "held-out note set (all 42 notes" in md
+
+
+# ------------------------------------------------------------------------------- code-only / wild set
+def test_derive_kind_matches_generator_kinds():
+    pytest.importorskip("arvo.calendar_au")
+    for g in golds():
+        for s in g["shifts"]:
+            assert ev.derive_kind({k: v for k, v in s.items() if k != "kind"}) == s["kind"], s
+
+
+def _write_wild(dirpath: Path, n: int = 2) -> None:
+    """A tiny wild set built from synthetic weeks, with 'kind' and 'week' stripped like hand-written gold."""
+    dirpath.mkdir(parents=True, exist_ok=True)
+    for g in golds()[:n]:
+        gold = {"week_ending": g["week_ending"], "rp": g["rp"],
+                "shifts": [{k: v for k, v in s.items() if k != "kind"} for s in g["shifts"]]}
+        (dirpath / f"{g['week']}.gold.json").write_text(json.dumps(gold), encoding="utf-8")
+        (dirpath / f"{g['week']}.txt").write_text((FIX / f"{g['week']}.txt").read_text(encoding="utf-8"),
+                                                 encoding="utf-8")
+
+
+def test_wild_loader_and_parser(tmp_path, monkeypatch):
+    _write_wild(tmp_path / "wild")
+    monkeypatch.setattr(ev, "WILD", tmp_path / "wild")
+    weeks = ev.load_fixtures("wild")
+    assert [w["week"] for w in weeks] == ["week01", "week02"] and all(w["text"] and w["png"] is None for w in weeks)
+    assert ev.select_weeks(weeks, "wild") == weeks and ev.select_weeks(weeks, "wild", 1) == weeks[:1]
+    a = ev.build_parser().parse_args([])
+    assert a.set == "synthetic"
+    assert ev.build_parser().parse_args(["--set", "wild", "--models", "code-only"]).set == "wild"
+    assert ev.result_paths("code-only", "wild")[0].name == "code-only_wild.json"
+    assert ev.result_paths("gemma4:e4b", "wild")[2].name == "summary_wild.md"
+
+
+def test_code_only_on_wild_offline(tmp_path, monkeypatch):
+    """code-only: deterministic extractor only; RP, photos and model-alone baseline are n/a. No network."""
+    import types
+    extract = pytest.importorskip("arvo.extract")
+    rp = pytest.importorskip("arvo.rp")
+    pytest.importorskip("arvo.pricing")
+    pytest.importorskip("arvo.calendar_au")
+
+    _write_wild(tmp_path / "wild")
+    monkeypatch.setattr(ev, "WILD", tmp_path / "wild")
+    monkeypatch.setattr(ev, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(ev, "RAW", tmp_path / "results" / "raw")
+    weeks = ev.select_weeks(ev.load_fixtures("wild"), "wild")
+    by_we = {w["week_ending"]: w for w in weeks}
+    monkeypatch.setattr(extract, "extract_shifts_code_only", lambda text, roster, we: (
+        [ev.to_shift(s) for s in by_we[we]["shifts"]], [], {"total_s": 0.0}), raising=False)
+
+    def boom(*a, **k):
+        raise AssertionError("code-only must not call the model")
+
+    monkeypatch.setattr(rp, "screen_notes", boom)
+    monkeypatch.setattr(baselines, "model_alone_lines", boom)
+    args = types.SimpleNamespace(set="wild", split="wild", limit=None, images=True, skip_baseline=False, rp_all=True)
+    roster = json.loads((ROOT / "data" / "roster.example.json").read_text(encoding="utf-8"))
+    r = ev.run_model("code-only", weeks, roster, args)
+    assert r["code_only"] and r["split"] == "wild" and r["n_weeks"] == 2
+    assert r["extraction"]["exact_match"] == 1.0 and r["invoice"]["weeks_total_exact"] == 2
+    assert "n/a" not in r["extraction"]["exact_by_kind"]  # kinds derived from date/time/holidays
+    assert r["rp"]["gemma"] is None and r["rp"]["keyword_baseline"]["n_flags"] >= 0
+    assert r["rp_all"]["gemma"] is None and r["rp_all"]["n_notes"] == 42
+    assert r["images"] is None and r["invoice_model_alone"] is None and r["model_alone_note"] == "n/a (code-only)"
+    assert (tmp_path / "results" / "raw" / "code-only_wild" / "week01.json").exists()
+    md = ev.summary_md([r], "wild")
+    assert md.startswith("# Arvo eval summary: wild set") and "held out" in md
+    assert "| code-only | n/a | n/a |" in md

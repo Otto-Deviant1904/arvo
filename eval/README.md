@@ -8,6 +8,8 @@ uv run --with pillow python eval/gen_fixtures.py                 # (re)write eva
 uv run --with pillow python eval/run_eval.py --split dev --models gemma4:e4b --limit 2 --skip-baseline   # smoke
 uv run --with pillow python eval/run_eval.py --split dev --models gemma4:e4b,gemma4:e2b --images          # tuning loop
 uv run --with pillow python eval/run_eval.py --split test --models gemma4:e4b,gemma4:e2b --images --rp-all  # once, at the end
+uv run --with pillow python eval/run_eval.py --split test --models code-only,gemma4:e4b    # no-model extractor alongside
+uv run --with pillow python eval/run_eval.py --set wild --models code-only,gemma4:e4b      # held-out wild set
 uv run --with pytest --with pillow pytest -q tests/test_eval_harness.py
 ```
 
@@ -66,6 +68,17 @@ all, many with keyword traps ("the hardware shop had already locked up", "strapp
 and avoids the example scenarios in `arvo/rp.py`'s prompt and the example phrasings in
 `docs/sources/restrictive_practices.md`; `tests/test_eval_harness.py` fails if any 5-word run of a held-out
 note appears in the prompt source. Each note sits on exactly one shift for its participant and day.
+
+## `code-only` and the wild set
+
+- `--models code-only` is a pseudo-model: extraction runs `arvo.extract.extract_shifts_code_only(diary_text,
+  roster, week_ending)` (deterministic, no LLM). Its RP, photo and model-alone columns are `n/a`; the keyword
+  RP baseline is still reported. It can be mixed with real models in one run (`--models code-only,gemma4:e4b`).
+- `--set wild` (default `synthetic`) reads `eval/wild/weekNN.txt` + `weekNN.gold.json` (same gold shape as the
+  synthetic set; `kind` may be missing, in which case it is derived from date, times and
+  `arvo.calendar_au` with the generator's rules, or `n/a`). The wild set has no split: `--split` is ignored, it is
+  held out, never used for tuning, and run once at the end. Results go to `eval/results/<model>_wild.json` and
+  `eval/results/summary_wild.md`.
 
 ## Metrics (`eval/run_eval.py`)
 

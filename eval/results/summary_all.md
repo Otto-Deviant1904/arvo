@@ -2,7 +2,7 @@
 
 Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run once at the end.
 
-Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, never a model. Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. Re-run: `uv run --with pillow python eval/run_eval.py --models ...`.
+Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, never a model. Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. `code-only` = the deterministic extractor with no model (no RP, photo or model-alone numbers). Re-run: `uv run --with pillow python eval/run_eval.py --split all --models ...`.
 
 ## Shift extraction (typed diary text)
 

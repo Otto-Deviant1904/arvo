@@ -6,6 +6,8 @@
 Splits: dev = weeks 01-08 (prompts/code may be tuned on these), test = weeks 09-24 (run once at the end),
 all = 01-24. The split is applied before --limit. --rp-all also screens the 42 held-out notes in
 eval/fixtures/rp_notes.jsonl, whatever the split.
+--models code-only: the no-model extractor arvo.extract.extract_shifts_code_only (no RP, photos or baseline).
+--set wild: eval/wild/weekNN.txt + weekNN.gold.json (held out, no split); results named <model>_wild.
 
 Gold comes only from eval/fixtures/*.gold.json (made by eval/gen_fixtures.py). Gold invoice lines are
 the gold shifts priced by arvo.pricing, so line metrics measure what extraction errors cost in dollars.
@@ -29,6 +31,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "eval" / "fixtures"
+WILD = ROOT / "eval" / "wild"
 RESULTS = ROOT / "eval" / "results"
 RAW = RESULTS / "raw"
 ROSTER_PATH = ROOT / "data" / "roster.example.json"
@@ -38,7 +41,9 @@ for p in (str(ROOT), str(ROOT / "eval")):
 
 RP_TYPES = ("seclusion", "chemical", "mechanical", "physical", "environmental")
 SPLITS = {"dev": range(1, 9), "test": range(9, 25), "all": range(1, 25)}
-SPLIT_LABEL = {"dev": "dev split (weeks 01-08)", "test": "test split (weeks 09-24)", "all": "all weeks (01-24)"}
+SPLIT_LABEL = {"dev": "dev split (weeks 01-08)", "test": "test split (weeks 09-24)", "all": "all weeks (01-24)",
+               "wild": "wild set (eval/wild, held out)"}
+CODE_ONLY = "code-only"  # pseudo-model: deterministic extractor, no LLM
 SHIFT_FIELDS = ("participant", "date", "start", "end", "km")
 
 
@@ -154,6 +159,34 @@ def extraction_metrics(c: dict) -> dict:
     return out
 
 
+def derive_kind(s) -> str:
+    """Shift kind from date/times/Vic holidays (same rules as gen_fixtures.classify), for gold without 'kind'."""
+    from datetime import date as _date
+    try:
+        from arvo.calendar_au import is_public_holiday
+    except ImportError:
+        return "n/a"
+    try:
+        st, en = tmin(_get(s, "start")), tmin(_get(s, "end"))
+        d = _date.fromisoformat(_get(s, "date"))
+        ph = is_public_holiday(d.isoformat())
+    except Exception:  # noqa: BLE001
+        return "n/a"
+    if ph:
+        return "public_holiday"
+    if en <= st:
+        return "overnight"
+    if d.weekday() >= 5:
+        return "saturday" if d.weekday() == 5 else "sunday"
+    if st >= 20 * 60:
+        return "weekday_evening"
+    return "weekday_cross_20" if en > 20 * 60 else "weekday_day"
+
+
+def with_kinds(shifts: list[dict]) -> list[dict]:
+    return [s if s.get("kind") else {**s, "kind": derive_kind(s)} for s in shifts]
+
+
 def line_key(ln) -> tuple:
     return (_get(ln, "participant_id"), _get(ln, "date"), str(_get(ln, "item_number") or "").strip(),
             round(float(_get(ln, "quantity") or 0) + 1e-9, 2), round(float(_get(ln, "total") or 0) + 1e-9, 2))
@@ -248,7 +281,7 @@ def latency(values: list[float]) -> dict:
 # =============================================================================================
 def select_weeks(weeks: list[dict], split: str = "all", limit: int | None = None) -> list[dict]:
     """Keep the split's weeks (by week number), then the first `limit` of them."""
-    keep = [w for w in weeks if int(w["week"][4:]) in SPLITS[split]]
+    keep = weeks if split not in SPLITS else [w for w in weeks if int(w["week"][4:]) in SPLITS[split]]
     return keep[:limit] if limit else keep
 
 
@@ -268,14 +301,19 @@ def result_paths(model: str, split: str) -> tuple[Path, Path, Path]:
     return (RESULTS / f"{slug(model)}_{split}.json", RAW / f"{slug(model)}_{split}", RESULTS / f"summary_{split}.md")
 
 
-def load_fixtures(limit: int | None = None) -> list[dict]:
+def load_fixtures(set_name: str = "synthetic") -> list[dict]:
+    """weekNN.txt + weekNN.gold.json pairs from eval/fixtures (synthetic) or eval/wild (wild)."""
+    base = FIXTURES if set_name == "synthetic" else WILD
     weeks = []
-    for gp in sorted(FIXTURES.glob("week*.gold.json")):
+    for gp in sorted(base.glob("week*.gold.json")):
+        stem = gp.name[: -len(".gold.json")]
         gold = json.loads(gp.read_text(encoding="utf-8"))
-        gold["text"] = (FIXTURES / f"{gold['week']}.txt").read_text(encoding="utf-8")
-        gold["png"] = str(FIXTURES / gold["image"]) if gold.get("image") and (FIXTURES / gold["image"]).exists() else None
+        gold.setdefault("week", stem)
+        gold["text"] = (base / f"{stem}.txt").read_text(encoding="utf-8")
+        gold["rp"] = gold.get("rp") or []
+        gold["png"] = str(base / gold["image"]) if gold.get("image") and (base / gold["image"]).exists() else None
         weeks.append(gold)
-    return weeks[:limit] if limit else weeks
+    return weeks
 
 
 def to_shift(d: dict):
@@ -295,6 +333,9 @@ def slug(model: str) -> str:
 
 def check_ollama(models: list[str]) -> None:
     from arvo import llm
+    models = [m for m in models if m != CODE_ONLY]
+    if not models:
+        return
     try:
         with urllib.request.urlopen(llm.OLLAMA_URL + "/api/tags", timeout=5) as r:
             have = {m["name"] for m in json.loads(r.read()).get("models", [])}
@@ -312,9 +353,21 @@ def price(shifts, roster) -> tuple[list[dict], list[str]]:
 
 
 def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
-    from arvo.extract import extract_shifts
-    from arvo.rp import screen_notes
     import baselines
+
+    code_only = model == CODE_ONLY
+    if code_only:  # no LLM: no RP screen, no photos, no model-alone baseline
+        try:
+            from arvo.extract import extract_shifts_code_only
+        except ImportError as e:
+            raise SystemExit(f"code-only needs arvo.extract.extract_shifts_code_only: {e}")
+
+        def extract_shifts(text, roster_, week_ending, _model, image_path=None):
+            return extract_shifts_code_only(text, roster_, week_ending)
+        screen_notes = None
+    else:
+        from arvo.extract import extract_shifts
+        from arvo.rp import screen_notes
 
     t_all = time.perf_counter()
     split = getattr(args, "split", "all")
@@ -329,7 +382,7 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
     for wk in weeks:
         name = wk["week"]
         gold = [to_shift(s) for s in wk["shifts"]]
-        gold_kinds = wk["shifts"]  # same order, carries 'kind'
+        gold_kinds = with_kinds(wk["shifts"])  # same order; 'kind' derived if the gold has none
         gold_lines, _ = price(gold, roster)
         rec = {"week": name, "week_ending": wk["week_ending"], "gold_lines": gold_lines}
         print(f"[{model}] {name} ...", flush=True)
@@ -351,7 +404,7 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
         # --- RP on the gold notes (not confounded by extraction)
         rp_gold += wk["rp"]
         try:
-            flags, rmeta = screen_notes(gold, roster, model)
+            flags, rmeta = screen_notes(gold, roster, model) if screen_notes else ([], {})
         except Exception as e:  # noqa: BLE001
             flags, rmeta = [], {"warnings": [f"ERROR {e}"]}
             errors.append(f"{name} rp: {type(e).__name__}: {e}")
@@ -363,7 +416,7 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
         rec.update(rp_flags=[as_dict(f) for f in flags], rp_meta=rmeta, keyword_flags=kw)
 
         # --- model-alone pricing baseline
-        if not args.skip_baseline:
+        if not args.skip_baseline and not code_only:
             t0 = time.perf_counter()
             try:
                 res = baselines.model_alone_lines(wk["text"], roster, wk["week_ending"], model)
@@ -378,7 +431,7 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
                 rec.update(baseline_lines=res[0], baseline_meta=res[1])
 
         # --- photo of the paper diary
-        if args.images and wk.get("png"):
+        if args.images and wk.get("png") and not code_only:
             t0 = time.perf_counter()
             try:
                 ipred, iwarn, imeta = extract_shifts("", roster, wk["week_ending"], model, image_path=wk["png"])
@@ -399,14 +452,15 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
         rows = load_rp_notes()
         nshifts = [to_shift(s) for s in rp_note_shifts(rows)]
         try:
-            aflags, ameta = screen_notes(nshifts, roster, model)
+            aflags, ameta = screen_notes(nshifts, roster, model) if screen_notes else ([], {})
         except Exception as e:  # noqa: BLE001
             aflags, ameta = [], {"warnings": [f"ERROR {e}"]}
             errors.append(f"rp-all: {type(e).__name__}: {e}")
         lat["rp_all_note_s"] = list(ameta.get("per_call_s", []))
         akw = baselines.keyword_screen([as_dict(s) for s in nshifts], roster)
-        rp_all = {"gemma": {**rp_metrics(rows, [as_dict(f) for f in aflags]),
-                            "dropped_by_quote_check": sum(1 for w in ameta.get("warnings", []) if "quote not found" in w)},
+        rp_all = {"gemma": None if code_only else {
+                      **rp_metrics(rows, [as_dict(f) for f in aflags]),
+                      "dropped_by_quote_check": sum(1 for w in ameta.get("warnings", []) if "quote not found" in w)},
                   "keyword_baseline": rp_metrics(rows, akw), "n_notes": len(rows)}
         (raw_dir / "rp_all.json").write_text(json.dumps(
             {"flags": [as_dict(f) for f in aflags], "meta": ameta, "keyword_flags": akw}, indent=1,
@@ -415,20 +469,21 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
     n_notes = sum(1 for wk in weeks for s in wk["shifts"] if s.get("note"))
     out = {
         "model": model, "split": split, "n_weeks": len(weeks), "weeks": [w["week"] for w in weeks],
-        "args": {"split": split, "limit": args.limit, "images": args.images, "skip_baseline": args.skip_baseline,
+        "args": {"set": getattr(args, "set", "synthetic"), "split": split, "limit": args.limit, "images": args.images, "skip_baseline": args.skip_baseline,
                  "rp_all": bool(getattr(args, "rp_all", False))},
         "extraction": extraction_metrics(ex_c),
         "invoice": invoice_metrics(inv), "invoice_by_week": inv,
-        "invoice_model_alone": (None if args.skip_baseline or base_skipped else invoice_metrics(inv_base)),
+        "code_only": code_only,
+        "invoice_model_alone": (None if args.skip_baseline or base_skipped or code_only else invoice_metrics(inv_base)),
         "invoice_model_alone_by_week": inv_base,
-        "model_alone_note": ("skipped (--skip-baseline)" if args.skip_baseline else
+        "model_alone_note": ("n/a (code-only)" if code_only else "skipped (--skip-baseline)" if args.skip_baseline else
                              "skipped: data/ndis_prices_2026_27.json missing" if base_skipped else ""),
-        "rp": {"gemma": {**rp_metrics(rp_gold, rp_flags), "dropped_by_quote_check": dropped_quotes},
+        "rp": {"gemma": None if code_only else {**rp_metrics(rp_gold, rp_flags), "dropped_by_quote_check": dropped_quotes},
                "keyword_baseline": rp_metrics(rp_gold, kw_flags),
                "n_labelled_notes": len(rp_gold), "n_notes_with_text": n_notes},
         "rp_all": rp_all,
         "images": ({"extraction": extraction_metrics(img_c), "invoice": invoice_metrics(inv_img)}
-                   if args.images else None),
+                   if args.images and not code_only else None),
         "latency": {"extract_per_diary": latency(lat["extract_s"]), "rp_per_note": latency(lat["rp_note_s"]),
                     "image_per_diary": latency(lat["image_s"]), "model_alone_per_diary": latency(lat["baseline_s"]),
                     "rp_all_per_note": latency(lat.get("rp_all_note_s", []))},
@@ -461,6 +516,10 @@ def _rp_table(L: list[str], results: list[dict], key: str) -> None:
         rows = [(r["model"], r[key]["gemma"])] + ([] if seen_kw else [("keyword baseline", r[key]["keyword_baseline"])])
         seen_kw = True
         for label, m in rows:
+            if m is None:  # code-only: no model RP screen
+                L.append(f"| {label} | " + " | ".join(["n/a"] * 9) + " |")
+                by_type.append(f"| {label} | " + " | ".join(["n/a"] * len(RP_TYPES)) + " |")
+                continue
             d, n = m["detection"]["overall"], m["needs_reporting"]["overall"]
             L.append(f"| {label} | {_pct(d['precision'])} | {_pct(d['recall'])} | {_pct(d['f1'])} | "
                      f"{_pct(n['precision'])} | {_pct(n['recall'])} | {_pct(n['f1'])} | "
@@ -474,12 +533,18 @@ def _rp_table(L: list[str], results: list[dict], key: str) -> None:
 
 
 def summary_md(results: list[dict], split: str = "all") -> str:
-    L = [f"# Arvo eval summary: {SPLIT_LABEL[split]}", "",
-         "Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run once "
-         "at the end.", "",
-         "Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, never a model. "
-         "Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. "
-         f"Re-run: `uv run --with pillow python eval/run_eval.py --split {split} --models ...`.", ""]
+    held_out = ("The wild set is held out: it was never used for tuning and was run once at the end."
+                if split == "wild" else
+                "Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run "
+                "once at the end.")
+    source = ("Diaries and gold from `eval/wild/` (gold written by hand, not by a model)." if split == "wild" else
+              "Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, "
+              "never a model.")
+    rerun = ("--set wild" if split == "wild" else f"--split {split}")
+    L = [f"# Arvo eval summary: {SPLIT_LABEL[split]}", "", held_out, "",
+         f"{source} Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. "
+         f"`code-only` = the deterministic extractor with no model (no RP, photo or model-alone numbers). "
+         f"Re-run: `uv run --with pillow python eval/run_eval.py {rerun} --models ...`.", ""]
     L += ["## Shift extraction (typed diary text)", "",
           "| model | weeks | gold/pred shifts | recall | precision | participant | date | start | end | km | exact shift |",
           "|---|---|---|---|---|---|---|---|---|---|---|"]
@@ -524,6 +589,7 @@ def summary_md(results: list[dict], split: str = "all") -> str:
               "mean abs $ error / week |", "|---|---|---|---|---|---|---|"]
         for r in results:
             if not r.get("images"):
+                L.append(f"| {r['model']} | n/a | n/a | n/a | n/a | n/a | n/a |")
                 continue
             e, m = r["images"]["extraction"], r["images"]["invoice"]
             L.append(f"| {r['model']} | {e['n_gold']}/{e['n_pred']} | {_pct(e['recall'])} | {_pct(e['precision'])} | "
@@ -545,7 +611,10 @@ def summary_md(results: list[dict], split: str = "all") -> str:
 
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description="Arvo eval")
-    ap.add_argument("--models", default="gemma4:e4b", help="comma-separated Ollama models")
+    ap.add_argument("--models", default="gemma4:e4b",
+                    help=f"comma-separated Ollama models; '{CODE_ONLY}' = the no-model extractor")
+    ap.add_argument("--set", choices=["synthetic", "wild"], default="synthetic",
+                    help="synthetic = eval/fixtures (split applies); wild = eval/wild (held out, no split)")
     ap.add_argument("--split", choices=sorted(SPLITS), default="all",
                     help="dev = weeks 01-08, test = weeks 09-24, all = 01-24 (applied before --limit)")
     ap.add_argument("--limit", type=int, default=None, help="only the first N weeks of the split")
@@ -570,13 +639,20 @@ def main(argv: list[str] | None = None) -> int:
     models = [m.strip() for m in args.models.split(",") if m.strip()]
 
     try:
-        import arvo.extract, arvo.rp, arvo.pricing  # noqa: F401,E401
+        import arvo.extract, arvo.pricing  # noqa: F401,E401
+        if any(m != CODE_ONLY for m in models):
+            import arvo.rp  # noqa: F401
     except ImportError as e:
         raise SystemExit(f"arvo modules not ready: {e}")
     check_ollama(models)
-    weeks = select_weeks(load_fixtures(), args.split, args.limit)
+    if args.set == "wild":
+        if args.split != "all":
+            print(f"note: --split {args.split} ignored for --set wild (the wild set has no split)", file=sys.stderr)
+        args.split = "wild"
+    weeks = select_weeks(load_fixtures(args.set), args.split, args.limit)
     if not weeks:
-        raise SystemExit("no fixtures: run eval/gen_fixtures.py first")
+        raise SystemExit("no fixtures: run eval/gen_fixtures.py first" if args.set == "synthetic"
+                         else f"no weekNN.gold.json files in {WILD}")
     roster = json.loads(ROSTER_PATH.read_text(encoding="utf-8"))
     RESULTS.mkdir(parents=True, exist_ok=True)
     t0 = time.perf_counter()
