@@ -3,10 +3,10 @@
   "week_ending": "2027-02-21",
   "seed": 2026,
   "style": {
-    "headings": true,
+    "headings": false,
     "h24": false,
     "emoji_p": 0.12,
-    "typo_p": 0.08
+    "typo_p": 0.03
   },
   "image": "week21.png",
   "shifts": [
@@ -16,11 +16,11 @@
       "start": "08:00",
       "end": "10:00",
       "km": 0,
-      "note": "dinner + pjs",
+      "note": "shower + meds prompt",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "8-10",
-      "day_text": "tue",
+      "time_text": "8–10",
+      "day_text": "TUES",
       "rp_note_id": null
     },
     {
@@ -32,8 +32,8 @@
       "note": "bowling w/ his mates",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "9:15 till 11:45",
-      "day_text": "Wednesday",
+      "time_text": "9:15-11:45",
+      "day_text": "Wed",
       "rp_note_id": null
     },
     {
@@ -45,7 +45,7 @@
       "note": "gym",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "11 - 2:30pm",
+      "time_text": "11:00 till 2:30",
       "day_text": "18/2",
       "rp_note_id": null
     },
@@ -58,7 +58,7 @@
       "note": "Priya wanted to sit in the car on her own for a bit after the shops, door open, I waited on the bench nearby.",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "5:45 pm - 9:45",
+      "time_text": "5.45pm-quarter to 10",
       "day_text": "18/2",
       "rp_note_id": "neg20"
     },
@@ -71,8 +71,8 @@
       "note": "Mrs B wanted a nap so I pulled the curtains and left her bedroom door open.",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "quarter past 7 - quarter past 10",
-      "day_text": "Fri 19/2",
+      "time_text": "7.15am–10.15",
+      "day_text": "19 Feb",
       "rp_note_id": "neg10"
     },
     {
@@ -81,11 +81,11 @@
       "start": "20:15",
       "end": "22:45",
       "km": 32,
-      "note": "op shopping",
+      "note": "bowling w/ his mates",
       "kind": "weekday_evening",
       "overnight": false,
-      "time_text": "8:15PM–10.45",
-      "day_text": "Fri 19/2",
+      "time_text": "8:15pm–quarter to 11",
+      "day_text": "FRI",
       "rp_note_id": null
     },
     {
@@ -94,11 +94,11 @@
       "start": "10:30",
       "end": "16:00",
       "km": 38,
-      "note": "op shopping",
+      "note": "pool then maccas",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "10:30 till 4PM",
-      "day_text": "Sat 20/2",
+      "time_text": "10:30am-4pm",
+      "day_text": "Sat 20th",
       "rp_note_id": null
     },
     {
@@ -107,11 +107,11 @@
       "start": "14:00",
       "end": "16:30",
       "km": 20,
-      "note": "drove him to his cousin's",
+      "note": "bowling w/ his mates",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "2pm till 4:30pm",
-      "day_text": "21/2",
+      "time_text": "2 till 4.30pm",
+      "day_text": "the 21st",
       "rp_note_id": null
     }
   ],

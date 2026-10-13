@@ -5,8 +5,8 @@
   "style": {
     "headings": false,
     "h24": false,
-    "emoji_p": 0.0,
-    "typo_p": 0.25
+    "emoji_p": 0.2,
+    "typo_p": 0.08
   },
   "image": null,
   "shifts": [
@@ -16,11 +16,11 @@
       "start": "08:30",
       "end": "10:30",
       "km": 18,
-      "note": "",
+      "note": "mvies",
       "kind": "public_holiday",
       "overnight": false,
-      "time_text": "8:30 till 10:30am",
-      "day_text": "MON",
+      "time_text": "8:30–10:30",
+      "day_text": "Mon (pub hol)",
       "rp_note_id": null
     },
     {
@@ -29,10 +29,10 @@
       "start": "13:00",
       "end": "17:30",
       "km": 9,
-      "note": "",
+      "note": "swimming",
       "kind": "public_holiday",
       "overnight": false,
-      "time_text": "1 pm-5:30pm",
+      "time_text": "1pm-5.30",
       "day_text": "Mon 28th",
       "rp_note_id": null
     },
@@ -45,8 +45,8 @@
       "note": "",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "9 til 11",
-      "day_text": "weds",
+      "time_text": "9 am-11am",
+      "day_text": "WED",
       "rp_note_id": null
     },
     {
@@ -55,11 +55,11 @@
       "start": "08:00",
       "end": "10:00",
       "km": 0,
-      "note": "shower + brekkie",
+      "note": "showered, dressed, brekkie",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "8 - 10 am",
-      "day_text": "Thur",
+      "time_text": "8am to 10",
+      "day_text": "thurs",
       "rp_note_id": null
     },
     {
@@ -71,8 +71,8 @@
       "note": "Jake wanted the bathroom door locked while he showered for privacy, he unlocked it himself after.",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "1pm-4.30",
-      "day_text": "Thursday",
+      "time_text": "1 - half past 4",
+      "day_text": "Thu",
       "rp_note_id": "neg19"
     },
     {
@@ -81,11 +81,11 @@
       "start": "17:15",
       "end": "18:45",
       "km": 0,
-      "note": "",
+      "note": "dinner + pjs",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "5:15-6:45pm",
-      "day_text": "31/12",
+      "time_text": "5:15pm–6:45",
+      "day_text": "Thursday",
       "rp_note_id": null
     },
     {
@@ -97,8 +97,8 @@
       "note": "Gave him the extra half tablet so he'd settle before tea.",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "2pm to half 7",
-      "day_text": "2/1",
+      "time_text": "2-7:30",
+      "day_text": "sat",
       "rp_note_id": "rp05"
     }
   ],

@@ -5,7 +5,7 @@
   "style": {
     "headings": false,
     "h24": false,
-    "emoji_p": 0.2,
+    "emoji_p": 0.12,
     "typo_p": 0.08
   },
   "image": null,
@@ -16,11 +16,11 @@
       "start": "08:00",
       "end": "09:30",
       "km": 0,
-      "note": "brekkie, changed the bed",
+      "note": "shower + meds propt",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "8 am-9:30",
-      "day_text": "MON",
+      "time_text": "8–9:30",
+      "day_text": "Mon",
       "rp_note_id": null
     },
     {
@@ -29,11 +29,11 @@
       "start": "09:30",
       "end": "13:00",
       "km": 27,
-      "note": "bus training into the city",
+      "note": "swimming",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "9:30 am to 1",
-      "day_text": "TUES",
+      "time_text": "half 9 - 1",
+      "day_text": "tues",
       "rp_note_id": null
     },
     {
@@ -42,11 +42,11 @@
       "start": "14:30",
       "end": "16:30",
       "km": 23,
-      "note": "Bunnings + footy",
+      "note": "Chaddy shopping",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "half 2 to half 4",
-      "day_text": "Tues 29/9",
+      "time_text": "2:30 til 4:30PM",
+      "day_text": "Tuesday",
       "rp_note_id": null
     },
     {
@@ -55,11 +55,11 @@
       "start": "08:30",
       "end": "10:30",
       "km": 11,
-      "note": "nails + movie",
+      "note": "hepled w/ shower, hair",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "8:30am til 10:30am",
-      "day_text": "30 Sep",
+      "time_text": "08:30-10:30am",
+      "day_text": "WED",
       "rp_note_id": null
     },
     {
@@ -68,11 +68,11 @@
       "start": "12:30",
       "end": "15:30",
       "km": 29,
-      "note": "bowling w/ his mates. Jake did his own seatbelt and picked the music on the drive home.",
+      "note": "Jake did his own seatbelt and picked the music on the drive home.",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "12:30-half 3",
-      "day_text": "30 Sep",
+      "time_text": "12:30 til 3:30PM",
+      "day_text": "Wednesday",
       "rp_note_id": "neg08"
     },
     {
@@ -81,11 +81,11 @@
       "start": "18:00",
       "end": "20:30",
       "km": 0,
-      "note": "podiatrist appt. She wants the front door locked at night cos she's scared of break-ins, so I locked it on my way out like she asked. She has her own key on the hook.",
+      "note": "She wants the front door locked at night cos she's scared of break-ins, so I locked it on my way out like she asked. She has her own key on the hook.",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "6–8:30",
-      "day_text": "1/10",
+      "time_text": "6pm until half past 8",
+      "day_text": "Thurs 1st",
       "rp_note_id": "neg11"
     },
     {
@@ -94,11 +94,11 @@
       "start": "09:00",
       "end": "11:15",
       "km": 31,
-      "note": "basketball at the stadium",
+      "note": "op shopping",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "9 till 11:15",
-      "day_text": "FRI",
+      "time_text": "9am to 11.15am",
+      "day_text": "Fri 2nd",
       "rp_note_id": null
     },
     {
@@ -110,8 +110,8 @@
       "note": "bus training into the city",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "half past 1 to 7:00",
-      "day_text": "Fri 2nd",
+      "time_text": "1:30 pm til 7pm",
+      "day_text": "fri",
       "rp_note_id": null
     },
     {
@@ -123,8 +123,8 @@
       "note": "library + walk",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "10-half past 12",
-      "day_text": "Saturday",
+      "time_text": "10 - 12.30",
+      "day_text": "saturday",
       "rp_note_id": null
     },
     {
@@ -133,11 +133,11 @@
       "start": "10:00",
       "end": "12:00",
       "km": 3,
-      "note": "dinner + pjs",
+      "note": "shower + brekkie",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "10 until 12 pm",
-      "day_text": "sunday",
+      "time_text": "10am-12pm",
+      "day_text": "Sun 4th",
       "rp_note_id": null
     }
   ],

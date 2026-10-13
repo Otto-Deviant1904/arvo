@@ -27,6 +27,7 @@ h1 { margin:0 0 4px; font-size:26px; letter-spacing:.02em; }
 .meta div, .party div { margin:2px 0; }
 .parties { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0; }
 .party h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 6px; }
+.table-wrap { overflow-x:auto; }
 table { width:100%; border-collapse:collapse; margin-top:8px; }
 th, td { border-bottom:1px solid var(--line); padding:7px 6px; vertical-align:top; text-align:left; }
 th { background:var(--head); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
@@ -107,7 +108,7 @@ def render_invoice_html(participant, worker: dict, lines: list, invoice_no: str,
     rows = []
     for ln in lines:
         times = f"{e(ln.start)}&ndash;{e(ln.end)}" if ln.start and ln.end else "&mdash;"
-        claim = "Direct service" if ln.unit == "H" else "Provider travel (non-labour)"
+        claim = "Direct service" if ln.unit == "H" else "Activity based transport"
         rule = f'<div class="rule">{e(ln.rule)}</div>' if ln.rule else ""
         rows.append(
             f"<tr><td>{e(_day(ln.date))}</td><td class=\"code\">{e(ln.item_number)}</td>"
@@ -154,14 +155,14 @@ def render_invoice_html(participant, worker: dict, lines: list, invoice_no: str,
   <div class="party"><h2>From (provider)</h2>{worker_html}</div>
   <div class="party"><h2>For (participant)</h2>{participant_html}</div>
 </section>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Date</th><th>Support item</th><th>Item name</th><th>Claim type</th><th class="num">Start&ndash;end</th>
   <th class="num">Qty</th><th>Unit</th><th class="num">Unit price</th><th class="num">Total</th></tr></thead>
   <tbody>
 {chr(10).join(rows) if rows else '<tr><td colspan="9" class="muted">No supports on this invoice.</td></tr>'}
   </tbody>
   <tfoot><tr><td colspan="8" class="num">Total (AUD)</td><td class="num">{e(_money(total))}</td></tr></tfoot>
-</table>
+</table></div>
 <section class="notes">
   <p><strong>GST:</strong> GST component $0.00. Most NDIS supports are GST-free. &ldquo;{e(gst_text)}&rdquo; ({e(gst_src)})</p>
   <p><strong>Payment:</strong> {e(_get(worker, 'bank') or 'bank details not provided')}. Please quote {e(invoice_no)}.</p>

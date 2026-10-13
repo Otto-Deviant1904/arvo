@@ -3,7 +3,7 @@
   "week_ending": "2027-01-31",
   "seed": 2026,
   "style": {
-    "headings": true,
+    "headings": false,
     "h24": false,
     "emoji_p": 0.12,
     "typo_p": 0.25
@@ -20,7 +20,7 @@
       "kind": "weekday_day",
       "overnight": false,
       "time_text": "2:30-6:30",
-      "day_text": "mon",
+      "day_text": "Mon 25th",
       "rp_note_id": null
     },
     {
@@ -46,7 +46,7 @@
       "kind": "public_holiday",
       "overnight": false,
       "time_text": "2pm - 5:30",
-      "day_text": "TUES",
+      "day_text": "26th Jan",
       "rp_note_id": null
     },
     {
@@ -55,11 +55,11 @@
       "start": "17:30",
       "end": "21:45",
       "km": 16,
-      "note": "Bunnings + footy",
+      "note": "bowling w/ his mates",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "5:30 till 9:45",
-      "day_text": "Wed 27/1",
+      "time_text": "5:30pm till 9:45",
+      "day_text": "Wed 27th",
       "rp_note_id": null
     },
     {
@@ -72,7 +72,7 @@
       "kind": "weekday_day",
       "overnight": false,
       "time_text": "8-11:15am",
-      "day_text": "Thursday",
+      "day_text": "Thrusday",
       "rp_note_id": "neg06"
     },
     {
@@ -81,11 +81,11 @@
       "start": "17:30",
       "end": "20:45",
       "km": 27,
-      "note": "basketball at the satdium",
+      "note": "dniner at the RSL",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "5:30 - quarter to 9",
-      "day_text": "Thursday",
+      "time_text": "5:30pm - quarter to 9",
+      "day_text": "Thrusday",
       "rp_note_id": null
     },
     {
@@ -98,7 +98,7 @@
       "kind": "weekday_cross_20",
       "overnight": false,
       "time_text": "4-9 pm",
-      "day_text": "Firday",
+      "day_text": "29/1",
       "rp_note_id": "neg09"
     },
     {
@@ -107,11 +107,11 @@
       "start": "09:30",
       "end": "12:15",
       "km": 11,
-      "note": "cooked dinner, did washing",
+      "note": "physio exercises + lunch",
       "kind": "sunday",
       "overnight": false,
       "time_text": "9:30 to 12:15pm",
-      "day_text": "Sunday",
+      "day_text": "Sundy",
       "rp_note_id": null
     }
   ],

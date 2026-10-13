@@ -208,7 +208,7 @@ def price_shift(shift: Shift, participant: Participant) -> tuple[list[InvoiceLin
     if km < 0:
         warnings.append(f"{where}: negative km ({km}) ignored")
     elif km > 0:
-        t = prices.travel_km_item(support_type)
+        t = prices.activity_transport_item()
         kq = q2(km)
         lines.append(InvoiceLine(participant_id=participant.id, date=shift.date, item_number=t.item_number,
                                  item_name=t.item_name, start="", end="", quantity=float(kq), unit="km",

@@ -5,8 +5,8 @@
   "style": {
     "headings": false,
     "h24": false,
-    "emoji_p": 0.2,
-    "typo_p": 0.15
+    "emoji_p": 0.12,
+    "typo_p": 0.25
   },
   "image": "week16.png",
   "shifts": [
@@ -16,11 +16,11 @@
       "start": "09:15",
       "end": "12:15",
       "km": 2,
-      "note": "church then lunch",
+      "note": "podiatrist appt",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "09:15 til 12.15",
-      "day_text": "Mon 11/1",
+      "time_text": "9.15am-qtr past 12",
+      "day_text": "monday",
       "rp_note_id": null
     },
     {
@@ -29,11 +29,11 @@
       "start": "20:00",
       "end": "21:30",
       "km": 13,
-      "note": "drove him to his cousin's",
+      "note": "basketball at the stadium",
       "kind": "weekday_evening",
       "overnight": false,
-      "time_text": "8PM to 9:30pm",
-      "day_text": "Mon 11th",
+      "time_text": "8pm-9:30",
+      "day_text": "Mon 11/1",
       "rp_note_id": null
     },
     {
@@ -42,11 +42,11 @@
       "start": "08:30",
       "end": "14:00",
       "km": 36,
-      "note": "gym then lunch",
+      "note": "drove him to his cousin's",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "8.30 to 2 pm",
-      "day_text": "Tue",
+      "time_text": "8:30–2",
+      "day_text": "Tues 12th",
       "rp_note_id": null
     },
     {
@@ -55,11 +55,11 @@
       "start": "19:00",
       "end": "22:30",
       "km": 5,
-      "note": "physio exercises + lunch",
+      "note": "tidy up, cooked curry",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "7 pm until 10:30pm",
-      "day_text": "Tues 12th",
+      "time_text": "from 7 pm to 10:30pm",
+      "day_text": "tue",
       "rp_note_id": null
     },
     {
@@ -71,8 +71,8 @@
       "note": "Tom wouldn't give the remote back so I wrapped both arms round him on the couch and kept him there till he let go of it.",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "from 4:30pm to 10:00",
-      "day_text": "the 15th",
+      "time_text": "4:30pm-10pm",
+      "day_text": "fri",
       "rp_note_id": "rp13"
     },
     {
@@ -81,11 +81,11 @@
       "start": "10:00",
       "end": "13:00",
       "km": 7,
-      "note": "brekkie, changed the bed",
+      "note": "shower + meds prompt",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "10 till 1pm",
-      "day_text": "SAT",
+      "time_text": "10 - 1",
+      "day_text": "Satuday",
       "rp_note_id": null
     },
     {
@@ -94,11 +94,11 @@
       "start": "09:30",
       "end": "11:15",
       "km": 4,
-      "note": "shower + brkekie",
+      "note": "hair wash, lunch",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "9:30 till 11:15 am",
-      "day_text": "Sun 17th",
+      "time_text": "9:30-11:15ish",
+      "day_text": "Sundy",
       "rp_note_id": null
     }
   ],

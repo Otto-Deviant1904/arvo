@@ -2,7 +2,8 @@
 
 price_for(item, date)        -> (unit_price, source_note), period chosen by the support date
 item_for(support_type, band) -> (item_number, item_name, warning_or_None)
-travel_km_item(support_type) -> TravelItem (provider travel non-labour item + per-km limit + rule text)
+activity_transport_item()     -> TravelItem (Activity Based Transport: km driven with the participant)
+travel_km_item(support_type) -> TravelItem (provider travel non-labour item; not used for invoice lines)
 """
 
 from __future__ import annotations
@@ -144,3 +145,13 @@ def travel_km_item(support_type: str) -> TravelItem:
                     f"${it['price_limit_national_aud']:.2f} per unit), only where provider travel time can be claimed.")
             return TravelItem(it["item_number"], it["item_name"], per_km, rule)
     raise PriceError(f"no provider-travel non-labour item pairs with {support_type} in {DATA_PATH.name}")
+
+
+def activity_transport_item() -> TravelItem:
+    """Activity Based Transport (km driven WITH the participant), used for every support type's km line."""
+    abt = data()["travel"]["activity_based_transport"]
+    per_km = float(abt["per_km_unmodified_vehicle_aud"])
+    rule = (f"Activity Based Transport: km driven with the participant, up to ${per_km:.2f}/km in an unmodified "
+            f"vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a "
+            f"${abt['price_limit_national_aud']:.0f} notional unit.")
+    return TravelItem(abt["item_number"], abt["item_name"], per_km, rule)

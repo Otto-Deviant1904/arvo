@@ -8,7 +8,7 @@ then rendered to messy diary text. No model is involved anywhere in here.
 
 Time-reading convention the text follows (and `parse_range` checks for every shift):
   - am/pm, 24h ("15:00"), noon, midday, midnight: as written.
-  - a bare START hour is only written for 07:00-18:00: 7-11 = morning, 12 = noon, 1-6 = afternoon.
+  - a bare START hour is only written for 07:00-17:00: 7-11 = morning, 12 = noon, 1-5 = afternoon.
   - a bare END is the first matching clock time after the start (so "3 till 8:30" = 15:00-20:30,
     "9pm - 1" = 21:00-01:00 next day). "ish" times are gold at the stated time ("7ish" = 7:00).
   - "half 9" = 9:30, "quarter to 6" = 5:45, "quarter past 4" = 4:15.
@@ -59,20 +59,36 @@ ALIAS_WEIGHTS = {
     "tom": [("Tom", 4), ("Tommy", 2), ("T.O.", 2), ("tom", 1)],
     "nonna": [("Nonna", 4), ("Mrs B", 3), ("Rosa", 1.5), ("nonna", 1)],
 }
+# (text, when): morn = starts before 11:00, eve = ends 18:30 or later, day = a daytime outing, any = anytime
 ACTIVITIES = {
-    "jake": ["Bunnings + footy", "pool then maccas", "Chaddy shopping", "bowling w/ his mates",
-             "cooked spag bol together", "library + walk", "movies", "gym then lunch",
-             "drove him to his cousin's", "op shopping", "basketball at the stadium", "park + dog walk",
-             "haircut then Kmart"],
-    "priya": ["shower + tea", "cooked dinner, did washing", "meal prep for the week", "helped w/ shower, hair",
-              "groceries + cooking", "bedtime routine", "laundry + lunch", "nails + movie",
-              "tidy up, cooked curry", "physio exercises + lunch"],
-    "tom": ["footy training", "library", "swimming", "job club", "shops + lunch", "bus training into the city",
-            "gym", "watched the footy at the pub (lemonade)", "fishing at the pier", "Centrelink appt"],
-    "nonna": ["shower + brekkie", "showered, dressed, brekkie", "shower + meds prompt", "hair wash, lunch",
-              "dinner + pjs", "made her lunch, hung washing", "church then lunch", "podiatrist appt",
-              "brekkie, changed the bed"],
+    "jake": [("Bunnings + footy", "day"), ("pool then maccas", "day"), ("Chaddy shopping", "day"),
+             ("bowling w/ his mates", "any"), ("cooked spag bol together", "eve"), ("library + walk", "day"),
+             ("movies", "any"), ("gym then lunch", "day"), ("drove him to his cousin's", "any"),
+             ("op shopping", "day"), ("basketball at the stadium", "any"), ("park + dog walk", "day"),
+             ("haircut then Kmart", "day"), ("dinner at the RSL", "eve"), ("footy at the G", "eve")],
+    "priya": [("shower + tea", "eve"), ("cooked dinner, did washing", "eve"), ("meal prep for the week", "day"),
+              ("helped w/ shower, hair", "morn"), ("groceries + cooking", "day"), ("bedtime routine", "eve"),
+              ("laundry + lunch", "day"), ("nails + movie", "any"), ("tidy up, cooked curry", "eve"),
+              ("physio exercises + lunch", "day")],
+    "tom": [("footy training", "any"), ("library", "day"), ("swimming", "any"), ("job club", "day"),
+            ("shops + lunch", "day"), ("bus training into the city", "day"), ("gym", "any"),
+            ("watched the footy at the pub (lemonade)", "eve"), ("fishing at the pier", "day"),
+            ("Centrelink appt", "day")],
+    "nonna": [("shower + brekkie", "morn"), ("showered, dressed, brekkie", "morn"), ("shower + meds prompt", "morn"),
+              ("hair wash, lunch", "day"), ("dinner + pjs", "eve"), ("made her lunch, hung washing", "day"),
+              ("church then lunch", "day"), ("podiatrist appt", "day"), ("brekkie, changed the bed", "morn"),
+              ("tea + meds prompt", "eve")],
 }
+
+
+def pick_activity(rng: random.Random, pid: str, s: int, e: int, anytime_only: bool = False) -> str:
+    ok = [t for t, when in ACTIVITIES[pid]
+          if when == "any" or (not anytime_only and (
+              (when == "morn" and s < 11 * 60) or (when == "eve" and e >= 18 * 60 + 30)
+              or (when == "day" and 8 * 60 + 30 <= s < 15 * 60 and e <= 19 * 60)))]
+    return rng.choice(ok) if ok else ""
+
+
 PH_ACTIVITY = {date(2026, 11, 3): "Cup Day BBQ at the neighbours", date(2026, 12, 25): "Xmas lunch",
                date(2026, 12, 26): "Boxing Day sales", date(2026, 12, 28): "",
                date(2027, 1, 26): "Aus Day at the beach"}
@@ -297,7 +313,7 @@ def time_variants(t: int, role: str, start: int | None, h24: bool, ish_ok: bool)
     for txt, w in out:
         if parse_time(txt, role, start) != t:
             continue
-        if role == "start" and _is_bare(txt) and not (7 * 60 <= t <= 18 * 60):
+        if role == "start" and _is_bare(txt) and not (7 * 60 <= t <= 17 * 60):
             continue
         if role == "start" and re.search(r"(quarter|qtr) to 7$", txt):
             continue
@@ -600,7 +616,7 @@ def line_for(rng, g: GShift, day: str | None, who: str, emoji: str) -> str:
         return wchoice(rng, forms)()
     pod = part_of_day(g.s)
     forms = [(lambda: _join(f"{day} - {who} {t}{tail_note}", f", {km}" if km else "", emoji).replace(" ,", ","), 5),
-             (lambda: _join(f"{day} {t} {who}", f"- {note}" if note else "", km, emoji), 3),
+             (lambda: _join(f"{day} - {t} {who}", f"- {note}" if note else "", km, emoji), 3),
              (lambda: _join(f"{day}: {t} {who}{tail_note}", km, emoji), 3),
              (lambda: _join(f"{day} - {who} {t}", km, f"- {note}" if note else "", emoji), 2)]
     if not long_note:
@@ -608,7 +624,7 @@ def line_for(rng, g: GShift, day: str | None, who: str, emoji: str) -> str:
                   (lambda: _join(f"{day} {pod} w/ {who} {t}", note, km, emoji), 2)]
     else:
         forms.append((lambda: _join(f"{day} - {who} {t}", km) + f"\n  {note}" + (f" {emoji}" if emoji else ""), 3))
-    return wchoice(rng, forms)()
+    return re.sub(r"([.!?]),", r"\1", wchoice(rng, forms)())
 
 
 def week_header(rng, days: list[date]) -> str:
@@ -683,12 +699,9 @@ def render_week(rng: random.Random, shifts: list[GShift], days: list[date], alia
             if g.double and nxt is not None and nxt.double and nxt.d == g.d and nxt.pid == g.pid and rng.random() < 0.5:
                 nxt.day_text = g.day_text
                 km1 = km_text(rng, g.km)
-                note2 = nxt.note or "back again"
-                if not nxt.note:
-                    nxt.note = note2
                 line = _join(f"{g.day_text} - {who(g)} {g.time_text}{', ' + g.note if g.note else ''}", km1,
-                             f"then back {nxt.time_text} {note2}", km_text(rng, nxt.km), emo())
-                out.append(line)
+                             f"then back {nxt.time_text}", nxt.note, km_text(rng, nxt.km), emo())
+                out.append(re.sub(r"([.!?]),", r"\1", line))
                 i += 2
                 continue
             out.append(line_for(rng, g, g.day_text, who(g), emo()))
@@ -840,9 +853,11 @@ def generate(out_dir: Path = FIXTURES, seed: int = SEED, images: bool = True, n_
         for g in shifts:  # notes
             if g.note:
                 continue
-            act = PH_ACTIVITY.get(g.d) if g.d in TARGET_PH and rng.random() < 0.6 else None
-            if act is None:
-                act = rng.choice(ACTIVITIES[g.pid]) if rng.random() < 0.85 else ""
+            if g.d in TARGET_PH:
+                act = PH_ACTIVITY[g.d] if PH_ACTIVITY[g.d] and rng.random() < 0.7 else \
+                    pick_activity(rng, g.pid, g.s, g.e, anytime_only=True)
+            else:
+                act = pick_activity(rng, g.pid, g.s, g.e) if rng.random() < 0.85 else ""
             if act and rng.random() < 0.12:
                 act = typo(rng, act)
             if g.rp_id:

@@ -5,8 +5,8 @@
   "style": {
     "headings": false,
     "h24": false,
-    "emoji_p": 0.0,
-    "typo_p": 0.25
+    "emoji_p": 0.2,
+    "typo_p": 0.03
   },
   "image": null,
   "shifts": [
@@ -19,8 +19,8 @@
       "note": "shops + lunch",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "10am till 3pm",
-      "day_text": "Mnday",
+      "time_text": "10am til 3 pm",
+      "day_text": "Mon",
       "rp_note_id": null
     },
     {
@@ -29,11 +29,11 @@
       "start": "18:00",
       "end": "20:30",
       "km": 0,
-      "note": "laundry + lunch",
+      "note": "nails + movie",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "6:00 til half 8",
-      "day_text": "Mon.",
+      "time_text": "6pm to 8:30pm",
+      "day_text": "MON",
       "rp_note_id": null
     },
     {
@@ -45,8 +45,8 @@
       "note": "Put the padlock back on the fridge so he can't graze between meals.",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "2:15 till 5:45",
-      "day_text": "tue",
+      "time_text": "2:15-5:45",
+      "day_text": "Tuesday",
       "rp_note_id": "rp17"
     },
     {
@@ -58,8 +58,8 @@
       "note": "helped w/ shower, hair",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "9:30am-11:45",
-      "day_text": "Wed 9th",
+      "time_text": "9:30 am-11:45am",
+      "day_text": "the 9th",
       "rp_note_id": null
     },
     {
@@ -68,11 +68,11 @@
       "start": "16:45",
       "end": "19:45",
       "km": 4,
-      "note": "helped w/ shower, hair",
+      "note": "cooked dinner, did washing",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "from 4:45 till 7:45",
-      "day_text": "weds",
+      "time_text": "4:45 pm-7:45",
+      "day_text": "the 9th",
       "rp_note_id": null
     },
     {
@@ -81,11 +81,11 @@
       "start": "07:00",
       "end": "09:30",
       "km": 4,
-      "note": "made her lunch, hung wahsing",
+      "note": "shower + meds propt",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "7-9:30",
-      "day_text": "Fri",
+      "time_text": "7 am - half past 9",
+      "day_text": "FRI",
       "rp_note_id": null
     },
     {
@@ -97,8 +97,8 @@
       "note": "",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "4 pm till half 10",
-      "day_text": "11/12",
+      "time_text": "4pm - 10:30",
+      "day_text": "Fri 11th",
       "rp_note_id": null
     },
     {
@@ -110,8 +110,8 @@
       "note": "Tom said he'd rather stay in and watch the cricket than go to the gym, so we stayed in.",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "11:45 - 5pm",
-      "day_text": "the 12th",
+      "time_text": "11:45-5",
+      "day_text": "Sat 12th",
       "rp_note_id": "neg14"
     },
     {
@@ -120,11 +120,11 @@
       "start": "08:00",
       "end": "10:00",
       "km": 0,
-      "note": "made her lunch, hung washing",
+      "note": "shower + brekkie",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "8–10",
-      "day_text": "13/12",
+      "time_text": "8-10:00",
+      "day_text": "Sun 13th",
       "rp_note_id": null
     },
     {
@@ -133,10 +133,10 @@
       "start": "12:30",
       "end": "17:00",
       "km": 0,
-      "note": "groceries + cooking",
+      "note": "physio exercises + lunch",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "12.30 - 5pm",
+      "time_text": "12:30 til 5",
       "day_text": "Sunday",
       "rp_note_id": null
     }

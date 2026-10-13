@@ -3,10 +3,10 @@
   "week_ending": "2026-12-20",
   "seed": 2026,
   "style": {
-    "headings": false,
+    "headings": true,
     "h24": false,
-    "emoji_p": 0.2,
-    "typo_p": 0.03
+    "emoji_p": 0.12,
+    "typo_p": 0.15
   },
   "image": null,
   "shifts": [
@@ -16,11 +16,11 @@
       "start": "15:00",
       "end": "20:30",
       "km": 2,
-      "note": "brekkie, changed the bed. We walked arm in arm to the bakery the way she likes.",
+      "note": "diner + pjs. We walked arm in arm to the bakery the way she likes.",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "3–8:30",
-      "day_text": "14 Dec",
+      "time_text": "3 till 8:30pm",
+      "day_text": "Monday",
       "rp_note_id": "neg03"
     },
     {
@@ -32,7 +32,7 @@
       "note": "gym",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "5:00 - quarter past 10",
+      "time_text": "5pm till 10:15pm",
       "day_text": "Tuesday",
       "rp_note_id": null
     },
@@ -42,11 +42,11 @@
       "start": "20:30",
       "end": "22:30",
       "km": 0,
-      "note": "nails + movie",
+      "note": "shower + tea",
       "kind": "weekday_evening",
       "overnight": false,
-      "time_text": "8:30pm-10:30",
-      "day_text": "wed",
+      "time_text": "8:30 pm - 10.30",
+      "day_text": "Wed 16th",
       "rp_note_id": null
     },
     {
@@ -55,11 +55,11 @@
       "start": "12:00",
       "end": "15:00",
       "km": 22,
-      "note": "bus training into the city",
+      "note": "gym",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "noon to 3pm",
-      "day_text": "saturday",
+      "time_text": "midday–3",
+      "day_text": "SAT",
       "rp_note_id": null
     },
     {
@@ -68,11 +68,11 @@
       "start": "11:00",
       "end": "14:00",
       "km": 0,
-      "note": "shower + brekkie",
+      "note": "podiatrist appt",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "11:00-2",
-      "day_text": "SUN",
+      "time_text": "11-2",
+      "day_text": "Sun 20th",
       "rp_note_id": null
     }
   ],

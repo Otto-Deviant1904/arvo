@@ -3,7 +3,7 @@
   "week_ending": "2027-01-24",
   "seed": 2026,
   "style": {
-    "headings": true,
+    "headings": false,
     "h24": false,
     "emoji_p": 0.0,
     "typo_p": 0.03
@@ -16,11 +16,11 @@
       "start": "18:00",
       "end": "20:30",
       "km": 6,
-      "note": "meal prep for the week",
+      "note": "cooked dinner, did washing",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "6:00 till half past 8",
-      "day_text": "Mon 18th",
+      "time_text": "6 pm till 8:30",
+      "day_text": "the 18th",
       "rp_note_id": null
     },
     {
@@ -29,10 +29,10 @@
       "start": "10:00",
       "end": "12:00",
       "km": 0,
-      "note": "dinner + pjs",
+      "note": "made her lunch, hung washing",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "10am til 12:00",
+      "time_text": "10am - midday",
       "day_text": "Wed 20th",
       "rp_note_id": null
     },
@@ -42,11 +42,11 @@
       "start": "08:00",
       "end": "10:15",
       "km": 0,
-      "note": "bedtime routine",
+      "note": "nails + movie",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "8am–10:15",
-      "day_text": "Thur",
+      "time_text": "8-10:15",
+      "day_text": "Thu",
       "rp_note_id": null
     },
     {
@@ -58,8 +58,8 @@
       "note": "nails + movie",
       "kind": "weekday_cross_20",
       "overnight": false,
-      "time_text": "half past 5-half past 9",
-      "day_text": "Thur",
+      "time_text": "5:30pm-9:30",
+      "day_text": "Thurs",
       "rp_note_id": null
     },
     {
@@ -68,11 +68,11 @@
       "start": "07:00",
       "end": "09:15",
       "km": 10,
-      "note": "made her lunch, hung wahsing",
+      "note": "sohwer + meds prompt",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "7 - 9:15",
-      "day_text": "the 22nd",
+      "time_text": "7-quarter past 9",
+      "day_text": "friday",
       "rp_note_id": null
     },
     {
@@ -84,8 +84,8 @@
       "note": "Jake went for his brother so I got him onto the lounge room floor and lay across his back until he settled.",
       "kind": "weekday_day",
       "overnight": false,
-      "time_text": "10–1:30",
-      "day_text": "the 22nd",
+      "time_text": "from 10am till 1.30",
+      "day_text": "22/1",
       "rp_note_id": "rp14"
     },
     {
@@ -94,11 +94,11 @@
       "start": "13:00",
       "end": "15:00",
       "km": 0,
-      "note": "Centrelink appt",
+      "note": "bus training into the city",
       "kind": "saturday",
       "overnight": false,
-      "time_text": "1pm-3",
-      "day_text": "23/1",
+      "time_text": "1-3",
+      "day_text": "Sat",
       "rp_note_id": null
     },
     {
@@ -107,11 +107,11 @@
       "start": "09:30",
       "end": "12:30",
       "km": 0,
-      "note": "Kept the back door keyed so she couldn't wander while I hung the washing out.",
+      "note": "brekkie, canged the bed. Kept the back door keyed so she couldn't wander while I hung the washing out.",
       "kind": "sunday",
       "overnight": false,
-      "time_text": "9:30 - 12.30pm",
-      "day_text": "Sun 24th",
+      "time_text": "9:30 to 12:30",
+      "day_text": "Sun",
       "rp_note_id": "rp18"
     }
   ],
