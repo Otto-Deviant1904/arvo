@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s10_results</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/diagram.js"></script>
+</head>
+<body>
+<script>
+// s10_results (nominal = rendered length 21.24 s = narration 20.34 + 0.9; narration starts at 0.35 s).
+// Narration: "Held-out results." 0.51-1.58 | "Test split:" 2.01-2.68 | "ninety-three per cent of shifts exact."
+// 3.08-5.11 | "Wild diaries:" 5.57-6.61 | "seventy-six per cent, where a code-only parser gets forty."
+// 7.04-10.54 | "Restrictive practices:" 11.06-12.36 | "e-four-b finds twenty of twenty-two restraints."
+// 12.75-15.53 | "Photos, ninety per cent." 16.08-17.79 | "Voice, six of ten memos fully right." 18.19-20.54
+// Numbers (held out, run once): test 93% (code-only 92%), wild 76% (code-only 40%), restraints 20/22
+// (keyword list misses most), photos 90%, voice 6/10.
+// Beats: the "held out · run once" stamp slams into the top-left corner. Score cards pop in one by one
+// in narration order (anticipation, overshoot, settle, a little rotation that settles); each number counts
+// up and punches when it lands. Wild: two bars grow; the code-only bar stops short and bonks; an amber
+// bracket marks the gap.
+(function () {
+  const L = Line, C = L.C, D = Diagram;
+  const LEN = 21.24;
+  const CARDS = [
+    { id: "test", x: 110, y: 170, w: 480, h: 330, t: 1.95, label: "Test split", n: 93, suf: "%", ct: 3.05, sub: "code-only 92%", subT: 4.0 },
+    { id: "wild", x: 660, y: 170, w: 600, h: 720, t: 5.5, label: "Wild diaries", n: 76, suf: "%", ct: 6.95 },
+    { id: "rp", x: 1330, y: 170, w: 480, h: 330, t: 11.0, label: "Restraints", n: 20, suf: " / 22", ct: 13.45, sub: "keyword list misses most", subT: 14.85, flag: true },
+    { id: "photo", x: 110, y: 560, w: 480, h: 330, t: 16.0, label: "Photos", n: 90, suf: "%", ct: 16.6 },
+    { id: "voice", x: 1330, y: 560, w: 480, h: 330, t: 18.1, label: "Voice", n: 6, suf: " / 10", ct: 18.85 },
+  ];
+  const M = {};
+
+  function cardItems(c, tn) {
+    const it = [{ cmds: L.rrect(c.x, c.y, c.w, c.h, 24, 500 + c.x + c.y), fill: C.body, width: 7 }];
+    const cx = c.x + c.w / 2;
+    let lx = cx;
+    if (c.flag) {
+      const lw = L.measure(c.label, 50, 650);
+      lx = cx + 30;
+      it.push(...D.flag(cx - lw / 2 - 26, c.y + 92, 66, tn, { fw: 40, fh: 27, wave: 2.5, width: 5.5, ph: 1 }));
+    }
+    it.push({ text: c.label, x: lx, y: c.y + 84, size: 50, weight: 650, anchor: "middle" });
+    // the number counts up, then punches
+    const c0 = c.t + 0.25, p = L.clamp((tn - c0) / (c.ct + 0.8 - c0));
+    const v = Math.round(c.n * L.ease.inOut(p));
+    const big = Math.min(c.id === "wild" ? 150 : 140, Math.floor((c.w - 70) / L.measure(String(c.n) + c.suf, 1, 750)));
+    const ny = c.id === "wild" ? c.y + 250 : c.y + 222;
+    const punch = 1 + D.wob(tn, c.ct + 0.8, 0.22, 2.4, 6) + (p > 0 && p < 1 ? 0.03 * Math.sin(tn * 40) : 0);
+    const numTxt = String(v) + c.suf;
+    it.push({ type: "group", scale: { s: punch, sy: 2 - punch, x: cx, y: ny - big * 0.35 }, items: [
+      { text: numTxt, x: cx, y: ny, size: big, weight: 750, anchor: "middle", fill: p >= 1 ? C.line : C.line, jit: 0.5 },
+    ] });
+    // a green underline swash lands with the number
+    if (tn > c.ct + 0.78) {
+      const w = L.measure(String(c.n) + c.suf, big, 750) * 0.86, y = ny + 24;
+      it.push({ cmds: L.curve([[cx - w / 2, y + 2], [cx, y - 4], [cx + w / 2, y + 1]]), stroke: C.green, width: 9, at: c.ct + 0.78, dur: 0.2 });
+    }
+    if (c.sub) {
+      const sp = L.clamp((tn - c.subT) / 0.35);
+      if (sp > 0) it.push({ type: "group", move: [0, 30 * (1 - L.ease.back(sp))], opacity: L.ease.out(sp), items: [
+        { text: c.sub, x: cx, y: c.y + c.h - 34, size: 33, weight: 560, anchor: "middle", opacity: 0.85 },
+      ] });
+    }
+    if (c.id === "wild") it.push(...wildBars(c, tn));
+    return it;
+  }
+
+  // two bars: Arvo grows to 76, code-only stops short at 40 (bonk), amber bracket marks the gap
+  function wildBars(c, tn) {
+    const it = [];
+    const base = c.y + c.h - 76, full = 400;
+    const bw = 150, ax = c.x + 95, bx = c.x + c.w - 95 - bw;
+    it.push({ cmds: L.curve([[c.x + 50, base + 2], [c.x + c.w / 2, base - 1], [c.x + c.w - 50, base + 2]]), width: 6, at: c.t + 0.3, dur: 0.25 });
+    // Arvo bar: grows with overshoot
+    const ga = D.settle(tn, 7.0, 1.3, 5.5);
+    if (ga > 0) {
+      const h = full * 0.76 * ga;
+      it.push({ cmds: L.rrect(ax, base - h, bw, h, 10, 610, 0.8), fill: C.green, width: 6.5 });
+    }
+    // code-only bar: rises at the same pace, stops short, squashes on the stop
+    const u = L.clamp((tn - 8.7) / 0.5);
+    if (u > 0) {
+      const stop = 0.4;
+      let h = full * Math.min(stop, 0.76 * L.ease.out2(u) * 1.15);
+      const bonk = D.wob(tn, 8.7 + 0.42, 0.1, 3.2, 6);
+      h *= 1 - Math.abs(bonk) * 0.6;
+      const wx = bw * (1 + Math.abs(bonk) * 0.3);
+      it.push({ cmds: L.rrect(bx + (bw - wx) / 2, base - h, wx, h, 10, 611, 0.8), fill: C.line, fillOpacity: 0.16, width: 6.5 });
+      if (tn > 9.1) it.push({ type: "group", pop: { x: bx + bw / 2, y: base - h - 30, at: 9.12, dur: 0.28 }, items: [
+        { text: "40%", x: bx + bw / 2, y: base - full * 0.4 - 26, size: 56, weight: 700, anchor: "middle" },
+      ] });
+    }
+    // gap bracket: dashed amber line at Arvo's level, double arrow down to code-only
+    if (tn > 9.55) {
+      const yTop = base - full * 0.76, yBot = base - full * 0.4 - 90, xg = bx + bw / 2;
+      const dp = L.clamp((tn - 9.55) / 0.3);
+      for (let k = 0; k < 5; k++) {
+        const x0 = ax + bw + 12 + k * 36;
+        if (x0 > xg - 10) break;
+        it.push({ cmds: L.poly([[x0, yTop], [x0 + 20, yTop]]), stroke: C.amber, width: 5, at: 9.55 + k * 0.04, dur: 0.06 });
+      }
+      const ah = L.ease.out(L.clamp((tn - 9.75) / 0.3));
+      if (ah > 0) {
+        const y1 = L.lerp(yBot, yTop + 8, ah);
+        it.push({ cmds: L.poly([[xg, yBot], [xg, y1]]), stroke: C.amber, width: 6 });
+        it.push({ cmds: L.poly([[xg - 13, y1 + 15], [xg, y1], [xg + 13, y1 + 15]]), stroke: C.amber, width: 6 });
+      }
+      void dp;
+    }
+    // bar labels
+    it.push({ type: "group", pop: { x: ax + bw / 2, y: base + 40, at: 7.2, dur: 0.25 }, items: [{ text: "Arvo", x: ax + bw / 2, y: base + 50, size: 38, weight: 650, anchor: "middle", fill: C.green }] });
+    it.push({ type: "group", pop: { x: bx + bw / 2, y: base + 40, at: 8.6, dur: 0.25 }, items: [{ text: "code-only", x: bx + bw / 2, y: base + 50, size: 38, weight: 600, anchor: "middle", opacity: 0.85 }] });
+    return it;
+  }
+
+  function stamp(tn) {
+    const t0 = 0.7;
+    if (tn < t0) return [];
+    const u = tn - t0;
+    const s = u < 0.14 ? L.lerp(1.9, 0.9, L.ease.in2(u / 0.14)) : 1 - 0.1 * Math.exp(-9 * (u - 0.14)) * Math.cos((u - 0.14) * 22);
+    const op = L.clamp(u / 0.1);
+    const w = M.stW + 46, x = 92, y = 52;
+    const cx = x + w / 2, cy = y + 38;
+    const it = [
+      { cmds: L.rrect(x, y, w, 76, 14, 701, 1.8), stroke: C.amber, width: 5.5 },
+      { text: "held out · run once", x: cx, y: y + 51, size: 36, weight: 700, anchor: "middle", fill: C.amber },
+    ];
+    // ink specks on impact
+    if (u > 0.14) [[-1, -1], [1, -0.6], [-0.8, 1], [1, 1]].forEach(([sx, sy], i) => {
+      const k = L.clamp((u - 0.14) / 0.25);
+      if (k < 1) it.push({ cmds: L.blob(cx + sx * (w / 2 + 14 + 26 * k), cy + sy * (52 + 16 * k), 4 * (1 - k) + 1, 4 * (1 - k) + 1, 710 + i, 0.02), fill: C.amber, stroke: null });
+    });
+    return [{ type: "group", opacity: op, rotate: { deg: -4, x: cx, y: cy }, scale: { s, x: cx, y: cy }, items: it }];
+  }
+
+  const shots = [{
+    start: 0, end: 99,
+    camera(tn) {
+      // drift a little towards whichever card is being talked about
+      let tx = 960, ty = 530;
+      CARDS.forEach((c) => { if (tn > c.t - 0.2) { tx = c.x + c.w / 2; ty = c.y + c.h / 2; } });
+      if (tn > 20.3) { tx = 960; ty = 530; }
+      const target = (t) => {
+        let x = 960, y = 530;
+        CARDS.forEach((c) => { if (t > c.t - 0.2) { x = c.x + c.w / 2; y = c.y + c.h / 2; } });
+        if (t > 20.3) { x = 960; y = 530; }
+        return [x, y];
+      };
+      const p = L.spring(target, 0, tn, 6, 5);
+      void tx; void ty;
+      return { x: 960 + (p[0] - 960) * 0.03, y: 530 + (p[1] - 530) * 0.03, oy: 530, s: 1.0 };
+    },
+    build(tn) {
+      const it = [];
+      CARDS.forEach((c) => {
+        const ps = D.popS(tn, c.t, { f: 2.2, d: 7.5, sq: 0.14 });
+        if (ps.s <= 0.01) return;
+        const cx = c.x + c.w / 2, cy = c.y + c.h / 2;
+        const rot = -6 * Math.exp(-5 * (tn - c.t)) * Math.cos((tn - c.t) * 13);
+        it.push({ type: "group", rotate: { deg: rot, x: cx, y: cy }, scale: { s: ps.sx, sy: ps.sy, x: cx, y: c.y + c.h }, items: cardItems(c, tn) });
+      });
+      it.push(...stamp(tn));
+      return it;
+    },
+  }];
+
+  Line.scene({
+    nominal: LEN, defaultDuration: LEN, shots,
+    init() { M.stW = L.measure("held out · run once", 36, 700); },
+  });
+})();
+</script>
+</body>
+</html>

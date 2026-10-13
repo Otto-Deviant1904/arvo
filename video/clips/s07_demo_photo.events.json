@@ -1,0 +1,70 @@
+[
+  {
+    "t": 0.0,
+    "label": "page_loaded"
+  },
+  {
+    "t": 4.14,
+    "label": "week_set"
+  },
+  {
+    "t": 6.47,
+    "label": "photo_dropzone",
+    "box": [
+      373,
+      684,
+      348,
+      81
+    ]
+  },
+  {
+    "t": 6.71,
+    "label": "photo_added",
+    "box": [
+      373,
+      684,
+      348,
+      90
+    ]
+  },
+  {
+    "t": 12.16,
+    "label": "run_clicked",
+    "box": [
+      373,
+      922,
+      239,
+      48
+    ]
+  },
+  {
+    "t": 24.35,
+    "label": "results_visible",
+    "box": [
+      774,
+      0,
+      794,
+      95
+    ]
+  },
+  {
+    "t": 29.24,
+    "label": "shifts_in_view",
+    "box": [
+      774,
+      40,
+      794,
+      721
+    ]
+  },
+  {
+    "t": 29.27,
+    "label": "first_shift_row",
+    "box": [
+      795,
+      222,
+      752,
+      112
+    ]
+  }
+]

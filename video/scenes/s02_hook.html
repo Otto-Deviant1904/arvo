@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s02_hook</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// s02_hook v4 (nominal 15.87 s = narration 14.97 + 0.9; beats follow the narration pauses).
+// A 0-5.4   wide, slow push-in. Room + Mel draw on fast (<1.2 s). Lamp clicks on. Mel scrolls,
+//           yawns (anticipation, rise, hold, drop with overshoot), scrolls, leans in to read, freezes.
+// B 5.4-9.9 cut: the phone slides up into frame (overshoot); her thumb flicks, the note scrolls
+//           and settles; zoom in on "Locked the pantry" as it goes red (marker, loop, pulse).
+// C 9.9-14  cut back, closer: casual glance up, blank beat, snap back, squash, POP (stretch,
+//           camera shake), ponytail whips and settles, phone flies up and she catches it,
+//           hand to cheek, panic lines, red flag pops and waves.
+// Diary words are verbatim from DEV_POST.md ("Footy training then tea at his place." elided).
+(function () {
+  const L = Line, C = L.C;
+  const T = { cutPhone: 2.8, cutBack: 11.3, end: 15.87 };
+
+  // ---------- small motion helpers
+  // quick up-and-back (thumb flick): rises fast, returns slower
+  function flick(tn, times, amp, d) {
+    let v = 0;
+    for (const t0 of times) {
+      const u = (tn - t0) / d;
+      if (u > 0 && u < 1) v += amp * (u < 0.35 ? L.ease.out2(u / 0.35) : 1 - L.ease.inOut((u - 0.35) / 0.65));
+    }
+    return v;
+  }
+  const within = (tn, times, d) => times.some((t0) => tn >= t0 && tn < t0 + d);
+
+  // ---------- the room
+  function room(tn, draw) {
+    const it = [];
+    const at = (a, d, o) => Object.assign(o, draw ? { at: a, dur: d } : {});
+    // lamp light first (under everything). A soft cone with a hand-shaped edge; flickers once.
+    const lampOn = draw && tn < 0.95 ? 0 : (within(tn, [2.18], 0.17) ? 0.15 : 1);
+    if (lampOn > 0) {
+      const cone = (inset, op) => ({
+        cmds: L.curve([[1636 + inset * 0.3, 462], [1608 + inset * 0.6, 590], [1574 + inset, 712], [1532 + inset, 876],
+          [1700, 884], [1888 - inset, 876], [1850 - inset, 716], [1818 - inset * 0.6, 590], [1790 - inset * 0.3, 460]], true, 0.6),
+        stroke: null, fill: C.amber, fillOpacity: op * lampOn, boil: 0.2,
+      });
+      it.push(cone(0, 0.07), cone(34, 0.07), cone(66, 0.08));
+      it.push({ cmds: L.blob(1712, 878, 170, 20, 12, 0.03), fill: C.amber, fillOpacity: 0.1 * lampOn, stroke: null, boil: 0.2 });
+    }
+    // floor
+    it.push(at(0.0, 0.35, { cmds: L.curve([[96, 876], [520, 879], [1000, 873], [1500, 877], [1830, 874]]), width: 6.5 }));
+    // window (slightly off-square), moon with a breathing glow, stars
+    const win = (c) => L.rotateCmds(c, 390, 340, -0.8);
+    it.push(at(0.05, 0.38, { cmds: win(L.rrect(200, 160, 380, 360, 16, 4, 2.2)) }));
+    it.push(at(0.25, 0.18, { cmds: win(L.curve([[392, 166], [389, 340], [391, 515]])), width: 6 }));
+    it.push(at(0.3, 0.18, { cmds: win(L.curve([[206, 343], [390, 338], [574, 341]])), width: 6 }));
+    it.push(at(0.32, 0.2, { cmds: L.curve([[170, 543], [380, 538], [610, 545]]) }));
+    const glowOn = draw ? L.clamp((tn - 0.7) / 0.3) : 1;
+    if (glowOn > 0) {
+      const br = Math.sin(tn * 2 * Math.PI / 2.8);
+      it.push({ cmds: L.blob(490, 250, 70 + 4 * br, 70 + 4 * br, 3, 0.02), fill: C.line, fillOpacity: 0.035 * glowOn, stroke: null, boil: 0 });
+      it.push({ cmds: L.blob(490, 250, 54 + 3 * br, 54 + 3 * br, 4, 0.02), fill: C.line, fillOpacity: 0.05 * glowOn, stroke: null, boil: 0 });
+    }
+    const moon = { type: "group", items: [
+      { cmds: L.blob(490, 250, 40, 40, 8, 0.02), fill: C.line, stroke: null },
+      { cmds: L.blob(510, 236, 37, 37, 9, 0.02), fill: C.bg, stroke: null },
+    ] };
+    if (draw) moon.pop = { x: 490, y: 250, at: 0.45, dur: 0.25 };
+    it.push(moon);
+    [[262, 226, 9, 0], [322, 296, 6, 1.3], [462, 440, 8, 2.1], [276, 452, 5, 0.7], [540, 330, 4, 1.7]].forEach(([x, y, s, ph], i) => {
+      let k = 0.7 + 0.3 * Math.sin(tn * (1.7 + i * 0.37) + ph * 2.0), rot = 0;
+      if (i === 2) { // one star does a proper twinkle every 2.3 s
+        const u = ((tn + 0.6) % 2.3) / 2.3;
+        if (u < 0.18) { const e = Math.sin(u / 0.18 * Math.PI); k = 0.8 + 0.9 * e; }
+      }
+      const arm = (a) => { const r = (a + rot) * L.D2R; return [[x - Math.cos(r) * s * k, y - Math.sin(r) * s * k], [x + Math.cos(r) * s * k, y + Math.sin(r) * s * k]]; };
+      const g = { type: "group", items: [
+        { cmds: L.poly(arm(0)), width: 3.8, wEnd: 2.4 },
+        { cmds: L.poly(arm(90)), width: 3.8, wEnd: 2.4 },
+      ] };
+      if (draw) g.pop = { x, y, at: 0.55 + i * 0.07, dur: 0.2 };
+      it.push(g);
+    });
+    // couch: a bit saggy where she sits, cushions uneven
+    it.push(at(0.12, 0.42, { cmds: L.curve([[640, 740], [634, 604], [650, 545], [702, 526], [840, 519], [1000, 523], [1160, 516], [1288, 524], [1338, 546], [1352, 606], [1346, 740]]) }));
+    it.push(at(0.3, 0.3, { cmds: L.curve([[598, 834], [592, 692], [600, 642], [640, 616], [684, 636], [693, 690], [690, 834]]) }));
+    it.push(at(0.34, 0.3, { cmds: L.curve([[1384, 834], [1390, 694], [1382, 646], [1342, 624], [1298, 642], [1290, 692], [1292, 834]]) }));
+    it.push(at(0.45, 0.3, { cmds: L.curve([[690, 742], [760, 745], [848, 754], [940, 747], [1100, 740], [1292, 743]]) }));
+    it.push(at(0.5, 0.28, { cmds: L.curve([[596, 836], [800, 832], [1000, 834], [1200, 830], [1386, 836]]) }));
+    it.push(at(0.62, 0.1, { cmds: L.curve([[1022, 742], [1019, 790], [1024, 833]]), width: 6 }));
+    it.push(at(0.66, 0.08, { cmds: L.curve([[624, 836], [619, 866]]) }));
+    it.push(at(0.68, 0.08, { cmds: L.curve([[1358, 836], [1363, 866]]) }));
+    // side table + mug + steam
+    it.push(at(0.55, 0.2, { cmds: L.curve([[1428, 746], [1520, 741], [1612, 744]]) }));
+    it.push(at(0.62, 0.12, { cmds: L.curve([[1447, 746], [1445, 810], [1443, 874]]) }));
+    it.push(at(0.64, 0.12, { cmds: L.curve([[1593, 744], [1596, 810], [1599, 874]]) }));
+    it.push(at(0.7, 0.16, { cmds: L.curve([[1488, 682], [1487, 724], [1498, 742], [1528, 742], [1540, 724], [1541, 682]]) }));
+    it.push(at(0.78, 0.08, { cmds: L.curve([[1488, 682], [1514, 677], [1541, 682]]), width: 6 }));
+    it.push(at(0.8, 0.1, { cmds: L.curve([[1542, 694], [1561, 696], [1563, 715], [1541, 725]]), width: 6 }));
+    if (!draw || tn > 1.0) {
+      [0, 1, 2].forEach((k) => {
+        const period = 2.6 + k * 0.35, ph = ((tn + k * 0.95) % period) / period;
+        const x0 = 1499 + k * 14, y0 = 668 - ph * 44;
+        const pts = [];
+        for (let i = 0; i < 5; i++) pts.push([x0 + Math.sin(i * 1.25 - tn * 2.3 + k * 2.1) * (3 + i * 1.7), y0 - i * 15]);
+        it.push({ cmds: L.curve(pts), width: 4.6, wEnd: 1.8, strokeOpacity: Math.sin(ph * Math.PI) * 0.7, boil: 0.15 });
+      });
+    }
+    // floor lamp, shade a little tilted
+    it.push(at(0.6, 0.12, { cmds: L.curve([[1662, 876], [1712, 866], [1760, 876]]) }));
+    it.push(at(0.64, 0.2, { cmds: L.curve([[1712, 868], [1713, 650], [1709, 460]]) }));
+    const shade = L.rotateCmds([["M", 1666, 372], ["Q", 1709, 366, 1754, 371], ["L", 1792, 456], ["Q", 1709, 470, 1626, 457], ["Z"]], 1709, 414, 4);
+    it.push(at(0.72, 0.22, { cmds: shade, fill: lampOn > 0.5 ? C.amber : C.bg, fillAt: draw ? 0.95 : null, fillSnap: true }));
+    return it;
+  }
+
+  // ---------- Mel
+  const base = Object.assign({
+    hip: [852, 748], spine: -15, slump: 14, headTilt: 22, fx: 0.8,
+    nh: [946, 530], fh: [962, 518], nf: [1078, 738], ff: [1106, 738],
+    phone: 1, phoneHand: "near", phoneRot: -18, glow: 1,
+  }, Mel.expr("tired"));
+  const P = (extra) => Object.assign({}, base, extra);
+  const yawnPre = P({ stretch: 0.965, spine: -17, headTilt: 27, nh: [946, 536], fh: [962, 524] });
+  const yawnUp = P({ stretch: 1.07, spine: -8, slump: 6, headTilt: -14, headSq: 1.05, lid: 1, mouthO: 1.3, brow: -0.5, browTilt: 0.35,
+    nh: [944, 562], fh: [960, 550], phoneRot: -30 });
+  const yawnDrop = P({ stretch: 0.95, spine: -19, slump: 22, headTilt: 30, headSq: 0.96, lid: 0.6, mouthC: -0.4, nh: [944, 542], fh: [960, 530] });
+  const slump2 = P({ spine: -17, slump: 18, headTilt: 25, nh: [944, 534], fh: [960, 522] });
+  const read = P(Object.assign({ spine: -3, slump: 5, headTilt: 31, fx: 0.85, nh: [976, 572], fh: [992, 560], phoneRot: -28 }, Mel.expr("alert")));
+
+  const sighUp = P({ stretch: 1.045, spine: -11, slump: 9, headTilt: 10, headSq: 1.03, lid: 0.9, mouthO: 0.45, brow: -0.46, browTilt: 0.35, nh: [944, 548], fh: [960, 536] });
+  const keysA = [
+    { t: 0, pose: base }, { t: 1.45, pose: base },
+    { t: 1.58, pose: yawnPre, ease: "inOut" },
+    { t: 1.84, pose: sighUp, ease: "out" },
+    { t: 1.95, pose: sighUp },
+    { t: 2.12, pose: yawnDrop, ease: "in2" },
+    { t: 2.55, pose: read, ease: "back" },
+  ];
+  const R = (extra) => Object.assign({}, read, extra);
+  const glance = R(Object.assign({ fx: 0.1, headTilt: -3, spine: -5 }, Mel.expr("blank")));
+  const snapBack = R({ headTilt: 33, fx: 0.85 });
+  const squash = R({ hip: [852, 752], stretch: 0.86, headSq: 0.86, spine: -1, headTilt: 30, lid: 0.6, brow: -0.3, browTilt: -0.25, mouthC: -0.3, nh: [952, 640], fh: [966, 630], phoneRot: -50 });
+  const pop = R(Object.assign({ hip: [852, 748], spine: 7, slump: 2, stretch: 1.15, headSq: 1.12, headTilt: -10, fx: 0.05,
+    nh: [968, 470], fh: [1004, 590], phoneFree: 1, phoneHand: "far", glow: 0 }, Mel.expr("alarm")));
+  const s1 = Object.assign({}, pop, { stretch: 0.96, headSq: 0.95, spine: 5, headTilt: -4, nh: [950, 522], fh: [1010, 560] });
+  const s2 = Object.assign({}, pop, { stretch: 1, headSq: 1, spine: 5, headTilt: -5, nh: [940, 560], fh: [1006, 566] });
+  const caught = Object.assign({}, s2, { fh: [948, 650], phoneFree: 0, nh: [930, 566] });
+  const dip = Object.assign({}, caught, { fh: [948, 664] });
+  const worried = Object.assign({}, caught, { fh: [948, 652], nh: [926, 514] }, Mel.expr("worried"));
+  const keysC = [
+    { t: T.cutBack, pose: read }, { t: 11.42, pose: read },
+    { t: 11.6, pose: glance, ease: "out" }, { t: 11.8, pose: glance },
+    { t: 11.92, pose: snapBack, ease: "in2" },
+    { t: 12.1, pose: squash, ease: "out" },
+    { t: 12.22, pose: pop, ease: "out" },
+    { t: 12.42, pose: s1, ease: "inOut" },
+    { t: 12.58, pose: s2, ease: "inOut" },
+    { t: 12.74, pose: caught, ease: "in2" },
+    { t: 12.86, pose: dip, ease: "out" },
+    { t: 13.06, pose: worried, ease: "out" },
+  ];
+  const poseA = (tn) => Mel.pose(keysA, tn);
+  const poseC = (tn) => Object.assign(Mel.pose(keysC, tn), { breathRate: 2.2 });
+
+  // follow-through: the ponytail tip and the lanyard card lag behind the body
+  function follow(poseFn, t0, tn, P0) {
+    const head = (t) => Mel.rig(poseFn(t), t).HC;
+    const card = (t) => Mel.rig(poseFn(t), t).cardAnchor;
+    const g = Mel.rig(P0, tn);
+    const ph = L.spring(head, t0, tn, 300, 13), pc = L.spring(card, t0, tn, 150, 8);
+    const lim = (v, m) => { const l = Math.hypot(v[0], v[1]); return l > m ? [v[0] / l * m, v[1] / l * m] : v; };
+    P0.ponyD = lim([(ph[0] - g.HC[0]) * 1.6, (ph[1] - g.HC[1]) * 1.6], 46);
+    P0.cardD = lim([pc[0] - g.cardAnchor[0], (pc[1] - g.cardAnchor[1]) * 0.6], 26);
+    return P0;
+  }
+
+  // ---------- the phone (shot B)
+  const PH = { textX: 716, size: 47 };
+  const LINES = [
+    ["wk ending Sun 8 Nov", 368, 0.45, 600, 38],
+    ["Tues (Cup day!!) -", 458],
+    ["Jake 3 till 8:30ish ...", 526],
+    ["Locked the pantry", 644],
+    ["so he would stop", 712],
+    ["snacking before dinner", 780],
+  ];
+
+  // ---------- shots
+  const shots = [
+    { // A. Sunday night on the couch
+      start: 0, end: T.cutPhone,
+      camera(tn) {
+        const p = L.ease.inOut(L.clamp((tn - 0.2) / 2.6));
+        return { x: 960 - 10 * p, y: 540 + 22 * p, s: 1 + 0.1 * p };
+      },
+      build(tn) {
+        const it = room(tn, true);
+        const Pm = follow(poseA, 0, tn, poseA(tn));
+        const scrolls = [1.1, 1.32];
+        const fl = flick(tn, scrolls, 6, 0.2);
+        Pm.nh = [Pm.nh[0], Pm.nh[1] - fl];
+        Pm.fh = [Pm.fh[0], Pm.fh[1] - fl * 0.6];
+        Pm.glow = (Pm.glow || 0) * (within(tn, scrolls.map((s) => s + 0.06), 0.09) ? 1.7 : 1);
+        it.push(...Mel.items(Pm, { tn, drawAt: 0.3, drawScale: 0.42, blink: within(tn, [1.45], 0.17) }));
+        it.push({ type: "group", pop: { x: 360, y: 600, at: 0.95, dur: 0.3 }, items: [
+          { text: "Sunday night.", x: 192, y: 616, size: 52, weight: 650, fill: C.amber },
+        ] });
+        return it;
+      },
+    },
+    { // B. the phone
+      start: T.cutPhone, end: T.cutBack,
+      init: null,
+      camera(tn) {
+        const z = L.ease.inOut(L.clamp((tn - 6.7) / 0.6)) - L.ease.inOut(L.clamp((tn - 9.5) / 0.6));
+        const pcx = PH.textX + PH.w3 / 2, pcy = 644 - PH.size * 0.32;
+        const drift = 0.03 * L.clamp((tn - T.cutPhone) / 8.5);
+        return { x: L.lerp(960, pcx, z), y: L.lerp(560, pcy, z), s: 1.2 + drift + 0.38 * z };
+      },
+      build(tn) {
+        const t0 = T.cutPhone;
+        const slide = L.clamp((tn - t0) / 0.38);
+        const slideY = 900 * (1 - L.ease.back(slide));
+        const rot = L.lerp(-9, -3, L.ease.soft(L.clamp((tn - t0) / 0.5)));
+        // thumb flicks the note up; the note scrolls with a soft overshoot
+        const thumbUp = flick(tn, [3.12], 42, 0.32);
+        const sp = L.clamp((tn - 3.2) / 0.55);
+        const scrollY = 330 * (1 - L.ease.soft(sp));
+        const g = [];
+        g.push({ cmds: L.rrect(620, 70, 680, 1120, 74, 31), fill: C.body, width: 7.5 });
+        g.push({ cmds: L.rrect(650, 152, 620, 1010, 40, 32), fill: C.screen, stroke: null });
+        g.push({ cmds: L.curve([[922, 113], [960, 112], [998, 114]]), width: 6.5 });
+        g.push({ cmds: L.curve([[712, 216], [694, 232], [712, 248]]), stroke: C.bg, width: 5.5 });
+        g.push({ cmds: L.curve([[684, 286], [960, 284], [1236, 287]]), stroke: C.bg, strokeOpacity: 0.25, width: 3.2, taper: false });
+        // scrolling note, clipped to the screen below the bar
+        const content = [];
+        const X = PH.textX, S = PH.size;
+        const lw = PH.w3, hx = X - 14, hy = 644 - S * 0.88, hw = lw + 28, hh = S * 1.2;
+        const swipe = L.curve([[hx + 4, hy + 6], [hx + hw * 0.3, hy + 1], [hx + hw * 0.7, hy + 4], [hx + hw, hy + 2], [hx + hw + 6, hy + hh * 0.5],
+          [hx + hw - 2, hy + hh], [hx + hw * 0.6, hy + hh + 3], [hx + hw * 0.25, hy + hh - 1], [hx - 2, hy + hh + 2], [hx - 6, hy + hh * 0.45]], true, 0.9);
+        if (tn > 7.65) {
+          const pulse = 0.5 - 0.5 * Math.cos((tn - 7.65) * 2 * Math.PI / 0.95);
+          content.push({ cmds: L.scaleCmds(swipe, hx + hw / 2, hy + hh / 2, 1.06 + 0.05 * pulse, 1.12 + 0.12 * pulse), fill: C.red, fillOpacity: 0.07 + 0.13 * pulse, stroke: null, boil: 0.2 });
+        }
+        const hp = L.clamp((tn - 6.95) / 0.35);
+        if (hp > 0) content.push({ cmds: swipe, fill: C.red, fillOpacity: 0.3, stroke: null, clipW: { x: hx - 10, y: hy - 10, w: hw + 24, h: hh + 20, p: L.ease.inOut(hp) } });
+        LINES.forEach(([s, y, op, wt, sz], i) => {
+          const red = i === 3 && tn > 7.12;
+          content.push({ text: s, x: X, y, size: sz || S, weight: wt || 500, fill: red ? "#b2302b" : C.bg, opacity: op });
+        });
+        const lcx = hx + hw / 2, lcy = hy + hh / 2, lrx = hw / 2 + 12, lry = hh / 2 + 17;
+        const loop = [];
+        for (let i = 0; i <= 13; i++) {
+          const a = (200 + i * 29) * L.D2R, k = 1 + (i / 13) * 0.07;
+          loop.push([lcx + Math.cos(a) * lrx * k, lcy + Math.sin(a) * lry * k - i * 0.6]);
+        }
+        content.push({ cmds: L.curve(loop), stroke: C.red, width: 7, at: 7.28, dur: 0.38 });
+        // "Cup day": the money trap, an amber marker; a coin pops beside it on "one trap costs money"
+        const cx0 = X + L.measure("Tues ", S, 500), cw = L.measure("(Cup day!!)", S, 500);
+        const cp = L.clamp((tn - 3.62) / 0.3);
+        if (cp > 0) content.unshift({ cmds: L.curve([[cx0 - 6, 458 - S * 0.72], [cx0 + cw * 0.5, 458 - S * 0.76], [cx0 + cw + 6, 458 - S * 0.7], [cx0 + cw + 8, 458 + S * 0.16],
+          [cx0 + cw * 0.5, 458 + S * 0.2], [cx0 - 8, 458 + S * 0.14]], true, 0.8), fill: C.amber, fillOpacity: 0.42, stroke: null,
+          clipW: { x: cx0 - 12, y: 458 - S, w: cw + 26, h: S * 1.4, p: L.ease.inOut(cp) } });
+        const lx = X + L.measure("Tues (Cup day!!) -", S, 500) + 52;
+        content.push({ type: "group", pop: { x: lx, y: 440, at: 9.95, dur: 0.3 }, items: [
+          ...Props.coin(lx, 440, 30), { text: "$", x: lx, y: 440 + 13, size: 36, weight: 700, fill: C.bg, anchor: "middle" },
+        ] });
+        g.push({ type: "group", clip: L.rrect(650, 292, 620, 870, 30, 33, 0), items: [{ type: "group", move: [0, scrollY], items: content }] });
+        // her hand: fingertips round the left edge, thumb on the right (the thumb does the scrolling)
+        [[934], [866], [800]].forEach(([y], i) => {
+          const tip = 662 - i * 4;
+          const f = [[548, y - 30], [600, y - 31], [tip - 16, y - 26], [tip, y - 6], [tip - 6, y + 16], [tip - 26, y + 28], [590, y + 30], [548, y + 30]];
+          g.push({ cmds: L.curve(f.concat([[520, y + 30], [520, y - 30]]), true), fill: C.bg, stroke: null });
+          g.push({ cmds: L.curve(f) });
+        });
+        const thumb = [[1350, 836], [1300, 840], [1250, 856], [1212, 876], [1192, 900], [1200, 922], [1236, 932], [1290, 934], [1350, 942]];
+        const tg = { type: "group", move: [-thumbUp * 0.25, -thumbUp], items: [
+          { cmds: L.curve(thumb.concat([[1390, 942], [1390, 836]]), true), fill: C.bg, stroke: null },
+          { cmds: L.curve(thumb) },
+          { cmds: L.curve([[1208, 896], [1220, 884], [1236, 881]]), width: 4.8 },
+          { cmds: L.curve([[1296, 866], [1300, 884], [1298, 904]]), width: 4.8 },
+        ] };
+        g.push(tg);
+        return [{ type: "group", move: [0, slideY], rotate: { deg: rot, x: 960, y: 600 }, items: g }];
+      },
+    },
+    { // C. back to Mel, closer: the double-take
+      start: T.cutBack, end: 99,
+      camera(tn, f) {
+        let dx = 0, dy = 0;
+        const u = (tn - 12.2) / 0.36;
+        if (u > 0 && u < 1) { const a = 10 * Math.pow(1 - u, 2); dx = L.sym(f, 71) * a; dy = L.sym(f, 73) * a; }
+        const push = L.ease.inOut(L.clamp((tn - 13.08) / 2.8));
+        return { x: 900, y: 520 - 6 * push, s: 1.56 + 0.05 * push, dx, dy };
+      },
+      build(tn) {
+        const it = room(tn, false);
+        const Pm = follow(poseC, T.cutBack, tn, poseC(tn));
+        it.push(...Mel.items(Pm, { tn, blink: within(tn, [14.6], 0.17) }));
+        const g = Mel.rig(Pm, tn), HC = g.HC, Rr = g.R;
+        // the phone in flight: leaves the near hand, spins up, drops into the far hand
+        if (Pm.phoneFree > 0.5) {
+          const tA = 12.165, tB = 12.693;
+          const pa = Mel.pose(keysC, tA), pb = Mel.pose(keysC, tB);
+          const A = [pa.nh[0] + 8, pa.nh[1] - 14], B = [pb.fh[0] + 8, pb.fh[1] - 14];
+          const u = L.clamp((tn - tA) / (tB - tA));
+          const x = L.lerp(A[0], B[0], u) + 30 * Math.sin(u * Math.PI);
+          const y = L.lerp(A[1], B[1], u) - 175 * 4 * u * (1 - u);
+          const rot = -12 + 330 * L.ease.out2(u);
+          it.push({ cmds: L.rotateCmds(L.rrect(x - 16, y - 29, 32, 58, 7, 21), x, y, rot), fill: C.screen, width: 5.5 });
+          if (u < 0.35) [[-1, 0], [1, 0.4]].forEach(([s, d]) => it.push({ cmds: L.poly([[x + s * 30, y + 26 - d * 6], [x + s * 42, y + 44 - d * 6]]), width: 4.5, wEnd: 2.5 }));
+        }
+        // panic lines: pop out from the head, then vibrate
+        [[-62, 0], [-36, 1], [34, 2], [58, 3]].forEach(([deg, i]) => {
+          const a = (deg - 90 + L.sym(Math.floor(tn * 12), i, 5) * 3) * L.D2R, tw = 1 + 0.14 * Math.sin(tn * 11 + i * 1.7);
+          const r0 = Rr + 28, r1 = Rr + 28 + 32 * tw;
+          it.push({ type: "group", pop: { x: HC[0], y: HC[1], at: 12.78 + i * 0.03, dur: 0.22 }, items: [
+            { cmds: L.poly([[HC[0] + Math.cos(a) * r0, HC[1] + Math.sin(a) * r0], [HC[0] + Math.cos(a) * r1, HC[1] + Math.sin(a) * r1]]), width: 7, wEnd: 3.5 },
+          ] });
+        });
+        // the red flag pops above her head; its wave starts big and settles
+        const fxp = HC[0] - 4, fy = HC[1] - Rr - 46;
+        const wa = 3 + 9 * Math.exp(-Math.max(0, tn - 13.03) * 2.2), w = Math.sin((tn - 12.98) * 6) * wa;
+        const top = fy - 112;
+        it.push({ type: "group", pop: { x: fxp, y: fy, at: 12.98, dur: 0.32 }, items: [
+          { cmds: L.curve([[fxp, fy], [fxp + 1, fy - 56], [fxp, top]]), width: 7 },
+          { cmds: [["M", fxp, top], ["C", fxp + 20, top - 10 + w * 0.3, fxp + 44, top + 8 + w * 0.6, fxp + 68, top - 2 + w],
+            ["L", fxp + 66, top + 42 + w], ["C", fxp + 44, top + 50 + w * 0.6, fxp + 22, top + 32 + w * 0.3, fxp + 1, top + 44], ["Z"]],
+            fill: C.red, width: 6 },
+        ] });
+        return it;
+      },
+    },
+  ];
+
+  Line.scene({
+    nominal: T.end, defaultDuration: 15.87, shots,
+    init() {
+      // fit the note text to the screen width
+      const widest = Math.max(...LINES.slice(1).map(([s]) => L.measure(s, 48, 500)));
+      PH.size = Math.min(48, Math.floor(48 * 540 / widest));
+      LINES.slice(1).forEach((l) => (l[4] = PH.size));
+      PH.w3 = L.measure("Locked the pantry", PH.size, 500);
+    },
+  });
+})();
+</script>
+</body>
+</html>

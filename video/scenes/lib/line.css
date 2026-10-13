@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Shantell Sans";
+  src: url("../../vendor/fonts/ShantellSans%5BBNCE,INFM,SPAC,wght%5D.ttf") format("truetype");
+  font-weight: 300 800;
+}
+html, body { margin: 0; padding: 0; background: #1c2330; }
+body { width: 1920px; height: 1080px; overflow: hidden; position: relative; }
+#paper, #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.warm { position: absolute; left: -9999px; top: 0; font-family: "Shantell Sans"; }
+.warm .a { font-weight: 500; }
+.warm .b { font-weight: 650; }

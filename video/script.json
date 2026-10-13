@@ -1,0 +1,86 @@
+[
+  {
+    "id": "s01_title",
+    "narration": "Arvo. Sunday-night invoicing for NDIS support workers, offline, on Gemma four.",
+    "on_screen_caption": "Sunday-night invoicing for NDIS support workers. Offline. Gemma 4 on your own laptop.",
+    "visual": "Title slide: 'Arvo' in deep green on off-white, subtitle beneath, small Gemma 4 / Ollama line."
+  },
+  {
+    "id": "s02_hook",
+    "narration": "One diary line, two traps. Tuesday, Cup Day. Jake, three till eight thirty-ish. Locked the pantry so he would stop snacking. One trap costs money. The other is a restrictive practice that reads like any other note.",
+    "on_screen_caption": null,
+    "visual": "The diary line types itself on screen: 'Tues (Cup day!!) - Jake 3 till 8:30ish ... Locked the pantry so he would stop snacking before dinner'; 'Cup day' and 'Locked the pantry' tint red as each trap is named."
+  },
+  {
+    "id": "s03_who",
+    "narration": "Call her Mel. An independent NDIS support worker in Victoria. Nobody pays her for the admin, and a wrong item number bounces the invoice.",
+    "on_screen_caption": "Mel is a composite, not a real person: built from published rate guides and NDIS Commission material. Not legal advice.",
+    "visual": "Who slide: 'Independent NDIS support worker, ABN, Victoria. Admin unpaid.' and the rates table: weekday $73.58 / evening $81.07 / Saturday $103.54 / Sunday $133.50 / public holiday $163.46 per hour."
+  },
+  {
+    "id": "s04_trap_price",
+    "narration": "Trap one. Cup Day is a Victorian public holiday. Five and a half hours at the holiday rate: eight hundred and ninety-nine dollars. On a normal Tuesday it crosses eight at night, and the whole shift bills at the evening rate. Not split.",
+    "on_screen_caption": "Tue 3 Nov 2026 is Melbourne Cup Day: 5.5 h x $163.46 = $899.03 (not 5.5 h x $73.58). Pricing Schedule 2026-27 s2.4(c): \"the higher of the amounts applies to the whole support\".",
+    "visual": "Trap 1 slide: big '5.5 h x $163.46 = $899.03', weekday $73.58 struck through, then the s2.4(c) quote in a pull-quote block."
+  },
+  {
+    "id": "s05_trap_pantry",
+    "narration": "Trap two. Locking the pantry is an environmental restraint under the NDIS rules. A registered provider has five business days to notify the Commission, twenty-four hours if it caused harm. An unregistered sole trader must not use it.",
+    "on_screen_caption": "Environmental restraint: NDIS (Restrictive Practices and Behaviour Support) Rules 2018. Registered provider: notify the NDIS Commission within 5 business days, 24 h if harm. Unregistered: must not use; raise it with the Commission. Not legal advice.",
+    "visual": "Trap 2 slide: the pantry sentence in red, 'environmental restraint' label, two columns: Registered (5 business days / 24 h if harm) and Unregistered (must not use; raise with the Commission)."
+  },
+  {
+    "id": "s06_demo_text",
+    "narration": "Paste the week, press Read and price. Gemma reads it offline; the counter shows real seconds, about thirteen. Seven shifts, ten invoice lines, three flags. The red one is the pantry, quoted exactly, with its notify-by date. The PRN and bed rails: authorised, record only. Then the shifts Gemma read, the lines code priced, a Why on each, and a printable invoice per participant.",
+    "on_screen_caption": "LIVE: Gemma 4 on my laptop (wait sped up)",
+    "visual": "Live app: diary pasted, 'Read and price this week' pressed, counter ticks, results appear; scroll to the red 'Check before you invoice' panel (pantry highlighted, PRN and bed rails marked authorised), the shifts table, the invoice lines; one 'Why' expanded; 'Print invoice' opened."
+  },
+  {
+    "id": "s07_demo_photo",
+    "narration": "Same job from a photo of a paper diary. Drop it in and run. All seven shifts come back, read straight from the image, with a note to check them before you invoice.",
+    "on_screen_caption": "LIVE: photo of a paper diary",
+    "visual": "Live app: eval/fixtures/week13.png dropped onto the page, run pressed, the shifts table fills from the image."
+  },
+  {
+    "id": "s08_demo_voice",
+    "narration": "And voice. Three memos, one per shift. Gemma hears the audio directly; no separate speech model. What Gemma heard opens for checking; the shifts land in the table.",
+    "on_screen_caption": "LIVE: voice memos",
+    "visual": "Live app: three voice memos added, run pressed, about 5 s of one memo plays, the 'What Gemma heard' panel opens line by line, shifts appear in the table."
+  },
+  {
+    "id": "s09_how",
+    "narration": "The model reads, code decides. Gemma never picks a price, an item number or a deadline. Code does, from the Schedule. Let Gemma price the week itself: zero of sixteen right. A flag must quote the note, or it's dropped.",
+    "on_screen_caption": "Gemma pricing the week itself: 0 of 16 weeks right (line recall 49.5%). Code pricing Gemma's shifts: 10 of 16, 95.0%.",
+    "visual": "Diagram: diary / photo / voice -> Gemma 4 reads -> shifts JSON -> code decides (bands, holidays, official prices) -> invoice; second row: note -> Gemma -> flag with verbatim quote, or dropped."
+  },
+  {
+    "id": "s10_results",
+    "narration": "Held-out results. Test split: ninety-three per cent of shifts exact. Wild diaries: seventy-six per cent, where a code-only parser gets forty. Restrictive practices: e-four-b finds twenty of twenty-two restraints. Photos, ninety per cent. Voice, six of ten memos fully right.",
+    "on_screen_caption": "Held out, run once on frozen code (eval-freeze-1). Test 93.3% exact (code-only 91.6%). Wild 75.9% (code-only 39.7%). Restrictive practices F1 88.9%, 20/22 restraints (keyword list 45.7%; gemma4:e2b 41.4%). Photos 90.0%. Voice 6/10.",
+    "visual": "Results table slide, five rows, Arvo column in green beside baselines; the wild row and the restrictive-practice row emphasised."
+  },
+  {
+    "id": "s11_lesson",
+    "narration": "My guardrails overruled right answers. Seven of fourteen wrong wild shifts were my code overwriting Gemma's correct value. New rule: code overrules Gemma only when Gemma's value is impossible. After the fix, no longer held out, wild goes to ninety-five per cent.",
+    "on_screen_caption": "7 of 14 wrong wild shifts: code overwrote a correct Gemma value. Rule: code overrules the model only when its own reading is unambiguous and the model's value is impossible. After the fix (not held out): wild 94.8%, 7/8 weeks to the cent.",
+    "visual": "Lesson slide: title 'My guardrails overruled right answers'; the warning line \"start set to 09:00 from '9 30 till 1 30' (model said 09:30)\"; before/after pair 75.9% -> 94.8%, 2/8 -> 7/8, marked 'not held out'."
+  },
+  {
+    "id": "s12_open",
+    "narration": "Why open weights? Shift notes are sensitive health information. On her own laptop, nothing leaves. Offline in a car park, zero dollars a week, on a six gigabyte laptop GPU.",
+    "on_screen_caption": "Shift notes are 'sensitive information' (Privacy Act s 6). Server binds to 127.0.0.1. Offline. $0 a week. 6 GB laptop GPU, or a CPU-only GitHub Actions runner (run 38347559687).",
+    "visual": "Why-open slide: four short lines (stays on the laptop / offline / $0 a week / 6 GB GPU or CPU runner) with a small screenshot of the green GitHub Actions gemma-smoke run."
+  },
+  {
+    "id": "s13_pay",
+    "narration": "Who pays? Independent workers like Mel, at twelve dollars a month. The agency tools charge per user, five staff minimum.",
+    "on_screen_caption": "Proposed: $12 a month or $99 a year for solo ABN workers. ShiftCare pricing: per user, \"All plans start at a minimum of five staff\".",
+    "visual": "Who-pays slide: '$12 / month' large in green; beside it a muted crop of the ShiftCare pricing page with the five-staff minimum line."
+  },
+  {
+    "id": "s14_end",
+    "narration": "On GitHub: Otto Deviant nineteen-oh-four, slash arvo. Open code, open weights. The model reads, code decides, and nothing leaves the laptop.",
+    "on_screen_caption": "github.com/Otto-Deviant1904/arvo  |  otto-deviant1904.github.io/arvo  |  Built with Gemma 4, Ollama, Python. MIT licence.",
+    "visual": "End slide: the two links large, the credits line beneath, 'The model reads. Code decides.' as the closing line."
+  }
+]

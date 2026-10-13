@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s12_open</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/diagram.js"></script>
+</head>
+<body>
+<script>
+// s12_open (nominal = rendered length 13.83 s = narration 12.93 + 0.9; narration starts at 0.35 s).
+// Narration: "Why open weights?" 0.51-1.63 | "Shift notes are sensitive health information." 2.08-4.48 |
+// "On her own laptop, nothing leaves." 5.01-7.21 | "Offline in a car park," 7.77-9.16 |
+// "zero dollars a week," 9.37-10.66 | "on a six gigabyte laptop GPU." 10.85-13.12
+// Beats: night car park draws on fast; the lamp flickers on. Mel sits in the driver's seat of her
+// hatchback, laptop on the steering wheel, typing; on "Why" she glances out at us. Tiny Privacy Act note
+// top right. A zoom bubble pops off the laptop: its padlock snaps shut (squash). A cloud pops and gets a
+// big cross; "nothing leaves the laptop". Signal bars try, die, get a cross. "$0 / week", "6 GB laptop GPU".
+(function () {
+  const L = Line, C = L.C, D = Diagram;
+  const LEN = 13.83, GND = 860;
+  const HIP = [830, 742];
+  const SCR = [[592, 562], [574, 450], [640, 442], [658, 554]]; // laptop screen (3/4 cheat, faces her and us)
+  const M = {};
+
+  // ---------- the car park
+  function scenery(tn) {
+    const it = [];
+    const lampOn = tn < 0.75 ? 0 : (D.within(tn, [0.86, 1.05], 0.08) ? 0.2 : 1);
+    if (lampOn > 0) {
+      const cone = (inset, op) => ({
+        cmds: L.curve([[1240 + inset * 0.2, 252], [1180 + inset * 0.5, 470], [1080 + inset, GND], [1270, GND + 6], [1500 - inset, GND], [1360 - inset * 0.5, 470], [1296 - inset * 0.2, 252]], true, 0.6),
+        stroke: null, fill: C.amber, fillOpacity: op * lampOn, boil: 0.2,
+      });
+      it.push(cone(0, 0.06), cone(40, 0.06), cone(80, 0.07));
+      it.push({ cmds: L.blob(1290, GND + 4, 200, 18, 12, 0.03), fill: C.amber, fillOpacity: 0.1 * lampOn, stroke: null, boil: 0.2 });
+    }
+    it.push({ cmds: L.curve([[60, GND + 2], [500, GND - 1], [1000, GND + 2], [1500, GND - 1], [1860, GND + 1]]), width: 6.5, at: 0, dur: 0.32 });
+    // bay lines + wheel stop
+    [[200, 0.12], [1420, 0.16], [1800, 0.2]].forEach(([x, a]) => it.push({ cmds: L.poly([[x, GND + 4], [x - 50, 912]]), width: 5.5, strokeOpacity: 0.7, at: a, dur: 0.12 }));
+    it.push({ cmds: L.rrect(232, GND - 22, 70, 22, 8, 905, 0.8), width: 5, at: 0.2, dur: 0.12 });
+    // lamp post
+    it.push({ cmds: L.curve([[1366, GND], [1364, 560], [1366, 236]]), width: 7, at: 0.25, dur: 0.22 });
+    it.push({ cmds: L.curve([[1366, 238], [1350, 218], [1310, 214], [1272, 222]]), width: 6.5, at: 0.4, dur: 0.12 });
+    it.push({ cmds: [["M", 1240, 252], ["Q", 1248, 222, 1272, 218], ["Q", 1296, 222, 1304, 252], ["Z"]], fill: lampOn > 0.5 ? C.amber : C.bg, width: 6, at: 0.46, dur: 0.12, fillAt: 0.76, fillSnap: true });
+    // stars (twinkle)
+    [[150, 130, 8], [470, 92, 6], [870, 120, 7], [1530, 170, 6], [330, 420, 5], [1160, 90, 5]].forEach(([x, y, s], i) => {
+      let k = 0.75 + 0.25 * Math.sin(tn * (1.6 + i * 0.4) + i * 2);
+      const u = ((tn + i * 0.7) % 2.6) / 2.6;
+      if (i === 2 && u < 0.16) k = 0.8 + 0.9 * Math.sin(u / 0.16 * Math.PI);
+      it.push({ type: "group", pop: { x, y, at: 0.5 + i * 0.05, dur: 0.2 }, items: D.star(x, y, s * k, { width: 3.6 }) });
+    });
+    return it;
+  }
+
+  function carBody() {
+    const it = [];
+    // lower body (filled: hides her legs), greenhouse as lines
+    it.push({ cmds: L.curve([[292, 792], [286, 722], [302, 670], [362, 646], [548, 606], [900, 600], [1182, 600], [1244, 614], [1266, 700], [1262, 792], [800, 794]], true, 0.45),
+      fill: C.body, width: 7, at: 0.05, dur: 0.4 });
+    it.push({ cmds: L.curve([[550, 606], [610, 510], [692, 414]]), width: 7, at: 0.25, dur: 0.15 });
+    it.push({ cmds: L.curve([[692, 414], [900, 404], [1086, 404], [1152, 420]]), width: 7, at: 0.32, dur: 0.18 });
+    it.push({ cmds: L.curve([[1152, 420], [1222, 520], [1244, 612]]), width: 7, at: 0.42, dur: 0.12 });
+    it.push({ cmds: L.curve([[904, 406], [908, 500], [912, 600]]), width: 11, at: 0.45, dur: 0.1 });
+    it.push({ cmds: L.curve([[1110, 410], [1150, 500], [1178, 600]]), width: 12, at: 0.48, dur: 0.1 });
+    // doors, handle, lights, mirror
+    it.push({ cmds: L.curve([[586, 608], [582, 700], [592, 772]]), width: 5, at: 0.5, dur: 0.1 });
+    it.push({ cmds: L.curve([[912, 604], [914, 700], [910, 778]]), width: 5, at: 0.52, dur: 0.1 });
+    it.push({ cmds: L.curve([[600, 776], [800, 780], [1080, 776]]), width: 5, at: 0.54, dur: 0.12 });
+    it.push({ cmds: L.poly([[838, 640], [878, 640]]), width: 7, at: 0.58, dur: 0.06 });
+    it.push({ cmds: L.blob(318, 676, 20, 11, 911, 0.04, -12), width: 5, fill: C.line, fillOpacity: 0.15, at: 0.58, dur: 0.08 });
+    it.push({ cmds: L.blob(1252, 652, 10, 20, 912, 0.04), width: 5, at: 0.6, dur: 0.08 });
+    it.push({ cmds: L.curve([[574, 588], [548, 576], [540, 592], [566, 600]], true), fill: C.body, width: 5, at: 0.6, dur: 0.08 });
+    // wheels in arches
+    [[452, 0.3], [1110, 0.34]].forEach(([x, a]) => {
+      it.push({ cmds: L.curve([[x - 86, 792], [x - 70, 728], [x, 708], [x + 70, 728], [x + 86, 792]]), fill: C.bg, width: 6, at: a, dur: 0.14 });
+      it.push({ cmds: L.blob(x, 798, 63, 63, 920 + x, 0.012), fill: C.bg, width: 7, at: a + 0.08, dur: 0.16 });
+      it.push({ cmds: L.blob(x, 798, 22, 22, 930 + x, 0.02), width: 5, at: a + 0.16, dur: 0.1 });
+    });
+    return it;
+  }
+
+  // ---------- Mel in the driver's seat (posed facing right, mirrored to face left)
+  const AX = (x) => 2 * HIP[0] - x; // world x <-> author x
+  const base = Object.assign({ hip: HIP, spine: 14, slump: 8, headTilt: 10, fx: 0.7, stretch: 1,
+    nh: [AX(686), 566], fh: [AX(664), 560], nf: [AX(560), 830], ff: [AX(540), 830] }, Mel.expr("focused"));
+  const P = (x) => Object.assign({}, base, x);
+  const look = P(Object.assign({ spine: 8, headTilt: -6, fx: -0.2, nh: [AX(690), 590], fh: [AX(668), 586] }, Mel.expr("alert")));
+  const lean = P(Object.assign({ spine: 4, headTilt: 2, slump: 4 }, Mel.expr("relieved")));
+  const smile = P(Mel.expr("smile"));
+  const keys = [
+    { t: 0, pose: base }, { t: 0.95, pose: base },
+    { t: 1.15, pose: P({ spine: 16, headTilt: 14 }), ease: "inOut" }, // anticipation
+    { t: 1.42, pose: look, ease: "back" }, { t: 1.95, pose: look },
+    { t: 2.3, pose: base, ease: "inOut" }, { t: 5.15, pose: base },
+    { t: 5.55, pose: lean, ease: "back" }, { t: 6.9, pose: lean },
+    { t: 7.3, pose: base, ease: "inOut" }, { t: 9.35, pose: base },
+    { t: 9.7, pose: smile, ease: "back" },
+  ];
+  const poseFn = (tn) => Mel.pose(keys, tn);
+  function typing(tn) {
+    if ((tn > 1.0 && tn < 2.25) || (tn > 5.3 && tn < 7.1)) return [0, 0];
+    return [Math.max(0, Math.sin(tn * 2 * Math.PI * 3.4)) * 7, Math.max(0, Math.sin(tn * 2 * Math.PI * 3.4 + Math.PI)) * 7];
+  }
+
+  function laptop(tn) {
+    const it = [];
+    // steering wheel rim (side on), laptop base resting on it, screen tilted towards her (and us)
+    it.push({ cmds: L.rotateCmds(L.blob(634, 618, 16, 58, 940, 0.02), 634, 618, 16), width: 7, at: 0.55, dur: 0.14 });
+    it.push({ cmds: L.poly([[640, 622], [580, 660]]), width: 8, at: 0.6, dur: 0.08 });
+    it.push({ cmds: L.poly([[590, 562], [712, 556]]), width: 8, wEnd: 6, at: 0.62, dur: 0.1 });
+    const glow = tn < 0.85 ? 0 : 1 + 0.08 * Math.sin(tn * 5);
+    if (glow > 0) {
+      const hc = M.hc || [756, 492];
+      it.push({ cmds: L.poly([[640, 446], [658, 552], [hc[0] - 30, hc[1] + 60], [hc[0] - 30, hc[1] - 50]], true), stroke: null, fill: C.line, fillOpacity: 0.07 * glow, boil: 0 });
+    }
+    it.push({ cmds: L.poly(SCR, true), fill: C.screen, width: 6, at: 0.66, dur: 0.12 });
+    // tiny padlock on the screen once it is locked
+    if (tn > 5.45) it.push(...D.place(D.lock(0, 0, 0.42, C.green, { width: 4.5, hole: C.screen }), { x: 617, y: 512 }));
+    else it.push({ cmds: D.scribble(590, 480, 36, 2, 1.5), stroke: C.bg, width: 4 }, { cmds: D.scribble(592, 500, 44, 3, 1.5), stroke: C.bg, width: 4 }, { cmds: D.scribble(594, 520, 30, 4, 1.5), stroke: C.bg, width: 4 });
+    return it;
+  }
+
+  // zoom bubble off the laptop: the padlock snaps shut
+  function bubble(tn) {
+    const it = [];
+    const ps = D.popS(tn, 5.0, { f: 2.2, d: 7, sq: 0.14 });
+    if (ps.s <= 0.01) return it;
+    const c = [700, 238], r = 118;
+    const items = [
+      { cmds: [["M", c[0] - 30, c[1] + r - 6], ["Q", c[0] - 52, c[1] + r + 60, 622, 452], ["Q", c[0] + 6, c[1] + r + 40, c[0] + 28, c[1] + r - 4]], fill: C.bg, width: 6 },
+      { cmds: L.blob(c[0], c[1], r, r, 950, 0.015), fill: C.bg, width: 7 },
+      { cmds: L.rrect(c[0] - 78, c[1] - 66, 156, 104, 12, 951, 0.8), fill: C.screen, width: 6 },
+      { cmds: L.curve([[c[0] - 96, c[1] + 52], [c[0], c[1] + 50], [c[0] + 96, c[1] + 52]]), width: 7 },
+    ];
+    const shut = L.ease.in2(L.clamp((tn - 5.32) / 0.12));
+    const sq = D.wob(tn, 5.44, 0.16, 3.4, 7);
+    const lock = D.lock(0, 0, 0.95, C.green, { open: 1 - shut, width: 6.5, hole: C.screen });
+    items.push(...D.place(lock, { x: c[0], y: c[1] - 4, sx: 1 + sq, sy: 1 - sq, px: 0, py: 26 }));
+    it.push({ type: "group", scale: { s: ps.sx, sy: ps.sy, x: 640, y: 440 }, items });
+    return it;
+  }
+
+  function labels(tn) {
+    const it = [];
+    const lab = (t0, items, ax, ay) => {
+      const p = D.popS(tn, t0, { sq: 0.14 });
+      if (p.s > 0.01) it.push({ type: "group", scale: { s: p.sx, sy: p.sy, x: ax, y: ay }, items });
+    };
+    const X = 1622;
+    lab(6.05, [{ text: "nothing leaves", x: X, y: 430, size: 54, weight: 650, anchor: "middle" },
+      { text: "the laptop", x: X, y: 494, size: 54, weight: 650, anchor: "middle" }], X, 470);
+    lab(9.4, [{ text: "$0", x: M.x0, y: 652, size: 96, weight: 750, fill: C.amber }, { text: "/ week", x: M.x0 + M.w0, y: 652, size: 64, weight: 650 }], X, 620);
+    lab(10.9, [{ text: "6 GB laptop GPU", x: X, y: 778, size: 54, weight: 650, anchor: "middle" }], X, 760);
+    // cloud: pops, then a big cross
+    const cp = D.popS(tn, 5.6, { sq: 0.14 });
+    if (cp.s > 0.01) {
+      const bob = Math.sin(tn * 1.6) * 5;
+      it.push({ type: "group", scale: { s: cp.sx, sy: cp.sy, x: 1030, y: 250 }, move: [0, bob], items: [
+        ...D.cloud(1030, 236, 62, { width: 7 }),
+        ...D.cross(1030, 222, 56, C.amber, 5.88, { width: 13, dur: 0.12 }),
+      ] });
+    }
+    // signal bars: flicker, die, cross
+    const sp = D.popS(tn, 7.8, { sq: 0.14 });
+    if (sp.s > 0.01) {
+      let lit = 0;
+      if (tn < 8.25) lit = Math.floor((tn - 7.8) * 18) % 3;
+      it.push({ type: "group", scale: { s: sp.sx, sy: sp.sy, x: 230, y: 320 }, items: [
+        ...D.bars(186, 320, 1.15, lit, { width: 5.5 }),
+        ...D.cross(232, 286, 52, C.amber, 8.25, { width: 13, dur: 0.12 }),
+      ] });
+    }
+    // heat shimmer off the laptop on "GPU"
+    if (tn > 11.0) {
+      [0, 1, 2].forEach((k) => {
+        const ph = ((tn - 11.0) * 0.9 + k * 0.33) % 1;
+        const x0 = 690 + k * 14, y0 = 548 - ph * 50, pts = [];
+        for (let i = 0; i < 4; i++) pts.push([x0 + Math.sin(i * 1.4 - tn * 4 + k) * 4, y0 - i * 12]);
+        it.push({ cmds: L.curve(pts), width: 4, wEnd: 1.8, strokeOpacity: Math.sin(ph * Math.PI) * 0.8, boil: 0.15 });
+      });
+    }
+    return it;
+  }
+
+  const shots = [{
+    start: 0, end: 99,
+    camera(tn) {
+      const p = L.ease.inOut(L.clamp(tn / LEN));
+      return { x: 950, y: 500, oy: 500, s: 1 + 0.025 * p };
+    },
+    build(tn) {
+      const it = scenery(tn);
+      // seat back + headrest behind her
+      it.push({ cmds: L.curve([[838, 604], [852, 540], [862, 486]]), width: 6.5, at: 0.4, dur: 0.12 });
+      it.push({ cmds: L.blob(872, 462, 26, 32, 960, 0.04, 8), fill: C.bg, width: 6, at: 0.48, dur: 0.1 });
+      const Pm = D.follow(poseFn, 0, tn, poseFn(tn));
+      const ty = typing(tn);
+      Pm.nh = [Pm.nh[0], Pm.nh[1] - ty[0]];
+      Pm.fh = [Pm.fh[0], Pm.fh[1] - ty[1]];
+      const mel = Mel.items(Pm, { tn, flip: true, drawAt: 0.35, drawScale: 0.4, blink: D.within(tn, [3.1, 8.45, 12.3], 0.15) });
+      const g = Mel.rig(Pm, tn);
+      M.hc = [AX(g.HC[0]), g.HC[1]];
+      it.push(...mel);
+      it.push(...laptop(tn));
+      it.push(...carBody());
+      it.push(...bubble(tn));
+      it.push(...labels(tn));
+      // tiny source note, top right
+      const np = L.clamp((tn - 2.1) / 0.4);
+      if (np > 0) it.push({ text: "shift notes = sensitive information (Privacy Act s 6)", x: 1880 - M.noteW, y: 58, size: 27, weight: 500, opacity: 0.72 * np, screen: true });
+      return it;
+    },
+  }];
+
+  Line.scene({
+    nominal: LEN, defaultDuration: LEN, shots,
+    init() {
+      M.noteW = L.measure("shift notes = sensitive information (Privacy Act s 6)", 27, 500);
+      const w = L.measure("$0 ", 96, 750) + L.measure("/ week", 64, 650);
+      M.w0 = L.measure("$0 ", 96, 750);
+      M.x0 = 1622 - w / 2;
+    },
+  });
+})();
+</script>
+</body>
+</html>

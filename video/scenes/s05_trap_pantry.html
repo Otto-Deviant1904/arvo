@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s05_trap_pantry</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// s05_trap_pantry (nominal 17.85 s = narration 16.95 + 0.9). Narration (scene time):
+//  0.35-1.27 "Trap two."  1.83-6.5 "Locking the pantry is an environmental restraint under the NDIS rules."
+//  7.18-11.44 "A registered provider has five business days to notify the Commission,"
+//  11.66-13.79 "twenty-four hours if it caused harm."  14.39-17.3 "An unregistered sole trader must not use it."
+// Facts (DEV_POST.md): environmental restraint under the NDIS (Restrictive Practices and Behaviour Support) Rules 2018;
+// registered provider: notify the NDIS Commission within 5 business days, 24 hours if harm; unregistered: must not use.
+(function () {
+  const L = Line, C = L.C;
+  const T = { cut: 6.95, end: 17.85 };
+  const within = (tn, times, d) => times.some((t0) => tn >= t0 && tn < t0 + d);
+  const G = 860;
+
+  // ---------- Jake (cap, no lanyard), stands right of the pantry and faces it (left)
+  const JX = 1220;
+  const jStand = Object.assign({ hip: [JX, G - 292], spine: 3, headTilt: 6, fx: 0.75, knee: "fwd",
+    nf: [JX + 10, G], ff: [JX - 26, G], nh: [JX + 20, G - 278], fh: [JX - 14, G - 282] }, Mel.expr("blank"), { brow: -0.3 });
+  const jLook = Object.assign({}, jStand, { headTilt: 16, spine: 6 }, Mel.expr("alert"), { brow: -0.32 });
+  const jReach = Object.assign({}, jLook, { spine: 9, nh: [JX + 170, 500] }, Mel.expr("sad"), { lid: 0, brow: -0.28 });
+  const jSad = Object.assign({}, jStand, { spine: 9, slump: 8, headTilt: 22, nh: [JX + 16, G - 270], fh: [JX - 10, G - 276] }, Mel.expr("sad"), { brow: -0.28 });
+  const keysJ = [
+    { t: 0, pose: jStand }, { t: 2.2, pose: jStand },
+    { t: 2.5, pose: jLook, ease: "out" }, { t: 3.1, pose: jLook },
+    { t: 3.55, pose: jReach, ease: "inOut" }, { t: 3.9, pose: jReach },
+    { t: 4.45, pose: jSad, ease: "inOut" },
+  ];
+  const poseJ = (tn) => Mel.pose(keysJ, tn);
+
+  const shots = [
+    { // A. the pantry gets padlocked; Jake
+      start: 0, end: T.cut,
+      camera(tn) { const p = L.ease.inOut(L.clamp(tn / T.cut)); return { x: 940, y: 520, s: 1 + 0.04 * p }; },
+      build(tn) {
+        const it = [];
+        it.push({ type: "group", screen: true, pop: { x: 220, y: 130, at: 0.35, dur: 0.3 }, items: [
+          { text: "Trap 2", x: 130, y: 152, size: 64, weight: 700, fill: C.red },
+          { cmds: L.curve([[132, 172], [220, 168], [314, 173]]), stroke: C.red, width: 6 },
+        ] });
+        // floor, pantry door (shakes when the lock snaps)
+        it.push({ cmds: L.curve([[40, G + 2], [900, G + 4], [1880, G]]), width: 6.5 });
+        const sh = tn > 2.1 ? Math.sin((tn - 2.1) * 40) * 1.3 * Math.exp(-(tn - 2.1) * 7) : 0;
+        const doorItems = [
+          { cmds: L.poly([[600, G], [600, 170], [980, 170], [980, G]]), width: 7 },
+          { cmds: L.rrect(618, 186, 344, G - 186, 6, 23, 0.8), fill: C.body, width: 6 },
+          { cmds: L.rrect(660, 240, 260, 220, 10, 24, 0.8), width: 4.5, taper: false, strokeOpacity: 0.7 },
+          { cmds: L.rrect(660, 520, 260, 280, 10, 25, 0.8), width: 4.5, taper: false, strokeOpacity: 0.7 },
+          { cmds: L.rrect(636, 500, 22, 70, 6, 26, 0.4), fill: C.line, width: 3 },
+          // hasp
+          { cmds: L.rrect(606, 560, 48, 18, 4, 27, 0.4), width: 4.5, taper: false },
+        ];
+        it.push({ type: "group", rotate: { deg: sh, x: 790, y: G }, items: doorItems });
+        it.push({ type: "group", screen: true, pop: { x: 1700, y: 60, at: 4.7, dur: 0.25 }, items: [
+          { text: "NDIS (Restrictive Practices and Behaviour Support) Rules 2018", x: 1860, y: 66, size: 25, weight: 500, fill: C.line, opacity: 0.72, anchor: "end", jit: 0.15 },
+        ] });
+        // her hand brings the open padlock in from the left, snaps it shut, lets go
+        const armIn = L.ease.out(L.clamp((tn - 0.9) / 0.6)), armOut = L.ease.inOut(L.clamp((tn - 2.55) / 0.5));
+        const reach = armIn - armOut;
+        const snap = L.clamp((tn - 1.95) / 0.12);
+        const open = tn < 1.95 ? 1 : Math.max(0, 1 - L.ease.back(snap));
+        const swing = tn > 2.1 ? 9 * Math.sin((tn - 2.1) * 11) * Math.exp(-(tn - 2.1) * 3.5) : 0;
+        const lx = 630, ly = 640;
+        it.push({ type: "group", rotate: { deg: swing, x: lx, y: 572 }, items: Props.padlock(lx, ly, 0.9, open, C.red) });
+        if (reach > 0.01) {
+          const wx = L.lerp(-160, lx - 52, reach), wy = L.lerp(ly + 60, ly + 30, reach);
+          it.push({ cmds: L.curve([[wx - 620, wy - 40], [wx - 300, wy + 6], [wx, wy]]), width: 7.5 });
+          it.push({ cmds: L.curve([[wx - 6, wy - 22], [wx + 30, wy - 30], [wx + 52, wy - 8], [wx + 44, wy + 24], [wx + 6, wy + 26], [wx - 8, wy + 6]], true), fill: C.bg, width: 6.5 });
+          it.push({ cmds: L.curve([[wx + 20, wy - 28], [wx + 42, wy - 44], [wx + 56, wy - 30]]), width: 6 });
+        }
+        if (within(tn, [2.08], 0.3)) [[-50, 0], [-90, 1], [-130, 2]].forEach(([d]) => {
+          const a = d * L.D2R;
+          it.push({ cmds: L.poly([[lx + Math.cos(a) * 62, 590 + Math.sin(a) * 62], [lx + Math.cos(a) * 92, 590 + Math.sin(a) * 92]]), width: 5.5, wEnd: 3 });
+        });
+        // Jake
+        const P = poseJ(tn);
+        it.push(...Mel.items(P, { tn, look: { ponytail: false, lanyard: false, cap: true }, flip: true, blink: within(tn, [1.4, 5.6], 0.17) }));
+        // "environmental restraint" writes on in red
+        it.push({ text: "environmental restraint", x: 1330, y: 160, size: 62, weight: 700, fill: C.red, anchor: "middle", at: 3.4, dur: 1.0, mode: "type" });
+        if (tn > 4.4) it.push({ cmds: L.curve([[1050, 184], [1330, 178], [1610, 185]]), stroke: C.red, width: 6, at: 4.4, dur: 0.35 });
+        return it;
+      },
+    },
+    { // B. two paths
+      start: T.cut, end: 99,
+      camera(tn) { const p = L.ease.inOut(L.clamp((tn - T.cut) / 10.9)); return { x: 960, y: 520, s: 1 + 0.025 * p }; },
+      build(tn) {
+        const it = [];
+        it.push({ screen: true, text: "NDIS (Restrictive Practices and Behaviour Support) Rules 2018", x: 1860, y: 66, size: 25, weight: 500, fill: C.line, opacity: 0.72, anchor: "end", jit: 0.15 });
+        // the node: a small red padlock, two arrows branching
+        it.push(...Props.padlock(960, 190, 0.6, 0, C.red));
+        const arrow = (pts, at) => {
+          const e = pts[pts.length - 1], p = pts[pts.length - 2], a = Math.atan2(e[1] - p[1], e[0] - p[0]);
+          it.push({ cmds: L.curve(pts), width: 6.5, at, dur: 0.35 });
+          if (tn > at + 0.3) it.push({ cmds: L.poly([[e[0] - Math.cos(a - 0.5) * 26, e[1] - Math.sin(a - 0.5) * 26], e, [e[0] - Math.cos(a + 0.5) * 26, e[1] - Math.sin(a + 0.5) * 26]]), width: 6.5 });
+        };
+        arrow([[900, 230], [760, 260], [600, 300]], 7.1);
+        arrow([[1020, 230], [1160, 260], [1320, 300]], 7.25);
+        it.push({ type: "group", pop: { x: 470, y: 340, at: 7.3, dur: 0.3 }, items: [{ text: "registered provider", x: 470, y: 356, size: 50, weight: 700, fill: C.line, anchor: "middle" }] });
+        it.push({ type: "group", pop: { x: 1460, y: 340, at: 14.35, dur: 0.3 }, items: [{ text: "unregistered", x: 1460, y: 356, size: 50, weight: 700, fill: C.line, anchor: "middle" }] });
+        // left: a calendar "5 business days", the letter flies to the NDIS Commission, "24 h if harm"
+        it.push({ type: "group", pop: { x: 560, y: 600, at: 8.6, dur: 0.32 }, items: [
+          ...Props.calendar(440, 470, 240, 240).slice(0, 1),
+          { cmds: L.rrect(452, 486, 216, 216, 8, 81, 0.6), fill: C.screen, width: 5 },
+          ...Props.calendar(440, 470, 240, 240).slice(1),
+          { text: "5", x: 560, y: 614, size: 120, weight: 700, fill: C.bg, anchor: "middle" },
+          { text: "business days", x: 560, y: 672, size: 28, weight: 600, fill: C.bg, anchor: "middle", opacity: 0.8 },
+        ] });
+        it.push(...Props.building(90, 470, 280, 390, { floors: 4, cols: 3, lit: true }));
+        it.push({ type: "group", pop: { x: 230, y: 430, at: 10.15, dur: 0.3 }, items: [
+          { text: "NDIS Commission", x: 230, y: 446, size: 36, weight: 700, fill: C.line, anchor: "middle" },
+        ] });
+        const fly = L.clamp((tn - 9.85) / 0.95);
+        if (fly > 0 && fly < 1) {
+          const e = L.ease.inOut(fly), x = L.lerp(800, 232, e), y = L.lerp(790, 820, e) - 260 * Math.sin(Math.PI * e);
+          const s = 1 - 0.55 * e;
+          it.push({ type: "group", scale: { s, x, y }, items: [].concat(Props.envelope(x, y, 150, 96, -12 + 24 * e)) });
+          [1, 2].forEach((k) => {
+            const e2 = L.ease.inOut(L.clamp(fly - k * 0.06)), x2 = L.lerp(800, 232, e2), y2 = L.lerp(790, 820, e2) - 260 * Math.sin(Math.PI * e2);
+            it.push({ cmds: L.blob(x2 + 70, y2, 3.5, 3.5, k, 0.02), fill: C.line, fillOpacity: 0.5 - k * 0.15, stroke: null });
+          });
+        } else if (fly <= 0 && tn > 9.3) {
+          it.push({ type: "group", pop: { x: 800, y: 790, at: 9.3, dur: 0.25 }, items: [].concat(Props.envelope(800, 790, 150, 96, -12)) });
+        }
+        if (fly >= 1 && tn < 11.3) { // a little "delivered" pulse at the door
+          const k = (tn - 10.8) / 0.5;
+          it.push({ cmds: L.blob(232, 820, 30 + 60 * k, 30 + 60 * k, 3, 0.02), width: 4.5, strokeOpacity: 1 - k, taper: false });
+        }
+        const ts = Math.max(0, tn - 11.75);
+        it.push({ type: "group", pop: { x: 860, y: 480, at: 11.7, dur: 0.25 }, items: [
+          { cmds: L.blob(860, 476, 6, 6, 3, 0.03), fill: C.line, stroke: null },
+          Props.tag(860, 476, "24 h if harm", { size: 36, angle: tn > 11.75 ? 40 * Math.exp(-ts * 3) * Math.cos(ts * 9) : 0, string: 34 }),
+        ] });
+        // right: unregistered -> must not use
+        it.push({ type: "group", pop: { x: 1460, y: 610, at: 14.6, dur: 0.3 }, items: Props.padlock(1460, 640, 2.2, 0, C.red) });
+        it.push(...Props.cross(1460, 610, 330, 300, 15.75, 15.92));
+        it.push({ type: "group", pop: { x: 1460, y: 860, at: 16.1, dur: 0.3 }, items: [
+          { text: "must not use", x: 1460, y: 880, size: 60, weight: 700, fill: C.red, anchor: "middle" },
+        ] });
+        return it;
+      },
+    },
+  ];
+  Line.scene({ nominal: T.end, defaultDuration: T.end, shots });
+})();
+</script>
+</body>
+</html>

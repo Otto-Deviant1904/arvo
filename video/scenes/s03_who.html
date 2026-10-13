@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s03_who</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// s03_who (nominal 11.07 s = narration 10.17 + 0.9). Narration (scene time):
+//  0.35-1.24 "Call her Mel."  1.66-5.14 "An independent NDIS support worker in Victoria."
+//  5.83-10.52 "Nobody pays her for the admin, and a wrong item number bounces the invoice."
+// A 0-5.45  street at night: Mel by her hatchback waves, walks to a front door (lanyard swings), knocks.
+// B 5.45-   kitchen table late at night: laptop, paper stack; the clock races; "$0/h" tag swings in;
+//           an invoice flies out of the laptop and boomerangs back with a red cross; Mel recoils, slumps.
+(function () {
+  const L = Line, C = L.C;
+  const T = { cut: 5.45, end: 11.07 };
+  const within = (tn, times, d) => times.some((t0) => tn >= t0 && tn < t0 + d);
+  const note = { text: "Mel is a composite, not a real person.", x: 60, y: 66, size: 26, weight: 500, fill: C.line, opacity: 0.72, jit: 0.15 };
+
+  function sky(tn) {
+    const it = [{ cmds: L.blob(1060, 140, 30, 30, 8, 0.02), fill: C.line, stroke: null }, { cmds: L.blob(1075, 129, 28, 28, 9, 0.02), fill: C.bg, stroke: null }];
+    [[300, 120, 6, 0], [620, 210, 5, 1.1], [1250, 90, 6, 2.2], [880, 70, 4, 0.5]].forEach(([x, y, s, ph], i) => {
+      const k = 0.7 + 0.3 * Math.sin(tn * (1.6 + i * 0.4) + ph * 2);
+      it.push({ cmds: L.poly([[x - s * k, y], [x + s * k, y]]), width: 3.6, wEnd: 2.4 }, { cmds: L.poly([[x, y - s * k], [x, y + s * k]]), width: 3.6, wEnd: 2.4 });
+    });
+    return it;
+  }
+
+  // ---------- A: the street (world is drawn at real proportions; the camera zooms out)
+  const G = 1056, X0 = 1650, DOOR = 2660;
+  const stand = Object.assign({ hip: [X0, G - 292], spine: 2, slump: 0, headTilt: 0, fx: 0.15, knee: "fwd",
+    nf: [X0 - 18, G], ff: [X0 + 22, G], nh: [X0 + 60, 560], fh: [X0 - 28, G - 276] }, Mel.expr("smile"));
+  const walkCfg = { t0: 1.5, x0: X0, ground: G, steps: 6, stride: 150, period: 0.95 };
+  const walkEnd = walkCfg.t0 + walkCfg.steps * walkCfg.period / 2;
+  function poseA(tn) {
+    let P = Object.assign({}, stand);
+    if (tn < 1.45) { // "Call her Mel": a wave
+      const w = Math.sin((tn - 0.4) * 11) * (tn > 0.4 ? 1 : 0);
+      P.nh = [X0 + 60 + 22 * w, tn < 0.4 ? L.lerp(G - 270, 560, L.ease.out(L.clamp(tn / 0.4))) : 560];
+    } else {
+      const wk = Mel.walk(tn, walkCfg);
+      const b = L.ease.inOut(L.clamp((tn - 1.45) / 0.3));
+      P = Mel.mix(Object.assign({}, stand, { nh: [X0 + 10, G - 270] }), Object.assign({}, stand, wk, { fx: 0.8, headTilt: 3 }, Mel.expr("blank")), b);
+      if (tn > walkEnd) { // stop at the door, then knock
+        const st = L.ease.out(L.clamp((tn - walkEnd) / 0.25));
+        const hx = P.hip[0];
+        P = Mel.mix(P, Object.assign({}, P, { nf: [hx - 12, G], ff: [hx + 22, G], fh: [hx - 10, P.hip[1] + 14], nh: [hx + 30, P.hip[1] + 18] }), st);
+        if (tn > 4.55) {
+          const kp = L.clamp((tn - 4.55) / 0.2), knock = Math.max(0, Math.sin((tn - 4.75) * 18)) * (tn > 4.75 && tn < 5.3 ? 1 : 0);
+          P.nh = [L.lerp(hx + 30, DOOR + 6 - 16 * knock, L.ease.out(kp)), L.lerp(P.hip[1] + 18, G - 470, L.ease.out(kp))];
+        }
+      }
+    }
+    return Object.assign({}, Mel.pose([{ t: 0, pose: {} }], tn), P);
+  }
+
+  // ---------- B: the kitchen table
+  const seat = Object.assign({ hip: [476, 704], spine: 12, slump: 4, headTilt: 10, fx: 0.8, knee: "up",
+    nf: [640, 858], ff: [664, 858], nh: [676, 628], fh: [704, 626] }, Mel.expr("focused"));
+  const recoil = Object.assign({}, seat, { spine: -8, headTilt: -8, fx: 0.4, nh: [600, 560], fh: [640, 600] }, Mel.expr("alarm"));
+  const slumped = Object.assign({}, seat, { spine: 22, slump: 10, headTilt: 26, fx: 0.7, nh: [600, 452], fh: [700, 626] }, Mel.expr("sad"), { lid: 0.6 });
+  const keysB = [
+    { t: T.cut, pose: seat }, { t: 9.62, pose: seat },
+    { t: 9.8, pose: recoil, ease: "out" }, { t: 10.15, pose: recoil },
+    { t: 10.55, pose: slumped, ease: "inOut" },
+  ];
+  function poseB(tn) {
+    const P = Mel.pose(keysB, tn);
+    if (tn < 9.6) { // typing
+      const a = Math.max(0, Math.sin(tn * 15)) * 7, b = Math.max(0, Math.sin(tn * 15 + 2.4)) * 7;
+      P.nh = [P.nh[0], P.nh[1] - a]; P.fh = [P.fh[0], P.fh[1] - b];
+    }
+    return P;
+  }
+
+  const shots = [
+    { start: 0, end: T.cut,
+      camera(tn) { const p = L.ease.inOut(L.clamp((tn - 1.3) / 3.6)); return { x: 1640 + 260 * p, y: 540, s: 0.62 }; },
+      build(tn) {
+        const it = [{ type: "group", screen: true, items: sky(tn) }];
+        it.push({ cmds: L.curve([[-400, G + 2], [1000, G + 5], [2200, G], [3800, G + 3]]), width: 6.5 });
+        // house with a lit window
+        it.push({ cmds: L.poly([[2560, G], [2560, 80], [3600, 80], [3600, G]]), width: 7 });
+        it.push({ cmds: L.curve([[2480, 96], [2900, -160], [3300, -420]], false, 0.4), width: 7.5 });
+        it.push(...Props.door(DOOR, G - 780, 330, 780));
+        it.push({ cmds: L.rrect(3080, 360, 300, 260, 12, 41, 1), fill: C.amber, fillOpacity: 0.85, width: 6.5 });
+        it.push({ cmds: L.poly([[3230, 364], [3230, 616]]), stroke: C.bg, width: 5, taper: false });
+        // her car (real size next to her), with a Victorian plate
+        it.push(...Props.car(150, G, 3.5));
+        it.push({ cmds: L.rrect(176, G - 262, 190, 78, 8, 5, 0.6), fill: C.screen, width: 4.5, taper: false });
+        it.push({ text: "VIC", x: 271, y: G - 205, size: 54, weight: 700, fill: C.bg, anchor: "middle", jit: 0 });
+        // Mel
+        const P = Mel.follow(poseA, 0, tn, poseA(tn), { card: 120, cardC: 6 });
+        it.push(...Mel.items(P, { tn, blink: within(tn, [3.2], 0.17) }));
+        // knock lines
+        if (within(tn, [4.78, 4.96, 5.14], 0.1)) [-1, 0, 1].forEach((d) =>
+          it.push({ cmds: L.poly([[DOOR - 20, G - 480 + d * 34], [DOOR - 52, G - 486 + d * 46]]), width: 5, wEnd: 2.5 }));
+        it.push(Object.assign({ screen: true }, note));
+        return it;
+      } },
+    { start: T.cut, end: 99,
+      camera(tn) { const p = L.ease.inOut(L.clamp((tn - T.cut) / 5.6)); return { x: 960 - 20 * p, y: 520 - 10 * p, s: 1 + 0.04 * p }; },
+      build(tn) {
+        const it = [];
+        // window with the moon, pendant lamp with a soft cone onto the table
+        it.push({ cmds: L.rrect(120, 110, 230, 210, 12, 3, 1.4), width: 6.5 }, { cmds: L.poly([[235, 114], [236, 318]]), width: 5, taper: false });
+        it.push({ cmds: L.blob(300, 168, 22, 22, 8, 0.02), fill: C.line, stroke: null }, { cmds: L.blob(312, 160, 21, 21, 9, 0.02), fill: C.bg, stroke: null });
+        it.push({ cmds: L.curve([[880, 0], [880, 92], [878, 168]]), width: 4.5, taper: false });
+        const flick = within(tn, [7.3], 0.12) ? 0.3 : 1;
+        it.push({ cmds: L.curve([[740, 640], [790, 420], [878, 236], [966, 420], [1020, 640]], true, 0.5), fill: C.amber, fillOpacity: 0.07 * flick, stroke: null, boil: 0.2 });
+        it.push({ cmds: L.curve([[780, 640], [826, 430], [878, 236], [930, 430], [976, 640]], true, 0.5), fill: C.amber, fillOpacity: 0.06 * flick, stroke: null, boil: 0.2 });
+        it.push({ cmds: [["M", 832, 236], ["Q", 836, 170, 878, 168], ["Q", 920, 170, 924, 236], ["Q", 878, 244, 832, 236], ["Z"]], fill: flick > 0.5 ? C.amber : C.body, width: 6.5 });
+        // floor, chair, table, paper stack, laptop
+        it.push({ cmds: L.curve([[40, 860], [900, 863], [1880, 858]]), width: 6.5 });
+        it.push(...Props.chair(410, 860, 1, 1));
+        it.push({ cmds: L.curve([[590, 642], [960, 638], [1330, 643]]), width: 7.5 });
+        it.push({ cmds: L.curve([[640, 646], [642, 860]]) }, { cmds: L.curve([[1284, 646], [1288, 860]]) });
+        for (let k = 0; k < 6; k++) it.push({ cmds: L.rrect(1040 + L.sym(k, 3) * 6, 626 - k * 12, 200, 11, 3, 50 + k, 0.5), fill: C.screen, width: 3.6, taper: false });
+        it.push(...Props.laptopSide(610, 640, 1));
+        // the wall clock races; "$0/h" swings in beside it
+        const race = L.ease.inOut(L.clamp((tn - 5.8) / 2.8));
+        const mins = 160 * race;
+        it.push(...Props.clock(1380, 300, 96, 270 + mins * 0.5, mins * 6));
+        if (race > 0 && race < 1) [0, 1].forEach((k) => {
+          const a = (mins * 6 - 90 - 22 - k * 16) * L.D2R;
+          it.push({ cmds: L.poly([[1380 + Math.cos(a) * 112, 300 + Math.sin(a) * 112], [1380 + Math.cos(a - 0.25) * 112, 300 + Math.sin(a - 0.25) * 112]]), width: 4, wEnd: 2, strokeOpacity: 0.6 });
+        });
+        const ts = Math.max(0, tn - 6.35);
+        const swing = ts > 0 ? 24 * Math.exp(-ts * 2.6) * Math.cos(ts * 9) : 0;
+        it.push({ type: "group", pop: { x: 1560, y: 230, at: 6.35, dur: 0.3 }, items: [
+          { cmds: L.blob(1560, 222, 6, 6, 3, 0.03), fill: C.line, stroke: null },
+          Props.tag(1560, 222, "$0/h", { size: 44, angle: swing }),
+        ] });
+        // Mel at the table
+        const P = Mel.follow(poseB, T.cut, tn, poseB(tn));
+        it.push(...Mel.items(P, { tn, blink: within(tn, [7.0, 8.9], 0.17) }));
+        // the invoice flies out of the laptop and boomerangs back, crossed out
+        const t0 = 8.55, t1 = 9.7;
+        if (tn > t0) {
+          const u = L.clamp((tn - t0) / (t1 - t0)), e = L.ease.inOut(u);
+          const b = (a, b2, c, d, t) => { const v = 1 - t; return v * v * v * a + 3 * v * v * t * b2 + 3 * v * t * t * c + t * t * t * d; };
+          const P0 = [860, 470], P1 = [1700, 60], P2 = [1700, 760], P3 = [790, 470];
+          const x = b(P0[0], P1[0], P2[0], P3[0], e), y = b(P0[1], P1[1], P2[1], P3[1], e);
+          const sc = 0.4 + 0.6 * L.ease.out(L.clamp(u * 3));
+          const rot = -360 * e - 8 * (u >= 1 ? 1 : 0) + (u >= 1 ? Math.sin((tn - t1) * 14) * 6 * Math.exp(-(tn - t1) * 5) : 0);
+          const paperItems = [].concat(Props.paper(x - 60, y - 76, 120, 152, { lines: 4 }));
+          if (tn > t1 - 0.05) paperItems.push(...Props.cross(x, y, 92, 104, t1 - 0.05, t1 + 0.1));
+          it.push({ type: "group", rotate: { deg: rot, x, y }, items: [{ type: "group", scale: { s: sc, x, y }, items: paperItems }] });
+          if (u > 0.02 && u < 0.85) [0, 1, 2].forEach((k) => {
+            const e2 = L.ease.inOut(L.clamp(u - 0.05 - k * 0.025));
+            const px = b(P0[0], P1[0], P2[0], P3[0], e2), py = b(P0[1], P1[1], P2[1], P3[1], e2);
+            it.push({ cmds: L.blob(px, py, 3.5, 3.5, k, 0.02), fill: C.line, fillOpacity: 0.5 - k * 0.12, stroke: null });
+          });
+        }
+        it.push(Object.assign({ screen: true }, note));
+        return it;
+      } },
+  ];
+  Line.scene({ nominal: T.end, defaultDuration: T.end, shots });
+})();
+</script>
+</body>
+</html>

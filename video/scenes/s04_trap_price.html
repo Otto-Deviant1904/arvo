@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s04_trap_price</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// s04_trap_price (nominal 16.64 s = narration 15.74 + 0.9). Narration (scene time):
+//  0.35-1.14 "Trap one."  1.54-4.0 "Cup Day is a Victorian public holiday."
+//  4.5-6.8 "Five and a half hours at the holiday rate:"  7.15-9.12 "eight hundred and ninety-nine dollars."
+//  9.64-14.6 "On a normal Tuesday it crosses eight at night, and the whole shift bills at the evening rate."
+//  15.16-16.29 "Not split."
+// Facts (DEV_POST.md): Tue 3 Nov 2026 is Melbourne Cup Day, a Victorian public holiday; 5.5 h x $163.46 = $899.03;
+// a shift crossing 8pm is billed whole at the higher (evening) rate, Pricing Schedule 2026-27 s2.4(c).
+(function () {
+  const L = Line, C = L.C;
+  const T = { cut: 9.45, end: 16.64 };
+  const within = (tn, times, d) => times.some((t0) => tn >= t0 && tn < t0 + d);
+
+  function horse(x, y, s) { // small side-view horse, facing right, navy ink for the cream page
+    const P = (px, py) => [x + px * s, y + py * s], ink = { stroke: C.bg };
+    return [
+      Object.assign({ cmds: L.curve([P(-48, 4), P(-30, -14), P(18, -16), P(42, -10), P(46, 10), P(20, 18), P(-30, 18), P(-50, 10)], true, 0.8), width: 5 }, ink),
+      Object.assign({ cmds: L.curve([P(36, -10), P(52, -40), P(70, -52)]), width: 5 }, ink),
+      Object.assign({ cmds: L.curve([P(66, -56), P(86, -50), P(92, -40), P(78, -36), P(64, -42)], false), width: 5 }, ink),
+      Object.assign({ cmds: L.curve([P(44, -24), P(58, -48), P(66, -60)]), width: 3.6 }, ink),
+      Object.assign({ cmds: L.poly([P(-36, 16), P(-42, 52)]), width: 5 }, ink), Object.assign({ cmds: L.poly([P(-22, 18), P(-16, 52)]), width: 5 }, ink),
+      Object.assign({ cmds: L.poly([P(24, 16), P(18, 52)]), width: 5 }, ink), Object.assign({ cmds: L.poly([P(36, 14), P(44, 50)]), width: 5 }, ink),
+      Object.assign({ cmds: L.curve([P(-48, 0), P(-66, 10), P(-70, 32)]), width: 4.5 }, ink),
+      { cmds: L.blob(...P(80, -46), 2.6, 2.6, 5, 0.02), fill: C.bg, stroke: null },
+    ];
+  }
+
+  const shots = [
+    { // A. the calendar, the rate, the total
+      start: 0, end: T.cut,
+      camera(tn) { const p = L.ease.inOut(L.clamp(tn / T.cut)); return { x: 960 + 10 * p, y: 520, s: 1 + 0.03 * p }; },
+      build(tn) {
+        const it = [];
+        it.push({ type: "group", screen: true, pop: { x: 220, y: 130, at: 0.35, dur: 0.3 }, items: [
+          { text: "Trap 1", x: 130, y: 152, size: 64, weight: 700, fill: C.amber },
+          { cmds: L.curve([[132, 172], [220, 168], [312, 173]]), stroke: C.amber, width: 6 },
+        ] });
+        // desk calendar; the old page flips over the rings to "Tue 3 Nov / Cup Day"
+        const X = 220, Y = 250, W = 660, H = 500;
+        it.push(...Props.calendar(X, Y, W, H));
+        const page = (items) => [{ cmds: L.rrect(X + 16, Y + 18, W - 32, H - 22, 10, 61, 0.8), fill: C.screen, width: 5.5 }, ...items];
+        const flip = L.clamp((tn - 1.55) / 0.42), fe = L.ease.inOut(flip);
+        // new page underneath
+        const newPage = page([
+          { text: "Tue 3 Nov", x: X + W / 2, y: Y + 110, size: 58, weight: 600, fill: C.bg, anchor: "middle", opacity: 0.75 },
+          { text: "Cup Day", x: X + W / 2, y: Y + 245, size: 112, weight: 700, fill: C.bg, anchor: "middle" },
+          { text: "Victorian public holiday", x: X + W / 2, y: Y + 312, size: 36, weight: 500, fill: C.bg, anchor: "middle", opacity: 0.7 },
+        ]);
+        it.push(...newPage);
+        if (tn > 2.5) it.push({ type: "group", pop: { x: X + W / 2, y: Y + 430, at: 2.5, dur: 0.3 }, items: horse(X + W / 2, Y + 404, 0.9) });
+        if (flip < 1) {
+          const sy = Math.cos(Math.PI * fe);
+          const oldPage = page([
+            { text: "Nov", x: X + W / 2, y: Y + 110, size: 56, weight: 600, fill: C.bg, anchor: "middle", opacity: 0.75 },
+            { cmds: L.poly([[X + 120, Y + 230], [X + W - 120, Y + 230]]), stroke: C.bg, strokeOpacity: 0.25, width: 5, taper: false },
+            { cmds: L.poly([[X + 160, Y + 290], [X + W - 160, Y + 290]]), stroke: C.bg, strokeOpacity: 0.25, width: 5, taper: false },
+          ]);
+          it.push({ type: "group", scale: { s: 1, sy: Math.max(0.02, Math.abs(sy)) * (sy >= 0 ? 1 : -1), x: X, y: Y + 18 }, items: sy >= 0 ? oldPage : page([]) });
+        }
+        it.push(...Props.calendar(X, Y, W, H).slice(1)); // rings on top
+        // "$163.46/h" swings in on a pin
+        const ts = Math.max(0, tn - 4.55);
+        const ang = tn < 4.55 ? 0 : -70 * Math.exp(-ts * 3.2) * Math.cos(ts * 8.5);
+        it.push({ type: "group", pop: { x: 1260, y: 250, at: 4.5, dur: 0.18 }, items: [
+          { cmds: L.blob(1260, 246, 7, 7, 4, 0.03), fill: C.line, stroke: null },
+          Props.tag(1260, 246, "$163.46/h", { size: 54, angle: ang, string: 40 }),
+        ] });
+        // 5.5 h, then the total counts up
+        it.push({ type: "group", pop: { x: 1240, y: 500, at: 5.05, dur: 0.3 }, items: [
+          { text: "5.5 h", x: 1040, y: 540, size: 100, weight: 700, fill: C.line },
+        ] });
+        if (tn > 7.1) {
+          const u = L.ease.out(L.clamp((tn - 7.1) / 1.25));
+          const val = (899.03 * u).toFixed(2);
+          const done = u >= 1;
+          it.push({ type: "group", pop: done ? { x: 1300, y: 690, at: 8.35, dur: 0.28 } : null, items: [
+            { text: "= $" + val, x: 1040, y: 730, size: 128, weight: 700, fill: C.amber },
+          ] });
+          if (done && tn < 8.9) [[-60, 0], [-30, 1], [20, 2]].forEach(([d, i]) => {
+            const a = (d - 90) * L.D2R, r0 = 40, r1 = 70;
+            it.push({ cmds: L.poly([[1740 + Math.cos(a) * r0, 640 + Math.sin(a) * r0], [1740 + Math.cos(a) * r1, 640 + Math.sin(a) * r1]]), stroke: C.amber, width: 6, wEnd: 3 });
+          });
+        }
+        return it;
+      },
+    },
+    { // B. a normal Tuesday: the clock passes 8pm, the whole bar goes evening rate, no scissors
+      start: T.cut, end: 99,
+      camera(tn) { const p = L.ease.inOut(L.clamp((tn - T.cut) / 7)); return { x: 960, y: 520, s: 1 + 0.03 * p }; },
+      build(tn) {
+        const it = [];
+        it.push({ screen: true, text: "Pricing Schedule 2026-27 s2.4(c)", x: 1860, y: 66, size: 26, weight: 500, fill: C.line, opacity: 0.72, anchor: "end", jit: 0.15 });
+        it.push({ type: "group", screen: true, pop: { x: 290, y: 130, at: 9.6, dur: 0.3 }, items: [
+          { text: "a normal Tuesday", x: 130, y: 152, size: 54, weight: 650, fill: C.line, opacity: 0.85 },
+        ] });
+        // clock: 3:00 -> 8:30
+        const sweep = L.ease.inOut(L.clamp((tn - 9.95) / 2.1));
+        const hours = 3 + 5.5 * sweep, mins = hours * 60;
+        const cx = 470, cy = 520, r = 210;
+        it.push(...Props.clock(cx, cy, r, (hours % 12) * 30, (mins % 60) * 6));
+        // the shift bar, 3pm -> 8:30pm
+        const bx = 840, bw = 960, by = 470, bh = 84, pxh = bw / 5.5, x8 = bx + 5 * pxh;
+        const filled = bw * sweep;
+        if (filled > 1) it.push({ cmds: L.rrect(bx, by, Math.max(20, filled), bh, 14, 71, 0.6), fill: C.line, fillOpacity: 0.16, stroke: null });
+        // after 8pm turns amber as the hand passes 8
+        if (hours > 8) it.push({ cmds: L.rrect(x8, by, Math.max(12, Math.min(bw, filled) - 5 * pxh), bh, 12, 72, 0.6), fill: C.amber, fillOpacity: 0.9, stroke: null });
+        // then the evening rate floods back over the whole shift
+        const flood = L.ease.inOut(L.clamp((tn - 12.7) / 0.8));
+        if (flood > 0) {
+          const fx = L.lerp(x8, bx, flood);
+          it.push({ cmds: L.rrect(fx, by, bx + bw - fx, bh, 14, 73, 0.6), fill: C.amber, fillOpacity: 0.9, stroke: null });
+        }
+        it.push({ cmds: L.rrect(bx, by, bw, bh, 16, 70, 0.8), width: 6.5 });
+        it.push({ cmds: L.poly([[x8, by - 22], [x8, by + bh + 8]]), width: 5, wEnd: 3, strokeOpacity: 0.9 });
+        it.push({ text: "3pm", x: bx, y: by + bh + 58, size: 40, weight: 600, fill: C.line, anchor: "middle" });
+        it.push({ text: "8:30pm", x: bx + bw, y: by + bh + 58, size: 40, weight: 600, fill: C.line, anchor: "middle" });
+        it.push({ text: "8pm", x: x8 - 10, y: by - 34, size: 40, weight: 650, fill: hours > 8 ? C.amber : C.line, anchor: "end" });
+        it.push({ type: "group", pop: { x: bx + bw / 2, y: by + bh / 2, at: 13.3, dur: 0.3 }, items: [
+          { text: "evening rate, whole shift", x: bx + bw / 2 - 60, y: by + bh / 2 + 15, size: 42, weight: 700, fill: C.bg, anchor: "middle" },
+        ] });
+        // scissors swoop in from the top right to cut at 8pm, snip, and get crossed out
+        if (tn > 14.15) {
+          const a = L.ease.out(L.clamp((tn - 14.15) / 0.4));
+          const sx = L.lerp(x8 + 340, x8 + 84, a), sy = L.lerp(by - 340, by - 76, a);
+          const snip = tn > 14.6 && tn < 15.1 ? 12 + 26 * Math.abs(Math.sin((tn - 14.6) * 16)) : 38;
+          it.push({ type: "group", items: Props.scissors(sx, sy, 1.6, snip, 135) });
+          if (tn > 15.1) {
+            it.push(...Props.cross(sx - 10, sy + 6, 200, 190, 15.12, 15.26));
+            it.push({ type: "group", pop: { x: 1300, y: by + bh + 140, at: 15.35, dur: 0.3 }, items: [
+              { text: "not split", x: 1300, y: by + bh + 160, size: 64, weight: 700, fill: C.line, anchor: "middle" },
+            ] });
+          }
+        }
+        return it;
+      },
+    },
+  ];
+  Line.scene({ nominal: T.end, defaultDuration: T.end, shots });
+})();
+</script>
+</body>
+</html>

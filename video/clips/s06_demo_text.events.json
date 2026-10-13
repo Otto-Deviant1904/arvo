@@ -1,0 +1,128 @@
+[
+  {
+    "t": 0.0,
+    "label": "page_loaded"
+  },
+  {
+    "t": 4.34,
+    "label": "week_set"
+  },
+  {
+    "t": 6.76,
+    "label": "typing_start"
+  },
+  {
+    "t": 10.56,
+    "label": "diary_pasted"
+  },
+  {
+    "t": 14.55,
+    "label": "run_clicked",
+    "box": [
+      373,
+      920,
+      239,
+      48
+    ]
+  },
+  {
+    "t": 27.55,
+    "label": "results_visible",
+    "box": [
+      774,
+      0,
+      794,
+      95
+    ]
+  },
+  {
+    "t": 31.9,
+    "label": "flags_in_view",
+    "box": [
+      774,
+      60,
+      794,
+      1020
+    ]
+  },
+  {
+    "t": 31.93,
+    "label": "pantry_quote",
+    "box": [
+      833,
+      271,
+      683,
+      52
+    ]
+  },
+  {
+    "t": 36.56,
+    "label": "shifts_in_view",
+    "box": [
+      774,
+      40,
+      794,
+      850
+    ]
+  },
+  {
+    "t": 39.84,
+    "label": "invoices_in_view",
+    "box": [
+      795,
+      333,
+      752,
+      414
+    ]
+  },
+  {
+    "t": 39.87,
+    "label": "cup_day_total",
+    "box": [
+      1404,
+      452,
+      56,
+      20
+    ]
+  },
+  {
+    "t": 44.26,
+    "label": "why_clicked",
+    "box": [
+      1487,
+      451,
+      45,
+      26
+    ]
+  },
+  {
+    "t": 44.46,
+    "label": "why_rule",
+    "box": [
+      796,
+      541,
+      750,
+      38
+    ]
+  },
+  {
+    "t": 48.85,
+    "label": "print_clicked",
+    "box": [
+      1411,
+      350,
+      121,
+      40
+    ]
+  },
+  {
+    "t": 49.33,
+    "label": "invoice_open",
+    "box": [
+      546,
+      303,
+      828,
+      422
+    ]
+  }
+]

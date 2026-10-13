@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s11_lesson</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/diagram.js"></script>
+</head>
+<body>
+<script>
+// s11_lesson (nominal = rendered length 19.86 s = narration 18.96 + 0.9; narration starts at 0.35 s).
+// Narration: "My guardrails overruled right answers." 0.51-2.70 | "Seven of fourteen wrong wild shifts were my
+// code overwriting Gemma's correct value." 3.23-8.33 | "New rule:" 8.97-9.63 | "code overrules Gemma only
+// when Gemma's value is impossible." 10.07-13.71 | "After the fix," 14.42-15.35 | "no longer held out,"
+// 15.55-16.63 | "wild goes to ninety-five per cent." 16.96-19.15
+// Beats: Gemma holds up "09:30" (green). The guardrail (a fence post with eyebrows and a clipboard) winds up
+// and stamps a red "09:00" over it (anticipation, slam, camera shake, Gemma flinches). "7 of 14" ticks up
+// while 7 of 14 shift boxes get stamped. Slow push in on the overwritten card. New rule: the stamp is
+// dropped, Gemma holds up a fresh card, the guardrail raises a small amber "check?" sign instead; Gemma nods.
+// Finish: "wild 76% -> 95%" (counts up) and a swinging tag "after the fix · not held out".
+(function () {
+  const L = Line, C = L.C, D = Diagram;
+  const LEN = 19.86;
+  const GND = 840, GX = 640, PX = 1150;
+  const CARD = { x: 830, y: 520, w: 250, h: 132 };
+  const SLAM = 1.5, TICKS = [3.55, 3.7, 3.85, 4.0, 4.15, 4.3], NEW = 9.0;
+  const M = {};
+
+  function cardItems(tn, stamped, tickAt) {
+    const x0 = CARD.x - CARD.w / 2, y0 = CARD.y - CARD.h / 2;
+    const it = [
+      { cmds: L.rrect(x0, y0, CARD.w, CARD.h, 16, 801), fill: C.body, width: 6.5 },
+      { text: "09:30", x: CARD.x, y: CARD.y + 28, size: 80, weight: 700, fill: C.green, anchor: "middle" },
+    ];
+    if (stamped) {
+      const ink = L.clamp((tn - SLAM) / 0.06);
+      it.push({ type: "group", rotate: { deg: -8, x: CARD.x, y: CARD.y }, opacity: ink, items: [
+        { cmds: L.rrect(CARD.x - 116, CARD.y - 50, 232, 100, 14, 802, 2), fill: C.body, fillOpacity: 0.86, stroke: C.red, width: 7 },
+        { text: "09:00", x: CARD.x, y: CARD.y + 26, size: 74, weight: 750, fill: C.red, anchor: "middle" },
+      ] });
+      // extra ink from the frantic re-stamping
+      TICKS.forEach((t0, i) => {
+        if (tn < t0 + 0.05) return;
+        const a = L.sym(i, 9) * 9, dx = L.sym(i, 11) * 14, dy = L.sym(i, 13) * 8;
+        it.push({ type: "group", rotate: { deg: -8 + a, x: CARD.x + dx, y: CARD.y + dy }, items: [
+          { cmds: L.rrect(CARD.x + dx - 116, CARD.y + dy - 50, 232, 100, 14, 810 + i, 2), stroke: C.red, width: 4.5, strokeOpacity: 0.5 },
+        ] });
+      });
+    }
+    if (tickAt != null && tn > tickAt) it.push(...D.tick(x0 + CARD.w - 4, y0 + 6, 22, C.green, tickAt, { width: 10 }));
+    return it;
+  }
+
+  // the stamp's path (bottom centre of the stamp face)
+  function stampPos(tn) {
+    const rest = [1062, 760], high = [1020, 400], hit = [CARD.x, CARD.y + 6];
+    let p = D.key(tn, [[0.85, rest], [1.32, high, "out"], [SLAM, hit, "in"], [1.78, hit], [2.1, [960, 470], "out"], [2.6, rest, "inOut"],
+      [3.35, rest], [3.5, [CARD.x + 20, CARD.y - 60], "out"]]);
+    let rot = D.key(tn, [[0.85, 0], [1.32, 24, "out"], [SLAM, -6, "in"], [1.78, -6], [2.3, 0]]);
+    if (tn >= 3.5 && tn < 4.6) {
+      // frantic re-stamping, one thump per tick
+      let y = CARD.y - 60;
+      TICKS.forEach((t0) => { const u = (tn - t0 + 0.07) / 0.14; if (u > 0 && u < 1) y = CARD.y - 60 + 66 * Math.sin(u * Math.PI); });
+      p = [CARD.x + 20 + Math.sin(tn * 30) * 6, y];
+      rot = -6;
+    }
+    if (tn >= 4.6) {
+      p = D.key(tn, [[4.6, [CARD.x + 20, CARD.y - 60]], [5.1, [1000, 600], "inOut"], [5.3, [1062, 700], "inOut"]]);
+      rot = 0;
+    }
+    return { p, rot };
+  }
+
+  function counter(tn) {
+    const it = [];
+    if (tn < 3.25 || tn > 9.2) return it;
+    const out = L.ease.in2(L.clamp((tn - 8.7) / 0.4));
+    let n = 1;
+    TICKS.forEach((t0) => { if (tn >= t0) n++; });
+    const ps = D.popS(tn, 3.25, { sq: 0.16 });
+    const punch = 1 + TICKS.reduce((a, t0) => a + D.wob(tn, t0, 0.1, 3, 9), 0);
+    const items = [];
+    items.push({ type: "group", scale: { s: ps.sx * punch, sy: ps.sy * (2 - punch), x: 960, y: 200 }, items: [
+      { text: String(n), x: M.cx0, y: 236, size: 130, weight: 750, fill: C.red },
+      { text: "of 14", x: M.cx0 + M.n7, y: 236, size: 130, weight: 750 },
+    ] });
+    // 14 wrong shifts: 7 get stamped (my code), 7 are other mistakes
+    for (let i = 0; i < 14; i++) {
+      const x = 960 - 7 * 58 + i * 58 + 7, y = 300;
+      const pp = D.popS(tn, 3.3 + i * 0.025, { sq: 0.1 }).s;
+      if (pp < 0.01) continue;
+      const k = i < 7 ? (i === 0 ? 3.3 : TICKS[i - 1]) : null;
+      const st = k != null && tn >= k;
+      const box = [{ cmds: L.rrect(x - 21, y - 21, 42, 42, 7, 830 + i, 0.8), fill: st ? C.red : C.body, fillOpacity: st ? 0.85 : 1, width: 4.5 }];
+      if (st) box.push({ cmds: L.poly([[x - 9, y - 9], [x + 9, y + 9]]), stroke: C.line, width: 4.5 }, { cmds: L.poly([[x + 9, y - 9], [x - 9, y + 9]]), stroke: C.line, width: 4.5 });
+      const sq = st ? D.wob(tn, k, 0.25, 3, 8) : 0;
+      items.push({ type: "group", scale: { s: pp * (1 + sq), sy: pp * (1 - sq), x, y }, items: box });
+    }
+    items.push({ type: "group", pop: { x: 960, y: 372, at: 4.5, dur: 0.3 }, items: [
+      { text: "wrong wild shifts", x: 960, y: 384, size: 40, weight: 600, anchor: "middle", opacity: 0.85 },
+    ] });
+    it.push({ type: "group", move: [0, -420 * out], items });
+    return it;
+  }
+
+  function result(tn) {
+    const it = [];
+    if (tn < 14.35) return it;
+    const y = 222;
+    const p1 = D.popS(tn, 14.4, { sq: 0.14 });
+    it.push({ type: "group", scale: { s: p1.sx, sy: p1.sy, x: M.rx + M.wW / 2, y: y - 30 }, items: [
+      { text: "wild", x: M.rx, y, size: 70, weight: 650, opacity: 0.9 },
+    ] });
+    const p2 = D.popS(tn, 14.6, { sq: 0.14 });
+    it.push({ type: "group", scale: { s: p2.sx, sy: p2.sy, x: M.rx76 + M.w76 / 2, y: y - 40 }, items: [
+      { text: "76%", x: M.rx76, y, size: 110, weight: 700, opacity: 0.6 },
+    ] });
+    // arrow
+    if (tn > 16.85) {
+      const ax0 = M.rxA, ax1 = M.rxA + 130, ay = y - 34;
+      it.push({ cmds: L.curve([[ax0, ay + 4], [ax0 + 65, ay - 4], [ax1, ay]]), stroke: C.amber, width: 9, at: 16.85, dur: 0.22 });
+      it.push({ cmds: L.poly([[ax1 - 30, ay - 24], [ax1 + 2, ay], [ax1 - 28, ay + 24]]), stroke: C.amber, width: 9, at: 17.04, dur: 0.12 });
+    }
+    // 95% counts up from 76 and punches
+    if (tn > 17.15) {
+      const p = L.clamp((tn - 17.15) / 1.1);
+      const v = Math.round(L.lerp(76, 95, L.ease.out(p)));
+      const ps = D.popS(tn, 17.15, { sq: 0.16 });
+      const punch = 1 + D.wob(tn, 18.25, 0.2, 2.4, 6);
+      it.push({ type: "group", scale: { s: ps.sx * punch, sy: ps.sy * (2 - punch), x: M.rx95 + M.w95 / 2, y: y - 50 }, items: [
+        { text: v + "%", x: M.rx95, y: y + 8, size: 160, weight: 750, fill: C.green, jit: 0.5 },
+      ] });
+    }
+    // tag: after the fix · not held out (swings from a pin, settles)
+    if (tn > 15.5) {
+      const pin = [960, 262];
+      const ang = D.key(tn, [[15.5, -28], [15.75, 10, "out"]]) + D.wob(tn, 15.75, 9, 1.1, 2.2);
+      const ps = D.popS(tn, 15.5, { sq: 0.1 });
+      const tw = M.tagW + 60, th = 66;
+      const tag = [
+        { cmds: L.curve([pin, [pin[0] + 2, pin[1] + 22], [pin[0], pin[1] + 44]]), width: 4 },
+        { cmds: L.rrect(pin[0] - tw / 2, pin[1] + 44, tw, th, 14, 860, 1.2), fill: C.body, stroke: C.amber, width: 5.5 },
+        { cmds: L.blob(pin[0], pin[1] + 56, 5, 5, 861, 0.02), stroke: C.amber, width: 3.5 },
+        { text: "after the fix · not held out", x: pin[0], y: pin[1] + 90, size: 34, weight: 650, fill: C.amber, anchor: "middle" },
+      ];
+      it.push({ cmds: L.blob(pin[0], pin[1], 6, 6, 862, 0.02), fill: C.line, stroke: null });
+      it.push({ type: "group", rotate: { deg: ang, x: pin[0], y: pin[1] }, scale: { s: ps.s, x: pin[0], y: pin[1] }, items: tag });
+    }
+    return it;
+  }
+
+  const shots = [{
+    start: 0, end: 99,
+    camera(tn, f) {
+      let dx = 0, dy = 0;
+      const u = (tn - SLAM) / 0.32;
+      if (u > 0 && u < 1) { const a = 12 * Math.pow(1 - u, 2); dx = L.sym(f, 71) * a; dy = L.sym(f, 73) * a; }
+      // slow push in on the overwritten card, back out for the new rule
+      const z = L.ease.inOut(L.clamp((tn - 4.9) / 2.6)) * (1 - L.ease.inOut(L.clamp((tn - 8.4) / 0.6)));
+      return { x: L.lerp(960, CARD.x + 60, z), y: 480, oy: 515, s: 1.1 + 0.2 * z, dx, dy };
+    },
+    build(tn) {
+      const it = [];
+      it.push({ cmds: L.curve([[330, GND + 2], [700, GND - 1], [1100, GND + 1], [1560, GND - 1]]), width: 6.5, at: 0, dur: 0.35 });
+      // ---- the guardrail
+      const sp = stampPos(tn);
+      const stern = tn < NEW ? 1 : L.lerp(1, 0, L.clamp((tn - NEW) / 0.4));
+      const lean = D.key(tn, [[0.85, 0], [1.32, 6, "out"], [SLAM, -10, "in"], [1.78, -10], [2.4, 0, "inOut"]]) + (tn > 3.5 && tn < 4.5 ? -6 : 0) +
+        D.key(tn, [[10.1, 0], [10.4, -7, "back"], [12.9, -7], [13.3, 0]]);
+      const gsq = D.wob(tn, SLAM, 0.06, 3, 7) + D.popS(tn, 0.15, { sq: 0 }).s - 1;
+      const ppop = D.popS(tn, 0.2, { sq: 0.12 });
+      let gArms = { r: [PX + 92, 690 + Math.sin(tn * 1.7) * 3] };
+      // check? sign (new rule)
+      const signUp = tn > 10.15 ? L.clamp(D.settle(tn, 10.15, 1.8, 6)) : 0;
+      const signDown = L.ease.inOut(L.clamp((tn - 13.35) / 0.4));
+      let signPos = null;
+      if (tn < NEW + 0.05) gArms.l = [sp.p[0] + 4, sp.p[1] - 92];
+      else if (signUp > 0) {
+        const s = Math.min(1.05, signUp);
+        signPos = [L.lerp(1060, 1020, s) + 22 * signDown, L.lerp(700, 400, s) + 80 * signDown];
+        gArms.l = [signPos[0] + 6, signPos[1] + 150];
+      } else gArms.l = [PX - 92, 700];
+      const mouth = tn < NEW ? -0.6 : (tn > 11.9 ? 0.7 : 0.1);
+      const look = tn < 3.2 ? [-1, 0] : tn < 8.7 ? [-0.6, 0.2] : tn < 14.3 ? [-1, -0.5] : [0, -1];
+      const guard = D.guard({ x: PX, y: GND, h: 330, w: 104, rot: lean, sx: ppop.sx * (1 - gsq * 0.5), sy: ppop.sy * (1 + gsq),
+        stern, mouth, look, blink: D.within(tn, [2.9, 7.1, 12.4, 16.2], 0.14), arms: gArms });
+      // clipboard in the right hand
+      const cb = gArms.r;
+      const clip = [
+        { cmds: L.rrect(cb[0] - 6, cb[1] - 70, 92, 120, 8, 870, 1), fill: C.screen, width: 5.5 },
+        { cmds: L.rrect(cb[0] + 22, cb[1] - 80, 36, 18, 5, 871, 0.6), fill: C.body, width: 4.5 },
+        { cmds: D.scribble(cb[0] + 10, cb[1] - 36, 60, 1, 1.5), stroke: C.bg, width: 4 },
+        { cmds: D.scribble(cb[0] + 10, cb[1] - 14, 50, 2, 1.5), stroke: C.bg, width: 4 },
+        { cmds: D.scribble(cb[0] + 10, cb[1] + 8, 58, 3, 1.5), stroke: C.bg, width: 4 },
+      ];
+      if (ppop.s > 0.01) {
+        it.push(...guard);
+        it.push(...D.place(clip, { x: 0, y: 0 }));
+      }
+      // ---- Gemma
+      const gp = D.popS(tn, 0.3, { sq: 0.14 });
+      let sx = gp.sx, sy = gp.sy, mood = "smile", brows = null, gl = [0.6, -0.4], rot = 0, dyG = 0;
+      const flinch = D.wob(tn, SLAM, 0.13, 3, 6) + TICKS.reduce((a, t0) => a + D.wob(tn, t0, 0.05, 4, 10), 0);
+      sx *= 1 + Math.abs(flinch) * 0.7; sy *= 1 - Math.abs(flinch);
+      if (tn > SLAM - 0.08 && tn < SLAM + 0.35) mood = "wince";
+      if (tn > 3.5 && tn < 4.45) mood = "wince";
+      if (tn > SLAM + 0.35 && tn < NEW) { mood = "flat"; brows = 1; gl = tn > 3.2 && tn < 4.9 ? [0.4, -1] : [0.6, -0.2]; }
+      if (tn >= 4.45 && tn < NEW) { mood = "oops"; }
+      if (tn >= NEW) { mood = "smile"; gl = [0.8, -0.6]; }
+      // the nod (agreeing with the check)
+      if (tn > 11.3 && tn < 11.9) { const v = (tn - 11.3) / 0.6; sy *= 1 - 0.07 * Math.sin(v * Math.PI * 2); gl = [0.6, Math.sin(v * Math.PI * 2) * 0.8]; }
+      if (tn >= 14.3) { gl = [0.3, -1]; mood = "smile"; }
+      if (tn > 18.2 && tn < 18.7) { const v = (tn - 18.2) / 0.5; dyG = -54 * Math.sin(v * Math.PI); mood = "happy"; sy *= 1 + 0.06 * Math.sin(v * Math.PI); }
+      if (tn > 18.7) { sy *= 1 - D.wob(tn, 18.7, 0.08, 3, 7); mood = "happy"; }
+      // the card: held up; the stamped one drops at NEW, a fresh one pops
+      const cardDrop = L.clamp((tn - NEW) / 0.5);
+      const fresh = D.popS(tn, NEW + 0.25, { sq: 0.14 });
+      const lowerCard = L.ease.inOut(L.clamp((tn - 14.2) / 0.5));
+      const cardMove = [0, 60 * lowerCard];
+      const handR = [CARD.x - 60 + cardMove[0], CARD.y + 58 + cardMove[1] + flinch * 30];
+      const gem = D.gem({ x: GX, y: GND + dyG, r: 105, tn, sx, sy, px: 0, py: 105 * 1.3, rot, mood, brows, look: gl, legs: true,
+        blink: D.within(tn, [2.5, 6.4, 10.6, 15.8], 0.14), arms: { l: [GX - 140, GND - 150 + dyG], r: tn < NEW ? handR : (fresh.s > 0.3 ? handR : [GX + 130, GND - 150]) } });
+      if (gp.s > 0.01) it.push(...gem);
+      if (tn < NEW + 0.6) {
+        const cp = D.popS(tn, 0.55, { sq: 0.14 });
+        if (cp.s > 0.01) {
+          const cy = 380 * L.ease.in2(cardDrop), crot = -40 * cardDrop;
+          const shake = D.wob(tn, SLAM, 10, 4, 7) + TICKS.reduce((a, t0) => a + D.wob(tn, t0, 4, 5, 12), 0);
+          it.push({ type: "group", move: [0, cy + shake * 0.5], opacity: 1 - L.clamp((tn - NEW - 0.35) / 0.25), rotate: { deg: crot + shake * 0.3, x: CARD.x, y: CARD.y },
+            scale: { s: cp.sx, sy: cp.sy, x: CARD.x, y: CARD.y + CARD.h / 2 }, items: cardItems(tn, tn >= SLAM) });
+        }
+      }
+      if (fresh.s > 0.01) it.push({ type: "group", move: cardMove, scale: { s: fresh.sx, sy: fresh.sy, x: CARD.x, y: CARD.y + CARD.h / 2 }, items: cardItems(tn, false, 11.75) });
+      // the stamp (held, then dropped on the new rule)
+      if (tn < NEW) it.push(...D.stamp(sp.p[0], sp.p[1], sp.rot));
+      else {
+        const u = tn - NEW;
+        const fx = 1062 + 40 * Math.min(u, 0.5), fy = Math.min(GND, 700 + 900 * u * u);
+        const bounce = fy >= GND ? -Math.abs(Math.sin((u - 0.28) * 9)) * 22 * Math.exp(-(u - 0.28) * 5) : 0;
+        it.push(...D.stamp(fx, fy + bounce, Math.min(90, 220 * u)));
+      }
+      // impact lines at the slam
+      const ip = L.clamp((tn - SLAM) / 0.3);
+      if (ip > 0 && ip < 1) {
+        [[-150, 0], [-110, 1], [-70, 2], [-30, 3], [10, 4]].forEach(([deg, i]) => {
+          const a = deg * L.D2R, r0 = 150 + 50 * ip, r1 = r0 + 40 * (1 - ip);
+          it.push({ cmds: L.poly([[CARD.x + Math.cos(a) * r0, CARD.y + Math.sin(a) * r0 * 0.75], [CARD.x + Math.cos(a) * r1, CARD.y + Math.sin(a) * r1 * 0.75]]), width: 6, wEnd: 3 });
+          void i;
+        });
+      }
+      // check? sign
+      if (signPos) {
+        const s = signPos, w = D.wob(tn, 10.4, 7, 2, 4);
+        it.push({ type: "group", rotate: { deg: w, x: s[0], y: s[1] + 150 }, items: [
+          { cmds: L.poly([[s[0], s[1] + 40], [s[0], s[1] + 150]]), width: 7 },
+          { cmds: L.rrect(s[0] - 88, s[1] - 42, 176, 84, 14, 880, 1.2), fill: C.amber, width: 6 },
+          { text: "check?", x: s[0], y: s[1] + 15, size: 44, weight: 750, fill: C.bg, anchor: "middle" },
+        ] });
+      }
+      it.push(...counter(tn));
+      it.push(...result(tn));
+      return it;
+    },
+  }];
+
+  Line.scene({
+    nominal: LEN, defaultDuration: LEN, shots,
+    init() {
+      M.n7 = L.measure("7 ", 130, 750);
+      const cw = L.measure("7 of 14", 130, 750);
+      M.cx0 = 960 - cw / 2;
+      M.wW = L.measure("wild", 70, 650);
+      M.w76 = L.measure("76%", 110, 700);
+      M.w95 = L.measure("95%", 160, 750);
+      const total = M.wW + 40 + M.w76 + 36 + 130 + 44 + M.w95;
+      M.rx = 960 - total / 2;
+      M.rx76 = M.rx + M.wW + 40;
+      M.rxA = M.rx76 + M.w76 + 36;
+      M.rx95 = M.rxA + 130 + 44;
+      M.tagW = L.measure("after the fix · not held out", 34, 650);
+    },
+  });
+})();
+</script>
+</body>
+</html>

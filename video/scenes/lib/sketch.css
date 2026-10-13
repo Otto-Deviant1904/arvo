@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "Caveat";
+  src: url("../../vendor/fonts/Caveat%5Bwght%5D.ttf") format("truetype");
+  font-weight: 400 700;
+}
+@font-face {
+  font-family: "Patrick Hand";
+  src: url("../../vendor/fonts/PatrickHand-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+html, body { margin: 0; padding: 0; background: #F5F2EA; }
+body { width: 1920px; height: 1080px; overflow: hidden; position: relative; }
+#paper, #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+#stage text { font-kerning: normal; }
+/* warm the fonts so they are loaded before the first frame */
+.warm { position: absolute; left: -9999px; top: 0; }
+.warm .c { font-family: "Caveat"; font-weight: 700; }
+.warm .c4 { font-family: "Caveat"; font-weight: 400; }
+.warm .p { font-family: "Patrick Hand"; }

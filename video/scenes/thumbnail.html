@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>thumbnail</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// YouTube thumbnail (rendered at 1920x1080, downscaled to 1280x720 into video/slides/thumbnail.png):
+// Mel mid double-take with the red flag; "Locked the pantry." big; small "offline NDIS invoicing on Gemma 4".
+(function () {
+  const L = Line, C = L.C;
+  const pose = Object.assign({ hip: [1480, 760], spine: 4, slump: 0, stretch: 1.1, headSq: 1.08, headTilt: -8, fx: 0.05, knee: "fwd",
+    nf: [1500, 1052], ff: [1446, 1052], nh: [1640, 400], fh: [1300, 420], ponyD: [-18, -26], cardD: [10, -6] }, Mel.expr("alarm"));
+  Line.scene({
+    nominal: 1, defaultDuration: 1, boil: 0,
+    shots: [{ start: 0, end: 99,
+      camera() { return { x: 1470, y: 470, s: 1.5, ox: 1590, oy: 560 }; },
+      build(tn) {
+        const it = [];
+        const m = Mel.items(pose, { tn: 0 });
+        const g = m.rig, HC = g.HC, R = g.R;
+        it.push(...m);
+        // panic lines
+        [-64, -38, 36, 62].forEach((deg) => {
+          const a = (deg - 90) * L.D2R, r0 = R + 26, r1 = R + 62;
+          it.push({ cmds: L.poly([[HC[0] + Math.cos(a) * r0, HC[1] + Math.sin(a) * r0], [HC[0] + Math.cos(a) * r1, HC[1] + Math.sin(a) * r1]]), width: 8, wEnd: 4 });
+        });
+        // the phone flying out of her hand
+        const px = 1650, py = 330;
+        it.push({ cmds: L.rotateCmds(L.rrect(px - 16, py - 29, 32, 58, 7, 21), px, py, 32), fill: C.screen, width: 6 });
+        [[-1, 0], [1, 0.4]].forEach(([s, d]) => it.push({ cmds: L.poly([[px + s * 32, py + 30 - d * 6], [px + s * 44, py + 48 - d * 6]]), width: 5, wEnd: 2.5 }));
+        // red flag above her head
+        const fx = HC[0] - 4, fy = HC[1] - R - 40, top = fy - 104;
+        it.push({ cmds: L.curve([[fx, fy], [fx + 1, fy - 52], [fx, top]]), width: 8 });
+        it.push({ cmds: [["M", fx, top], ["C", fx + 20, top - 10, fx + 44, top + 10, fx + 70, top], ["L", fx + 68, top + 44], ["C", fx + 44, top + 54, fx + 22, top + 34, fx + 1, top + 46], ["Z"]], fill: C.red, width: 7 });
+        // the words, pinned to the screen
+        const words = [];
+        const X = 96;
+        const w1 = L.measure("Locked", 180, 800), w2 = L.measure("the pantry.", 180, 800);
+        words.push({ cmds: L.curve([[X - 20, 314], [X + w1 * 0.5, 306], [X + w1 + 26, 314], [X + w1 + 30, 384], [X + w1 * 0.5, 390], [X - 22, 384]], true, 0.8), fill: C.red, fillOpacity: 0.9, stroke: null, boil: 0 });
+        words.push({ cmds: L.curve([[X - 20, 504], [X + w2 * 0.5, 496], [X + w2 + 26, 504], [X + w2 + 30, 574], [X + w2 * 0.5, 580], [X - 22, 574]], true, 0.8), fill: C.red, fillOpacity: 0.9, stroke: null, boil: 0 });
+        words.push({ text: "Locked", x: X, y: 384, size: 180, weight: 800, fill: C.line, jit: 0 });
+        words.push({ text: "the pantry.", x: X, y: 574, size: 180, weight: 800, fill: C.line, jit: 0 });
+        words.push({ text: "offline NDIS invoicing", x: X + 4, y: 730, size: 76, weight: 650, fill: C.amber, jit: 0 });
+        words.push({ text: "on Gemma 4", x: X + 4, y: 826, size: 76, weight: 650, fill: C.amber, jit: 0 });
+        it.push({ type: "group", screen: true, items: words });
+        return it;
+      } }],
+  });
+})();
+</script>
+</body>
+</html>

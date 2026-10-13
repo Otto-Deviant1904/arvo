@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>annotate</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+</head>
+<body>
+<script>
+// Red hand-drawn annotation over a clip, on a transparent page (rendered by video/annotate.py).
+// URL: ?box=x,y,w,h (clip px) &src=1920,1080 &rect=x,y,w,h (frame_rect) &kind=loop|arrow &d=<seconds>
+// loop: drawn on in 0.45 s, running ~35 deg past its start; hold; fades out over the last 0.3 s.
+(function () {
+  const L = Line, C = L.C, q = new URLSearchParams(location.search);
+  const nums = (k, def) => (q.get(k) || def).split(",").map(Number);
+  const [bx, by, bw, bh] = nums("box", "0,0,100,100"), [sw, sh] = nums("src", "1920,1080"), [rx, ry, rw, rh] = nums("rect", "0,0,1920,1080");
+  const kind = q.get("kind") || "loop";
+  const D = parseFloat(q.get("d")) || 2.4;
+  const kx = rw / sw, ky = rh / sh;
+  const X = rx + bx * kx, Y = ry + by * ky, Wd = bw * kx, Ht = bh * ky;
+  const cx = X + Wd / 2, cy = Y + Ht / 2;
+  Line.scene({
+    nominal: D, defaultDuration: D, transparent: true,
+    shots: [{ start: 0, end: 99, build(tn) {
+      const fade = 1 - L.ease.inOut(L.clamp((tn - (D - 0.3)) / 0.3));
+      const items = [];
+      if (kind === "arrow") {
+        const ex = X - 10, ey = cy, sx = ex - 190, sy = ey - 150;
+        items.push({ cmds: L.curve([[sx, sy], [sx + 70, sy + 10], [ex - 40, ey - 40], [ex, ey]]), stroke: C.red, width: 8, wEnd: 4.5, at: 0, dur: 0.4 });
+        if (tn > 0.36) {
+          const a = Math.atan2(40, 40);
+          items.push({ cmds: L.poly([[ex - Math.cos(a - 0.55) * 34, ey - Math.sin(a - 0.55) * 34], [ex, ey], [ex - Math.cos(a + 0.55) * 34, ey - Math.sin(a + 0.55) * 34]]), stroke: C.red, width: 8, wEnd: 5 });
+        }
+      } else {
+        const lrx = Wd / 2 + 26 + Math.min(40, Wd * 0.04), lry = Ht / 2 + 22 + Math.min(30, Ht * 0.08);
+        const pts = [];
+        for (let i = 0; i <= 14; i++) {
+          const a = (200 + i * 28) * L.D2R, k = 1 + (i / 14) * 0.06;
+          pts.push([cx + Math.cos(a) * lrx * k, cy + Math.sin(a) * lry * k - i * 0.5]);
+        }
+        items.push({ cmds: L.curve(pts), stroke: C.red, width: 8, wEnd: 4.5, at: 0, dur: 0.45 });
+      }
+      return [{ type: "group", opacity: fade, items }];
+    } }],
+  });
+})();
+</script>
+</body>
+</html>

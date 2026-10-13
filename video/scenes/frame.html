@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>frame</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// Clip frame: navy background with a cream laptop; the screen area is transparent.
+// Rendered to frame_overlay.png (RGBA) by: render_scenes.py frame --length 1 --stills 1 --transparent
+// The screen rect is also written to frame_rect.json: keep the two in sync (RECT below).
+(function () {
+  const L = Line;
+  const RECT = { x: 180, y: 30, w: 1560, h: 878 };
+  Line.scene({
+    nominal: 1, defaultDuration: 1, boil: 0,
+    shots: [{ start: 0, end: 99, build() { return Props.laptopFront(RECT.x, RECT.y, RECT.w, RECT.h); } }],
+    init(canvas) {
+      document.documentElement.style.background = "transparent";
+      document.body.style.background = "transparent";
+      canvas.getContext("2d").clearRect(RECT.x, RECT.y, RECT.w, RECT.h);
+    },
+  });
+})();
+</script>
+</body>
+</html>

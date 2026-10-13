@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s13_pay</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/props.js"></script>
+</head>
+<body>
+<script>
+// s13_pay (nominal 9.31 s = narration 8.41 + 0.9). Narration (scene time):
+//  0.35-2.97 "Who pays? Independent workers like Mel,"  3.18-4.48 "at twelve dollars a month."
+//  5.06-7.14 "The agency tools charge per user,"  7.4-8.8 "five staff minimum."
+// Facts (DEV_POST.md): proposed $12 a month for independent ABN workers; ShiftCare charges per user,
+// "All plans start at a minimum of five staff".
+(function () {
+  const L = Line, C = L.C;
+  const T = { end: 9.31 };
+  const within = (tn, times, d) => times.some((t0) => tn >= t0 && tn < t0 + d);
+  const G = 860, MX = 470, JX = 690, JY = 650;
+
+  const base = Object.assign({ hip: [MX, G - 292], spine: 3, headTilt: 6, fx: 0.8, knee: "fwd",
+    nf: [MX + 12, G], ff: [MX - 22, G], nh: [MX + 50, G - 276], fh: [MX - 14, G - 280] }, Mel.expr("blank"));
+  const hold = Object.assign({}, base, { spine: 6, headTilt: 18, nh: [JX - 10, 352] }, Mel.expr("smile"));
+  const after = Object.assign({}, base, { headTilt: 4, nh: [MX + 60, G - 290] }, Mel.expr("smile"));
+  const lookR = Object.assign({}, after, { headTilt: -2, fx: 0.85 }, Mel.expr("alert"));
+  const shrug = Object.assign({}, after, { spine: 1, stretch: 1.035, headTilt: -10, fx: 0.25, nh: [MX + 150, 420], fh: [MX - 120, 432] }, Mel.expr("smile"));
+  const keys = [
+    { t: 0, pose: base }, { t: 1.6, pose: base },
+    { t: 2.2, pose: hold, ease: "inOut" }, { t: 3.3, pose: hold },
+    { t: 3.75, pose: after, ease: "inOut" }, { t: 4.9, pose: after },
+    { t: 5.25, pose: lookR, ease: "out" }, { t: 7.9, pose: lookR },
+    { t: 8.2, pose: shrug, ease: "back" },
+  ];
+  const poseM = (tn) => Mel.pose(keys, tn);
+
+  const shots = [{
+    start: 0, end: 99,
+    camera(tn) { const p = L.ease.inOut(L.clamp(tn / T.end)); return { x: 960 + 12 * p, y: 520, s: 1 + 0.03 * p }; },
+    build(tn) {
+      const it = [];
+      it.push({ type: "group", screen: true, pop: { x: 230, y: 130, at: 0.35, dur: 0.3 }, items: [
+        { text: "Who pays?", x: 130, y: 152, size: 64, weight: 700, fill: C.line },
+      ] });
+      it.push({ cmds: L.curve([[40, G + 2], [900, G + 4], [1880, G]]), width: 6.5 });
+      // a little table with a money jar (slot in the lid); it wobbles when the coin lands
+      it.push({ cmds: L.curve([[590, JY], [690, JY - 3], [790, JY + 1]]), width: 7 });
+      it.push({ cmds: L.curve([[606, JY + 2], [604, G]]) }, { cmds: L.curve([[774, JY + 2], [778, G]]) });
+      const wob = tn > 3.62 ? 3.2 * Math.sin((tn - 3.62) * 22) * Math.exp(-(tn - 3.62) * 5) : 0;
+      it.push({ type: "group", rotate: { deg: wob, x: JX, y: JY }, items: [
+        ...Props.jar(JX, JY, 150, 190),
+        { cmds: L.poly([[JX - 22, JY - 199], [JX + 22, JY - 199]]), stroke: C.bg, width: 5, taper: false },
+      ] });
+      // the coin: in her hand, then dropped into the slot
+      const drop = L.clamp((tn - 3.3) / 0.32);
+      const P = Mel.follow(poseM, 0, tn, poseM(tn));
+      if (tn > 1.9 && drop < 1) {
+        const hx = drop > 0 ? JX : P.nh[0] + 10, hy0 = P.nh[1] - 10;
+        const y = drop > 0 ? L.lerp(hy0, JY - 214, L.ease.in2(drop)) : hy0;
+        const sx = drop > 0.75 ? 1 - (drop - 0.75) / 0.25 * 0.75 : 1;
+        it.push({ type: "group", pop: { x: hx, y, at: 1.95, dur: 0.25 }, items: [{ type: "group", scale: { s: sx, sy: 1, x: hx, y }, items: [
+          ...Props.coin(hx, y, 26), { text: "$", x: hx, y: y + 11, size: 30, weight: 700, fill: C.bg, anchor: "middle", jit: 0 },
+        ] }] });
+      }
+      if (within(tn, [3.62], 0.32)) [[-40, 0], [-90, 1], [-140, 2]].forEach(([d]) => {
+        const a = d * L.D2R;
+        it.push({ cmds: L.poly([[JX + Math.cos(a) * 50, JY - 210 + Math.sin(a) * 50], [JX + Math.cos(a) * 80, JY - 210 + Math.sin(a) * 80]]), width: 5.5, wEnd: 3 });
+      });
+      it.push({ type: "group", pop: { x: 760, y: 230, at: 3.7, dur: 0.32 }, items: [
+        { text: "$12/month", x: 760, y: 250, size: 84, weight: 700, fill: C.amber, anchor: "middle" },
+      ] });
+      // Mel
+      it.push(...Mel.items(P, { tn, blink: within(tn, [1.2, 6.4], 0.17) }));
+      // the agency: an office block and five chairs, each one "per user"
+      it.push(...Props.building(1560, 300, 320, 560, { floors: 6, cols: 3, lit: true }));
+      [0, 1, 2, 3, 4].forEach((i) => {
+        const cx = 960 + i * 122, at = 5.1 + i * 0.28;
+        it.push({ type: "group", pop: { x: cx + 40, y: G, at, dur: 0.25 }, items: Props.chair(cx, G, 0.8, 1) });
+        const ts = Math.max(0, tn - at - 0.1);
+        const ty = i % 2 ? 556 : 486;
+        it.push({ type: "group", pop: { x: cx + 40, y: ty, at: at + 0.1, dur: 0.25 }, items: [
+          { cmds: L.blob(cx + 40, ty, 5, 5, 3, 0.03), fill: C.line, stroke: null },
+          Props.tag(cx + 40, ty, "per user", { size: 26, angle: 18 * Math.exp(-ts * 3) * Math.cos(ts * 10), string: 22, fill: C.screen }),
+        ] });
+      });
+      it.push({ type: "group", pop: { x: 1220, y: 378, at: 7.45, dur: 0.32 }, items: [
+        { cmds: L.rrect(960, 330, 520, 96, 14, 95, 0.8), fill: C.bg, width: 6 },
+        { text: "5 staff minimum", x: 1220, y: 395, size: 52, weight: 700, fill: C.line, anchor: "middle" },
+      ] });
+      return it;
+    },
+  }];
+  Line.scene({ nominal: T.end, defaultDuration: T.end, shots });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>s01_title</title>
+<link rel="stylesheet" href="lib/line.css">
+<script src="lib/line.js"></script>
+<script src="lib/mel.js"></script>
+<script src="lib/diagram.js"></script>
+</head>
+<body>
+<script>
+// s01_title (nominal = rendered length 7.18 s = narration 6.28 + 0.9; narration starts at 0.35 s).
+// Narration: "Arvo." 0.50-0.96 | "Sunday-night invoicing for NDIS support workers," 1.22-4.41 |
+//            "offline," 4.82-5.45 | "on Gemma four." 5.64-6.48
+// Beats: letters of "arvo" drop in one by one (stretch while falling, squash on landing, rebound,
+// settle); the amber full stop bounces in on arcs from the right. The icon sheet pops, the sun
+// rises behind it. Tagline slides up. Mel peeks over the wordmark (anticipation), pops up, waves once.
+// The second line slides up on "offline"; "Gemma 4" gets an amber underline on "Gemma four".
+(function () {
+  const L = Line, C = L.C, D = Diagram;
+  const LEN = 7.18;
+  const S = 270, WT = 700;
+  const M = {}; // layout, filled in init()
+  const TAG = "Sunday-night invoicing for NDIS support workers";
+  const SUB = "offline · Gemma 4 on your laptop";
+
+  function letter(ch, i, tn) {
+    const t0 = 0.16 + i * 0.075, T = tn - t0;
+    if (T < 0) return null;
+    const dy = D.key(T, [[0, -760], [0.3, 0, "in"], [0.43, -64, "out2"], [0.56, 0, "in2"], [0.64, -11, "out2"], [0.72, 0, "in2"]]);
+    const sx = D.key(T, [[0, 0.8], [0.29, 0.86, "lin"], [0.315, 1.3, "out"], [0.39, 0.92, "inOut"], [0.5, 1.0], [0.555, 1.0], [0.575, 1.1, "out"], [0.66, 0.97], [0.8, 1]]);
+    const x = M.x0 + M.lx[i], cx = x + M.lw[i] / 2;
+    return { type: "group", move: [0, dy], scale: { s: sx, sy: 1 / sx, x: cx, y: M.base }, items: [
+      { text: ch, x, y: M.base, size: S, weight: WT, fill: C.line, jit: 0.4 },
+    ] };
+  }
+  // the full stop arcs in from the right, bouncing (arcs, squash on each landing)
+  function dot(tn) {
+    const t0 = 0.5, T = tn - t0;
+    if (T < 0) return [];
+    const lands = [0.34, 0.6, 0.78, 0.88], hs = [300, 120, 40, 10];
+    let y = 0, sx = 1;
+    let prev = 0;
+    for (let k = 0; k < lands.length; k++) {
+      const a = prev, b = lands[k];
+      if (T < b) {
+        const u = (T - a) / (b - a);
+        y = k === 0 ? -hs[0] * (1 - u * u) : -4 * hs[k] * u * (1 - u);
+        sx = k === 0 ? 0.86 : 0.92 + 0.08 * Math.abs(1 - 2 * u);
+        break;
+      }
+      prev = b;
+    }
+    // squash just after each landing
+    for (let k = 0; k < lands.length; k++) {
+      const v = T - lands[k];
+      if (v >= 0 && v < 0.07) sx = 1 + [0.42, 0.28, 0.14, 0.06][k] * Math.sin((v / 0.07) * Math.PI);
+    }
+    const x = D.key(T, [[0, 520], [0.34, 230, "lin"], [0.6, 70, "lin"], [0.78, 14, "lin"], [0.88, 0, "out2"]]);
+    const dx = M.x0 + M.lx[4];
+    return [{ type: "group", move: [x, y], scale: { s: sx, sy: 1 / sx, x: dx + M.lw[4] / 2, y: M.base }, items: [
+      { text: ".", x: dx, y: M.base, size: S, weight: WT, fill: C.amber, jit: 0.4 },
+    ] }];
+  }
+
+  // Mel peeks over the wordmark and waves once
+  const P0 = Object.assign({ spine: 0, headTilt: 0, fx: 0, stretch: 1 }, Mel.expr("blank"));
+  function melPose(tn) {
+    const hx = M.melX, clipY = M.clipY;
+    const up = clipY + 148, peek = clipY + 292, dip = clipY + 312;
+    const hy = D.key(tn, [[1.9, clipY + 560], [2.05, peek, "out"], [2.42, peek], [2.55, dip, "inOut"], [2.72, up - 22, "out"], [2.86, up + 8, "inOut"], [3.0, up]]);
+    const stretch = D.key(tn, [[2.42, 1], [2.55, 0.94], [2.7, 1.08, "out"], [2.86, 0.98], [3.0, 1]]);
+    const headSq = D.key(tn, [[2.42, 1], [2.55, 0.9], [2.7, 1.1, "out"], [2.86, 0.97], [3.0, 1]]);
+    // look left, look right while peeking (curiosity), then front
+    const fx = D.key(tn, [[2.06, 0], [2.16, -0.5, "out"], [2.28, -0.5], [2.36, 0.5, "inOut"], [2.46, 0.5], [2.6, 0, "inOut"]]);
+    const wave = tn > 2.95 && tn < 4.0 ? Math.sin((tn - 2.95) * 2 * Math.PI * 2.7) * 26 * Math.sin(Math.min(1, (tn - 2.95) / 1.05) * Math.PI) : 0;
+    const armUp = D.key(tn, [[2.78, 0], [2.98, 1, "back"], [3.95, 1], [4.25, 0, "inOut"]]);
+    const HCy = hy - 257 * stretch;
+    const rest = [hx + 52, hy - 30], upH = [hx + 118 + wave, HCy - 50 + Math.abs(wave) * 0.3];
+    const nh = [L.lerp(rest[0], upH[0], armUp), L.lerp(rest[1], upH[1], armUp)];
+    const happy = L.clamp((tn - 2.75) / 0.2);
+    return Object.assign({}, P0, {
+      hip: [hx, hy], stretch, headSq, fx,
+      nh, fh: [hx - 52, hy - 30], nf: [hx + 30, hy + 300], ff: [hx - 30, hy + 300],
+      mouthC: L.lerp(0.05, 0.95, happy), brow: L.lerp(-0.42, -0.5, happy), lid: tn > 3.05 && tn < 3.9 ? 0.25 : 0, eyeR: 6,
+      headTilt: armUp * 6 + wave * 0.08,
+    });
+  }
+
+  const shots = [{
+    start: 0, end: 99,
+    camera(tn) {
+      const p = L.ease.inOut(L.clamp(tn / LEN));
+      return { x: 960, y: 548, s: 1 + 0.035 * p };
+    },
+    build(tn) {
+      const it = [];
+      // Mel first (behind the wordmark), clipped to above the letters
+      if (tn > 1.9) {
+        const Pm = D.follow(melPose, 1.9, tn, melPose(tn));
+        const mel = Mel.items(Pm, { tn, blink: D.within(tn, [2.2, 5.3], 0.15) });
+        it.push({ type: "group", clip: [["M", 0, -300], ["L", 1920, -300], ["L", 1920, M.clipY], ["L", 0, M.clipY], ["Z"]], items: mel });
+      }
+      // icon: sheet pops, sun rises behind it (overshoot, settle)
+      const sp = D.popS(tn, 0.95, { f: 2.4, d: 8, sq: 0.12 });
+      if (sp.s > 0.01) {
+        const rise = Math.max(0, D.settle(tn, 1.25, 1.6, 6));
+        const ic = D.sunSheet(M.ix, M.iy, 1.18, tn, { rise });
+        it.push({ type: "group", scale: { s: sp.sx, sy: sp.sy, x: M.ix, y: M.base }, items: ic });
+      }
+      // wordmark
+      ["a", "r", "v", "o"].forEach((ch, i) => { const g = letter(ch, i, tn); if (g) it.push(g); });
+      it.push(...dot(tn));
+      // tagline + second line slide up (overshoot), fading in
+      const up = (t0, items) => {
+        const p = L.clamp((tn - t0) / 0.42);
+        if (p <= 0) return;
+        it.push({ type: "group", move: [0, 70 * (1 - L.ease.back(p))], opacity: L.ease.out(Math.min(1, p * 1.6)), items });
+      };
+      up(1.2, [{ text: TAG, x: 960, y: M.tagY, size: M.tagS, weight: 560, anchor: "middle" }]);
+      up(4.72, [{ text: SUB, x: 960, y: M.subY, size: 44, weight: 600, anchor: "middle", fill: C.amber }]);
+      if (tn > 5.7) {
+        const x0 = M.gx0 - 4, x1 = M.gx1 + 6, y = M.subY + 16;
+        it.push({ cmds: L.curve([[x0, y + 3], [(x0 + x1) / 2, y - 2], [x1, y + 2], [x1 - 40, y + 10]], false, 0.8), stroke: C.amber, width: 6.5, at: 5.7, dur: 0.3 });
+      }
+      return it;
+    },
+  }];
+
+  Line.scene({
+    nominal: LEN, defaultDuration: LEN, shots,
+    init() {
+      const word = "arvo.";
+      M.lx = [], M.lw = [];
+      for (let i = 0; i < word.length; i++) {
+        M.lx.push(L.measure(word.slice(0, i), S, WT));
+        M.lw.push(L.measure(word[i], S, WT));
+      }
+      M.ww = L.measure(word, S, WT);
+      const iconW = 153, gap = 56;
+      const total = iconW + gap + M.ww;
+      M.base = 520;
+      M.ix = 960 - total / 2 + iconW / 2;
+      M.iy = M.base - 184;
+      M.x0 = 960 - total / 2 + iconW + gap;
+      M.clipY = M.base - S * 0.5 - 6;
+      M.melX = M.x0 + M.lx[2] + M.lw[2] * 0.15;
+      M.tagS = Math.min(58, Math.floor(58 * 1500 / L.measure(TAG, 58, 560)));
+      M.tagY = 690; M.subY = 778;
+      const subW = L.measure(SUB, 44, 600), sx0 = 960 - subW / 2;
+      M.gx0 = sx0 + L.measure("offline · ", 44, 600);
+      M.gx1 = sx0 + L.measure("offline · Gemma 4", 44, 600);
+    },
+  });
+})();
+</script>
+</body>
+</html>

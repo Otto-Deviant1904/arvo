@@ -1,0 +1,64 @@
+[
+  {
+    "t": 0.0,
+    "label": "page_loaded"
+  },
+  {
+    "t": 4.18,
+    "label": "week_set"
+  },
+  {
+    "t": 9.41,
+    "label": "memos_added",
+    "box": [
+      373,
+      634,
+      348,
+      270
+    ]
+  },
+  {
+    "t": 13.78,
+    "label": "run_clicked",
+    "box": [
+      373,
+      922,
+      239,
+      48
+    ]
+  },
+  {
+    "t": 21.91,
+    "label": "results_visible"
+  },
+  {
+    "t": 26.3,
+    "label": "heard_in_view",
+    "box": [
+      795,
+      128,
+      752,
+      368
+    ]
+  },
+  {
+    "t": 29.35,
+    "label": "shifts_in_view",
+    "box": [
+      774,
+      40,
+      794,
+      931
+    ]
+  },
+  {
+    "t": 29.37,
+    "label": "first_shift_row",
+    "box": [
+      795,
+      544,
+      752,
+      110
+    ]
+  }
+]

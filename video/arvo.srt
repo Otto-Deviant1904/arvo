@@ -1,0 +1,51 @@
+1
+00:00:00,350 --> 00:00:02,909
+Paste the week, press Read and price.
+
+2
+00:00:02,909 --> 00:00:07,820
+Gemma reads it offline; the counter shows real seconds, about thirteen.
+
+3
+00:00:07,820 --> 00:00:10,932
+Seven shifts, ten invoice lines, three flags.
+
+4
+00:00:10,932 --> 00:00:15,567
+The red one is the pantry, quoted exactly, with its notify-by date.
+
+5
+00:00:15,567 --> 00:00:18,817
+The PRN and bed rails: authorised, record only.
+
+6
+00:00:18,817 --> 00:00:24,420
+Then the shifts Gemma read, the lines code priced, a Why on each, and a printable
+
+7
+00:00:24,420 --> 00:00:26,080
+invoice per participant.
+
+8
+00:00:26,980 --> 00:00:29,850
+Same job from a photo of a paper diary.
+
+9
+00:00:29,850 --> 00:00:32,940
+Drop it in, run, and the shifts come back.
+
+10
+00:00:45,976 --> 00:00:46,684
+And voice.
+
+11
+00:00:46,684 --> 00:00:48,594
+Three memos, one per shift.
+
+12
+00:00:48,594 --> 00:00:52,627
+Gemma hears the audio directly; no separate speech model.
+
+13
+00:00:52,627 --> 00:00:57,296
+What Gemma heard opens for checking; the shifts land in the table.

@@ -5,3 +5,11 @@ __pycache__/
 out/
 eval/results/raw/
 .env
+video/build/
+video/clips/*.mp4
+video/audio/*.wav
+video/*.mp4
+video/scenes/*.mp4
+video/scenes/*_last.png
+video/audio/audition/
+video/clips/frames*/
