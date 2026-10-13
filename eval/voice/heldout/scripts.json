@@ -1,0 +1,236 @@
+{
+  "week_ending": "2026-12-27",
+  "held_out": "Do not tune prompts or code on this set. Written after the dev set (eval/voice/gold.json) was frozen; run once per release.",
+  "tts": "piper-tts (rhasspy/piper-voices), en_GB-northern_english_male-medium (not used in the dev set)",
+  "noise": "ffmpeg anoisesrc brown, lowpass 350 Hz x2, mixed at 12.0 dB SNR (memos with noise_snr_db set)",
+  "container": "WhatsApp-style voice note: Ogg Opus 32 kb/s, PTT-YYYYMMDD-WANNNN.opus",
+  "memos": [
+    {
+      "id": "ho-01",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261221-WA0001.opus",
+      "recorded": "2026-12-21T20:34",
+      "duration_s": 7.62,
+      "noise_snr_db": 12.0,
+      "script": "Jakey, Monday, quarter to five till twenty past eight. Ten pin bowling in Moorabbin, then fish and chips down the beach. Twenty-two k's.",
+      "shift": {
+        "alias": "Jakey",
+        "participant_id": "jake",
+        "day": "Monday",
+        "date": "2026-12-21",
+        "start": "16:45",
+        "end": "20:20",
+        "km": 22,
+        "note": "Ten pin bowling in Moorabbin, then fish and chips down the beach.",
+        "rp_type": null
+      },
+      "tags": [
+        "crosses_8pm"
+      ]
+    },
+    {
+      "id": "ho-02",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261222-WA0002.opus",
+      "recorded": "2026-12-22T11:41",
+      "duration_s": 9.39,
+      "noise_snr_db": null,
+      "script": "Nonna, Tuesday morning, eight till half eleven. Gave her the morning tablets from the Webster pack, did her hair, then we locked up the house and walked to the bakery. No k's today.",
+      "shift": {
+        "alias": "Nonna",
+        "participant_id": "nonna",
+        "day": "Tuesday",
+        "date": "2026-12-22",
+        "start": "08:00",
+        "end": "11:30",
+        "km": 0,
+        "note": "Gave her the morning tablets from the Webster pack, did her hair, then we locked up the house and walked to the bakery.",
+        "rp_type": null
+      },
+      "tags": [
+        "trap_words:tablet,lock"
+      ]
+    },
+    {
+      "id": "ho-03",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261223-WA0003.opus",
+      "recorded": "2026-12-23T07:52",
+      "duration_s": 7.58,
+      "noise_snr_db": null,
+      "script": "Tom, last night, half six till quarter past nine. We drove round to see the Christmas lights in Boronia, then got a burger. Fourteen k's.",
+      "shift": {
+        "alias": "Tom",
+        "participant_id": "tom",
+        "day": "Tuesday",
+        "date": "2026-12-22",
+        "start": "18:30",
+        "end": "21:15",
+        "km": 14,
+        "note": "We drove round to see the Christmas lights in Boronia, then got a burger.",
+        "rp_type": null
+      },
+      "tags": [
+        "last_night",
+        "crosses_8pm"
+      ]
+    },
+    {
+      "id": "ho-04",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261223-WA0004.opus",
+      "recorded": "2026-12-23T16:48",
+      "duration_s": 7.34,
+      "noise_snr_db": null,
+      "script": "Pri, Wednesday arvo, midday till half four. Christmas shopping at Southland, then we wrapped all the presents at her place. Nineteen k's.",
+      "shift": {
+        "alias": "Pri",
+        "participant_id": "priya",
+        "day": "Wednesday",
+        "date": "2026-12-23",
+        "start": "12:00",
+        "end": "16:30",
+        "km": 19,
+        "note": "Christmas shopping at Southland, then we wrapped all the presents at her place.",
+        "rp_type": null
+      },
+      "tags": []
+    },
+    {
+      "id": "ho-05",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261224-WA0005.opus",
+      "recorded": "2026-12-24T11:10",
+      "duration_s": 7.16,
+      "noise_snr_db": null,
+      "script": "Tom, Thursday morning, half seven till eleven. Gym session, then I helped him clean out the fridge and write a shopping list. Eight k's.",
+      "shift": {
+        "alias": "Tom",
+        "participant_id": "tom",
+        "day": "Thursday",
+        "date": "2026-12-24",
+        "start": "07:30",
+        "end": "11:00",
+        "km": 8,
+        "note": "Gym session, then I helped him clean out the fridge and write a shopping list.",
+        "rp_type": null
+      },
+      "tags": []
+    },
+    {
+      "id": "ho-06",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261224-WA0006.opus",
+      "recorded": "2026-12-24T18:20",
+      "duration_s": 10.47,
+      "noise_snr_db": 12.0,
+      "script": "Jake, Christmas Eve, one till six. Drove down to his nan's in Frankston, thirty-one k's. He was bouncing off the walls about Santa, so his mum got me to crush a Phenergan into his cordial to make him drowsy.",
+      "shift": {
+        "alias": "Jake",
+        "participant_id": "jake",
+        "day": "Thursday",
+        "date": "2026-12-24",
+        "start": "13:00",
+        "end": "18:00",
+        "km": 31,
+        "note": "Drove down to his nan's in Frankston. He was bouncing off the walls about Santa, so his mum got me to crush a Phenergan into his cordial to make him drowsy.",
+        "rp_type": "chemical"
+      },
+      "tags": [
+        "rp"
+      ]
+    },
+    {
+      "id": "ho-07",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261225-WA0007.opus",
+      "recorded": "2026-12-25T14:25",
+      "duration_s": 9.07,
+      "noise_snr_db": null,
+      "script": "Priya, Christmas Day, ten till two. Lunch at her cousin's in Dandenong. She held her baby niece for ages, and she got a sparkly new belt from Santa. Sixteen k's.",
+      "shift": {
+        "alias": "Priya",
+        "participant_id": "priya",
+        "day": "Friday",
+        "date": "2026-12-25",
+        "start": "10:00",
+        "end": "14:00",
+        "km": 16,
+        "note": "Lunch at her cousin's in Dandenong. She held her baby niece for ages, and she got a sparkly new belt from Santa.",
+        "rp_type": null
+      },
+      "tags": [
+        "public_holiday:Christmas Day",
+        "trap_words:held,belt"
+      ]
+    },
+    {
+      "id": "ho-08",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261226-WA0008.opus",
+      "recorded": "2026-12-26T13:30",
+      "duration_s": 10.73,
+      "noise_snr_db": null,
+      "script": "Tommy, Boxing Day, half nine till one. Boxing Day sales at Highpoint, twenty-seven k's. He kept unclipping himself at the traffic lights, so I snapped the plastic guard over his buckle so he couldn't get it undone.",
+      "shift": {
+        "alias": "Tommy",
+        "participant_id": "tom",
+        "day": "Saturday",
+        "date": "2026-12-26",
+        "start": "09:30",
+        "end": "13:00",
+        "km": 27,
+        "note": "Boxing Day sales at Highpoint. He kept unclipping himself at the traffic lights, so I snapped the plastic guard over his buckle so he couldn't get it undone.",
+        "rp_type": "mechanical"
+      },
+      "tags": [
+        "public_holiday:Boxing Day",
+        "rp"
+      ]
+    },
+    {
+      "id": "ho-09",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261227-WA0009.opus",
+      "recorded": "2026-12-27T12:55",
+      "duration_s": 6.61,
+      "noise_snr_db": 12.0,
+      "script": "Rosa, quarter past nine till twenty to one. Took her to mass, then a cuppa and leftover pav at hers. Four k's.",
+      "shift": {
+        "alias": "Rosa",
+        "participant_id": "nonna",
+        "day": "Sunday",
+        "date": "2026-12-27",
+        "start": "09:15",
+        "end": "12:40",
+        "km": 4,
+        "note": "Took her to mass, then a cuppa and leftover pav at hers.",
+        "rp_type": null
+      },
+      "tags": [
+        "no_day_spoken"
+      ]
+    },
+    {
+      "id": "ho-10",
+      "voice": "en_GB-northern_english_male-medium",
+      "file": "heldout/audio/PTT-20261227-WA0010.opus",
+      "recorded": "2026-12-27T17:40",
+      "duration_s": 5.86,
+      "noise_snr_db": null,
+      "script": "Priya, Sunday, two till half five. Walk along the beach at St Kilda and a gelato. Thirteen k's.",
+      "shift": {
+        "alias": "Priya",
+        "participant_id": "priya",
+        "day": "Sunday",
+        "date": "2026-12-27",
+        "start": "14:00",
+        "end": "17:30",
+        "km": 13,
+        "note": "Walk along the beach at St Kilda and a gelato.",
+        "rp_type": null
+      },
+      "tags": []
+    }
+  ]
+}

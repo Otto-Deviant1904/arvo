@@ -5,6 +5,9 @@ does first), then the joined diary goes through `pipeline.run` like a typed week
 eval/voice/results.json and eval/voice/RESULTS.md.
 
     uv run python eval/voice/run_voice_eval.py [--model gemma4:e4b]
+
+`--set heldout` scores the 10 held-out memos instead (eval/voice/heldout/scripts.json + heldout/audio/,
+built by heldout/make_heldout.py) and writes eval/voice/heldout/results.json + RESULTS.md. Do not tune on it.
 """
 
 from __future__ import annotations
@@ -39,6 +42,25 @@ NOTES = """## Notes (read before quoting these numbers)
   for "shopping at Chadstone", "Physi" for "footy", "No case" for "No k's") did not change any field.
 - Transcripts were identical across 3 runs (temperature 0). GPU (RTX 4050 6 GB) was shared with other
   agents, so seconds are indicative."""
+
+HELDOUT_NOTES = """## Notes (read before quoting these numbers)
+
+- Held-out: scripts written after the dev set was frozen, never used to tune prompts or code. Run it once
+  per release; if a change is made because of a miss here, this set is no longer held out.
+- Audio is Piper TTS (en_GB northern_english_male, a voice the dev set does not use), encoded as
+  WhatsApp-style Ogg Opus voice notes. Still clean synthetic speech with no Australian accent. Car noise
+  (brown, low-passed at 350 Hz, 12 dB SNR) on 3 memos.
+- Week of Christmas 2026: Christmas Day (Fri 25) and Boxing Day (Sat 26) are Victorian public holidays.
+  Covers 2 shifts crossing 8 pm, one "last night" memo, one memo with no day spoken, Australian number
+  phrasing, 2 restrictive practices (chemical, mechanical) and 2 innocent notes with trap words
+  (tablets, locked, held, belt). Tag rows are subsets of these 10 memos (small n).
+- Pricing is not scored here; invoice lines are kept in results.json under runs[].lines."""
+
+SETS = {
+    "dev": dict(gold=HERE / "gold.json", out=HERE, title="Voice memo eval", notes=NOTES),
+    "heldout": dict(gold=HERE / "heldout" / "scripts.json", out=HERE / "heldout",
+                    title="Held-out voice memo eval", notes=HELDOUT_NOTES),
+}
 
 _UNITS = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve "
                                      "thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split())}
@@ -126,8 +148,15 @@ def match(golds: list[dict], shifts: list[dict], flags: list[dict]) -> list[dict
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="gemma4:e4b")
+    ap.add_argument("--set", default="dev", choices=sorted(SETS),
+                    help="dev: gold.json + audio/ (default); heldout: heldout/scripts.json + heldout/audio/")
     args = ap.parse_args()
-    gold = json.loads((HERE / "gold.json").read_text(encoding="utf-8"))
+    cfg = SETS[args.set]
+    gold = json.loads(cfg["gold"].read_text(encoding="utf-8"))
+    missing = [m["file"] for m in gold["memos"] if not (HERE / m["file"]).is_file()]
+    if missing:
+        sys.exit(f"missing audio for {len(missing)} memos (e.g. {missing[0]}); "
+                 f"generate it first (heldout/make_heldout.py or make_fixtures.py)")
     roster = pipeline.load_roster(REPO / "data" / "roster.example.json")
     voices: dict[str, list[dict]] = {}
     for m in gold["memos"]:
@@ -144,6 +173,8 @@ def main() -> int:
         runs.append({"voice": voice_name, "diary": diary, "transcribe_s": round(t1 - t0, 2),
                      "pipeline_s": round(t2 - t1, 2), "timings": res["timings"], "warnings": res["warnings"],
                      "shifts": res["shifts"], "flags": res["flags"]})
+        if args.set != "dev":
+            runs[-1]["lines"] = res["lines"]
         matched = match([m["shift"] for m in memos], res["shifts"], res["flags"])
         for m, meta, s in zip(memos, metas, matched):
             ref, hyp = m["script"], meta["transcript"]
@@ -158,6 +189,8 @@ def main() -> int:
                                                                           "km", "note", "warnings")},
                 "correct": score(m["shift"], s, res["flags"]),
             })
+            if m.get("tags"):
+                per_memo[-1]["tags"] = m["tags"]
         print(f"{voice_name}: transcribe {t1 - t0:.1f}s, pipeline {t2 - t1:.1f}s, "
               f"{len(res['shifts'])} shifts, {len(res['flags'])} flags", flush=True)
 
@@ -171,6 +204,8 @@ def main() -> int:
               "clean": [p for p in per_memo if not p["noise_snr_db"]],
               "car noise": [p for p in per_memo if p["noise_snr_db"]],
               **{v: [p for p in per_memo if p["voice"] == v] for v in voices}}
+    for tag in sorted({t.split(":", 1)[0] for p in per_memo for t in p.get("tags", [])}):
+        groups[f"tag: {tag}"] = [p for p in per_memo if any(t.split(":", 1)[0] == tag for t in p.get("tags", []))]
     summary = {}
     for g, ps in groups.items():
         summary[g] = {"memos": len(ps), "wer": mean(p["wer"] for p in ps),
@@ -188,9 +223,11 @@ def main() -> int:
     }
     out = {"model": args.model, "week_ending": gold["week_ending"], "summary": summary,
            "memos": per_memo, "runs": runs}
-    (HERE / "results.json").write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    if args.set != "dev":
+        out = {"set": args.set, **out}
+    (cfg["out"] / "results.json").write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
 
-    lines = [f"# Voice memo eval ({args.model}, {n} Piper TTS memos)", "",
+    lines = [f"# {cfg['title']} ({args.model}, {n} Piper TTS memos)", "",
              "WER: lower-cased words, number words mapped to digits and k's/km unified (wer_raw: no mapping). "
              "Fields: extracted shift vs gold after the full text pipeline; note = 80% of gold note words present; "
              "rp = right restrictive-practice type flagged (or none flagged when none).", "",
@@ -209,8 +246,8 @@ def main() -> int:
         wrong = ", ".join(f for f, ok in p["correct"].items() if not ok) or "-"
         lines.append(f"| {p['id']} | {str(p['noise_snr_db']) + ' dB' if p['noise_snr_db'] else '-'} | "
                      f"{p['wer']:.3f} | {wrong} | {p['transcript'].replace('|', '/')} |")
-    lines += ["", NOTES]
-    (HERE / "RESULTS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines += ["", cfg["notes"]]
+    (cfg["out"] / "RESULTS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines[:4 + 2 + len(groups) + 2]))
     return 0
 
