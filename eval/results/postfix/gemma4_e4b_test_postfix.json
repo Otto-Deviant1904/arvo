@@ -1,0 +1,562 @@
+{
+ "model": "gemma4:e4b",
+ "split": "test",
+ "n_weeks": 16,
+ "weeks": [
+  "week09",
+  "week10",
+  "week11",
+  "week12",
+  "week13",
+  "week14",
+  "week15",
+  "week16",
+  "week17",
+  "week18",
+  "week19",
+  "week20",
+  "week21",
+  "week22",
+  "week23",
+  "week24"
+ ],
+ "args": {
+  "set": "synthetic",
+  "split": "test",
+  "limit": null,
+  "images": false,
+  "skip_baseline": true,
+  "rp_all": false
+ },
+ "extraction": {
+  "n_gold": 119,
+  "n_pred": 118,
+  "recall": 0.9832,
+  "precision": 0.9915,
+  "field_accuracy": {
+   "participant": 0.9916,
+   "date": 0.9832,
+   "start": 0.9748,
+   "end": 0.9664,
+   "km": 0.9916
+  },
+  "exact_match": 0.9496,
+  "exact_by_kind": {
+   "overnight": {
+    "n": 1,
+    "exact": 0.0
+   },
+   "public_holiday": {
+    "n": 8,
+    "exact": 1.0
+   },
+   "saturday": {
+    "n": 12,
+    "exact": 1.0
+   },
+   "sunday": {
+    "n": 13,
+    "exact": 1.0
+   },
+   "weekday_cross_20": {
+    "n": 22,
+    "exact": 0.9545
+   },
+   "weekday_day": {
+    "n": 57,
+    "exact": 0.9298
+   },
+   "weekday_evening": {
+    "n": 6,
+    "exact": 1.0
+   }
+  }
+ },
+ "invoice": {
+  "weeks": 16,
+  "n_gold_lines": 202,
+  "n_pred_lines": 201,
+  "line_precision": 0.9701,
+  "line_recall": 0.9653,
+  "line_f1": 0.9677,
+  "weeks_total_exact": 11,
+  "weeks_lines_exact": 10,
+  "abs_error_sum": 2691.42,
+  "abs_error_mean": 168.21,
+  "gold_dollars": 38583.78
+ },
+ "invoice_by_week": [
+  {
+   "week": "week09",
+   "n_gold": 14,
+   "n_pred": 14,
+   "matched": 14,
+   "gold_total": 2749.56,
+   "pred_total": 2749.56,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week10",
+   "n_gold": 15,
+   "n_pred": 15,
+   "matched": 15,
+   "gold_total": 2320.15,
+   "pred_total": 2320.15,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week11",
+   "n_gold": 17,
+   "n_pred": 17,
+   "matched": 17,
+   "gold_total": 3445.56,
+   "pred_total": 3445.56,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week12",
+   "n_gold": 8,
+   "n_pred": 8,
+   "matched": 8,
+   "gold_total": 1801.2,
+   "pred_total": 1801.2,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week13",
+   "n_gold": 13,
+   "n_pred": 13,
+   "matched": 13,
+   "gold_total": 3485.39,
+   "pred_total": 3485.39,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week14",
+   "n_gold": 12,
+   "n_pred": 12,
+   "matched": 12,
+   "gold_total": 2371.4,
+   "pred_total": 2371.4,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week15",
+   "n_gold": 7,
+   "n_pred": 7,
+   "matched": 7,
+   "gold_total": 1703.65,
+   "pred_total": 1703.65,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week16",
+   "n_gold": 14,
+   "n_pred": 14,
+   "matched": 13,
+   "gold_total": 2116.96,
+   "pred_total": 2098.57,
+   "abs_error": 18.39,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week17",
+   "n_gold": 11,
+   "n_pred": 11,
+   "matched": 10,
+   "gold_total": 1895.1,
+   "pred_total": 1911.95,
+   "abs_error": 16.85,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week18",
+   "n_gold": 15,
+   "n_pred": 15,
+   "matched": 15,
+   "gold_total": 3082.12,
+   "pred_total": 3082.12,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week19",
+   "n_gold": 9,
+   "n_pred": 9,
+   "matched": 8,
+   "gold_total": 1923.97,
+   "pred_total": 2914.81,
+   "abs_error": 990.84,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week20",
+   "n_gold": 12,
+   "n_pred": 11,
+   "matched": 11,
+   "gold_total": 2389.77,
+   "pred_total": 2045.22,
+   "abs_error": 344.55,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week21",
+   "n_gold": 15,
+   "n_pred": 15,
+   "matched": 13,
+   "gold_total": 2366.28,
+   "pred_total": 2366.28,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": false
+  },
+  {
+   "week": "week22",
+   "n_gold": 17,
+   "n_pred": 17,
+   "matched": 16,
+   "gold_total": 3084.79,
+   "pred_total": 4405.58,
+   "abs_error": 1320.79,
+   "total_exact": false,
+   "lines_exact": false
+  },
+  {
+   "week": "week23",
+   "n_gold": 10,
+   "n_pred": 10,
+   "matched": 10,
+   "gold_total": 1999.47,
+   "pred_total": 1999.47,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  },
+  {
+   "week": "week24",
+   "n_gold": 13,
+   "n_pred": 13,
+   "matched": 13,
+   "gold_total": 1848.41,
+   "pred_total": 1848.41,
+   "abs_error": 0.0,
+   "total_exact": true,
+   "lines_exact": true
+  }
+ ],
+ "code_only": false,
+ "invoice_model_alone": null,
+ "invoice_model_alone_by_week": [],
+ "model_alone_note": "skipped (--skip-baseline)",
+ "rp": {
+  "gemma": {
+   "detection": {
+    "overall": {
+     "tp": 14,
+     "fp": 2,
+     "fn": 1,
+     "precision": 0.875,
+     "recall": 0.9333,
+     "f1": 0.9032
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "chemical": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     },
+     "mechanical": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.6667,
+      "f1": 0.8
+     },
+     "physical": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     }
+    },
+    "any_type_note_level": {
+     "tp": 15,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.9375,
+     "recall": 1.0,
+     "f1": 0.9677
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 13,
+     "fp": 2,
+     "fn": 1,
+     "precision": 0.8667,
+     "recall": 0.9286,
+     "f1": 0.8966
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "chemical": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     },
+     "mechanical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667
+     },
+     "physical": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "environmental": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "f1": 0.8571
+     }
+    },
+    "any_type_note_level": {
+     "tp": 14,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.9333,
+     "recall": 1.0,
+     "f1": 0.9655
+    }
+   },
+   "hard_negatives_flagged": "1/13",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "14/14",
+   "authorised_marked_authorised": "1/1",
+   "n_flags": 16,
+   "n_flag_keys": 16,
+   "dropped_by_quote_check": 0
+  },
+  "keyword_baseline": {
+   "detection": {
+    "overall": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 12,
+     "precision": 0.6,
+     "recall": 0.2,
+     "f1": 0.3
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 2,
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "environmental": {
+      "tp": 2,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.6667,
+      "recall": 0.6667,
+      "f1": 0.6667
+     }
+    },
+    "any_type_note_level": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 12,
+     "precision": 0.6,
+     "recall": 0.2,
+     "f1": 0.3
+    }
+   },
+   "needs_reporting": {
+    "overall": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 11,
+     "precision": 0.6,
+     "recall": 0.2143,
+     "f1": 0.3158
+    },
+    "by_type": {
+     "seclusion": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "chemical": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+     },
+     "mechanical": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "physical": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 2,
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5
+     },
+     "environmental": {
+      "tp": 2,
+      "fp": 1,
+      "fn": 1,
+      "precision": 0.6667,
+      "recall": 0.6667,
+      "f1": 0.6667
+     }
+    },
+    "any_type_note_level": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 11,
+     "precision": 0.6,
+     "recall": 0.2143,
+     "f1": 0.3158
+    }
+   },
+   "hard_negatives_flagged": "2/13",
+   "unlabelled_notes_flagged": 0,
+   "harm_correct_on_detected": "2/3",
+   "authorised_marked_authorised": "0/1",
+   "n_flags": 5,
+   "n_flag_keys": 5
+  },
+  "n_labelled_notes": 28,
+  "n_notes_with_text": 108
+ },
+ "rp_all": null,
+ "images": null,
+ "latency": {
+  "extract_per_diary": {
+   "n": 16,
+   "mean_s": 8.729,
+   "p95_s": 11.881
+  },
+  "rp_per_note": {
+   "n": 108,
+   "mean_s": 0.495,
+   "p95_s": 1.139
+  },
+  "image_per_diary": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  },
+  "model_alone_per_diary": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  },
+  "rp_all_per_note": {
+   "n": 0,
+   "mean_s": null,
+   "p95_s": null
+  }
+ },
+ "errors": [],
+ "wall_s": 193.3
+}

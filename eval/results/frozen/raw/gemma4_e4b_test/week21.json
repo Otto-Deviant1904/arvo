@@ -1,0 +1,732 @@
+{
+ "week": "week21",
+ "week_ending": "2027-02-21",
+ "gold_lines": [
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-16",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "08:00",
+   "end": "10:00",
+   "quantity": 2.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 147.16,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "09:15",
+   "end": "11:45",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 183.95,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 21.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 20.79,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-18",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "11:00",
+   "end": "14:30",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 257.53,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-18",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 7.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 6.93,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "item_number": "01_015_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+   "start": "17:45",
+   "end": "21:45",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 324.28,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 2.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 1.98,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "07:15",
+   "end": "10:15",
+   "quantity": 3.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 220.74,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 8.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 7.92,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "item_number": "04_103_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+   "start": "20:15",
+   "end": "22:45",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 202.68,
+   "rule": "Weekday Evening: starts at or after 8pm and ends at or before midnight on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 32.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 31.68,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "10:30",
+   "end": "16:00",
+   "quantity": 5.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 569.47,
+   "rule": "Saturday rate: shift is on a Saturday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 38.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 37.62,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "item_number": "04_106_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Sunday",
+   "start": "14:00",
+   "end": "16:30",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 133.5,
+   "total": 333.75,
+   "rule": "Sunday rate: shift is on a Sunday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 20.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 19.8,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  }
+ ],
+ "pred_shifts": [
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-16",
+   "start": "08:00",
+   "end": "10:00",
+   "km": 0.0,
+   "note": "shower + meds prompt",
+   "source_quote": "Mrs B 8–10",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "start": "09:15",
+   "end": "11:45",
+   "km": 21.0,
+   "note": "bowling w/ his mates, 21km 🚗",
+   "source_quote": "jake 9:15-11:45",
+   "warnings": []
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-18",
+   "start": "11:00",
+   "end": "14:30",
+   "km": 7.0,
+   "note": "18/2 (gym) 7k",
+   "source_quote": "Tommy 11:00 till 2:30",
+   "warnings": [
+    "date set to 2027-02-18 from the diary's 'Tommy  18/2 gym 7k' (model said 2027-02-17)"
+   ]
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "start": "17:45",
+   "end": "21:45",
+   "km": 2.0,
+   "note": "drove 2km\n  Priya wanted to sit in the car on her own for a bit after the shops, door open, I waited on the bench nearby.",
+   "source_quote": "Pri 5.45pm-quarter to 10",
+   "warnings": []
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "start": "07:15",
+   "end": "10:15",
+   "km": 8.0,
+   "note": "Nonna - Mrs B wanted a nap so I pulled the curtains and left her bedroom door open. 8km",
+   "source_quote": "7.15am–10.15 Nonna",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "start": "20:15",
+   "end": "22:45",
+   "km": 32.0,
+   "note": "jake - bowling w/ his mates 32k",
+   "source_quote": "8:15pm–quarter to 11 jake",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "start": "10:30",
+   "end": "16:00",
+   "km": 38.0,
+   "note": "38km - pool then maccas",
+   "source_quote": "Jake 10:30am-4pm",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "start": "14:00",
+   "end": "16:30",
+   "km": 20.0,
+   "note": "Jake, bowling w/ his mates 20kms",
+   "source_quote": "2 till 4.30pm Jake",
+   "warnings": []
+  }
+ ],
+ "extract_warnings": [],
+ "extract_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 9.36,
+  "load_s": 0.005,
+  "prompt_tokens": 980,
+  "eval_tokens": 996,
+  "attempts": 1,
+  "done_reason": "stop",
+  "raw_count": 8
+ },
+ "pred_lines": [
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-16",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "08:00",
+   "end": "10:00",
+   "quantity": 2.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 147.16,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "09:15",
+   "end": "11:45",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 183.95,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 21.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 20.79,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-18",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "11:00",
+   "end": "14:30",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 257.53,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-18",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 7.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 6.93,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "item_number": "01_015_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+   "start": "17:45",
+   "end": "21:45",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 324.28,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 2.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 1.98,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "07:15",
+   "end": "10:15",
+   "quantity": 3.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 220.74,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 8.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 7.92,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "item_number": "04_103_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+   "start": "20:15",
+   "end": "22:45",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 202.68,
+   "rule": "Weekday Evening: starts at or after 8pm and ends at or before midnight on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 32.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 31.68,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "10:30",
+   "end": "16:00",
+   "quantity": 5.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 569.47,
+   "rule": "Saturday rate: shift is on a Saturday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 38.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 37.62,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "item_number": "04_106_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Sunday",
+   "start": "14:00",
+   "end": "16:30",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 133.5,
+   "total": 333.75,
+   "rule": "Sunday rate: shift is on a Sunday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 20.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 19.8,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  }
+ ],
+ "pricing_warnings": [
+  "Friday before the AFL Grand Final 2027: not yet declared in vic_public_holidays.json; treated as an ordinary day"
+ ],
+ "rp_flags": [],
+ "rp_meta": {
+  "model": "gemma4:e4b",
+  "calls": 8,
+  "skipped": 0,
+  "total_s": 2.948,
+  "load_s": 0.02,
+  "prompt_tokens": 4420,
+  "eval_tokens": 48,
+  "per_call_s": [
+   0.468,
+   0.326,
+   0.348,
+   0.401,
+   0.337,
+   0.35,
+   0.371,
+   0.347
+  ],
+  "warnings": []
+ },
+ "keyword_flags": [],
+ "baseline_lines": [
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-16",
+   "item_number": "01_015_0107_1_1",
+   "quantity": 2.0,
+   "unit_price": 81.07,
+   "total": 162.14
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "item_number": "04_104_0125_6_1",
+   "quantity": 2.5,
+   "unit_price": 73.58,
+   "total": 183.95
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-18",
+   "item_number": "04_104_0125_6_1",
+   "quantity": 3.5,
+   "unit_price": 73.58,
+   "total": 257.53
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "item_number": "01_015_0107_1_1",
+   "quantity": 2.0,
+   "unit_price": 81.07,
+   "total": 162.14
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 2.0,
+   "unit_price": 0.99,
+   "total": 1.98
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "item_number": "01_011_0107_1_1",
+   "quantity": 3.0,
+   "unit_price": 73.58,
+   "total": 220.74
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 8.0,
+   "unit_price": 0.99,
+   "total": 7.92
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "item_number": "01_015_0107_1_1",
+   "quantity": 3.0,
+   "unit_price": 81.07,
+   "total": 243.21
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "item_number": "04_105_0125_6_1",
+   "quantity": 6.5,
+   "unit_price": 103.54,
+   "total": 673.91
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "item_number": "04_105_0125_6_1",
+   "quantity": 2.5,
+   "unit_price": 103.54,
+   "total": 258.85
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 20.0,
+   "unit_price": 0.99,
+   "total": 19.8
+  }
+ ],
+ "baseline_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 10.297,
+  "load_s": 0.002,
+  "prompt_tokens": 2471,
+  "eval_tokens": 1052,
+  "attempts": 1,
+  "done_reason": "stop",
+  "wall_s": 10.297
+ },
+ "image_pred_shifts": [
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-16",
+   "start": "08:00",
+   "end": "10:00",
+   "km": 0.0,
+   "note": "shower + meds prompt",
+   "source_quote": "Mrs B 8-10",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-17",
+   "start": "09:15",
+   "end": "11:45",
+   "km": 21.0,
+   "note": "bowling w/ his mates",
+   "source_quote": "jake 9:15-11:45",
+   "warnings": []
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-17",
+   "start": "11:00",
+   "end": "14:30",
+   "km": 7.0,
+   "note": "(gym)",
+   "source_quote": "Tommy 11:00 till 2:30",
+   "warnings": []
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-18",
+   "start": "00:00",
+   "end": "00:00",
+   "km": 0.0,
+   "note": "wanted to sit in the car on her own for a bit after the shops, door open, I waited on the bench nearby.",
+   "source_quote": "Priya",
+   "warnings": [
+    "end 00:00 is not after start 00:00: treated as overnight, finishing next day",
+    "shift is 24.0 hours long: check times"
+   ]
+  },
+  {
+   "participant_id": "",
+   "date": "2027-02-18",
+   "start": "17:45",
+   "end": "21:45",
+   "km": 2.0,
+   "note": "drove",
+   "source_quote": "unknown 5:45pm-quarter to 10",
+   "warnings": [
+    "unknown participant 'unknown': not on the roster",
+    "end set to 21:45 from '5:45pm-quarter to 10' (model said 22:45)"
+   ]
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-02-19",
+   "start": "07:15",
+   "end": "10:15",
+   "km": 8.0,
+   "note": "Mrs B wanted a nap so I pulled the curtains and left her bedroom door open.",
+   "source_quote": "Nonna 7:15am-10:15",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-19",
+   "start": "20:15",
+   "end": "22:45",
+   "km": 32.0,
+   "note": "bowling w/ his mates",
+   "source_quote": "jake 8:15pm-quarter to 11",
+   "warnings": [
+    "end set to 22:45 from '8:15pm-quarter to 11' (model said 23:45)"
+   ]
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-20",
+   "start": "10:30",
+   "end": "16:00",
+   "km": 38.0,
+   "note": "pool then maccas",
+   "source_quote": "Jake 10:30am-4pm",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-21",
+   "start": "14:00",
+   "end": "16:30",
+   "km": 20.0,
+   "note": "bowling w/ his mates",
+   "source_quote": "Jake 2 till 4:30pm",
+   "warnings": []
+  }
+ ],
+ "image_warnings": [
+  "'unknown 5:45pm-quarter to 10': unknown participant 'unknown'",
+  "photo input: notes and km could not be checked against typed text; review them"
+ ],
+ "image_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 11.372,
+  "load_s": 0.014,
+  "prompt_tokens": 1587,
+  "eval_tokens": 1103,
+  "attempts": 1,
+  "done_reason": "stop",
+  "raw_count": 9
+ }
+}

@@ -1,0 +1,448 @@
+{
+ "week": "week06",
+ "week_ending": "2027-01-03",
+ "gold_lines": [
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "item_number": "04_102_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Public Holiday",
+   "start": "10:00",
+   "end": "14:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 163.46,
+   "total": 653.84,
+   "rule": "Boxing Day (additional day) is a Victorian public holiday: Public Holiday rate"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 13.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 12.87,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-12-30",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "09:00",
+   "end": "12:30",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 257.53,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-31",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "11:00",
+   "end": "15:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 294.32,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-31",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 8.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 7.92,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "item_number": "04_103_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+   "start": "19:00",
+   "end": "23:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 324.28,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 31.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 30.69,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-01-01",
+   "item_number": "01_012_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Public Holiday",
+   "start": "08:00",
+   "end": "11:00",
+   "quantity": 3.0,
+   "unit": "H",
+   "unit_price": 163.46,
+   "total": 490.38,
+   "rule": "New Year's Day is a Victorian public holiday: Public Holiday rate"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "09:30",
+   "end": "13:00",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 362.39,
+   "rule": "Saturday rate: shift is on a Saturday"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 12.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 11.88,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  }
+ ],
+ "pred_shifts": [
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "start": "10:00",
+   "end": "14:00",
+   "km": 13.0,
+   "note": "beach (Mordi), public hol so double check the rate",
+   "source_quote": "Jake 10-2, 13km",
+   "warnings": []
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-12-30",
+   "start": "09:00",
+   "end": "12:30",
+   "km": 0.0,
+   "note": "shower + brekkie + the physio exercises, walked over",
+   "source_quote": "Priya 9-12.30",
+   "warnings": []
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-31",
+   "start": "11:00",
+   "end": "15:00",
+   "km": 8.0,
+   "note": "her family back from Daylesford, did lunch + a drive down to the bay, 8 k. Then NYE",
+   "source_quote": "Mrs B 11am till 3",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "start": "19:00",
+   "end": "23:00",
+   "km": 31.0,
+   "note": "fireworks at Docklands drove 31 k (parking!!!)",
+   "source_quote": "Jake 7pm-11pm",
+   "warnings": []
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-01-01",
+   "start": "08:00",
+   "end": "11:00",
+   "km": 0.0,
+   "note": "brekkie + meds + a walk, 0km. new years day",
+   "source_quote": "Nonna 8 - 11",
+   "warnings": []
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "start": "09:30",
+   "end": "13:00",
+   "km": 12.0,
+   "note": "12 kms, back from being sick, took him for a haircut and the op shop",
+   "source_quote": "T.O. 9.30-1",
+   "warnings": []
+  }
+ ],
+ "extract_warnings": [],
+ "extract_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 7.524,
+  "load_s": 0.006,
+  "prompt_tokens": 957,
+  "eval_tokens": 764,
+  "attempts": 1,
+  "done_reason": "stop",
+  "raw_count": 6
+ },
+ "pred_lines": [
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "item_number": "04_102_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Public Holiday",
+   "start": "10:00",
+   "end": "14:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 163.46,
+   "total": 653.84,
+   "rule": "Boxing Day (additional day) is a Victorian public holiday: Public Holiday rate"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 13.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 12.87,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-12-30",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "09:00",
+   "end": "12:30",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 257.53,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-31",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "11:00",
+   "end": "15:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 294.32,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-31",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 8.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 7.92,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "item_number": "04_103_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+   "start": "19:00",
+   "end": "23:00",
+   "quantity": 4.0,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 324.28,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 31.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 30.69,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-01-01",
+   "item_number": "01_012_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Public Holiday",
+   "start": "08:00",
+   "end": "11:00",
+   "quantity": 3.0,
+   "unit": "H",
+   "unit_price": 163.46,
+   "total": 490.38,
+   "rule": "New Year's Day is a Victorian public holiday: Public Holiday rate"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "09:30",
+   "end": "13:00",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 362.39,
+   "rule": "Saturday rate: shift is on a Saturday"
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 12.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 11.88,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  }
+ ],
+ "pricing_warnings": [
+  "Friday before the AFL Grand Final 2027: not yet declared in vic_public_holidays.json; treated as an ordinary day"
+ ],
+ "rp_flags": [],
+ "rp_meta": {
+  "model": "gemma4:e4b",
+  "calls": 6,
+  "skipped": 0,
+  "total_s": 2.42,
+  "load_s": 0.023,
+  "prompt_tokens": 3349,
+  "eval_tokens": 36,
+  "per_call_s": [
+   0.377,
+   0.454,
+   0.433,
+   0.348,
+   0.442,
+   0.366
+  ],
+  "warnings": []
+ },
+ "keyword_flags": [],
+ "baseline_lines": [
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "item_number": "01_012_0107_1_1",
+   "quantity": 2.0,
+   "unit_price": 163.46,
+   "total": 326.92
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-28",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 13.0,
+   "unit_price": 0.99,
+   "total": 12.87
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-12-30",
+   "item_number": "01_011_0107_1_1",
+   "quantity": 3.5,
+   "unit_price": 73.58,
+   "total": 257.53
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-31",
+   "item_number": "01_011_0107_1_1",
+   "quantity": 4.0,
+   "unit_price": 73.58,
+   "total": 294.32
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "item_number": "01_015_0107_1_1",
+   "quantity": 4.0,
+   "unit_price": 81.07,
+   "total": 324.28
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 31.0,
+   "unit_price": 0.99,
+   "total": 30.69
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-01-01",
+   "item_number": "01_011_0107_1_1",
+   "quantity": 3.0,
+   "unit_price": 73.58,
+   "total": 220.74
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "item_number": "04_105_0125_6_1",
+   "quantity": 3.5,
+   "unit_price": 103.54,
+   "total": 362.4
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-02",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 12.0,
+   "unit_price": 0.99,
+   "total": 11.88
+  }
+ ],
+ "baseline_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 9.41,
+  "load_s": 0.004,
+  "prompt_tokens": 2457,
+  "eval_tokens": 865,
+  "attempts": 1,
+  "done_reason": "stop",
+  "wall_s": 9.41
+ }
+}

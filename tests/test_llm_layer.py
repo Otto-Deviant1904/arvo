@@ -114,11 +114,14 @@ def test_extract_day_written_overrides_model_date(fake_llm, roster):
     fake_llm.queue({"shifts": [item(day_written="Tues", date="2026-11-04")]})
     shifts, _, _ = extract_shifts(ONE, roster, WEEK)
     assert shifts[0].date == "2026-11-03"
-    assert any("date set to 2026-11-03 from the diary's 'Tues - Cup day!" in w for w in shifts[0].warnings)
-    # with no day in the diary text, the model's day_written still beats its date
+    assert any("date set to 2026-11-03 from 'Tues - Cup day!" in w and "own line" in w for w in shifts[0].warnings)
+    # no day on the shift's line: the model's in-week date stands; its day_written only fills a missing date
     fake_llm.queue({"shifts": [item(day_written="Tues", date="2026-11-04")]})
     shifts, _, _ = extract_shifts("Jake 3 till 8:30ish\n", roster, WEEK)
-    assert shifts[0].date == "2026-11-03" and any("from 'Tues'" in w for w in shifts[0].warnings)
+    assert shifts[0].date == "2026-11-04"
+    fake_llm.queue({"shifts": [item(day_written="Tues", date="")]})
+    shifts, _, _ = extract_shifts("Jake 3 till 8:30ish\n", roster, WEEK)
+    assert shifts[0].date == "2026-11-03" and any(w.startswith("check: date 2026-11-03") for w in shifts[0].warnings)
 
 
 def test_extract_alias_fallback(fake_llm, roster):
@@ -130,7 +133,7 @@ def test_extract_alias_fallback(fake_llm, roster):
     shifts, warns, _ = extract_shifts("Tues Jakey 3 till 8:30ish\nWed Pri 3 till 8:30ish\nThu Bob 3 till 8:30ish",
                                       roster, WEEK)
     assert [s.participant_id for s in shifts] == ["jake", "priya", ""]
-    assert any("alias of priya" in w for w in shifts[1].warnings)
+    assert any("participant set to priya" in w for w in shifts[1].warnings)
     assert any("unknown participant 'Bob'" in w for w in warns)
     assert match_alias("T.O.", [p for p in __import__("arvo.extract").extract.as_participants(roster)]) == "tom"
 
@@ -146,7 +149,7 @@ def test_extract_approximate_time_warning(fake_llm, roster):
 
 def test_extract_time_rules(fake_llm, roster):
     fake_llm.queue({"shifts": [
-        item(start="15:00", end="08:30"),                                    # ambiguous end -> +12h
+        item(start="15:00", end="08:30"),                    # possible (overnight) reading: kept, with a check
         item(day_written="Thurs", date="2026-11-05", times_written="10am-2pm", source_quote="Jakey 10am-2pm",
              start="10:00", end="02:00", km=0, note=""),                     # explicit pm wins
         item(day_written="Sat", date="2026-11-07", times_written="10pm till 6:30am",
@@ -155,7 +158,9 @@ def test_extract_time_rules(fake_llm, roster):
     ]})
     text = ONE + "Thurs Jakey 10am-2pm\nSat Jake 10pm till 6:30am\n"
     shifts, warns, _ = extract_shifts(text, roster, WEEK)
-    assert [(s.start, s.end) for s in shifts] == [("15:00", "20:30"), ("10:00", "14:00"), ("22:00", "06:30")]
+    assert [(s.start, s.end) for s in shifts] == [("15:00", "08:30"), ("10:00", "14:00"), ("22:00", "06:30")]
+    assert any(w.startswith("check: '3 till 8:30ish' read as 15:00-08:30 overnight") for w in shifts[0].warnings)
+    assert any("end set to 14:00 from '10am-2pm'" in w for w in shifts[1].warnings)
     assert any("overnight" in w for w in shifts[2].warnings)
     assert any("times not HH:MM" in w for w in warns)
     assert reconcile_times("half 3 - 7ish", "15:30", "19:00") == ("15:30", "19:00", [])
@@ -178,10 +183,12 @@ def test_extract_note_and_km_checks(fake_llm, roster):
     fake_llm.queue({"shifts": [item(note="Went to Bunnings and the footy", km=30)]})
     shifts, _, _ = extract_shifts(ONE, roster, WEEK)
     w = " | ".join(shifts[0].warnings)
-    assert "not word-for-word" in w and "km set to 12 from the diary (model said 30)" in w and shifts[0].km == 12
+    # 30 is written nowhere and the shift's text shows exactly one figure: that figure wins
+    assert "not word-for-word" in w and "km set to 12 from this shift's text (model read 30" in w and shifts[0].km == 12
+    # no figure at all: the model's km is never zeroed, only flagged
     fake_llm.queue({"shifts": [item(note="", km=30)]})
     shifts, _, _ = extract_shifts("Tues Jake 3 till 8:30ish\n", roster, WEEK)
-    assert "no such km figure" in " | ".join(shifts[0].warnings) and shifts[0].km == 0
+    assert "check: 30 km is not written for this shift" in " | ".join(shifts[0].warnings) and shifts[0].km == 30
 
 
 def test_extract_image_path_sends_image(fake_llm, roster, tmp_path):
@@ -213,8 +220,8 @@ def test_extract_km_unit_first_kept_and_filled(fake_llm, roster):
              times_written="9-1", start="09:00", end="13:00", km=0, note="footy"),
     ]})
     shifts, _, _ = extract_shifts(text, roster, WEEK)
-    assert [s.km for s in shifts] == [11, 14]
-    assert any("km set to 14 from the diary (model said 0)" in w for w in shifts[1].warnings)
+    assert [s.km for s in shifts] == [11, 0]  # a model 0 stands next to a written figure, with a check
+    assert any("check: the shift's text shows 14 km; model read 0" in w for w in shifts[1].warnings)
 
 
 def test_extract_splits_two_blocks_on_one_line(fake_llm, roster):
@@ -248,8 +255,17 @@ def test_extract_date_from_diary_headings(fake_llm, roster):
              times_written="08:00-09:30", start="08:00", end="09:30", km=0, note=""),
     ]})
     shifts, _, _ = extract_shifts(text, roster, WEEK)
-    got = {(s.participant_id, s.date) for s in shifts}
-    assert got == {("tom", "2026-11-02"), ("priya", "2026-11-04"), ("nonna", "2026-11-04"), ("jake", "2026-11-03")}
+    got = {s.participant_id: s for s in shifts}
+    # a heading above never overrules an in-week model date; it shows up as a check
+    assert {k: s.date for k, s in got.items()} == {"tom": "2026-11-02", "priya": "2026-11-02",
+                                                   "nonna": "2026-11-08", "jake": "2026-11-03"}
+    assert any(w.startswith("check: the heading '~ Wed 4/11 ~' above says 2026-11-04") for w in got["priya"].warnings)
+    assert any("date set to 2026-11-03 from 'Tuseday:" in w for w in got["jake"].warnings)  # own line, misspelt
+    # model date outside the week: the heading fills it in
+    fake_llm.queue({"shifts": [item(day_written="", date="2026-12-01", name_written="Pri", participant_id="priya",
+                                    times_written="10am till quarter to 1", start="10:00", end="12:45", km=0, note="")]})
+    shifts, _, _ = extract_shifts(text, roster, WEEK)
+    assert [(s.participant_id, s.date) for s in shifts if s.participant_id == "priya"] == [("priya", "2026-11-04")]
     # a day the code cannot place on the shift's own line: keep the model's date, never borrow from above
     fake_llm.queue({"shifts": [item(day_written="", date="2026-11-05", times_written="3 till 8:30ish")]})
     shifts, _, _ = extract_shifts("Wed\nJake 9-11\nyesterday - Jake 3 till 8:30ish\n", roster, WEEK)
@@ -277,6 +293,112 @@ def test_extract_code_only_makes_no_model_call(fake_llm, roster):
         ("jake", "2026-11-05", "10:00", "14:00", 0)]
     assert shifts[2].note == "Locked the pantry so he would stop snacking." and warns == []
     assert extract_shifts_code_only("  ", roster, WEEK)[:2] == ([], ["diary is empty"])
+
+
+def _it(**kw):
+    """A model item with no defaults borrowed from the Jake/Tues fixture."""
+    base = {"day_written": "", "date": "", "name_written": "", "participant_id": "unknown", "times_written": "",
+            "start": "", "end": "", "km": 0, "note": ""}
+    return {**base, **kw}
+
+
+def test_principle_km_never_zeroed(fake_llm, roster):
+    text = ("mon jake 10 till 2 bowling twenty two k\n"
+            "tue tom 9-1 shopping odo 10200 to 10218\n"
+            "wed pri 9-12 park, drove 14\n"
+            "thu nonna 2-5 chemist\n")
+    fake_llm.queue({"shifts": [
+        _it(date="2026-11-02", name_written="jake", participant_id="jake", times_written="10 till 2",
+            start="10:00", end="14:00", km=22),
+        _it(date="2026-11-03", name_written="tom", participant_id="tom", times_written="9-1",
+            start="09:00", end="13:00", km=0),
+        _it(date="2026-11-04", name_written="pri", participant_id="priya", times_written="9-12",
+            start="09:00", end="12:00", km=14),
+        _it(date="2026-11-05", name_written="nonna", participant_id="nonna", times_written="2-5",
+            start="14:00", end="17:00", km=6),
+    ]})
+    shifts, _, _ = extract_shifts(text, roster, WEEK)
+    assert [s.km for s in shifts] == [22, 18, 14, 6]
+    assert shifts[0].warnings == [] and shifts[2].warnings == []
+    assert "odometer" in shifts[1].warnings[0]
+    assert shifts[3].warnings == ["check: 6 km is not written for this shift; model read 6"]
+
+
+def test_principle_times_h_mm_and_half_past(fake_llm, roster):
+    text = ("tuesday tom 9 30 till 1 30 shopping\n"
+            "thursday tom 6 till 9 30 pm footy dinner\n"
+            "[memo recorded Fri 2026-11-06] Nonna Friday morning 8 till half 11 gave her the tablets\n"
+            "[memo recorded Sat 2026-11-07] Priya Saturday arvo, midday till half 4. shopping\n")
+    fake_llm.queue({"shifts": [
+        _it(date="2026-11-03", name_written="tom", participant_id="tom", times_written="9 30 till 1 30",
+            start="09:30", end="13:30"),
+        _it(date="2026-11-05", name_written="tom", participant_id="tom", times_written="6 till 9 30 pm",
+            start="18:00", end="21:30"),
+        _it(date="2026-11-06", name_written="Nonna", participant_id="nonna", times_written="eight till half eleven",
+            start="08:00", end="10:30"),
+        _it(date="2026-11-07", name_written="Priya", participant_id="priya", times_written="midday till half 4",
+            start="12:00", end="15:30"),
+    ]})
+    shifts, _, _ = extract_shifts(text, roster, WEEK)
+    assert [(s.start, s.end) for s in shifts] == [("09:30", "13:30"), ("18:00", "21:30"),
+                                                  ("08:00", "11:30"), ("12:00", "16:30")]
+    assert shifts[0].warnings == [] and shifts[1].warnings == []
+    assert shifts[2].warnings == ["end set to 11:30 from '8 till half 11' (model read 10:30)"]
+    assert parse_written_times("9 30 till 12 30, 20 past 8") == [(9, 30, False), (12, 30, False), (8, 20, False)]
+
+
+def test_principle_dates_only_from_the_shifts_own_line(fake_llm, roster):
+    text = ("Mon 2 Nov: Tom 10-2, shopping\n"
+            "The next day Pri 8.30-12, shower\n"
+            "Sundy - Nonna 9-12 church\n"
+            "missed one: Rosa 9.30 - 1 Thursday\n"
+            "Sat 7th - Jake 8-11am, swim. then Tom same as yesterday but 12-4\n")
+    fake_llm.queue({"shifts": [
+        _it(day_written="Mon 2 Nov", date="2026-11-02", name_written="Tom", participant_id="tom",
+            times_written="10-2", start="10:00", end="14:00"),
+        _it(day_written="The next day", date="2026-11-03", name_written="Pri", participant_id="priya",
+            times_written="8.30-12", start="08:30", end="12:00"),
+        _it(day_written="Sundy", date="2026-11-07", name_written="Nonna", participant_id="nonna",
+            times_written="9-12", start="09:00", end="12:00"),
+        _it(day_written="Thursday", date="2026-11-04", name_written="Rosa", participant_id="nonna",
+            times_written="9.30 - 1", start="09:30", end="13:00"),
+        _it(day_written="Sat 7th", date="2026-11-07", name_written="Jake", participant_id="jake",
+            times_written="8-11am", start="08:00", end="11:00"),
+        _it(day_written="Fri", date="2026-11-06", name_written="Tom", participant_id="tom",
+            times_written="12-4", start="12:00", end="16:00"),
+    ]})
+    shifts, _, _ = extract_shifts(text, roster, WEEK)
+    got = {(s.participant_id, s.start): s.date for s in shifts}
+    assert got == {("tom", "10:00"): "2026-11-02", ("priya", "08:30"): "2026-11-03",
+                   ("nonna", "09:00"): "2026-11-08", ("nonna", "09:30"): "2026-11-05",
+                   ("jake", "08:00"): "2026-11-07", ("tom", "12:00"): "2026-11-06"}
+
+
+def test_principle_no_split_on_struck_or_corrected_times(fake_llm, roster):
+    text = ("Mon 2 Nov\nJake 9-1, swimming. 12km. ~~12~~ 16km\n"
+            "Wed\nPriya 10-2. actually 10-1, she cancelled the last hour\n"
+            "Thu\nTom 4pm - ~~8~~ 8.30pm, drove 25 k\n")
+    fake_llm.queue({"shifts": [
+        _it(date="2026-11-02", name_written="Jake", participant_id="jake", times_written="9-1, then 12-16",
+            start="09:00", end="13:00", km=16),
+        _it(date="2026-11-04", name_written="Priya", participant_id="priya", times_written="10-1",
+            start="10:00", end="13:00"),
+        _it(date="2026-11-05", name_written="Tom", participant_id="tom", times_written="4pm - ~~8~~ 8.30pm",
+            start="16:00", end="20:30", km=25),
+    ]})
+    shifts, warns, _ = extract_shifts(text, roster, WEEK)
+    assert [(s.participant_id, s.start, s.end, s.km) for s in shifts] == [
+        ("jake", "09:00", "13:00", 16), ("priya", "10:00", "13:00", 0), ("tom", "16:00", "20:30", 25)]
+    assert warns == [] and not any("approximate" in w for s in shifts for w in s.warnings)
+    assert time_ranges("Tom 4pm - ~~8~~ 8.30pm")[0][2:] == ((16, 0, True), (20, 30, True))
+
+
+def test_principle_fuzzy_participant_name(fake_llm, roster):
+    fake_llm.queue({"shifts": [_it(date="2026-11-04", name_written="pree", times_written="7 30 till 10 30",
+                                   start="07:30", end="10:30")]})
+    shifts, warns, _ = extract_shifts("wednesday pree 7 30 till 10 30 shower\n", roster, WEEK)
+    assert shifts[0].participant_id == "priya" and warns == []
+    assert shifts[0].warnings == ["check: 'pree' read as priya (closest name on the roster)"]
 
 
 # ----------------------------------------------------------------------------- rp

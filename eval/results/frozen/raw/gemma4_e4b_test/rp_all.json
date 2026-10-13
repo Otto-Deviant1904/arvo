@@ -1,0 +1,394 @@
+{
+ "flags": [
+  {
+   "participant_id": "jake",
+   "date": "2026-12-27",
+   "rp_type": "chemical",
+   "evidence_quote": "Gave Jake his usual night meds at 8 off the chart",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-01-05",
+   "explanation": "A substance was given to influence behaviour outside of the agreed plan."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-02-26",
+   "rp_type": "seclusion",
+   "evidence_quote": "I sat against his bedroom door from the hallway till he'd quietened down, maybe 15 mins",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-03-05",
+   "explanation": "The participant was prevented from leaving or moving freely from their room by the support worker's presence at the door."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2026-12-21",
+   "rp_type": "seclusion",
+   "evidence_quote": "I made him stay in the garage on his own and kept the roller door down till he said sorry",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-12-30",
+   "explanation": "Thomas was prevented from leaving the garage, which is a form of seclusion."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-12-03",
+   "rp_type": "environmental",
+   "evidence_quote": "I left her out on the back verandah with the screen door latched for an hour",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-12-10",
+   "explanation": "Rosa was prevented from moving freely within her environment by having the screen door latched."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-05",
+   "rp_type": "seclusion",
+   "evidence_quote": "I put her out in the back courtyard by herself and held the sliding door closed till she stopped",
+   "harm_mentioned": true,
+   "authorised_in_bsp": false,
+   "report_by": "within 24 hours of 2026-11-05",
+   "explanation": "Priya was prevented from leaving the courtyard by having the sliding door held closed."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-02",
+   "rp_type": "chemical",
+   "evidence_quote": "Gave him the extra half tablet so he'd settle before tea",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-01-08",
+   "explanation": "An extra tablet was given to influence the participant's behaviour."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-03-04",
+   "rp_type": "chemical",
+   "evidence_quote": "so I gave him a couple of his mum's anxiety pills",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-03-12",
+   "explanation": "A substance was given to influence behaviour, which constitutes a chemical restraint."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-10-22",
+   "rp_type": "chemical",
+   "evidence_quote": "Mixed one of her sleeping pills into her custard at lunch so she'd have a nap and stop calling out",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-10-29",
+   "explanation": "A substance was given to influence behaviour, which constitutes a chemical restraint."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "rp_type": "chemical",
+   "evidence_quote": "I gave him two of his hayfever tablets so he'd be dopey",
+   "harm_mentioned": true,
+   "authorised_in_bsp": false,
+   "report_by": "within 24 hours of 2027-01-06",
+   "explanation": "A substance was given to influence behaviour, which constitutes a chemical restraint."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-08",
+   "rp_type": "mechanical",
+   "evidence_quote": "Did the strap up on her recliner so she'd stop getting up and wandering, she had a red mark on her tummy from it later",
+   "harm_mentioned": true,
+   "authorised_in_bsp": false,
+   "report_by": "within 24 hours of 2026-11-08",
+   "explanation": "A strap was used to prevent the participant from moving, which is a mechanical restriction."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-11-30",
+   "rp_type": "mechanical",
+   "evidence_quote": "Left the brakes on Jake's chair and parked him by the window so he'd stop following me round the kitchen",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-12-07",
+   "explanation": "The brakes on the chair were used to restrict Jake's movement to prevent him from following the support worker."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2026-11-22",
+   "rp_type": "mechanical",
+   "evidence_quote": "Knotted Tom's jumper sleeves behind the chair so he'd stay sitting down for tea",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-11-27",
+   "explanation": "The jumper sleeves were knotted to prevent Tom from moving or leaving his seat, which is a mechanical restriction."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-05",
+   "rp_type": "environmental",
+   "evidence_quote": "Put Priya's onesie on back to front at bedtime so she can't get at the zip and undress overnight",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-01-12",
+   "explanation": "The participant's clothing was manipulated to prevent her from undressing, which restricts access to her body."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-01-15",
+   "rp_type": "physical",
+   "evidence_quote": "Tom wouldn't give the remote back so I wrapped both arms round him on the couch and kept him there till he let go of it",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-01-22",
+   "explanation": "The support worker used physical force to prevent Thomas from moving until he complied with the request."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-22",
+   "rp_type": "physical",
+   "evidence_quote": "I got him onto the lounge room floor and lay across his back until he settled",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-02-01",
+   "explanation": "The support worker physically restrained Jake by lying across his back to influence his behaviour."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-10-05",
+   "rp_type": "physical",
+   "evidence_quote": "She kept trying to pull her stockings off so I leant on her knees to keep her legs still while I got them back on",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-10-12",
+   "explanation": "The support worker used physical force by leaning on the participant's knees to prevent her from moving her legs."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-14",
+   "rp_type": "physical",
+   "evidence_quote": "Priya kept trying to get out of the shower so I held her there by the shoulders till I'd finished her hair, she's got a few red marks on her arm tonight",
+   "harm_mentioned": true,
+   "authorised_in_bsp": false,
+   "report_by": "within 24 hours of 2027-02-14",
+   "explanation": "The support worker physically held Priya to prevent her from leaving the shower."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-08",
+   "rp_type": "environmental",
+   "evidence_quote": "Put the padlock back on the fridge so he can't graze between meals",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-12-15",
+   "explanation": "Access to the fridge was restricted by locking it to prevent grazing between meals."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2027-01-24",
+   "rp_type": "environmental",
+   "evidence_quote": "Kept the back door keyed so she couldn't wander while I hung the washing out",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-02-01",
+   "explanation": "The participant's access to the outside environment was restricted by locking the back door."
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-22",
+   "rp_type": "environmental",
+   "evidence_quote": "Tom's not allowed in the shed with his drum kit till he's paid his mum back, I kept the key on me",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-03-01",
+   "explanation": "Access to the shed and its contents was restricted by keeping the key."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-01",
+   "rp_type": "environmental",
+   "evidence_quote": "Priya's not allowed to the Friday disco this week because of how she spoke to her mum, I rang and cancelled her spot",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2026-11-09",
+   "explanation": "Access to an activity (the disco) was restricted due to behaviour."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-15",
+   "rp_type": "chemical",
+   "evidence_quote": "Gave Priya her as-needed lorazepam 0.5mg at 6.30, distress score was 5 so as per her plan, settled by 7",
+   "harm_mentioned": false,
+   "authorised_in_bsp": true,
+   "report_by": "",
+   "explanation": "Lorazepam was given to influence Priya's behaviour because her distress score was 5, which is a chemical restraint."
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-25",
+   "rp_type": "mechanical",
+   "evidence_quote": "Put the sides up on Nonna's bed before I left tonight, as per her plan for falls",
+   "harm_mentioned": false,
+   "authorised_in_bsp": true,
+   "report_by": "",
+   "explanation": "Bed rails were used to restrict movement to prevent falls, which is a mechanical restriction."
+  }
+ ],
+ "meta": {
+  "model": "gemma4:e4b",
+  "calls": 42,
+  "skipped": 0,
+  "total_s": 32.936,
+  "load_s": 0.156,
+  "prompt_tokens": 23889,
+  "eval_tokens": 1935,
+  "per_call_s": [
+   0.422,
+   0.386,
+   0.439,
+   0.366,
+   0.372,
+   0.364,
+   0.433,
+   0.365,
+   0.455,
+   0.349,
+   0.56,
+   0.443,
+   0.364,
+   0.356,
+   0.354,
+   0.965,
+   0.43,
+   0.359,
+   0.359,
+   0.387,
+   1.276,
+   1.031,
+   1.116,
+   1.08,
+   0.966,
+   1.019,
+   1.2,
+   1.063,
+   1.102,
+   1.136,
+   1.047,
+   1.217,
+   1.153,
+   1.018,
+   1.151,
+   1.144,
+   1.013,
+   1.095,
+   1.068,
+   1.205,
+   1.337,
+   0.971
+  ],
+  "warnings": []
+ },
+ "keyword_flags": [
+  {
+   "participant_id": "jake",
+   "date": "2026-10-18",
+   "rp_type": "environmental",
+   "evidence_quote": "Hardware shop had already locked up so we went to Coles instead.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-03-04",
+   "rp_type": "mechanical",
+   "evidence_quote": "Priya strapped her new watch on and showed everyone at the cafe.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-10-01",
+   "rp_type": "environmental",
+   "evidence_quote": "She wants the front door locked at night cos she's scared of break-ins, so I locked it on my way out like she asked.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-10-17",
+   "rp_type": "mechanical",
+   "evidence_quote": "Helped Jake strap his knee brace on for basketball like the physio showed us.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-31",
+   "rp_type": "environmental",
+   "evidence_quote": "Jake wanted the bathroom door locked while he showered for privacy, he unlocked it himself after.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-05",
+   "rp_type": "seclusion",
+   "evidence_quote": "Priya was screaming so I put her out in the back courtyard by herself and held the sliding door closed till she stopped.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": true
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-10-22",
+   "rp_type": "chemical",
+   "evidence_quote": "Mixed one of her sleeping pills into her custard at lunch so she'd have a nap and stop calling out.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "nonna",
+   "date": "2026-11-08",
+   "rp_type": "mechanical",
+   "evidence_quote": "Did the strap up on her recliner so she'd stop getting up and wandering, she had a red mark on her tummy from it later.",
+   "authorised_in_bsp": true,
+   "harm_mentioned": true
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-02-14",
+   "rp_type": "physical",
+   "evidence_quote": "Priya kept trying to get out of the shower so I held her there by the shoulders till I'd finished her hair, she's got a few red marks on her arm tonight.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": true
+  },
+  {
+   "participant_id": "jake",
+   "date": "2026-12-08",
+   "rp_type": "environmental",
+   "evidence_quote": "Put the padlock back on the fridge so he can't graze between meals.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": true
+  },
+  {
+   "participant_id": "tom",
+   "date": "2027-02-22",
+   "rp_type": "environmental",
+   "evidence_quote": "Tom's not allowed in the shed with his drum kit till he's paid his mum back, I kept the key on me.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-01",
+   "rp_type": "environmental",
+   "evidence_quote": "Priya's not allowed to the Friday disco this week because of how she spoke to her mum, I rang and cancelled her spot.",
+   "authorised_in_bsp": false,
+   "harm_mentioned": false
+  },
+  {
+   "participant_id": "priya",
+   "date": "2026-11-15",
+   "rp_type": "chemical",
+   "evidence_quote": "Gave Priya her as-needed lorazepam 0.5mg at 6.30, distress score was 5 so as per her plan, settled by 7.",
+   "authorised_in_bsp": true,
+   "harm_mentioned": false
+  }
+ ]
+}

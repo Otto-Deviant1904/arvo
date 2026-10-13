@@ -1,0 +1,364 @@
+{
+ "week": "week15",
+ "week_ending": "2027-01-10",
+ "gold_lines": [
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "12:30",
+   "end": "15:30",
+   "quantity": 3.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 220.74,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 7.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 6.93,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-05",
+   "item_number": "01_015_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+   "start": "18:00",
+   "end": "20:30",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 202.68,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "item_number": "04_103_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+   "start": "15:30",
+   "end": "21:30",
+   "quantity": 6.0,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 486.42,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 20.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 19.8,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-08",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "13:00",
+   "end": "18:30",
+   "quantity": 5.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 404.69,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-09",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "09:30",
+   "end": "13:00",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 362.39,
+   "rule": "Saturday rate: shift is on a Saturday"
+  }
+ ],
+ "pred_shifts": [
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "start": "12:30",
+   "end": "15:30",
+   "km": 7.0,
+   "note": "Bunnings + footy, 7km",
+   "source_quote": "J 12:30pm till half 3",
+   "warnings": []
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-05",
+   "start": "18:00",
+   "end": "20:30",
+   "km": 0.0,
+   "note": "Put Priya's onesie on back to front at bedtime so she can't get at the zip and undress overnight. no km",
+   "source_quote": "Priya 6pm - 8.30",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "start": "15:30",
+   "end": "21:30",
+   "km": 20.0,
+   "note": "Jake - Jake wouldn't sit still at the dentist so I gave him two of his hayfever tablets so he'd be dopey. He was wobbly on the stairs after and fell, grazed his elbow. 20km",
+   "source_quote": "half 3 til 9:30pm Jake",
+   "warnings": []
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-08",
+   "start": "13:00",
+   "end": "18:30",
+   "km": 0.0,
+   "note": "meal prep for the week, 0km",
+   "source_quote": "Priya 1pm to 6:30pm",
+   "warnings": []
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-09",
+   "start": "09:30",
+   "end": "13:00",
+   "km": 0.0,
+   "note": "J - pool then macacs",
+   "source_quote": "9:30am till 1:00 J",
+   "warnings": []
+  }
+ ],
+ "extract_warnings": [],
+ "extract_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 6.631,
+  "load_s": 0.004,
+  "prompt_tokens": 900,
+  "eval_tokens": 658,
+  "attempts": 1,
+  "done_reason": "stop",
+  "raw_count": 5
+ },
+ "pred_lines": [
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "item_number": "04_104_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+   "start": "12:30",
+   "end": "15:30",
+   "quantity": 3.0,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 220.74,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 7.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 6.93,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-05",
+   "item_number": "01_015_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+   "start": "18:00",
+   "end": "20:30",
+   "quantity": 2.5,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 202.68,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "item_number": "04_103_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+   "start": "15:30",
+   "end": "21:30",
+   "quantity": 6.0,
+   "unit": "H",
+   "unit_price": 81.07,
+   "total": 486.42,
+   "rule": "Crosses 8pm: whole shift at Weekday Evening rate (NDIS Pricing Schedule 2026-27 s2.4(c))"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "item_number": "04_590_0125_6_1",
+   "item_name": "Activity Based Transport",
+   "start": "",
+   "end": "",
+   "quantity": 20.0,
+   "unit": "km",
+   "unit_price": 0.99,
+   "total": 19.8,
+   "rule": "Activity Based Transport: km driven with the participant, up to $0.99/km in an unmodified vehicle (PAPL 2025-26 p28; 2026-27 catalogue). Claimed as a dollar amount against a $1 notional unit."
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-08",
+   "item_number": "01_011_0107_1_1",
+   "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+   "start": "13:00",
+   "end": "18:30",
+   "quantity": 5.5,
+   "unit": "H",
+   "unit_price": 73.58,
+   "total": 404.69,
+   "rule": "Weekday Daytime: starts at or after 6am and ends at or before 8pm on a weekday"
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-09",
+   "item_number": "04_105_0125_6_1",
+   "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+   "start": "09:30",
+   "end": "13:00",
+   "quantity": 3.5,
+   "unit": "H",
+   "unit_price": 103.54,
+   "total": 362.39,
+   "rule": "Saturday rate: shift is on a Saturday"
+  }
+ ],
+ "pricing_warnings": [
+  "Friday before the AFL Grand Final 2027: not yet declared in vic_public_holidays.json; treated as an ordinary day"
+ ],
+ "rp_flags": [
+  {
+   "participant_id": "priya",
+   "date": "2027-01-05",
+   "rp_type": "environmental",
+   "evidence_quote": "Put Priya's onesie on back to front at bedtime so she can't get at the zip and undress overnight",
+   "harm_mentioned": false,
+   "authorised_in_bsp": false,
+   "report_by": "2027-01-12",
+   "explanation": "The participant's clothing was manipulated to prevent her from undressing, which restricts access to her body."
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "rp_type": "chemical",
+   "evidence_quote": "I gave him two of his hayfever tablets so he'd be dopey",
+   "harm_mentioned": true,
+   "authorised_in_bsp": false,
+   "report_by": "within 24 hours of 2027-01-06",
+   "explanation": "A substance was given to influence behaviour, which constitutes a chemical restraint."
+  }
+ ],
+ "rp_meta": {
+  "model": "gemma4:e4b",
+  "calls": 5,
+  "skipped": 0,
+  "total_s": 3.566,
+  "load_s": 0.022,
+  "prompt_tokens": 2816,
+  "eval_tokens": 175,
+  "per_call_s": [
+   0.529,
+   1.258,
+   1.007,
+   0.439,
+   0.333
+  ],
+  "warnings": []
+ },
+ "keyword_flags": [],
+ "baseline_lines": [
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "item_number": "04_104_0125_6_1",
+   "quantity": 1.5,
+   "unit_price": 73.58,
+   "total": 110.37
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-05",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 7.0,
+   "unit_price": 0.99,
+   "total": 6.93
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-06",
+   "item_number": "01_015_0107_1_1",
+   "quantity": 2.5,
+   "unit_price": 81.07,
+   "total": 202.68
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "item_number": "04_104_0125_6_1",
+   "quantity": 6.5,
+   "unit_price": 73.58,
+   "total": 478.27
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-06",
+   "item_number": "04_590_0125_6_1",
+   "quantity": 20.0,
+   "unit_price": 0.99,
+   "total": 19.8
+  },
+  {
+   "participant_id": "priya",
+   "date": "2027-01-08",
+   "item_number": "01_015_0107_1_1",
+   "quantity": 3.5,
+   "unit_price": 81.07,
+   "total": 283.75
+  },
+  {
+   "participant_id": "jake",
+   "date": "2027-01-09",
+   "item_number": "04_105_0125_6_1",
+   "quantity": 3.5,
+   "unit_price": 103.54,
+   "total": 362.4
+  }
+ ],
+ "baseline_meta": {
+  "model": "gemma4:e4b",
+  "total_s": 6.741,
+  "load_s": 0.005,
+  "prompt_tokens": 2397,
+  "eval_tokens": 664,
+  "attempts": 1,
+  "done_reason": "stop",
+  "wall_s": 6.741
+ }
+}

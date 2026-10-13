@@ -13,6 +13,7 @@
   "week08"
  ],
  "args": {
+  "set": "synthetic",
   "split": "dev",
   "limit": null,
   "images": false,
@@ -166,6 +167,7 @@
    "lines_exact": true
   }
  ],
+ "code_only": false,
  "invoice_model_alone": null,
  "invoice_model_alone_by_week": [],
  "model_alone_note": "skipped (--skip-baseline)",
@@ -435,13 +437,13 @@
  "latency": {
   "extract_per_diary": {
    "n": 8,
-   "mean_s": 9.102,
-   "p95_s": 10.842
+   "mean_s": 9.089,
+   "p95_s": 10.856
   },
   "rp_per_note": {
    "n": 60,
-   "mean_s": 0.479,
-   "p95_s": 1.158
+   "mean_s": 0.48,
+   "p95_s": 1.154
   },
   "image_per_diary": {
    "n": 0,

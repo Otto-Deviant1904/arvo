@@ -1,13 +1,13 @@
 """Diary (text or photo) -> list[Shift].
 
-The model reads the whole week in one call; Python then decides: dates must be
-in the week window (and agree with the weekday the worker wrote), times must be
-HH:MM, participants must be on the roster, notes must be verbatim.
+The model reads the whole week in one call. Python then checks every value against the diary text.
+Principle: code overrules the model only when its own reading of the text is unambiguous AND the
+model's value is impossible given that text (the line says "half 11", the model read 10:30). Every other
+disagreement keeps the model's value and adds a "check:" warning for the worker to look at.
 """
 
 from __future__ import annotations
 
-import difflib
 import re
 import time
 from datetime import date, timedelta
@@ -116,6 +116,38 @@ def match_alias(name: str, participants: list[Participant]) -> str | None:
     return loose.pop() if len(loose) == 1 else None
 
 
+def _skeleton(s: str) -> str:
+    """First letter + following consonants, vowels/h/w/y dropped, repeats collapsed: 'pree' -> 'pr'."""
+    s = _alias_key(s)
+    out = s[:1]
+    for ch in s[1:]:
+        if ch not in "aeiouyhw" and ch != out[-1]:
+            out += ch
+    return out
+
+
+def fuzzy_alias(name: str, participants: list[Participant]) -> str | None:
+    """Last resort for a name not on the roster ('pree' dictated for Pri): 4+ letters, edit distance <= 2
+    and the same consonant skeleton as exactly one participant's alias."""
+    key = _alias_key(name)
+    if len(key) < 4:
+        return None
+    best: dict[str, int] = {}
+    for p in participants:
+        for a in {p.id, *p.aliases, *(p.name.split()[:1])}:
+            ak = _alias_key(a)
+            if len(ak) < 3 or _skeleton(ak) != _skeleton(key):
+                continue
+            d = edit_distance(key, ak)
+            if d <= 2:
+                best[p.id] = min(best.get(p.id, 9), d)
+    if not best:
+        return None
+    top = min(best.values())
+    winners = [pid for pid, d in best.items() if d == top]
+    return winners[0] if len(winners) == 1 else None
+
+
 # --------------------------------------------------------------------------- week window
 
 def week_window(week_ending: str) -> list[date]:
@@ -160,17 +192,33 @@ def window_lines(window: list[date]) -> str:
 _AMBIGUOUS_DAY_WORDS = {"sat", "sun", "wed", "mon"}  # also ordinary words ("sat down", "the sun")
 
 
+def edit_distance(a: str, b: str) -> int:
+    """Optimal-string-alignment distance (insert, delete, substitute, swap two neighbours)."""
+    a, b = a.casefold(), b.casefold()
+    prev2, prev = None, list(range(len(b) + 1))
+    for i in range(1, len(a) + 1):
+        cur = [i] + [0] * len(b)
+        for j in range(1, len(b) + 1):
+            cur[j] = min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] != b[j - 1]))
+            if i > 1 and j > 1 and a[i - 1] == b[j - 2] and a[i - 2] == b[j - 1]:
+                cur[j] = min(cur[j], prev2[j - 2] + 1)
+        prev2, prev = prev, cur
+    return prev[-1]
+
+
 def weekday_index(tok: str, strict: bool = False) -> int | None:
-    """'tues' -> 1. Also misspelt full names ('tuseday', 'thrusday'). strict=True ignores sat/sun/wed/mon."""
+    """'tues' -> 1. Misspelt full names too: edit distance 1 for 5-6 letter words ('sundy', 'mnday'),
+    2 for 7+ ('tuseday', 'wensday'), unique best match only. strict=True ignores sat/sun/wed/mon."""
     tok = tok.casefold()
     for i, names in enumerate(_WEEKDAY_TOKENS):
         if tok in names:
             return None if strict and tok in _AMBIGUOUS_DAY_WORDS else i
-    if len(tok) >= 5 and tok.endswith(("day", "days")):
-        scores = sorted(((difflib.SequenceMatcher(None, tok, w.lower()).ratio(), i)
-                         for i, w in enumerate(WEEKDAYS)), reverse=True)
-        if scores[0][0] >= 0.8 and scores[0][0] - scores[1][0] >= 0.05:
-            return scores[0][1]
+    if len(tok) < 5 or not tok.isalpha() or not tok.endswith(("ay", "dy", "ays", "dys")):
+        return None
+    limit = 1 if len(tok) <= 6 else 2
+    dists = sorted((edit_distance(tok, w), i) for i, w in enumerate(WEEKDAYS))
+    if dists[0][0] <= limit and dists[1][0] > dists[0][0]:
+        return dists[0][1]
     return None
 
 
@@ -209,8 +257,15 @@ def _month(word: str) -> int | None:
     return next((i + 1 for i, n in enumerate(_MONTH_NAMES) if len(w) >= 3 and n.startswith(w)), None)
 
 
-_DAYISH_RE = re.compile(r"\b(?:\d{1,2}(?:st|nd|rd|th)|\d{1,2}/\d{1,2}|yesterday|today|tonight|"
-                        r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*)\b", re.I)
+_RELATIVE_DAY_RE = re.compile(r"\b(?:yesterday|today|tonight|tomorrow|last night|this (?:morning|arvo)|"
+                              r"next day|day after|day before|same as)\b|\b\d{1,2}(?:st|nd|rd|th)\b|"
+                              r"\b\d{1,2}/\d{1,2}\b", re.I)
+
+
+def has_day_words(s: str) -> bool:
+    """Day words the code may not be able to place: 'yesterday', 'the next day', '21st', a month name."""
+    return bool(_RELATIVE_DAY_RE.search(s or "")) or any(
+        _month(w) for w in re.findall(r"[a-z]{3,9}", (s or "").casefold()) if w not in {"mar", "may"})
 
 
 def parse_model_date(raw: str, window: list[date]) -> str:
@@ -290,7 +345,7 @@ def build_messages(diary_text: str, participants: list[Participant], window: lis
             {"role": "user", "content": head + body}]
 
 
-# --------------------------------------------------------------------------- validation
+# --------------------------------------------------------------------------- reading times
 
 _TIME_RE = re.compile(r"^\s*(\d{1,2})[:.h](\d{2})\s*$")
 _APPROX_RE = re.compile(r"\d[\s-]?ish\b|\bish\b|\babout\b|\bapprox|\baround\b|\broughly\b|\babt\b|~", re.I)
@@ -318,14 +373,26 @@ def _hhmm(mins: int) -> str:
     return f"{mins // 60:02d}:{mins % 60:02d}"
 
 
+_MASK_RE = re.compile(r"~~[^~\n]*~~"                                   # struck-through text
+                      r"|\b\d{4}-\d{1,2}-\d{1,2}\b|\b\d{1,2}/\d{1,2}(?:/\d{2,4})?\b|\b\d{1,2}-\d{1,2}-\d{4}\b")
+
+
+def _mask(text: str) -> str:
+    """Blank out struck-through text (~~12~~) and written dates (2026-11-03, 3/11) so they are never read
+    as times. Same length, so offsets still point into the original text."""
+    return _MASK_RE.sub(lambda m: " " * len(m.group()), text or "")
+
+
 _TIME_TOKEN_RE = re.compile(r"""
     (?P<half>\bhalf\s+(?:past\s+)?(?P<halfh>\d{1,2})\b)
   | (?P<qp>\bquarter\s+past\s+(?P<qph>\d{1,2})\b)
   | (?P<qt>\bquarter\s+to\s+(?P<qth>\d{1,2})\b)
+  | (?P<past>\b(?P<pastm>5|10|20|25)\s+(?:mins?\s+)?past\s+(?P<pasth>\d{1,2})\b)
   | (?P<noon>\bnoon\b|\bmidday\b)
   | (?P<midnight>\bmidnight\b)
   | (?P<mil>(?<![\d/])\b(?P<milh>[01]\d|2[0-3])(?P<milm>[0-5]\d)\b(?![/\d]))
-  | (?P<num>(?<![\d:./$])(?<!km\s)(?<!km)(?P<h>\d{1,2})(?:[:.](?P<m>[0-5]\d))?(?![\d/])
+  | (?P<num>(?<![\d:./$])(?<!km\s)(?<!km)(?P<h>\d{1,2})
+        (?:[:.](?P<m>[0-5]\d)|\x20(?P<m2>[0-5][05])(?![\d:.]))?(?![\d/])
         (?!st\b|nd\b|rd\b|th\b)(?!\s*(?:kms?|k)\b(?!\s*:?\s*\d))(?:\s*(?P<ap>[ap]\.?m\b\.?|[ap](?![a-z])))?)
 """, re.X | re.I)
 
@@ -341,6 +408,8 @@ def _token(m: re.Match) -> Tok | None:
         h, mi, ex = int(m.group("qph")), 15, False
     elif m.group("qt"):
         h, mi, ex = (int(m.group("qth")) - 1) or 12, 45, False
+    elif m.group("past"):
+        h, mi, ex = int(m.group("pasth")), int(m.group("pastm")), False
     elif m.group("noon"):
         h, mi, ex = 12, 0, True
     elif m.group("midnight"):
@@ -349,7 +418,7 @@ def _token(m: re.Match) -> Tok | None:
         h, mi, ex = int(m.group("milh")), int(m.group("milm")), True
     else:
         raw_h = m.group("h")
-        h, mi = int(raw_h), int(m.group("m") or 0)
+        h, mi = int(raw_h), int(m.group("m") or m.group("m2") or 0)
         ap = (m.group("ap") or "").lower()[:1]
         if ap == "p" and h < 12:
             h, ex = h + 12, True
@@ -360,19 +429,12 @@ def _token(m: re.Match) -> Tok | None:
     return None if h > 23 or mi > 59 else (h, mi, ex)
 
 
-_DATE_MASK_RE = re.compile(r"\b\d{4}-\d{1,2}-\d{1,2}\b|\b\d{1,2}/\d{1,2}(?:/\d{2,4})?\b|\b\d{1,2}-\d{1,2}-\d{4}\b")
-
-
-def _mask_dates(text: str) -> str:
-    """Blank out written dates (2026-11-03, 3/11, 3/11/26) so their digits are never read as times."""
-    return _DATE_MASK_RE.sub(lambda m: " " * len(m.group()), text or "")
-
-
 def time_tokens(text: str) -> list[tuple[int, int, Tok]]:
     """[(start, end, (hour, minute, explicit))] for each time expression. explicit=False means no am/pm
-    and a 1-12 hour, so the half of the day is unknown. Dates, ordinals ('4th') and km are not times."""
+    and a 1-12 hour, so the half of the day is unknown. "9 30" is 9:30. Dates, ordinals ('4th'), km and
+    struck-through text are not times."""
     out = []
-    for m in _TIME_TOKEN_RE.finditer(_mask_dates(text)):
+    for m in _TIME_TOKEN_RE.finditer(_mask(text)):
         tok = _token(m)
         if tok:
             out.append((m.start(), m.end(), tok))
@@ -384,11 +446,12 @@ def parse_written_times(text: str) -> list[Tok]:
 
 
 def time_ranges(text: str) -> list[tuple[int, int, Tok, Tok]]:
-    """'3 till 8:30', '9am-1pm', 'half 4-6:30' -> [(start, end, from_tok, to_tok)] in text order."""
+    """'3 till 8:30', '9am-1pm', 'half 4-6:30', '9 30 till 1 30' -> [(start, end, from_tok, to_tok)]."""
+    masked = _mask(text)
     toks, out, i = time_tokens(text), [], 0
     while i < len(toks) - 1:
         (a0, a1, ta), (b0, b1, tb) = toks[i], toks[i + 1]
-        if _RANGE_SEP_RE.match(text[a1:b0]) and ta != tb:
+        if _RANGE_SEP_RE.match(masked[a1:b0]) and ta != tb:
             out.append((a0, b1, ta, tb))
             i += 2
         else:
@@ -403,9 +466,10 @@ def _cands(tok: Tok) -> list[int]:
 
 def resolve_range(t1: Tok, t2: Tok, *, after: int | None = None, model_start: int | None = None,
                   model_end: int | None = None) -> tuple[int, int]:
-    """Minutes since midnight for a written range. No am/pm: agree with the model if it fits, else
-    start after `after` (second block of a split day), else the shortest shift to an explicit end, else
-    1-6 and 12 = pm, 7-11 = am. An ambiguous end is the first reading after the start."""
+    """Minutes since midnight for a written range (code's own reading, used where the model gave none).
+    No am/pm: agree with the model if it fits, else start after `after` (second block of a day), else the
+    shortest shift to an explicit end, else 1-6 and 12 = pm, 7-11 = am. Ambiguous end: first reading
+    after the start."""
     c = _cands(t1)
     if len(c) == 1:
         s = c[0]
@@ -429,53 +493,89 @@ def resolve_range(t1: Tok, t2: Tok, *, after: int | None = None, model_start: in
     return s, e
 
 
-def reconcile_times(times_written: str, start: str, end: str) -> tuple[str, str, list[str]]:
-    """Code wins over the model where the written times are unambiguous; digits always come from the text.
-    Then fix an ambiguous end/start that only makes sense +12h (e.g. '3 till 8:30' read as 15:00-08:30)."""
-    toks = parse_written_times(times_written)
+def reconcile_times(written: str, start: str, end: str, context: str = "") -> tuple[str, str, list[str]]:
+    """Check the model's start/end against the written range (two time expressions).
+    Overrule only when the written time is unambiguous or the model's value is not a possible reading of
+    those digits AND of any other time written in `context` (the shift's own diary text, so 'actually
+    10-1' is respected). Everything else: model stands, maybe with a 'check:' warning."""
+    toks = parse_written_times(written)
     warns: list[str] = []
     if len(toks) != 2:
         return start, end, warns
+    possible = {x % 1440 for _, _, t in time_tokens(context) for x in _cands(t)}
     fixed = []
-    for label, model_t, (h, mi, ex) in (("start", start, toks[0]), ("end", end, toks[1])):
+    for label, model_t, tok in (("start", start, toks[0]), ("end", end, toks[1])):
+        h, mi, ex = tok
         mm = _minutes(model_t)
-        if ex:
-            want = h * 60 + mi
-        elif mm // 60 % 12 == h % 12 and mm % 60 == mi:
+        c = _cands(tok)
+        if mm in c:
             want = mm
-        else:  # keep the model's am/pm half, take hour/minute from the text
-            want = (h % 12 + (12 if mm >= 12 * 60 else 0)) * 60 + mi
-        if want != mm:
-            warns.append(f"{label} set to {_hhmm(want)} from '{times_written}' (model said {model_t})")
+        elif mm in possible:  # the model read another time written for this shift
+            want = mm
+            warns.append(f"check: diary says '{written}', model read {label} {model_t}")
+        else:  # impossible for these digits: take the written time (model's half of the day if no am/pm)
+            want = c[0] if ex else (h % 12 + (12 if mm >= 12 * 60 else 0)) * 60 + mi
+            warns.append(f"{label} set to {_hhmm(want)} from '{written}' (model read {model_t})")
         fixed.append((want, ex))
-    (s_m, s_ex), (e_m, e_ex) = fixed
+    (s_m, _), (e_m, e_ex) = fixed
     if not e_ex and e_m <= s_m and e_m < 12 * 60 and e_m + 720 > s_m:
-        warns.append(f"end read as {_hhmm(e_m + 720)} (not {_hhmm(e_m)}) so the shift ends after it starts")
-        e_m += 720
-    if not s_ex and s_m < 6 * 60 and s_m + 720 < e_m:
-        warns.append(f"start read as {_hhmm(s_m + 720)} (not {_hhmm(s_m)}): no am/pm written")
-        s_m += 720
+        warns.append(f"check: '{written}' read as {_hhmm(s_m)}-{_hhmm(e_m)} overnight; "
+                     f"{_hhmm(e_m + 720)} would end the same day")
     return _hhmm(s_m), _hhmm(e_m), warns
 
+
+# --------------------------------------------------------------------------- reading km
 
 def _num_str(x: float) -> str:
     return str(int(x)) if float(x).is_integer() else f"{x:g}"
 
 
-_KM_RE = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s*(?:kms?|kilomet\w*|k)\b(?!\s*:?\s*\d)"
-                    r"|\b(?:kms?|kilomet\w*)\s*:?\s*(\d+(?:\.\d+)?)(?![\d.])", re.I)
+_UNITS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+          "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+_TENS = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+_WORD_NUM = rf"(?:(?:{'|'.join(_TENS)})(?:[\s-](?:{'|'.join(_UNITS[1:10])}))?|{'|'.join(_UNITS)})"
+_KM_UNIT = r"(?:kms?|k's|ks|kilomet\w*|k)"
+_KM_RE = re.compile(
+    rf"(?<![\d.])(?P<a>\d+(?:\.\d+)?)\s*{_KM_UNIT}\b(?!\s*:?\s*\d)"
+    rf"|\b(?:kms?|kilomet\w*)\s*:?\s*(?P<b>\d+(?:\.\d+)?)(?!\d|\.\d)"
+    rf"|\b(?P<w>{_WORD_NUM})[\s-]*{_KM_UNIT}\b"
+    rf"|\bodo\w*\b[^\d\n]{{0,12}}(?P<o1>\d{{3,7}})\s*(?:-|–|to|till)\s*(?P<o2>\d{{3,7}})"
+    rf"|\bdrove\s+(?:him\s+|her\s+)?(?P<d>\d+(?:\.\d+)?)\b(?!\s*(?:mins?|hrs?|hours?|:|\.\d))",
+    re.I)
+
+
+def _word_value(w: str) -> float:
+    parts = re.split(r"[\s-]+", w.casefold())
+    if parts[0] in _TENS:
+        return 20 + 10 * _TENS.index(parts[0]) + (_UNITS.index(parts[1]) if len(parts) > 1 else 0)
+    return float(_UNITS.index(parts[0]))
+
+
+def _km_matches(text: str) -> list[tuple[float, str]]:
+    out = []
+    for m in _KM_RE.finditer(_MASK_RE.sub(lambda x: " " * len(x.group()), text or "")):
+        if m.group("a") or m.group("b") or m.group("d"):
+            out.append((float(m.group("a") or m.group("b") or m.group("d")), "digits"))
+        elif m.group("w"):
+            out.append((_word_value(m.group("w")), "words"))
+        elif m.group("o1"):
+            diff = int(m.group("o2")) - int(m.group("o1"))
+            if 0 < diff < 2000:
+                out.append((float(diff), "odometer"))
+    return out
 
 
 def km_figures(text: str) -> list[float]:
-    """Every km figure written, either way round: '12km', '8 kms', 'km 29', 'kms: 4'."""
-    return [float(m.group(1) or m.group(2)) for m in _KM_RE.finditer(text or "")]
+    """Every km figure written for a shift: '12km', 'km 29', 'kms: 4', 'twenty two k', 'drove 14',
+    odometer 'odo 45213 to 45231' (= 18). Struck-through figures are ignored."""
+    return [v for v, _ in _km_matches(text)]
 
 
 def _km_stated(km: float, text: str) -> bool:
     return any(abs(f - km) < 0.05 for f in km_figures(text))
 
 
-# --------------------------------------------------------------------------- where each shift sits in the diary
+# --------------------------------------------------------------------------- where each shift sits
 
 def _line_bounds(text: str, i: int, j: int) -> tuple[int, int]:
     ls = text.rfind("\n", 0, i) + 1
@@ -490,65 +590,27 @@ def _lines(text: str):
         pos += len(line) + 1
 
 
-def _find_range_by_name(name: str, model_start: int | None, text: str, pos: int) -> tuple[int, int] | None:
-    """The model's times_written is not verbatim: take the first time range on a line with the name whose
-    start agrees with the model's start."""
-    rx = _verbatim_regex(name)
-    if not rx:
-        return None
-    for from_pos in (pos, 0):
-        for m in re.finditer(rx, text[from_pos:], re.I):
-            ls, le = _line_bounds(text, from_pos + m.start(), from_pos + m.end())
-            for r0, r1, t1, t2 in time_ranges(text[ls:le]):
-                if model_start is None or resolve_range(t1, t2, model_start=model_start)[0] == model_start:
-                    return ls + r0, ls + r1
-    return None
+def _cell(text: str, t0: int, t1: int) -> tuple[int, int]:
+    """The part of the line that belongs to the time range at t0..t1: from the end of the previous
+    range on the line (or the line start) to the start of the next one (or the line end)."""
+    ls, le = _line_bounds(text, t0, t1)
+    rngs = [(ls + a, ls + b) for a, b, _, _ in time_ranges(text[ls:le])]
+    c0 = max([b for a, b in rngs if b <= t0], default=ls)
+    c1 = min([a for a, b in rngs if a >= t1], default=le)
+    return c0, c1
 
 
-def _locate(it: dict, text: str, pos: int) -> tuple[int, int, int, int] | None:
-    """(quote_start, quote_end, times_start, times_end) of one model item in the diary, or None."""
-    tw, name = str(it.get("times_written") or ""), str(it.get("name_written") or "")
-    tsp = find_span(tw, text, pos) if tw else None
-    if not tsp and name:
-        ms = norm_time(it.get("start"))
-        tsp = _find_range_by_name(name, _minutes(ms) if ms else None, text, pos)
-    if tsp:
-        ls, le = _line_bounds(text, tsp[0], tsp[1])
-        nsp = find_span(name, text[ls:le]) if name else None
-        if nsp:
-            return min(ls + nsp[0], tsp[0]), max(ls + nsp[1], tsp[1]), tsp[0], tsp[1]
-        return tsp[0], tsp[1], tsp[0], tsp[1]
-    q = find_span(str(it.get("source_quote") or ""), text, pos)
-    return (q[0], q[1], q[0], q[1]) if q else None
-
-
-def locate_shifts(items: list, text: str) -> list[dict | None]:
-    """For each model item, offsets in the diary (code-side, verbatim by construction):
-    q0..q1 = name + times (the source_quote), t0..t1 = the times, s0..s1 = the shift's slice: from the quote
-    to the end of that line (or of the line where the model's note ends, if later), never past the next shift."""
-    spans: list[tuple | None] = []
-    pos = 0
-    for it in items:
-        it = it if isinstance(it, dict) else {}
-        q = _locate(it, text, pos)
-        if not q:
-            spans.append(None)
-            continue
-        n = find_span(str(it.get("note") or ""), text, q[0])
-        last = max(q[1], n[1] if n and n[0] >= q[0] else 0)
-        spans.append((*q, last))
-        pos = q[0] + 1
-    starts = sorted({sp[0] for sp in spans if sp})
-    out: list[dict | None] = []
-    for sp in spans:
-        if not sp:
-            out.append(None)
-            continue
-        q0, q1, t0, t1, last = sp
-        eol = text.find("\n", max(last - 1, q0))
-        end = min(len(text) if eol < 0 else eol, min((b for b in starts if b > q0), default=len(text)))
-        out.append({"q0": q0, "q1": q1, "t0": t0, "t1": t1, "s0": q0, "s1": max(end, q1)})
-    return out
+def cell_date(text: str, t0: int, t1: int, window: list[date]) -> tuple[date | None, str, bool]:
+    """The day written for this shift on its own line: anywhere in its part of the line before the times,
+    or within 4 words after them ('9.30 - 1 Monday'). Returns (date or None, the words, day_words_seen);
+    day_words_seen is True when the shift's text names a day the code cannot place ('the next day')."""
+    c0, c1 = _cell(text, t0, t1)
+    before = text[c0:t0]
+    after = " ".join(re.findall(r"[A-Za-z0-9/]+", _mask(text[t1:c1]))[:4])
+    found = set(dates_from_day_written(before, window)) | set(dates_from_day_written(after, window, strict=True))
+    if len(found) == 1:
+        return found.pop(), (before.strip() + " " + after).strip(), True
+    return None, "", bool(found) or has_day_words(before)
 
 
 _HEADING_WORDS = {"st", "nd", "rd", "th", "the", "cup", "day", "arvo", "morning", "evening", "night",
@@ -558,34 +620,26 @@ _HEADING_WORDS = {"st", "nd", "rd", "th", "the", "cup", "day", "arvo", "morning"
 def _is_heading_line(line: str) -> bool:
     toks = re.findall(r"[a-z]+|\d+", line.casefold())
     return 0 < len(toks) <= 6 and all(t.isdigit() or t in _HEADING_WORDS or weekday_index(t) is not None
-                                      for t in toks)
+                                      or _month(t) for t in toks)
 
 
-def context_date(text: str, t0: int, t1: int, window: list[date]) -> tuple[date | None, str]:
-    """The day the diary itself gives for the times at text[t0:t1]: words before the times on that line
-    (plus up to 3 words after them), else the nearest earlier day heading or dated shift line.
-    Returns (date, the words used) or (None, '') if nothing or a contradiction."""
-    ls, le = _line_bounds(text, t0, t1)
-    before = text[ls:t0]
-    after = " ".join(re.findall(r"[A-Za-z0-9/]+", text[t1:le])[:3])
-    found = set(dates_from_day_written(before, window)) | set(dates_from_day_written(after, window, strict=True))
-    if found:
-        return (found.pop(), (before + " " + after).strip()) if len(found) == 1 else (None, "")
-    if _DAYISH_RE.search(before):  # the line names a day we cannot place: do not borrow one from above
-        return None, ""
-    pos = ls - 1
-    while pos > 0:
-        ps = text.rfind("\n", 0, pos) + 1
-        line, pos = text[ps:pos], ps - 1
-        if not line.strip() or re.search(r"\b(?:wk|week)\b", line, re.I):
+def heading_date(text: str, pos: int, window: list[date], headings_only: bool = False) -> tuple[date | None, str]:
+    """Nearest day written above `pos`: a heading line, or (unless headings_only) the day at the start of
+    an earlier shift line. Used only where the model gave no usable date, or for a 'check:' warning."""
+    ls, _ = _line_bounds(text, pos, pos)
+    p = ls - 1
+    while p > 0:
+        ps = text.rfind("\n", 0, p) + 1
+        line, p = text[ps:p], ps - 1
+        if not line.strip() or re.search(r"\b(?:wk|week|w/e)\b", line, re.I):
             continue
         rngs = time_ranges(line)
-        if rngs:
-            region = line[:rngs[0][0]]
-        elif _is_heading_line(line):
+        if _is_heading_line(line):
             region = line
+        elif rngs and not headings_only:
+            region = line[:rngs[0][0]]
         else:
-            continue  # a note line
+            continue
         found = set(dates_from_day_written(region, window))
         if len(found) == 1:
             return found.pop(), region.strip()
@@ -605,8 +659,84 @@ def aliases_in(s: str, participants: list[Participant]) -> set[str]:
     return out
 
 
+def _all_spans(fragment: str, text: str) -> list[tuple[int, int]]:
+    rx = _verbatim_regex(fragment)
+    return [(m.start(), m.end()) for m in re.finditer(rx, text, re.I)] if rx and text else []
+
+
+def _overlaps(a: tuple[int, int], spans) -> bool:
+    return any(a[0] < y and x < a[1] for x, y in spans)
+
+
+def _locate_one(it: dict, text: str, window: list[date], claimed: list) -> dict | None:
+    """Where in the diary this model item comes from. Candidates: the model's times_written verbatim, or
+    (if not verbatim) a time range on a line with the model's name_written whose start fits the model's
+    start. A candidate whose own line names a different day than the model's date is skipped, unless the
+    model's day_written names that same day (then the model just wrote the wrong date)."""
+    tw, name = str(it.get("times_written") or ""), str(it.get("name_written") or "")
+    model_date = parse_model_date(str(it.get("date") or ""), window)
+    dw = dates_from_day_written(str(it.get("day_written") or ""), window)
+    cands: list[tuple[int, int]] = [sp for sp in _all_spans(tw, text) if not _overlaps(sp, claimed)] if tw else []
+    if not cands and name:
+        ms = norm_time(it.get("start"))
+        mstart = _minutes(ms) if ms else None
+        for na, nb in _all_spans(name, text):
+            ls, le = _line_bounds(text, na, nb)
+            for r0, r1, t1, t2 in time_ranges(text[ls:le]):
+                sp = (ls + r0, ls + r1)
+                if not _overlaps(sp, claimed) and sp not in cands and (
+                        mstart is None or resolve_range(t1, t2, model_start=mstart)[0] == mstart):
+                    cands.append(sp)
+    best, best_score = None, -1
+    for t0, t1 in cands:
+        c0, c1 = _cell(text, t0, t1)
+        ls, le = _line_bounds(text, t0, t1)
+        nsp = find_span(name, text[c0:c1]) if name else None
+        on_line = nsp or (find_span(name, text[ls:le]) if name else None)
+        d, _, _ = cell_date(text, t0, t1, window)
+        if d and model_date and d.isoformat() != model_date and not (len(dw) == 1 and dw[0] == d):
+            continue  # that line is another day's shift
+        score = (2 if nsp else 1 if on_line else 0) + (1 if d and d.isoformat() == model_date else 0)
+        if score > best_score:
+            best, best_score = (t0, t1, (c0 + nsp[0], c0 + nsp[1]) if nsp else None), score
+    if best is None or (name and best_score == 0 and len(cands) > 1):
+        return None
+    t0, t1, nsp = best
+    q0, q1 = (min(nsp[0], t0), max(nsp[1], t1)) if nsp else (t0, t1)
+    return {"q0": q0, "q1": q1, "t0": t0, "t1": t1}
+
+
+def locate_shifts(items: list, text: str, window: list[date] | None = None) -> list[dict | None]:
+    """For each model item, offsets in the diary (code-side, verbatim by construction), or None:
+    q0..q1 = name + times (the source_quote), t0..t1 = the times, s0..s1 = the shift's slice: from the
+    quote to the end of that line (or of the line where the model's note ends, if later), never past the
+    next located shift."""
+    window = window or []
+    claimed: list[tuple[int, int]] = []
+    locs: list[dict | None] = []
+    for it in items:
+        loc = _locate_one(it if isinstance(it, dict) else {}, text, window, claimed) if text else None
+        if loc:
+            claimed.append((loc["t0"], loc["t1"]))
+            n = find_span(str((it or {}).get("note") or ""), text[loc["q0"]:]) if isinstance(it, dict) else None
+            loc["last"] = max(loc["q1"], loc["q0"] + n[1] if n else 0)
+        locs.append(loc)
+    starts = sorted({loc["q0"] for loc in locs if loc})
+    for loc in locs:
+        if loc:
+            eol = text.find("\n", max(loc["last"] - 1, loc["q0"]))
+            end = min(len(text) if eol < 0 else eol, min((b for b in starts if b > loc["q0"]), default=len(text)))
+            loc["s0"], loc["s1"] = loc["q0"], max(end, loc["q1"])
+    return locs
+
+
 def _words(s: str) -> set[str]:
     return set(re.findall(r"[a-z0-9]+", norm_text(s)))
+
+
+def _strip_punct(s: str) -> str:
+    """Trim separators around a slice of diary text; keeps a closing full stop or bracket."""
+    return s.strip().lstrip(",.;:-–—) \t").rstrip(",;:-–—( \t").strip()
 
 
 def _full_note(note: str, seg: str | None, times_written: str) -> str:
@@ -627,55 +757,46 @@ def _full_note(note: str, seg: str | None, times_written: str) -> str:
     return note
 
 
-def _strip_punct(s: str) -> str:
-    """Trim separators around a slice of diary text; keeps a closing full stop or bracket."""
-    return s.strip().lstrip(",.;:-–—) \t").rstrip(",;:-–—( \t").strip()
+# --------------------------------------------------------------------------- two blocks on one line
+
+_JOIN_RE = re.compile(r"\bthen\b|\band\b|,|&", re.I)
 
 
-# --------------------------------------------------------------------------- double shifts on one line
+def _joined(text: str, a1: int, b0: int) -> bool:
+    """Two ranges count as two blocks only if 'then' / 'and' / ',' joins them."""
+    return bool(_JOIN_RE.search(_mask(text[a1:b0])))
+
 
 def split_merged(it: dict, loc: dict | None, text: str) -> list[tuple[dict, dict | None]]:
-    """One model item that covers two time blocks ('8:30-10:45am ... then back half 4-6:30') -> two items.
-    Triggered when the model's times_written holds two ranges, or its end time is the end of the next
-    range on the same diary line."""
-    tw = str(it.get("times_written") or "")
-    tw_r = time_ranges(tw)
+    """One model item that spans two time blocks on its diary line ('9-11 then back 4-6' read as 09:00-18:00)
+    -> two items. Only when the line itself holds two explicit ranges joined by then/and/',' and the
+    model's end is the end of the second block (or its times_written holds both)."""
+    if not loc:
+        return [(it, loc)]
+    ls, le = _line_bounds(text, loc["t0"], loc["t1"])
+    line_r = [(ls + a, ls + b, x, y) for a, b, x, y in time_ranges(text[ls:le])]
+    k = next((i for i, r in enumerate(line_r) if r[0] < loc["t1"] and loc["t0"] < r[1]), None)
+    if k is None or k + 1 >= len(line_r):
+        return [(it, loc)]
+    (a0, a1, x1, y1), (b0, b1, x2, y2) = line_r[k], line_r[k + 1]
+    if not _joined(text, a1, b0):
+        return [(it, loc)]
     ms, me = norm_time(it.get("start")), norm_time(it.get("end"))
     model_start, model_end = (_minutes(ms) if ms else None), (_minutes(me) if me else None)
-    pair: list = []
-    ls = le = 0
-    if loc:
-        ls, le = _line_bounds(text, loc["t0"], loc["t1"])
-        line_r = [(ls + a, ls + b, x, y) for a, b, x, y in time_ranges(text[ls:le])]
-        k = next((i for i, r in enumerate(line_r) if r[0] < loc["t1"] and loc["t0"] < r[1]), None)
-        if k is not None and k + 1 < len(line_r):
-            pair = line_r[k:k + 2]
-    merged = len(tw_r) == 2
-    if not merged and len(pair) == 2 and model_end is not None:
-        e1 = resolve_range(pair[0][2], pair[0][3], model_start=model_start)[1]
-        e2 = resolve_range(pair[1][2], pair[1][3], after=e1)[1]
-        merged = model_end % 1440 == e2 % 1440 != e1 % 1440
-    if not merged:
+    s1, e1 = resolve_range(x1, y1, model_start=model_start)
+    s2, e2 = resolve_range(x2, y2, after=e1, model_end=model_end)
+    tw = str(it.get("times_written") or "")
+    both_written = len(time_ranges(tw)) == 2
+    if not (both_written or (model_end is not None and model_end % 1440 == e2 % 1440 != e1 % 1440)):
         return [(it, loc)]
-    blocks = pair if len(pair) == 2 else [(None, None, x, y) for _, _, x, y in tw_r]
-    s1, e1 = resolve_range(blocks[0][2], blocks[0][3], model_start=model_start)
-    s2, e2 = resolve_range(blocks[1][2], blocks[1][3], after=e1, model_end=model_end)
-    why = f"split: '{tw or text[pair[0][0]:pair[1][1]]}' is two blocks of time"
-    if pair:
-        (a0, a1, _, _), (b0, b1, _, _) = pair
-        q0 = min(loc["q0"], a0)
-        loc1 = {"q0": q0, "q1": a1, "t0": a0, "t1": a1, "s0": q0, "s1": b0}
-        loc2 = {"q0": b0, "q1": b1, "t0": b0, "t1": b1, "s0": b0, "s1": le}
-        notes = (_strip_punct(text[a1:b0]), _strip_punct(text[b1:le]))
-        tws = (text[a0:a1], text[b0:b1])
-    else:
-        loc1 = loc2 = None
-        notes = (str(it.get("note") or ""), "")
-        tws = (tw[tw_r[0][0]:tw_r[0][1]], tw[tw_r[1][0]:tw_r[1][1]])
-    it1 = {**it, "times_written": tws[0], "start": _hhmm(s1), "end": _hhmm(e1), "note": notes[0],
-           "_code_note": bool(pair), "_warn": [why]}
-    it2 = {**it, "times_written": tws[1], "start": _hhmm(s2), "end": _hhmm(e2), "note": notes[1], "km": 0,
-           "_code_note": bool(pair), "_warn": [why]}
+    why = f"split: '{text[a0:b1]}' is two blocks of time"
+    q0 = min(loc["q0"], a0)
+    loc1 = {"q0": q0, "q1": a1, "t0": a0, "t1": a1, "s0": q0, "s1": b0}
+    loc2 = {"q0": b0, "q1": b1, "t0": b0, "t1": b1, "s0": b0, "s1": le}
+    it1 = {**it, "times_written": text[a0:a1], "start": _hhmm(s1), "end": _hhmm(e1),
+           "note": _strip_punct(text[a1:b0]), "_code_note": True, "_warn": [why]}
+    it2 = {**it, "times_written": text[b0:b1], "start": _hhmm(s2), "end": _hhmm(e2), "km": 0,
+           "note": _strip_punct(text[b1:le]), "_code_note": True, "_warn": [why]}
     return [(it1, loc1), (it2, loc2)]
 
 
@@ -695,52 +816,71 @@ def _check_item(it: dict, loc: dict | None, text: str, participants: list[Partic
     label = f"'{quote}'" if quote else "a shift"
     w: list[str] = list(it.get("_warn") or [])
 
-    # participant: model id, cross-checked against a code alias match on the written name
+    # participant: the model's id stands unless the name on that line is exactly another participant's alias
     pid = str(it.get("participant_id") or "").strip()
     name = str(it.get("name_written") or "").strip()
-    code_pid = match_alias(name, participants) or (match_alias(pid, participants) if pid not in ids else None)
-    if pid in ids and code_pid and code_pid != pid:
-        w.append(f"model matched '{name}' to {pid}, but it is an alias of {code_pid}; using {code_pid}")
-        pid = code_pid
-    elif pid not in ids:
+    name_on_line = bool(loc and name and find_span(name, text[loc["q0"]:loc["q1"]]))
+    code_pid = match_alias(name, participants)
+    if pid in ids:
+        if code_pid and code_pid != pid:
+            if name_on_line:
+                w.append(f"participant set to {code_pid}: '{name}' is their name on the roster (model read {pid})")
+                pid = code_pid
+            else:
+                w.append(f"check: '{name}' is {code_pid}'s name on the roster, model read {pid}")
+    else:
+        code_pid = code_pid or match_alias(pid, participants)
         if code_pid:
             pid = code_pid
+        elif fz := (fuzzy_alias(name, participants) or fuzzy_alias(pid, participants)):
+            w.append(f"check: '{name or pid}' read as {fz} (closest name on the roster)")
+            pid = fz
         else:
             w.append(f"unknown participant '{name or pid}': not on the roster")
             run_warn.append(f"{label}: unknown participant '{name or pid}'")
             pid = ""
 
-    # date: the day the diary gives (same line or nearest heading) > the model's day_written > model date
+    # date: a day written on the shift's own line overrules the model; a heading above only fills a gap
     raw_date = str(it.get("date") or "").strip()
     model_date = parse_model_date(raw_date, window)
+    model_date = model_date if model_date in in_window else ""
     day_written = str(it.get("day_written") or "").strip()
-    ctx, ctx_words = context_date(text, loc["t0"], loc["t1"], window) if loc else (None, "")
-    implied = dates_from_day_written(day_written, window)
+    own, own_words, day_words = cell_date(text, loc["t0"], loc["t1"], window) if loc else (None, "", False)
     d_iso = model_date
-    if ctx:
-        d_iso = ctx.isoformat()
-        if d_iso != model_date:
-            w.append(f"date set to {d_iso} from the diary's '{ctx_words[:40]}' "
-                     f"(model said {model_date or raw_date or 'nothing'})")
-    elif len(implied) == 1 and implied[0].isoformat() != model_date:
-        d_iso = implied[0].isoformat()
-        w.append(f"date set to {d_iso} from '{day_written}' (model said {model_date or raw_date or 'nothing'})")
-    elif len(implied) > 1 and model_date in in_window:
-        w.append(f"day written '{day_written}' is ambiguous; kept {model_date}")
+    if own and own.isoformat() != model_date:
+        d_iso = own.isoformat()
+        w.append(f"date set to {d_iso} from '{own_words[:40]}' on the shift's own line "
+                 f"(model read {raw_date or 'nothing'})")
+    elif not model_date:
+        implied = dates_from_day_written(day_written, window)
+        head, head_words = heading_date(text, loc["t0"], window) if loc else (None, "")
+        if len(implied) == 1:
+            d_iso = implied[0].isoformat()
+            w.append(f"check: date {d_iso} taken from the model's day '{day_written}' "
+                     f"(model's date '{raw_date}' is not in this week)")
+        elif head:
+            d_iso = head.isoformat()
+            w.append(f"check: date {d_iso} taken from '{head_words[:40]}' above "
+                     f"(model's date '{raw_date}' is not in this week)")
+    elif loc and not own and not day_words:
+        head, head_words = heading_date(text, loc["t0"], window, headings_only=True)
+        if head and head.isoformat() != model_date:
+            w.append(f"check: the heading '{head_words[:30]}' above says {head.isoformat()}, model read {model_date}")
     if d_iso not in in_window:
         run_warn.append(f"dropped {label}: date {raw_date or '?'} is outside the week "
                         f"{window[0].isoformat()}..{window[-1].isoformat()}")
         return None
 
-    # times
+    # times: checked against the diary's own range for this shift when it can be found
     start, end = norm_time(it.get("start")), norm_time(it.get("end"))
     if not start or not end:
         run_warn.append(f"dropped {label}: times not HH:MM (start={it.get('start')!r}, end={it.get('end')!r})")
         return None
-    start, end, tw = reconcile_times(times_written or quote, start, end)
+    written = text[loc["t0"]:loc["t1"]] if loc else (times_written or quote)
+    start, end, tw = reconcile_times(written, start, end, seg or written)
     w.extend(tw)
-    approx_src = times_written or quote
-    if _APPROX_RE.search(approx_src):
+    approx_src = times_written or written
+    if _APPROX_RE.search(_mask(approx_src)):
         w.append(f"approximate time in '{approx_src}': check start/end")
     _time_sanity(start, end, w)
 
@@ -749,23 +889,29 @@ def _check_item(it: dict, loc: dict | None, text: str, participants: list[Partic
     if not it.get("_code_note"):
         note = _full_note(note, seg, times_written)
 
-    # km: only if written; the figure in this shift's own slice of the diary wins
+    # km: the model's figure always stands; say so when the shift's text does not show it
     try:
         km = max(0.0, float(it.get("km") or 0))
     except (TypeError, ValueError):
         km = 0.0
     if not from_image and text:
-        own = seg if seg is not None else quote + " " + note
-        figs = km_figures(own)
-        if len(figs) == 1 and abs(figs[0] - km) >= 0.05:
-            w.append(f"km set to {_num_str(figs[0])} from the diary (model said {_num_str(km)})")
-            km = figs[0]
-        elif km and not _km_stated(km, own):
-            if _km_stated(km, text):
-                w.append(f"{_num_str(km)} km is in the diary but not in this shift's text: check it belongs here")
+        own_text = seg if seg is not None else quote + " " + note
+        found = _km_matches(own_text)
+        figs = [v for v, _ in found]
+        shown = ", ".join(_num_str(f) for f in figs)
+        if km and not any(abs(f - km) < 0.05 for f in figs):
+            if len(figs) == 1 and not _km_stated(km, text):  # model's figure is written nowhere
+                w.append(f"km set to {_num_str(figs[0])} from this shift's text "
+                         f"(model read {_num_str(km)}, which the diary does not show)")
+                km = figs[0]
             else:
-                w.append(f"model gave {_num_str(km)} km but no such km figure is in the diary: set to 0")
-                km = 0.0
+                w.append(f"check: {_num_str(km)} km is not written for this shift"
+                         + (f" (it shows {shown})" if figs else "") + f"; model read {_num_str(km)}")
+        elif not km and len(found) == 1 and found[0][1] == "odometer":
+            km = found[0][0]
+            w.append(f"km set to {_num_str(km)} from the odometer readings on this shift's line (model read 0)")
+        elif not km and any(f > 0 for f in figs):
+            w.append(f"check: the shift's text shows {shown} km; model read 0")
 
     if note and not from_image and norm_text(note) not in norm_text(text):
         w.append("note is not word-for-word from the diary: check it")
@@ -793,49 +939,62 @@ _SKIP_LINE_RE = re.compile(r"\b(?:cancel\w*|no[- ]show|didn'?t (?:go|happen|show
 
 def recover_skipped(text: str, participants: list[Participant], window: list[date],
                     kept: list[tuple[Shift, dict | None]]) -> list[Shift]:
-    """Time ranges in the diary that no model shift accounts for -> shifts, read by code, each with a
-    warning. Needs a roster name in the range's part of the line (or a host shift on the same line, for a
-    second block of time), a date from the diary, and a range that does not fall inside the host shift."""
+    """Time ranges no model shift accounts for -> shifts read by code, each with a warning.
+    On a line with a model shift, only a later range joined to it by then/and/',' (a second block), with
+    a time that does not fall inside that shift. On a line with no model shift: needs a roster name in
+    its part of the line and a day from that line (or a heading above)."""
     covered = [(loc["t0"], loc["t1"]) for _, loc in kept if loc]
-    hosts = [(loc["s0"], loc["s1"], sh) for sh, loc in kept if loc]
+    anchors = [(loc["t0"], loc["t1"], sh) for sh, loc in kept if loc]
+    slices = [(loc["s0"], loc["s1"]) for _, loc in kept if loc]
     out: list[Shift] = []
     for ls, le in _lines(text):
-        line = text[ls:le]
-        rngs = [(ls + a, ls + b, x, y) for a, b, x, y in time_ranges(line)]
+        rngs = [(ls + a, ls + b, x, y) for a, b, x, y in time_ranges(text[ls:le])]
+        line_anchors = sorted((a for a in anchors if ls <= a[0] < le), key=lambda a: a[0])
         for k, (r0, r1, t1, t2) in enumerate(rngs):
-            if any(a < r1 and r0 < b for a, b in covered):
+            if _overlaps((r0, r1), covered):
                 continue
-            cell0 = rngs[k - 1][1] if k else ls
-            cell1 = rngs[k + 1][0] if k + 1 < len(rngs) else le
-            near = text[cell0:r1] + " " + " ".join(re.findall(r"\S+", text[r1:cell1])[:3])
+            c0 = rngs[k - 1][1] if k else ls
+            c1 = rngs[k + 1][0] if k + 1 < len(rngs) else le
+            near = text[c0:r1] + " " + " ".join(re.findall(r"\S+", text[r1:c1])[:3])
             if _SKIP_LINE_RE.search(near):
                 continue
-            host = next((sh for s0, s1, sh in hosts if s0 <= r0 < s1), None)
-            who = aliases_in(text[cell0:cell1], participants)
+            who = aliases_in(text[c0:c1], participants)
+            host = None
+            if line_anchors:
+                prev = [a for a in line_anchors if a[1] <= r0]
+                if not prev or not _joined(text, prev[-1][1], r0):
+                    continue  # before the model's shift, or not joined to it: a correction or an aside
+                host = prev[-1][2]
+            elif _overlaps((r0, r1), slices):
+                continue  # inside another shift's note
             pid = next(iter(who)) if len(who) == 1 else (host.participant_id if host and not who else None)
             if not pid:
                 continue
-            ctx, _ = context_date(text, r0, r1, window)
-            d = ctx.isoformat() if ctx else (host.date if host else None)
-            if not d:
+            own, _, day_words = cell_date(text, r0, r1, window)
+            if own:
+                d = own.isoformat()
+            elif host:
+                d = host.date
+            elif not day_words and (h := heading_date(text, r0, window)[0]):
+                d = h.isoformat()
+            else:
                 continue
-            same_day_host = host if host and host.date == d and host.participant_id == pid else None
-            s, e = resolve_range(t1, t2, after=_minutes(same_day_host.end) if same_day_host else None)
-            if same_day_host:
-                hs, he = _minutes(same_day_host.start), _minutes(same_day_host.end)
+            same = host if host and host.date == d and host.participant_id == pid else None
+            s, e = resolve_range(t1, t2, after=_minutes(same.end) if same else None)
+            if same:
+                hs, he = _minutes(same.start), _minutes(same.end)
                 if max(hs, s) < min(he if he > hs else he + 1440, e if e > s else e + 1440):
-                    continue  # a time inside the host shift's note, not a second block
-            tail = text[r1:cell1]
-            figs = km_figures(tail) if not same_day_host else []
-            w = [f"added by code: the model did not list '{_strip_punct(text[cell0:r1])}'; check it"
-                 if not same_day_host else
-                 f"split: '{text[r0:r1]}' is a second block of time on the same line"]
-            if _APPROX_RE.search(text[r0:r1]):
+                    continue  # a time inside the host shift, not a second block
+            tail = text[r1:c1]
+            figs = km_figures(tail) if not same else []
+            w = [f"split: '{text[r0:r1]}' is a second block of time on the same line" if same else
+                 f"added by code: the model did not list '{_strip_punct(text[c0:r1])}'; check it"]
+            if _APPROX_RE.search(_mask(text[r0:r1])):
                 w.append(f"approximate time in '{text[r0:r1]}': check start/end")
             _time_sanity(_hhmm(s), _hhmm(e), w)
             out.append(Shift(participant_id=pid, date=d, start=_hhmm(s), end=_hhmm(e),
                              km=figs[0] if len(figs) == 1 else 0.0, note=_strip_punct(tail),
-                             source_quote=_strip_punct(text[cell0:r1]), warnings=w))
+                             source_quote=_strip_punct(text[c0:r1]), warnings=w))
             covered.append((r0, r1))
     return out
 
@@ -853,7 +1012,7 @@ def validate_shifts(items: list, diary_text: str, participants: list[Participant
             raw.append(it)
         else:
             run_warn.append(f"dropped model item #{i + 1}: not an object")
-    locs = locate_shifts(raw, text) if text and not from_image else [None] * len(raw)
+    locs = locate_shifts(raw, text, window) if text and not from_image else [None] * len(raw)
     work = [pair for it, loc in zip(raw, locs) for pair in split_merged(it, loc, text)]
 
     kept: list[tuple[Shift, dict | None]] = []
@@ -864,7 +1023,7 @@ def validate_shifts(items: list, diary_text: str, participants: list[Participant
             continue
         key = (sh.participant_id, sh.date, sh.start, sh.end)
         if key in seen:
-            run_warn.append(f"dropped duplicate '{sh.source_quote}'")
+            run_warn.append(f"dropped a repeat of {sh.participant_id or '?'} {sh.date} {sh.start}-{sh.end}")
             continue
         seen.add(key)
         kept.append((sh, loc))
