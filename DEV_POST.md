@@ -45,11 +45,11 @@ Three lines from the demo week (ending Sunday 8 November 2026):
 | `Thurs night - Mrs B again 7pm-9:30pm` | nonna, 2026-11-05, 19:00-21:30 | Crosses 8pm, so s2.4(c): the whole support goes in the higher band | `01_015_0107_1_1` Weekday Evening, 2.5 h x $81.07 = **$202.68** |
 | `Sun - T.O. 10-3 ... 22 km` | tom, 2026-11-08, 10:00-15:00, 22 km | Sunday band; km claimed as Activity Based Transport | `04_106_0125_6_1` Sunday, 5 h x $133.50 = **$667.50**, plus 22 km x $0.99 = $21.78 |
 
-![The "Check before you invoice" panel: the pantry note flagged as an environmental restraint, not authorised, report by Tuesday 10 November 2026; the PRN and bed-rail notes flagged as authorised, "record it as the plan says"](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/flags.png)
+![The "Check before you invoice" panel: the pantry note flagged as an environmental restraint, not authorised, with a registered-provider notify-by date of Tuesday 10 November 2026; the PRN and bed-rail notes flagged as authorised, "record it as the plan says"](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/flags.png)
 
 The flags for the same week:
 
-- **Red.** "Locked the pantry so he would stop snacking before dinner": environmental restraint, not authorised, report by Tue 10 Nov 2026.
+- **Red.** "Locked the pantry so he would stop snacking before dinner": environmental restraint, not authorised; a registered provider would have to notify by Tue 10 Nov 2026.
 - **Authorised, record only.** "Gave PRN lorazepam 0.5mg as per plan at 11:15" (chemical) and "Bed rails up as per plan" (mechanical) match the authorisations in Priya's and Nonna's roster entries. Still restrictive practices, still shown, no report-by date.
 - **Not flagged.** "He asked me to hang onto his phone during the game." Holding a phone because the person asked is not a restraint.
 
