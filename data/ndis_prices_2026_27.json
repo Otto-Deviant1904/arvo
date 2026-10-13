@@ -1,0 +1,577 @@
+{
+  "meta": {
+    "dataset": "NDIS price limits for Victorian (non-remote) independent support workers, 2026-27",
+    "retrieved": "2026-10-13",
+    "important_document_change": "There is NO 'Pricing Arrangements and Price Limits 2026-27' (PAPL). For 2026-27 the NDIA published a prices-only 'NDIS Pricing Schedule 2026-27' (effective 1 July 2026, v1.2), which was replaced by the Minister's pricing determination Schedule effective 24 September 2026. Claiming rules (travel, km rates) not restated in the Schedules are taken from the PAPL 2025-26 v1.1, which the NDIS pricing page still lists as a current guidance document.",
+    "documents": [
+      {
+        "id": "SCHED_2026_27_EFF_2026_09_24",
+        "title": "National Disability Insurance Scheme Pricing Schedule 2026-27 (Effective 24 September 2026)",
+        "url": "https://www.ndis.gov.au/media/8841/download?attachment",
+        "url_docx": "https://www.ndis.gov.au/media/8842/download?attachment",
+        "sha256_pdf": "e54e1c37cb02061e479ce2289d63e588915081cbaba0dd1e9b3c6eca81eefcc9",
+        "legal_status": "Incorporated into the Minister's pricing determination under s45C of the NDIS Act (as amended by the NDIS Amendment (Securing the NDIS for Future Generations) Act 2026); legally binding maximum amounts for NDIA-managed and plan-managed supports."
+      },
+      {
+        "id": "SCHED_2026_27_EFF_2026_07_01",
+        "title": "National Disability Insurance Scheme Pricing Schedule 2026-27 (Effective 1 July 2026), Version 1.2 (22 July 2026)",
+        "url": "https://www.ndis.gov.au/media/8703/download?attachment",
+        "url_docx": "https://www.ndis.gov.au/media/8704/download?attachment",
+        "sha256_pdf": "849943c5bc1a6558a115cd09d362eb7c827f4d7b1a74fe85914b1a937ba7eb41",
+        "legal_status": "NDIA price guidance published 22 June 2026 ahead of the Minister's determination; now listed in the 2026-27 pricing arrangements archive."
+      },
+      {
+        "id": "CATALOGUE_2026_27",
+        "title": "NDIS Support Catalogue 2026-27 (XLSX; item start date 20260701; file modified 2026-07-02)",
+        "url": "https://www.ndis.gov.au/media/8038/download?attachment",
+        "sha256": "7125009461b3b15a55443c5b61fb288e52be1eabb6ca73d9a99e3ae8b413af88",
+        "landing_page": "https://www.ndis.gov.au/providers/pricing-and-payments/pricing/what-support-catalogue"
+      },
+      {
+        "id": "PAPL_2025_26_V1_1",
+        "title": "NDIS Pricing Arrangements and Price Limits 2025-26, Version 1.1 (released 14 October 2025, valid from 24 November 2025)",
+        "url": "https://www.ndis.gov.au/media/8096/download?attachment",
+        "url_docx": "https://www.ndis.gov.au/media/8036/download?attachment",
+        "sha256_pdf": "183bb124beff7b417dfc5a39e97b8866380741ed84985491df2e85206ba5d21e",
+        "status": "Still listed on the current NDIS pricing arrangements page under 'Other pricing and claiming guidance documents' with the note 'We will shortly publish updated pricing and claiming guidance documents.' No 2026-27 PAPL exists."
+      },
+      {
+        "id": "PAPL_2025_26_V1_0",
+        "title": "NDIS Pricing Arrangements and Price Limits 2025-26, Version 1.0 (released 16 June 2025, valid from 1 July 2025)",
+        "url": "https://www.ndis.gov.au/media/7739/download?attachment"
+      },
+      {
+        "id": "APR_2026_27",
+        "title": "NDIA Annual Pricing Review for 2026-27 prices report (June 2026)",
+        "url": "https://www.ndis.gov.au/media/8701/download?attachment"
+      },
+      {
+        "id": "NDIS_NEWS_2026_09_24",
+        "title": "New price limits set for NDIS supports (media release, Department of Health, Disability and Ageing, 24 September 2026)",
+        "url": "https://www.ndis.gov.au/news/11701-new-price-limits-set-ndis-supports"
+      }
+    ],
+    "currency": "AUD",
+    "gst_inclusive": true,
+    "price_identity_check": "For all 11 items below, National/Remote/Very Remote prices are identical in the 1 Jul 2026 Schedule, the 24 Sep 2026 Schedule and the 2026-27 Support Catalogue."
+  },
+  "price_periods": [
+    {
+      "effective_from": "2026-09-24",
+      "effective_to": null,
+      "governing_doc": "SCHED_2026_27_EFF_2026_09_24"
+    },
+    {
+      "effective_from": "2026-07-01",
+      "effective_to": "2026-09-23",
+      "governing_doc": "SCHED_2026_27_EFF_2026_07_01",
+      "note": "Same prices for these items as the 24 Sep version."
+    },
+    {
+      "effective_from": "2025-07-01",
+      "effective_to": "2026-06-30",
+      "governing_doc": "PAPL_2025_26_V1_1",
+      "note": "See previous_year_prices_2025_26."
+    }
+  ],
+  "items": {
+    "assistance_with_self_care_standard": [
+      {
+        "item_number": "01_011_0107_1_1",
+        "item_name": "Assistance With Self-Care Activities - Standard - Weekday Daytime",
+        "time_band": "weekday_daytime",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 73.58,
+        "price_limit_remote_aud": 103.01,
+        "price_limit_very_remote_aud": 110.37,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 7 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 5 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "01_015_0107_1_1",
+        "item_name": "Assistance With Self-Care Activities - Standard - Weekday Evening",
+        "time_band": "weekday_evening",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 81.07,
+        "price_limit_remote_aud": 113.5,
+        "price_limit_very_remote_aud": 121.61,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 7 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 5 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "01_002_0107_1_1",
+        "item_name": "Assistance With Self-Care Activities - Standard - Weekday Night",
+        "time_band": "weekday_night",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 82.57,
+        "price_limit_remote_aud": 115.6,
+        "price_limit_very_remote_aud": 123.86,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 6 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 5 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "01_013_0107_1_1",
+        "item_name": "Assistance With Self-Care Activities - Standard - Saturday",
+        "time_band": "saturday",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 103.54,
+        "price_limit_remote_aud": 144.96,
+        "price_limit_very_remote_aud": 155.31,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 7 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 5 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "01_014_0107_1_1",
+        "item_name": "Assistance With Self-Care Activities - Standard - Sunday",
+        "time_band": "sunday",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 133.5,
+        "price_limit_remote_aud": 186.9,
+        "price_limit_very_remote_aud": 200.25,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 7 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 5 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "01_012_0107_1_1",
+        "item_name": "Assistance With Self-Care Activities - Standard - Public Holiday",
+        "time_band": "public_holiday",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 163.46,
+        "price_limit_remote_aud": 228.84,
+        "price_limit_very_remote_aud": 245.19,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 7 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 5 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      }
+    ],
+    "access_community_social_rec_standard": [
+      {
+        "item_number": "04_104_0125_6_1",
+        "item_name": "Access Community Social and Rec Activ - Standard - Weekday Daytime",
+        "time_band": "weekday_daytime",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 73.58,
+        "price_limit_remote_aud": 103.01,
+        "price_limit_very_remote_aud": 110.37,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 9 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 8 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "04_103_0125_6_1",
+        "item_name": "Access Community Social and Rec Activ - Standard - Weekday Evening",
+        "time_band": "weekday_evening",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 81.07,
+        "price_limit_remote_aud": 113.5,
+        "price_limit_very_remote_aud": 121.61,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 9 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 8 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "04_105_0125_6_1",
+        "item_name": "Access Community Social and Rec Activ - Standard - Saturday",
+        "time_band": "saturday",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 103.54,
+        "price_limit_remote_aud": 144.96,
+        "price_limit_very_remote_aud": 155.31,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 9 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 8 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "04_106_0125_6_1",
+        "item_name": "Access Community Social and Rec Activ - Standard - Sunday",
+        "time_band": "sunday",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 133.5,
+        "price_limit_remote_aud": 186.9,
+        "price_limit_very_remote_aud": 200.25,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 9 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 8 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      },
+      {
+        "item_number": "04_102_0125_6_1",
+        "item_name": "Access Community Social and Rec Activ - Standard - Public Holiday",
+        "time_band": "public_holiday",
+        "unit": "H",
+        "unit_meaning": "H = Hour",
+        "price_limit_national_aud": 163.46,
+        "price_limit_remote_aud": 228.84,
+        "price_limit_very_remote_aud": 245.19,
+        "applies_to_victoria_non_remote": "National column (MM 1-5), per Pricing Schedule 24 Sep 2026 Part 1 s2.3(c)",
+        "sources": [
+          {
+            "doc": "SCHED_2026_27_EFF_2026_09_24",
+            "where": "Appendix 1, Table 1 (DSW Level 1), PDF page 9 of 96"
+          },
+          {
+            "doc": "SCHED_2026_27_EFF_2026_07_01",
+            "where": "Schedule 1, Table 1, PDF page 7 of 99 (identical price)"
+          },
+          {
+            "doc": "CATALOGUE_2026_27",
+            "where": "sheet 'Current Support Items' (identical price; Unit column 'H')"
+          }
+        ]
+      }
+    ],
+    "access_community_social_rec_standard_weekday_night": {
+      "item_number": null,
+      "price_limit_national_aud": null,
+      "note": "No 'Access Community Social and Rec Activ - Standard - Weekday Night' item exists in either 2026-27 Schedule or the 2026-27 catalogue (only Daytime, Evening, Saturday, Sunday, Public Holiday). Same in PAPL 2025-26."
+    }
+  },
+  "previous_year_prices_2025_26": {
+    "note": "Prices for supports delivered 1 July 2025 - 30 June 2026 (for back-dated diaries). Same values in PAPL 2025-26 v1.0 (valid 1 July 2025) and v1.1 (valid 24 Nov 2025).",
+    "sources": [
+      {
+        "doc": "PAPL_2025_26_V1_0"
+      },
+      {
+        "doc": "PAPL_2025_26_V1_1",
+        "where": "Core - Assistance with Daily Life, PDF p43; Participation in Community, Social and Civic Activities, PDF p65"
+      }
+    ],
+    "national_aud": {
+      "01_011_0107_1_1": 70.23,
+      "01_015_0107_1_1": 77.38,
+      "01_002_0107_1_1": 78.81,
+      "01_013_0107_1_1": 98.83,
+      "01_014_0107_1_1": 127.43,
+      "01_012_0107_1_1": 156.03,
+      "04_104_0125_6_1": 70.23,
+      "04_103_0125_6_1": 77.38,
+      "04_105_0125_6_1": 98.83,
+      "04_106_0125_6_1": 127.43,
+      "04_102_0125_6_1": 156.03
+    }
+  },
+  "time_bands": {
+    "source": {
+      "doc": "SCHED_2026_27_EFF_2026_09_24",
+      "where": "Part 4 - Definitions, Table 61: Definitions of Time of Day and Day of Week, PDF pages 94-95 of 96"
+    },
+    "applicability_note": "Schedule Part 1 s2.4(b): 'A provider may claim up to the maximum amount for a support item in Appendices 1, 2 and 3 that references the day of the week or the time of the day in accordance with the definitions in Part 4.' (PDF p5)",
+    "definitions_verbatim": {
+      "weekday": "Monday, Tuesday, Wednesday, Thursday, Friday (unless the day is a public holiday).",
+      "weekday_daytime": "Any support to a participant that starts at or after 6:00 am and ends before or at 8:00 pm on a single weekday (unless it is a Public Holiday or Night-time Sleepover Support).",
+      "weekday_evening": "Any support to a participant that starts at or after 8:00 pm and finishes at or before midnight on a single weekday (unless it is a Public Holiday or Night-time Sleepover Support).",
+      "weekday_night": "Any support to a participant that commences at or before midnight on a weekday and finishes after midnight on the next weekday, or commences before 6:00 am on a weekday and finishes on that weekday (unless it is a Public Holiday, Saturday, Sunday or Night-time Sleepover Support).",
+      "saturday": "Any support to a participant that starts at or after midnight on the night prior to a Saturday and ends before or at midnight of that Saturday (unless it is a Public Holiday or Night-time Sleepover Support).",
+      "sunday": "Any support to a participant that starts at or after midnight on the night prior to a Sunday and ends before or at midnight of that Sunday (unless it is a Public Holiday or Night-time Sleepover Support).",
+      "public_holiday_support": "Any support to a participant that starts at or after midnight on the night prior to a Public Holiday and ends before or at midnight of that Public Holiday (unless it is a Night-time Sleepover Support).",
+      "public_holiday_days": "Any of the following days: 1 January (New Year's Day); 26 January (Australia Day); Good Friday; Easter Monday; 25 April (Anzac Day); King's birthday holiday (the day on which it is celebrated in a State or Territory or a region of a State or Territory); 25 December (Christmas Day); 26 December (Boxing Day); any other day or part-day declared as a public holiday within a State or Territory where the support is being delivered.",
+      "night_time_sleepover_support": "Any support to a participant which is delivered on a weekday, a Saturday, a Sunday or a Public Holiday that: Commences before midnight on a day and finishes after midnight on that day; and Is for a continuous period of eight (8) hours or more; and The worker is allowed to sleep when they are not providing support; and Where more than two (2) hours of active support is provided, a provider may claim for the third or additional hour at Saturday rates on weekdays, or at applicable rates on other days (Saturday, Sunday or Public Holidays)."
+    },
+    "papl_2025_26_wording_difference": "PAPL 2025-26 v1.1 (PDF p18) Weekday Night wording differs slightly: 'commences at or before midnight on a weekday and finishes after midnight on that weekday, or commences before 6:00 am on a weekday and finishes on that weekday'. The 2026-27 Schedule says 'finishes after midnight on the next weekday'. Daytime and Evening wording is identical in both documents.",
+    "evening_starts_at_8pm_note": "Per the verbatim definitions, Weekday Evening is a support that STARTS at or after 8:00 pm. A weekday support that starts before 8:00 pm and ends after 8:00 pm meets neither the Daytime nor the Evening definition, so it is a boundary-crossing support (see boundary_rule)."
+  },
+  "boundary_rule": {
+    "rule_2026_27_verbatim": "Where a support a support crosses between different times of day or days of week and is delivered by a single worker, the higher of the amounts applies to the whole support.",
+    "rule_2026_27_source": {
+      "doc": "SCHED_2026_27_EFF_2026_09_24",
+      "where": "Part 1: Maximum amounts, section 2.4 'Day and time', paragraph (c), PDF page 5 of 96 (the duplicated words 'a support a support' are in the official PDF and DOCX)"
+    },
+    "rule_2025_26_verbatim": "If a support to a participant does not meet one of the above criteria, then it needs to be billed as two or more separate supports. An exception to this general rule occurs when a particular support crosses a shift boundary and the same worker delivers the entire support. In this case, the higher of the relevant price limits applies to the entire support and the provider should make the claim against the relevant support item. Providers are required to discuss this billing arrangement with the participant.",
+    "rule_2025_26_source": {
+      "doc": "PAPL_2025_26_V1_1",
+      "where": "General Claiming Rules > Time of Day and Day of Week, PDF page 18 of 104 (section begins p17); identical wording in v1.0"
+    },
+    "summary_for_code": "Single worker, support crosses a time-of-day or day-of-week boundary: claim the WHOLE support against the item for the higher-priced band (not split). The 2025-26 PAPL says that otherwise (i.e. not the same worker for the whole support) the support is billed as two or more separate supports. The 2026-27 Schedule states only the single-worker rule; it does not restate the split rule.",
+    "unverified": "The 2026-27 Schedule does not say what happens when the higher band has no item for that support (e.g. a community-access support running past midnight on a weekday: there is no 'Access Community Social and Rec Activ - Standard - Weekday Night' item). Not resolved by any official text found."
+  },
+  "travel": {
+    "provider_travel_time_labour": {
+      "how_claimed": "Travel time is claimed against the same support item as the primary support, using the 'Provider Travel' claim type; catalogue column 'Provider Travel' = 'Y' for all 11 items above.",
+      "time_cap_rule_one_sentence": "In MMM1-3 areas a provider can claim up to 30 minutes of travel time to and from each participant (up to 60 minutes in MMM4-5), for each eligible worker; the MMM class is based on where the participant is when the support is delivered.",
+      "time_cap_verbatim": "When a provider claims for labour costs (travel time) related to a support, they can claim for up to 30 minutes of travel to and from each participant in MMM1-3 areas and up to 60 minutes in MMM4-5 areas for each eligible worker. This is known as a travel time limit.",
+      "rate_rule_verbatim": "The hourly rate for travel claims should be the same as the rate agreed for the primary support, or lower if agreed with the participant.",
+      "sole_trader_condition_verbatim": "The provider is required to pay the worker delivering the support for the time spent travelling because of the agreement under which the worker is employed; or the provider is a sole trader and is travelling from their usual place of work to or from the participant, or between participants.",
+      "return_travel_verbatim": "In addition to the above travel, providers delivering core and capacity-building supports can also claim for travel time from the last participant to their usual place of work but only if they must pay their worker for the return travel time and this is subject to the relevant travel time limit.",
+      "prior_agreement_verbatim": "The participant has agreed to the travel costs in advance (that is, the Agreement between the participant and provider should specify the travel costs that can be claimed)",
+      "sources": [
+        {
+          "doc": "PAPL_2025_26_V1_1",
+          "where": "General Claiming Rules > Provider Travel (PDF p21-22) and Provider Travel - Labour Costs (Time) (PDF p22)"
+        },
+        {
+          "doc": "APR_2026_27",
+          "where": "s12 Isolated Towns (PDF p172): restates 'In MM 1-3 areas providers can claim up to 30 minutes of travel (labour time) to and from each participant. In MM 4-5 locations providers can claim up to 60 minutes'"
+        },
+        {
+          "doc": "CATALOGUE_2026_27",
+          "where": "'Provider Travel' column"
+        }
+      ],
+      "caveat": "The 2026-27 Pricing Schedules do not restate travel rules; the 2025-26 PAPL is the most recent official claiming-rules document (still linked from the current pricing arrangements page)."
+    },
+    "provider_travel_non_labour": {
+      "items": [
+        {
+          "item_number": "01_799_0107_1_1",
+          "item_name": "Provider travel - non-labour costs",
+          "unit": "E",
+          "price_limit_national_aud": 1.0,
+          "pairs_with": "Assistance With Self-Care Activities items (registration group 0107)"
+        },
+        {
+          "item_number": "04_799_0125_6_1",
+          "item_name": "Provider travel - non-labour costs",
+          "unit": "E",
+          "price_limit_national_aud": 1.0,
+          "pairs_with": "Access Community Social and Rec Activ items (registration group 0125)"
+        }
+      ],
+      "unit_price_note": "Notional unit price $1.00 (catalogue 'Type' = 'Unit Price = $1'); claim quantity = dollar amount. PAPL: 'These support items are not subject to price limits.'",
+      "per_km_limit_aud": 0.99,
+      "per_km_verbatim": "For a vehicle owned by the provider or the worker, up to $0.99 a kilometre; and For other forms of transport or associated costs, such as road tolls, parking, public transport fares, up to the full amount.",
+      "condition_verbatim": "Claims can only be made for the non-labour costs associated with provider travel in respect of a support where the rules governing provider travel allow a claim for provider travel time to be made.",
+      "sources": [
+        {
+          "doc": "PAPL_2025_26_V1_1",
+          "where": "Provider Travel - Non-Labour Costs, PDF p23 (same $0.99 in v1.0)"
+        },
+        {
+          "doc": "SCHED_2026_27_EFF_2026_07_01",
+          "where": "Schedule 8, Table 66: Non-labour Travel Costs, PDF p74-75 (items listed at $1.00, no per-km rate stated)"
+        },
+        {
+          "doc": "CATALOGUE_2026_27",
+          "where": "rows 01_799_0107_1_1 and 04_799_0125_6_1"
+        }
+      ],
+      "caveat": "No 2026-27 document restates a per-km figure; $0.99/km comes from the 2025-26 PAPL. The 24 Sep 2026 Schedule does not list the 799 items at all (they are in the 1 Jul 2026 Schedule and the 2026-27 catalogue)."
+    },
+    "activity_based_transport": {
+      "item_number": "04_590_0125_6_1",
+      "item_name": "Activity Based Transport",
+      "unit": "E",
+      "price_limit_national_aud": 1.0,
+      "per_km_verbatim": "For a vehicle that is not modified for accessibility, up to $0.99 a kilometre; For a vehicle that is modified for accessibility or a bus, up to $2.76 a kilometre; For other forms of transport or associated costs, such as road tolls, parking, and public transport fares, up to the full amount.",
+      "per_km_unmodified_vehicle_aud": 0.99,
+      "per_km_modified_vehicle_or_bus_aud": 2.76,
+      "sources": [
+        {
+          "doc": "PAPL_2025_26_V1_1",
+          "where": "Claiming for Activity Based Transport, PDF p28"
+        },
+        {
+          "doc": "CATALOGUE_2026_27"
+        },
+        {
+          "doc": "SCHED_2026_27_EFF_2026_07_01",
+          "where": "Schedule 8, Table 67"
+        }
+      ]
+    }
+  },
+  "other_rules": {
+    "gst": {
+      "verbatim": "Any maximum amount specified in this document already includes any Goods and Services Tax (GST).",
+      "source": {
+        "doc": "SCHED_2026_27_EFF_2026_09_24",
+        "where": "Part 1 s1.2, PDF p4"
+      }
+    },
+    "who_limits_apply_to_verbatim": "the maximum amounts specified in Part 2 apply to the acquisition or provision of an NDIS support or class of NDIS supports if the funding for the support or class of supports under a participant's plan is managed by: i. The National Disability Insurance Agency (NDIA) (Agency-managed); or ii. A registered plan management provider (plan managed).",
+    "who_limits_apply_source": {
+      "doc": "SCHED_2026_27_EFF_2026_09_24",
+      "where": "Part 1 s1.1(a), PDF p4"
+    },
+    "geography_verbatim": "If a support is delivered in a MM 1-5 location, except for areas reclassified under Part 3 - Isolated Towns Modification - Type 1, the national amount applies.",
+    "geography_source": {
+      "doc": "SCHED_2026_27_EFF_2026_09_24",
+      "where": "Part 1 s2.3(c), PDF p5"
+    },
+    "ttp": {
+      "applies": false,
+      "statement": "No Temporary Transformation Payment (TTP) items or TTP loading appear in either 2026-27 Pricing Schedule, the 2026-27 Support Catalogue (current or legacy sheet), or the PAPL 2025-26 text (0 matches for 'TTP'/'Transformation Payment'). The APR 2026-27 (Table 44, PDF p139) lists residual payments Jul-Dec 2025 against 'Access Community Social and Recreational Activities Standard - TTP' ($1.3m) and 'Group Activities Standard - TTP' ($0.5m); why those claims exist (e.g. late claims for earlier dates) is not stated and was not verified.",
+      "sources": [
+        {
+          "doc": "SCHED_2026_27_EFF_2026_09_24"
+        },
+        {
+          "doc": "SCHED_2026_27_EFF_2026_07_01"
+        },
+        {
+          "doc": "CATALOGUE_2026_27"
+        },
+        {
+          "doc": "PAPL_2025_26_V1_1"
+        },
+        {
+          "doc": "APR_2026_27",
+          "where": "Table 44, PDF p139"
+        }
+      ]
+    },
+    "unregistered_sole_traders": {
+      "can_charge_up_to_same_limits": true,
+      "one_sentence": "As at 13 Oct 2026, the binding 2026-27 maximum amounts make no registered/unregistered distinction (they apply to Agency-managed and plan-managed funding, Schedule Part 1 s1.1), and the PAPL 2025-26 says plan managers must keep providers within the price limits 'regardless of whether the participant purchases the support from a registered or an unregistered provider' (PDF p10); so an unregistered sole trader may charge plan-managed participants up to the same limits, but Agency-managed supports require a Registered Provider (PAPL PDF p9).",
+      "verbatim_papl_p10": "Plan managers must adhere to the arrangements prescribed in the NDIS Pricing Arrangements and Price Limits, including ensuring that the prices charged by providers do not exceed the price limits. This rule applies regardless of whether the participant purchases the support from a registered or an unregistered provider.",
+      "verbatim_papl_p9_agency_managed": "A provider of a support that is agency managed in a participant's plan: Must be a Registered Provider with the NDIS;",
+      "verbatim_papl_p10_self_managed": "Self-managing participants can use registered or unregistered providers and are not subject to the price limits or other pricing arrangements set out in the NDIS Pricing Arrangements and Price Limits and its associated documents.",
+      "pending_change": "APR 2026-27 Recommendation 16 (PDF p13): 'The prices for Social, Community and Civic Participation supports delivered by unregistered providers, including high intensity supports should be reduced by 10% from 1 January 2027.' The 24 Sep 2026 media release says the government is 'currently consulting' on differentiated pricing. NOT yet in force; check for an updated Schedule before 1 Jan 2027. If adopted, it would affect 04_10x_0125_6_1 items for unregistered sole traders.",
+      "sources": [
+        {
+          "doc": "SCHED_2026_27_EFF_2026_09_24",
+          "where": "Part 1 s1.1"
+        },
+        {
+          "doc": "PAPL_2025_26_V1_1",
+          "where": "Introduction, PDF p9-10"
+        },
+        {
+          "doc": "APR_2026_27",
+          "where": "s1.7.1, Recommendation 16, PDF p13"
+        },
+        {
+          "doc": "NDIS_NEWS_2026_09_24"
+        }
+      ]
+    },
+    "upcoming_change_warning": "The 24 Sep 2026 media release says the SCHADS Award Schedule E decision (Fair Work Commission, 11 Sep 2026) takes effect 1 Dec 2026 and 'The 2026-27 NDIS Pricing Schedule will be updated later this year to reflect any required changes.' Prices above may change during 2026-27; re-check the Schedule.",
+    "upcoming_change_source": {
+      "doc": "NDIS_NEWS_2026_09_24"
+    }
+  }
+}

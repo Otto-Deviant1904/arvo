@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "jurisdiction": "Victoria, Australia",
+    "retrieved": "2026-10-13",
+    "sources": [
+      "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    ],
+    "source_caveat_verbatim": "All public holiday dates are accurate at the time of publishing, but may be subject to change.",
+    "ndis_link": "NDIS Pricing Schedule 2026-27 (24 Sep 2026) Part 4 Table 61 defines Public holiday to include 'any other day or part-day declared as a public holiday within a State or Territory where the support is being delivered.' Every date below is therefore a Public Holiday for NDIS pricing when the support is delivered in Victoria.",
+    "melbourne_cup_regional_caveat": "Some non-metro councils substitute a local holiday for Melbourne Cup Day; this file does not list council substitutions (not researched)."
+  },
+  "2026": [
+    {
+      "date": "2026-01-01",
+      "weekday": "Thursday",
+      "name": "New Year's Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-01-26",
+      "weekday": "Monday",
+      "name": "Australia Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-03-09",
+      "weekday": "Monday",
+      "name": "Labour Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-04-03",
+      "weekday": "Friday",
+      "name": "Good Friday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "note": "restricted trading day"
+    },
+    {
+      "date": "2026-04-04",
+      "weekday": "Saturday",
+      "name": "Saturday before Easter Sunday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-04-05",
+      "weekday": "Sunday",
+      "name": "Easter Sunday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-04-06",
+      "weekday": "Monday",
+      "name": "Easter Monday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-04-25",
+      "weekday": "Saturday",
+      "name": "ANZAC Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "note": "Falls on Saturday. 'ANZAC Day is commemorated on the day it falls. There is no replacement holiday when ANZAC Day falls on a weekend.' Restricted trading day."
+    },
+    {
+      "date": "2026-06-08",
+      "weekday": "Monday",
+      "name": "King's Birthday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-09-25",
+      "weekday": "Friday",
+      "name": "Friday before the AFL Grand Final",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026"
+    },
+    {
+      "date": "2026-11-03",
+      "weekday": "Tuesday",
+      "name": "Melbourne Cup",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "note": "'Melbourne Cup Day is a public holiday across all of Victoria unless alternate local holiday has been arranged by a non-metro council.'"
+    },
+    {
+      "date": "2026-12-25",
+      "weekday": "Friday",
+      "name": "Christmas Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "note": "restricted trading day"
+    },
+    {
+      "date": "2026-12-26",
+      "weekday": "Saturday",
+      "name": "Boxing Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "note": "Falls on Saturday; Saturday 26 December is still listed"
+    },
+    {
+      "date": "2026-12-28",
+      "weekday": "Monday",
+      "name": "Boxing Day (additional day)",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+      "note": "'As Boxing Day falls on a Saturday, an additional public holiday is given on the following Monday.'"
+    }
+  ],
+  "2027": [
+    {
+      "date": "2027-01-01",
+      "weekday": "Friday",
+      "name": "New Year's Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": "2027-01-26",
+      "weekday": "Tuesday",
+      "name": "Australia Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": "2027-03-08",
+      "weekday": "Monday",
+      "name": "Labour Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": "2027-03-26",
+      "weekday": "Friday",
+      "name": "Good Friday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "restricted trading day"
+    },
+    {
+      "date": "2027-03-27",
+      "weekday": "Saturday",
+      "name": "Saturday before Easter Sunday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": "2027-03-28",
+      "weekday": "Sunday",
+      "name": "Easter Sunday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": "2027-03-29",
+      "weekday": "Monday",
+      "name": "Easter Monday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": "2027-04-25",
+      "weekday": "Sunday",
+      "name": "ANZAC Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "Falls on Sunday; no replacement holiday. Restricted trading day."
+    },
+    {
+      "date": "2027-06-14",
+      "weekday": "Monday",
+      "name": "King's Birthday",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027"
+    },
+    {
+      "date": null,
+      "weekday": null,
+      "name": "Friday before the AFL Grand Final",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "NOT YET DECLARED. Source says: 'Subject to AFL schedule' and 'Friday before AFL Grand Final typically falls on the last Friday in September. This website will be updated with the exact date upon release of the 2027 AFL schedule.'"
+    },
+    {
+      "date": "2027-11-02",
+      "weekday": "Tuesday",
+      "name": "Melbourne Cup",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "Statewide unless a non-metro council has arranged an alternate local holiday."
+    },
+    {
+      "date": "2027-12-25",
+      "weekday": "Saturday",
+      "name": "Christmas Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "Falls on Saturday; still listed. Restricted trading day."
+    },
+    {
+      "date": "2027-12-27",
+      "weekday": "Monday",
+      "name": "Christmas Day (additional day)",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "'As Christmas Day falls on a Saturday, an additional public holiday is given on the following Monday.'"
+    },
+    {
+      "date": "2027-12-26",
+      "weekday": "Sunday",
+      "name": "Boxing Day",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "Falls on Sunday; still listed"
+    },
+    {
+      "date": "2027-12-28",
+      "weekday": "Tuesday",
+      "name": "Boxing Day (additional day)",
+      "source": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027",
+      "note": "'As Boxing Day falls on a Sunday, an additional public holiday is given on the following Tuesday.'"
+    }
+  ]
+}
