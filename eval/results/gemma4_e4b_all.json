@@ -8,7 +8,9 @@
  "args": {
   "limit": 2,
   "images": false,
-  "skip_baseline": true
+  "skip_baseline": true,
+  "split": "all",
+  "rp_all": false
  },
  "extraction": {
   "n_gold": 19,
@@ -371,5 +373,7 @@
   }
  },
  "errors": [],
- "wall_s": 29.4
+ "wall_s": 29.4,
+ "split": "all",
+ "rp_all": null
 }

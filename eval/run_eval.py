@@ -1,13 +1,18 @@
 """Arvo eval: extraction, invoice lines, restrictive-practice screening, photos, latency.
 
-    uv run --with pillow python eval/run_eval.py --models gemma4:e4b,gemma4:e2b
-    uv run --with pillow python eval/run_eval.py --models gemma4:e4b --limit 2 --skip-baseline   # smoke
+    uv run --with pillow python eval/run_eval.py --split test --models gemma4:e4b,gemma4:e2b --images --rp-all
+    uv run --with pillow python eval/run_eval.py --split dev --models gemma4:e4b --limit 2 --skip-baseline  # smoke
+
+Splits: dev = weeks 01-08 (prompts/code may be tuned on these), test = weeks 09-24 (run once at the end),
+all = 01-24. The split is applied before --limit. --rp-all also screens the 42 held-out notes in
+eval/fixtures/rp_notes.jsonl, whatever the split.
 
 Gold comes only from eval/fixtures/*.gold.json (made by eval/gen_fixtures.py). Gold invoice lines are
 the gold shifts priced by arvo.pricing, so line metrics measure what extraction errors cost in dollars.
 RP is screened on the GOLD shifts' notes, so RP numbers are not confounded by extraction.
 
-Writes eval/results/<model>.json, eval/results/summary.md, raw predictions in eval/results/raw/.
+Writes eval/results/<model>_<split>.json, eval/results/summary_<split>.md, raw predictions in
+eval/results/raw/<model>_<split>/.
 """
 
 from __future__ import annotations
@@ -32,6 +37,8 @@ for p in (str(ROOT), str(ROOT / "eval")):
         sys.path.insert(0, p)
 
 RP_TYPES = ("seclusion", "chemical", "mechanical", "physical", "environmental")
+SPLITS = {"dev": range(1, 9), "test": range(9, 25), "all": range(1, 25)}
+SPLIT_LABEL = {"dev": "dev split (weeks 01-08)", "test": "test split (weeks 09-24)", "all": "all weeks (01-24)"}
 SHIFT_FIELDS = ("participant", "date", "start", "end", "km")
 
 
@@ -239,6 +246,28 @@ def latency(values: list[float]) -> dict:
 # =============================================================================================
 # Running the system
 # =============================================================================================
+def select_weeks(weeks: list[dict], split: str = "all", limit: int | None = None) -> list[dict]:
+    """Keep the split's weeks (by week number), then the first `limit` of them."""
+    keep = [w for w in weeks if int(w["week"][4:]) in SPLITS[split]]
+    return keep[:limit] if limit else keep
+
+
+def rp_note_shifts(rows: list[dict]) -> list[dict]:
+    """rp_notes.jsonl rows -> one shift-like dict per note (times are placeholders; only the note is screened)."""
+    return [{"participant_id": r["participant_id"], "date": r["date"], "start": "09:00", "end": "10:00",
+             "km": 0.0, "note": r["text"]} for r in rows]
+
+
+def load_rp_notes() -> list[dict]:
+    path = FIXTURES / "rp_notes.jsonl"
+    return [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+
+
+def result_paths(model: str, split: str) -> tuple[Path, Path, Path]:
+    """(results json, raw dir, summary md) for one model and split, so dev runs never overwrite test ones."""
+    return (RESULTS / f"{slug(model)}_{split}.json", RAW / f"{slug(model)}_{split}", RESULTS / f"summary_{split}.md")
+
+
 def load_fixtures(limit: int | None = None) -> list[dict]:
     weeks = []
     for gp in sorted(FIXTURES.glob("week*.gold.json")):
@@ -288,7 +317,8 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
     import baselines
 
     t_all = time.perf_counter()
-    raw_dir = RAW / slug(model)
+    split = getattr(args, "split", "all")
+    raw_dir = result_paths(model, split)[1]
     raw_dir.mkdir(parents=True, exist_ok=True)
     ex_c, img_c = {}, {}
     inv, inv_base, inv_img = [], [], []
@@ -364,10 +394,29 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
         (raw_dir / f"{name}.json").write_text(json.dumps(rec, indent=1, ensure_ascii=False, default=str) + "\n",
                                               encoding="utf-8")
 
+    rp_all = None
+    if getattr(args, "rp_all", False):  # the held-out RP note set, screened whatever the split
+        rows = load_rp_notes()
+        nshifts = [to_shift(s) for s in rp_note_shifts(rows)]
+        try:
+            aflags, ameta = screen_notes(nshifts, roster, model)
+        except Exception as e:  # noqa: BLE001
+            aflags, ameta = [], {"warnings": [f"ERROR {e}"]}
+            errors.append(f"rp-all: {type(e).__name__}: {e}")
+        lat["rp_all_note_s"] = list(ameta.get("per_call_s", []))
+        akw = baselines.keyword_screen([as_dict(s) for s in nshifts], roster)
+        rp_all = {"gemma": {**rp_metrics(rows, [as_dict(f) for f in aflags]),
+                            "dropped_by_quote_check": sum(1 for w in ameta.get("warnings", []) if "quote not found" in w)},
+                  "keyword_baseline": rp_metrics(rows, akw), "n_notes": len(rows)}
+        (raw_dir / "rp_all.json").write_text(json.dumps(
+            {"flags": [as_dict(f) for f in aflags], "meta": ameta, "keyword_flags": akw}, indent=1,
+            ensure_ascii=False, default=str) + "\n", encoding="utf-8")
+
     n_notes = sum(1 for wk in weeks for s in wk["shifts"] if s.get("note"))
     out = {
-        "model": model, "n_weeks": len(weeks), "weeks": [w["week"] for w in weeks],
-        "args": {"limit": args.limit, "images": args.images, "skip_baseline": args.skip_baseline},
+        "model": model, "split": split, "n_weeks": len(weeks), "weeks": [w["week"] for w in weeks],
+        "args": {"split": split, "limit": args.limit, "images": args.images, "skip_baseline": args.skip_baseline,
+                 "rp_all": bool(getattr(args, "rp_all", False))},
         "extraction": extraction_metrics(ex_c),
         "invoice": invoice_metrics(inv), "invoice_by_week": inv,
         "invoice_model_alone": (None if args.skip_baseline or base_skipped else invoice_metrics(inv_base)),
@@ -377,10 +426,12 @@ def run_model(model: str, weeks: list[dict], roster: dict, args) -> dict:
         "rp": {"gemma": {**rp_metrics(rp_gold, rp_flags), "dropped_by_quote_check": dropped_quotes},
                "keyword_baseline": rp_metrics(rp_gold, kw_flags),
                "n_labelled_notes": len(rp_gold), "n_notes_with_text": n_notes},
+        "rp_all": rp_all,
         "images": ({"extraction": extraction_metrics(img_c), "invoice": invoice_metrics(inv_img)}
                    if args.images else None),
         "latency": {"extract_per_diary": latency(lat["extract_s"]), "rp_per_note": latency(lat["rp_note_s"]),
-                    "image_per_diary": latency(lat["image_s"]), "model_alone_per_diary": latency(lat["baseline_s"])},
+                    "image_per_diary": latency(lat["image_s"]), "model_alone_per_diary": latency(lat["baseline_s"]),
+                    "rp_all_per_note": latency(lat.get("rp_all_note_s", []))},
         "errors": errors,
         "wall_s": round(time.perf_counter() - t_all, 1),
     }
@@ -398,8 +449,34 @@ def _s(x) -> str:
     return "n/a" if x is None else f"{x:.2f}"
 
 
-def summary_md(results: list[dict]) -> str:
-    L = ["# Arvo eval summary", "",
+def _rp_table(L: list[str], results: list[dict], key: str) -> None:
+    L += ["| system | detection P | detection R | detection F1 | needs-reporting P | needs-reporting R | "
+          "needs-reporting F1 | note-level F1 (any type) | hard negatives flagged | dropped by quote check |",
+          "|---|---|---|---|---|---|---|---|---|---|"]
+    by_type = []
+    seen_kw = False
+    for r in results:
+        if not r.get(key):
+            continue
+        rows = [(r["model"], r[key]["gemma"])] + ([] if seen_kw else [("keyword baseline", r[key]["keyword_baseline"])])
+        seen_kw = True
+        for label, m in rows:
+            d, n = m["detection"]["overall"], m["needs_reporting"]["overall"]
+            L.append(f"| {label} | {_pct(d['precision'])} | {_pct(d['recall'])} | {_pct(d['f1'])} | "
+                     f"{_pct(n['precision'])} | {_pct(n['recall'])} | {_pct(n['f1'])} | "
+                     f"{_pct(m['detection']['any_type_note_level']['f1'])} | {m['hard_negatives_flagged']} | "
+                     f"{m.get('dropped_by_quote_check', 'n/a')} |")
+            bt = m["detection"]["by_type"]
+            by_type.append(f"| {label} | " + " | ".join(
+                f"{_pct(bt[t]['f1'])} ({bt[t]['tp']}/{bt[t]['tp'] + bt[t]['fn']})" for t in RP_TYPES) + " |")
+    L += ["", "Detection F1 by type (detected/positives):", "", "| system | " + " | ".join(RP_TYPES) + " |",
+          "|---|" + "---|" * len(RP_TYPES)] + by_type
+
+
+def summary_md(results: list[dict], split: str = "all") -> str:
+    L = [f"# Arvo eval summary: {SPLIT_LABEL[split]}", "",
+         "Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run once "
+         "at the end.", "",
          "Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, never a model. "
          "Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. "
          "Re-run: `uv run --with pillow python eval/run_eval.py --models ...`.", ""]
@@ -433,33 +510,14 @@ def summary_md(results: list[dict]) -> str:
             L.append(f"| {label} | {m['weeks']} | {_pct(m['line_precision'])} | {_pct(m['line_recall'])} | "
                      f"{m['weeks_total_exact']}/{m['weeks']} | {m['weeks_lines_exact']}/{m['weeks']} | "
                      f"${_s(m['abs_error_mean'])} | ${_s(m['abs_error_sum'])} |")
-    L += ["", "## Restrictive-practice flags (on gold notes)", "",
+    L += ["", "## Restrictive-practice flags (on this split's gold notes)", "",
           "Detection = any regulated RP (authorised or not). Needs reporting = RP not authorised in the BSP "
-          "(a flag predicts it when authorised_in_bsp is false). Matched on (participant, date, type).", "",
-          "| system | detection P | detection R | detection F1 | needs-reporting P | needs-reporting R | "
-          "needs-reporting F1 | note-level F1 (any type) | hard negatives flagged | dropped by quote check |",
-          "|---|---|---|---|---|---|---|---|---|---|"]
-    seen_kw = False
-    for r in results:
-        rows = [(r["model"], r["rp"]["gemma"])]
-        if not seen_kw:
-            rows.append(("keyword baseline", r["rp"]["keyword_baseline"]))
-            seen_kw = True
-        for label, m in rows:
-            d, n = m["detection"]["overall"], m["needs_reporting"]["overall"]
-            L.append(f"| {label} | {_pct(d['precision'])} | {_pct(d['recall'])} | {_pct(d['f1'])} | "
-                     f"{_pct(n['precision'])} | {_pct(n['recall'])} | {_pct(n['f1'])} | "
-                     f"{_pct(m['detection']['any_type_note_level']['f1'])} | {m['hard_negatives_flagged']} | "
-                     f"{m.get('dropped_by_quote_check', 'n/a')} |")
-    L += ["", "Detection F1 by type:", "", "| system | " + " | ".join(RP_TYPES) + " |", "|---|" + "---|" * len(RP_TYPES)]
-    seen_kw = False
-    for r in results:
-        rows = [(r["model"], r["rp"]["gemma"])] + ([] if seen_kw else [("keyword baseline", r["rp"]["keyword_baseline"])])
-        seen_kw = True
-        for label, m in rows:
-            bt = m["detection"]["by_type"]
-            L.append(f"| {label} | " + " | ".join(
-                f"{_pct(bt[t]['f1'])} ({bt[t]['tp']}/{bt[t]['tp'] + bt[t]['fn']})" for t in RP_TYPES) + " |")
+          "(a flag predicts it when authorised_in_bsp is false). Matched on (participant, date, type).", ""]
+    _rp_table(L, results, "rp")
+    if any(r.get("rp_all") for r in results):
+        n = next(r["rp_all"]["n_notes"] for r in results if r.get("rp_all"))
+        L += ["", f"## Restrictive-practice flags: held-out note set (all {n} notes in rp_notes.jsonl, any split)", ""]
+        _rp_table(L, results, "rp_all")
     if any(r.get("images") for r in results):
         L += ["", "## Photos of a paper diary (6 handwriting PNGs)", "",
               "| model | gold/pred shifts | recall | precision | exact shift | weeks total right to the cent | "
@@ -485,13 +543,30 @@ def summary_md(results: list[dict]) -> str:
     return "\n".join(L) + "\n"
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description="Arvo eval")
     ap.add_argument("--models", default="gemma4:e4b", help="comma-separated Ollama models")
-    ap.add_argument("--limit", type=int, default=None, help="only the first N weeks")
-    ap.add_argument("--images", action="store_true", help="also extract from the 6 diary photos")
+    ap.add_argument("--split", choices=sorted(SPLITS), default="all",
+                    help="dev = weeks 01-08, test = weeks 09-24, all = 01-24 (applied before --limit)")
+    ap.add_argument("--limit", type=int, default=None, help="only the first N weeks of the split")
+    ap.add_argument("--images", action="store_true", help="also extract from the split's diary photos")
     ap.add_argument("--skip-baseline", action="store_true", help="skip the model-alone pricing baseline")
-    args = ap.parse_args(argv)
+    ap.add_argument("--rp-all", action="store_true",
+                    help="also screen all 42 held-out notes in rp_notes.jsonl, whatever the split")
+    return ap
+
+
+def write_summary(split: str) -> Path:
+    """summary_<split>.md from every <model>_<split>.json present."""
+    results = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(RESULTS.glob(f"*_{split}.json"))]
+    results = [r for r in results if "extraction" in r and r.get("split") == split]
+    path = result_paths("x", split)[2]
+    path.write_text(summary_md(results, split), encoding="utf-8")
+    return path
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
     models = [m.strip() for m in args.models.split(",") if m.strip()]
 
     try:
@@ -499,7 +574,7 @@ def main(argv: list[str] | None = None) -> int:
     except ImportError as e:
         raise SystemExit(f"arvo modules not ready: {e}")
     check_ollama(models)
-    weeks = load_fixtures(args.limit)
+    weeks = select_weeks(load_fixtures(), args.split, args.limit)
     if not weeks:
         raise SystemExit("no fixtures: run eval/gen_fixtures.py first")
     roster = json.loads(ROSTER_PATH.read_text(encoding="utf-8"))
@@ -511,12 +586,10 @@ def main(argv: list[str] | None = None) -> int:
         except Exception:  # noqa: BLE001
             traceback.print_exc()
             return 1
-        (RESULTS / f"{slug(model)}.json").write_text(json.dumps(res, indent=1, ensure_ascii=False) + "\n",
-                                                     encoding="utf-8")
-    results = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(RESULTS.glob("*.json"))]
-    results = [r for r in results if "extraction" in r]
-    (RESULTS / "summary.md").write_text(summary_md(results), encoding="utf-8")
-    print((RESULTS / "summary.md").read_text(encoding="utf-8"))
+        result_paths(model, args.split)[0].write_text(json.dumps(res, indent=1, ensure_ascii=False) + "\n",
+                                                      encoding="utf-8")
+    path = write_summary(args.split)
+    print(path.read_text(encoding="utf-8"))
     print(f"total wall time {time.perf_counter() - t0:.1f}s")
     return 0
 

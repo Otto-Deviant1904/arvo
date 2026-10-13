@@ -1,4 +1,6 @@
-# Arvo eval summary
+# Arvo eval summary: all weeks (01-24)
+
+Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run once at the end.
 
 Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, never a model. Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. Re-run: `uv run --with pillow python eval/run_eval.py --models ...`.
 
@@ -21,7 +23,7 @@ Exact-shift rate by shift kind:
 | gemma4:e4b reads, code prices (Arvo) | 2 | 96.2% | 78.1% | 0/2 | 0/2 | $249.90 | $499.79 |
 | gemma4:e4b alone (model prices) | skipped (--skip-baseline) | | | | | | |
 
-## Restrictive-practice flags (on gold notes)
+## Restrictive-practice flags (on this split's gold notes)
 
 Detection = any regulated RP (authorised or not). Needs reporting = RP not authorised in the BSP (a flag predicts it when authorised_in_bsp is false). Matched on (participant, date, type).
 
@@ -30,7 +32,7 @@ Detection = any regulated RP (authorised or not). Needs reporting = RP not autho
 | gemma4:e4b | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 0/3 | 0 |
 | keyword baseline | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 1/3 | n/a |
 
-Detection F1 by type:
+Detection F1 by type (detected/positives):
 
 | system | seclusion | chemical | mechanical | physical | environmental |
 |---|---|---|---|---|---|
