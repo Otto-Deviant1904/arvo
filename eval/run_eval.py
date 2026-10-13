@@ -537,7 +537,7 @@ def summary_md(results: list[dict], split: str = "all") -> str:
                 if split == "wild" else
                 "Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run "
                 "once at the end.")
-    source = ("Diaries and gold from `eval/wild/` (gold written by hand, not by a model)." if split == "wild" else
+    source = ("Diaries and gold from `eval/wild/` (diaries and gold written by an AI agent; a blind second annotator agreed on 58/58 shifts, see eval/README.md)." if split == "wild" else
               "Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, "
               "never a model.")
     rerun = ("--set wild" if split == "wild" else f"--split {split}")

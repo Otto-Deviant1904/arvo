@@ -341,7 +341,7 @@ def test_page_never_writes_markup_from_strings():
 def test_page_has_required_copy():
     for text in ("Running on your laptop: ", "Demo mode: showing a saved run", "Record a memo", "MediaRecorder",
                  "What Gemma heard", "audio_b64_list", "audio_dates",
-                 "Arvo flags, it does not decide. Talk to your provider or the NDIS Commission.",
+                 "Arvo flags, it does not decide. Registered providers must notify the NDIS Commission",
                  "Nothing you type here leaves this computer.", "python -m arvo serve", "demo/run.json"):
         assert text in HTML, text
     # no third-party scripts; the only external URL is the hosted-demo font stylesheet

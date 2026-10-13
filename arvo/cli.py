@@ -76,12 +76,13 @@ def render(result) -> str:
         if f.explanation:
             out.append(f"      why: {f.explanation}")
         if f.report_by:
-            out.append(f"      report by: {f.report_by}")
+            out.append(f"      registered provider notify by: {f.report_by}")
         elif not f.authorised_in_bsp:
             out.append("      report by: (5 business days; deadline needs arvo.calendar_au)")
     if red:
-        out.append("  Red flags: unregistered providers must not use restrictive practices. "
-                   "Talk to your provider or the NDIS Commission.")
+        out.append("  Red flags: registered providers must notify the NDIS Commission by the date shown. "
+                   "Unregistered providers must not use restrictive practices at all: raise it with the "
+                   "Commission (behavioursupport@ndiscommission.gov.au, 1800 035 544). Immediate risk: 000.")
 
     if result.warnings:
         out.append("")

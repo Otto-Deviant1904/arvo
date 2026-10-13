@@ -2,7 +2,7 @@
 
 The wild set is held out: it was never used for tuning and was run once at the end.
 
-Diaries and gold from `eval/wild/` (gold written by hand, not by a model). Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. `code-only` = the deterministic extractor with no model (no RP, photo or model-alone numbers). Re-run: `uv run --with pillow python eval/run_eval.py --set wild --models ...`.
+Diaries and gold from `eval/wild/` (diaries and gold written by an AI agent; a blind second annotator agreed on 58/58 shifts, see eval/README.md). Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. `code-only` = the deterministic extractor with no model (no RP, photo or model-alone numbers). Re-run: `uv run --with pillow python eval/run_eval.py --set wild --models ...`.
 
 ## Shift extraction (typed diary text)
 

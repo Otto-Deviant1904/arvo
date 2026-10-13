@@ -612,7 +612,7 @@ const MIC_MESSAGES = {
   nomic: 'No microphone found. Plug one in, or choose a recorded file.',
   failed: 'Recording could not start. Choose a recorded file instead.',
 };
-const FLAG_FOOTER = 'Arvo flags, it does not decide. Talk to your provider or the NDIS Commission.';
+const FLAG_FOOTER = 'Arvo flags, it does not decide. Registered providers must notify the NDIS Commission of unauthorised use by the date shown. Unregistered providers must not use restrictive practices at all: raise it with the Commission (behavioursupport@ndiscommission.gov.au, 1800 035 544). If anyone is at immediate risk, call 000.';
 const INVOICE_CSP = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:">';
 
 const state = {
@@ -1233,7 +1233,7 @@ function renderFlags(flags, shifts) {
       h('dl', { class: 'flag-facts' },
         authorised
           ? h('div', null, h('dt', null, 'Reporting'), h('dd', null, 'Authorised use: record it as the plan says'))
-          : h('div', { class: 'is-deadline' }, h('dt', null, 'Report by'), h('dd', null, f.report_by ? fmtDeadline(f.report_by) : 'No deadline worked out')),
+          : h('div', { class: 'is-deadline' }, h('dt', null, 'Registered provider: notify by'), h('dd', null, f.report_by ? fmtDeadline(f.report_by) : 'No deadline worked out')),
         h('div', null, h('dt', null, 'Harm or injury mentioned'), h('dd', null, f.harm_mentioned ? 'Yes' : 'No')))));
   }
   sec.replaceChildren(
