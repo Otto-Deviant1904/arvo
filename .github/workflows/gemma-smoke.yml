@@ -1,0 +1,50 @@
+name: gemma smoke test
+
+# Runs the real pipeline on a GitHub runner with no GPU and no API key:
+# Ollama + the open-weight gemma4:e2b model on CPU, two synthetic diaries,
+# and the restrictive-practice notes set. Proves the whole thing needs
+# nothing but open weights and a computer.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Ollama model tag"
+        default: "gemma4:e2b"
+      limit:
+        description: "How many fixture diaries"
+        default: "2"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Install Ollama
+        run: curl -fsSL https://ollama.com/install.sh | sh
+      - name: Start Ollama and pull the model
+        run: |
+          (ollama serve > ollama.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break; sleep 2; done
+          ollama pull "${{ inputs.model }}"
+      - name: Run Arvo on one diary
+        run: |
+          uv run python -m arvo process eval/fixtures/week01.txt \
+            --week-ending "$(python3 -c 'import json;print(json.load(open("eval/fixtures/week01.gold.json"))["week_ending"])')" \
+            --roster data/roster.example.json --model "${{ inputs.model }}" --json smoke_run.json | tee smoke_run.txt
+      - name: Eval on a few diaries
+        run: |
+          uv run --with pillow python eval/run_eval.py --models "${{ inputs.model }}" --limit "${{ inputs.limit }}" --skip-baseline
+          cat eval/results/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemma-smoke
+          path: |
+            smoke_run.json
+            smoke_run.txt
+            eval/results/
+            ollama.log
