@@ -32,13 +32,13 @@ jobs:
           ollama pull "${{ inputs.model }}"
       - name: Run Arvo on one diary
         run: |
-          uv run python -m arvo process eval/fixtures/week01.txt \
-            --week-ending "$(python3 -c 'import json;print(json.load(open("eval/fixtures/week01.gold.json"))["week_ending"])')" \
+          uv run python -m arvo process eval/fixtures/week09.txt \
+            --week-ending "$(python3 -c 'import json;print(json.load(open("eval/fixtures/week09.gold.json"))["week_ending"])')" \
             --roster data/roster.example.json --model "${{ inputs.model }}" --json smoke_run.json | tee smoke_run.txt
       - name: Eval on a few diaries
         run: |
-          uv run --with pillow python eval/run_eval.py --models "${{ inputs.model }}" --limit "${{ inputs.limit }}" --skip-baseline
-          cat eval/results/summary.md >> "$GITHUB_STEP_SUMMARY"
+          uv run --with pillow python eval/run_eval.py --models "${{ inputs.model }}" --split test --limit "${{ inputs.limit }}" --skip-baseline
+          cat eval/results/summary_test.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

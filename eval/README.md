@@ -5,10 +5,24 @@ from a model. Everything here runs offline against the local Ollama server.
 
 ```
 uv run --with pillow python eval/gen_fixtures.py                 # (re)write eval/fixtures/
-uv run --with pillow python eval/run_eval.py --models gemma4:e4b,gemma4:e2b --images
-uv run --with pillow python eval/run_eval.py --models gemma4:e4b --limit 2 --skip-baseline   # smoke
+uv run --with pillow python eval/run_eval.py --split dev --models gemma4:e4b --limit 2 --skip-baseline   # smoke
+uv run --with pillow python eval/run_eval.py --split dev --models gemma4:e4b,gemma4:e2b --images          # tuning loop
+uv run --with pillow python eval/run_eval.py --split test --models gemma4:e4b,gemma4:e2b --images --rp-all  # once, at the end
 uv run --with pytest --with pillow pytest -q tests/test_eval_harness.py
 ```
+
+## Dev / test split
+
+**Prompts and code were tuned only on dev weeks 1-8; test weeks 9-24 and the RP note set were run once at the end.**
+
+- `--split dev` = weeks 01-08 (photos: weeks 2, 6), `--split test` = weeks 09-24 (photos: weeks 9, 13, 16, 21),
+  `--split all` (default) = 01-24. The split is applied before `--limit`. Extraction, invoice lines, photos and
+  the RP screen on gold notes all follow the split.
+- `--rp-all` also screens all 42 held-out notes in `eval/fixtures/rp_notes.jsonl`, whatever the split, each as
+  its own note. This is the held-out RP set: it is never used for tuning. Reported in its own section.
+- Results carry the split in their names: `eval/results/<model>_<split>.json`, `eval/results/summary_<split>.md`,
+  `eval/results/raw/<model>_<split>/`, so a dev run never overwrites test results. Each summary is built from
+  that split's result files only and says the split in its header.
 
 ## Fixtures (`eval/fixtures/`)
 
@@ -79,9 +93,9 @@ note appears in the prompt source. Each note sits on exactly one shift for its p
 - **Latency**: wall seconds per diary (extraction, photo, model-alone) and per note (RP, from the per-call
   timings in rp's meta), mean and p95, plus total wall time.
 
-Outputs: `eval/results/<model>.json`, `eval/results/summary.md` (built from every results JSON present,
-so a `--limit` smoke result shows its week count), raw predictions per week in `eval/results/raw/`
-(gitignored). A week whose model call errors scores as all-missed and is listed under errors.
+Outputs: `eval/results/<model>_<split>.json`, `eval/results/summary_<split>.md` (built from every results
+JSON of that split, so a `--limit` smoke result shows its week count), raw predictions per week in
+`eval/results/raw/<model>_<split>/` (gitignored). A week whose model call errors scores as all-missed and is listed under errors.
 
 ## Limits worth stating in the post
 

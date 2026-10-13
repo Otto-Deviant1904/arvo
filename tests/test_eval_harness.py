@@ -227,3 +227,72 @@ def test_keyword_baseline():
     assert f == [{"rp_type": "chemical", "evidence_quote": "Gave her PRN lorazepam.", "authorised_in_bsp": True,
                   "harm_mentioned": False}]
     assert baselines.keyword_rp("Strapped him in, he got a bruise.")[0]["harm_mentioned"] is True
+
+
+# ------------------------------------------------------------------------------- splits / --rp-all
+def test_split_selection_before_limit():
+    weeks = ev.load_fixtures()
+    dev, test = ev.select_weeks(weeks, "dev"), ev.select_weeks(weeks, "test")
+    assert [w["week"] for w in dev] == [f"week{i:02d}" for i in range(1, 9)]
+    assert [w["week"] for w in test] == [f"week{i:02d}" for i in range(9, 25)]
+    assert len(ev.select_weeks(weeks, "all")) == 24
+    assert [w["week"] for w in ev.select_weeks(weeks, "test", 2)] == ["week09", "week10"]
+    assert {w["week"] for w in test if w["image"]} == {"week09", "week13", "week16", "week21"}
+    assert {w["week"] for w in dev if w["image"]} == {"week02", "week06"}
+
+
+def test_parser_and_split_named_outputs():
+    a = ev.build_parser().parse_args([])
+    assert a.split == "all" and a.rp_all is False and a.limit is None
+    a = ev.build_parser().parse_args(["--split", "test", "--rp-all", "--limit", "3"])
+    assert (a.split, a.rp_all, a.limit) == ("test", True, 3)
+    with pytest.raises(SystemExit):
+        ev.build_parser().parse_args(["--split", "train"])
+    js, raw, md = ev.result_paths("gemma4:e4b", "test")
+    assert (js.name, raw.name, md.name) == ("gemma4_e4b_test.json", "gemma4_e4b_test", "summary_test.md")
+    assert ev.result_paths("gemma4:e4b", "dev")[2].name == "summary_dev.md"
+
+
+def test_rp_note_shifts_cover_every_heldout_note():
+    rows = ev.load_rp_notes()
+    shifts = ev.rp_note_shifts(rows)
+    assert len(shifts) == 42 and [s["note"] for s in shifts] == [r["text"] for r in rows]
+    assert len({(s["participant_id"], s["date"]) for s in shifts}) == 42  # keys never collide in rp_metrics
+
+
+def test_run_model_offline_with_split_and_rp_all(tmp_path, monkeypatch):
+    """Whole run_model path with fake model calls (gold in, gold out): no network, no Ollama."""
+    import types
+    extract = pytest.importorskip("arvo.extract")
+    rp = pytest.importorskip("arvo.rp")
+    pytest.importorskip("arvo.pricing")
+    from arvo.models import RPFlag
+
+    monkeypatch.setattr(ev, "RESULTS", tmp_path)
+    monkeypatch.setattr(ev, "RAW", tmp_path / "raw")
+    weeks = ev.select_weeks(ev.load_fixtures(), "dev", 2)
+    by_we = {w["week_ending"]: w for w in weeks}
+    monkeypatch.setattr(extract, "extract_shifts", lambda text, roster, we, model, image_path=None: (
+        [ev.to_shift(s) for s in by_we[we]["shifts"]], [], {}))
+    rows = ev.load_rp_notes()
+
+    def fake_screen(shifts, roster, model):
+        keys = {(s.participant_id, s.date) for s in shifts}
+        flags = [RPFlag(r["participant_id"], r["date"], r["rp_type"], "q", r["harm_mentioned"], r["authorised_in_bsp"])
+                 for r in rows if r["is_rp"] and (r["participant_id"], r["date"]) in keys]
+        return flags, {"per_call_s": [0.1] * len(shifts), "warnings": []}
+
+    monkeypatch.setattr(rp, "screen_notes", fake_screen)
+    args = types.SimpleNamespace(split="dev", limit=2, images=False, skip_baseline=True, rp_all=True)
+    roster = json.loads((ROOT / "data" / "roster.example.json").read_text(encoding="utf-8"))
+    r = ev.run_model("fake", weeks, roster, args)
+    assert r["split"] == "dev" and r["weeks"] == ["week01", "week02"]
+    assert r["extraction"]["exact_match"] == 1.0 and r["invoice"]["weeks_total_exact"] == 2
+    assert r["rp_all"]["n_notes"] == 42
+    assert r["rp_all"]["gemma"]["detection"]["overall"]["f1"] == 1.0
+    assert r["rp_all"]["gemma"]["needs_reporting"]["overall"] == ev.prf(20, 0, 0)
+    assert r["rp_all"]["gemma"]["hard_negatives_flagged"] == "0/20"
+    assert (tmp_path / "raw" / "fake_dev" / "week01.json").exists()
+    md = ev.summary_md([r], "dev")
+    assert md.startswith("# Arvo eval summary: dev split (weeks 01-08)")
+    assert "tuned only on dev weeks 1-8" in md and "held-out note set (all 42 notes" in md

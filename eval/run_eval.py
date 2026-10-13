@@ -479,7 +479,7 @@ def summary_md(results: list[dict], split: str = "all") -> str:
          "at the end.", "",
          "Synthetic diaries from `eval/gen_fixtures.py` (seeded); gold labels come from the generator, never a model. "
          "Gold invoice lines = gold shifts priced by `arvo.pricing`. RP is screened on the gold notes. "
-         "Re-run: `uv run --with pillow python eval/run_eval.py --models ...`.", ""]
+         f"Re-run: `uv run --with pillow python eval/run_eval.py --split {split} --models ...`.", ""]
     L += ["## Shift extraction (typed diary text)", "",
           "| model | weeks | gold/pred shifts | recall | precision | participant | date | start | end | km | exact shift |",
           "|---|---|---|---|---|---|---|---|---|---|---|"]
