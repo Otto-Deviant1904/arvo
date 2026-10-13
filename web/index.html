@@ -218,6 +218,37 @@ input[type="date"]:focus-visible, textarea:focus-visible { border-color: var(--f
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 0 0.3em;
 }
 
+.voice { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 0.5rem; }
+.voice legend { font-weight: 600; padding: 0; margin-bottom: 0.375rem; }
+.voice-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.file-btn { display: inline-flex; align-items: center; }
+.file-btn:focus-within { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn-secondary[aria-disabled="true"] { color: var(--muted); border-color: var(--line); cursor: not-allowed; background: var(--surface); }
+.rec-btn { display: inline-flex; align-items: center; gap: 0.5rem; }
+.rec-dot { width: 0.625rem; height: 0.625rem; border-radius: 50%; background: var(--flag); flex: none; }
+.rec-btn[aria-disabled="true"] .rec-dot { background: var(--line); }
+.rec-btn.is-recording { background: var(--flag); border-color: var(--flag); color: var(--surface); }
+.rec-btn.is-recording .rec-dot { background: var(--surface); animation: pulse 1s ease-in-out infinite; }
+.rec-time { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.voice-status { font-size: 0.875rem; color: var(--muted); }
+.voice-status:empty { display: none; }
+.voice-note {
+  font-size: 0.875rem; color: var(--warn); background: var(--warn-bg);
+  border: 1px solid var(--warn-line); border-radius: 6px; padding: 0.375rem 0.625rem;
+}
+.memo-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.memo {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 0.375rem 0.75rem;
+  padding: 0.625rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2);
+}
+.memo-name { font-weight: 600; font-size: 0.9375rem; overflow-wrap: anywhere; }
+.memo-len { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); white-space: nowrap; }
+.memo-row { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.75rem; font-size: 0.875rem; }
+.memo-row label { color: var(--muted); }
+.memo-row input[type="date"] { width: auto; max-width: 11.5rem; padding: 0.25rem 0.5rem; }
+.memo-row .link-btn { margin-left: auto; font-size: 0.875rem; }
+.memo-warn { grid-column: 1 / -1; font-size: 0.8125rem; color: var(--warn); }
+
 /* ---------- results shared */
 .panel { padding: 1.25rem; }
 .sec-head { display: grid; gap: 0.25rem; margin-bottom: 0.875rem; }
@@ -311,6 +342,18 @@ mark.evidence {
   border-radius: 6px; padding: 0.0625rem 0.5rem;
 }
 .warn-inline b, .warn-list b { font-weight: 700; }
+.heard {
+  margin: 0 0 0.875rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2);
+}
+.heard summary { cursor: pointer; padding: 0.625rem 0.875rem; font-weight: 700; }
+.heard summary span { font-weight: 400; color: var(--muted); }
+.heard-body { padding: 0 0.875rem 0.875rem; display: grid; gap: 0.625rem; }
+.heard-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.625rem; }
+.heard-meta { font-size: 0.8125rem; color: var(--muted); }
+.heard-text {
+  margin: 0.125rem 0 0; padding: 0.5rem 0.75rem; border-left: 3px solid var(--accent);
+  background: var(--surface); border-radius: 0 6px 6px 0; overflow-wrap: anywhere;
+}
 .warn-list {
   list-style: none; margin: 0 0 0.875rem; padding: 0.625rem 0.875rem; display: grid; gap: 0.25rem;
   color: var(--warn); background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 8px;
@@ -478,6 +521,22 @@ mark.evidence {
         </div>
       </div>
 
+      <fieldset class="voice" id="voice" aria-describedby="voice-hint">
+        <legend>Voice memos</legend>
+        <p class="hint" id="voice-hint">Talked your shift notes into your phone in the car? Add the memos. Gemma listens on this laptop.</p>
+        <div class="voice-actions">
+          <button type="button" class="btn-secondary rec-btn" id="rec-btn">
+            <span class="rec-dot" aria-hidden="true"></span><span id="rec-label">Record a memo</span><span class="rec-time" id="rec-time" aria-hidden="true"></span>
+          </button>
+          <label class="btn-secondary file-btn" for="audio-files">Choose audio files
+            <input type="file" id="audio-files" class="sr-only" multiple accept="audio/*,.m4a,.mp3,.wav,.ogg,.opus,.webm,.aac,.flac,.amr,.3gp,.caf">
+          </label>
+        </div>
+        <p class="voice-status" id="rec-status" role="status" aria-live="polite"></p>
+        <p class="voice-note" id="voice-note" hidden></p>
+        <ol class="memo-list" id="memo-list" aria-label="Voice memos to send" hidden></ol>
+      </fieldset>
+
       <div class="run-row">
         <button type="submit" class="btn-primary" id="run-btn">Read and price this week</button>
         <span class="elapsed" id="elapsed" aria-hidden="true"></span>
@@ -493,7 +552,7 @@ mark.evidence {
 
     <div class="card empty" id="empty">
       <h3>Nothing to check yet</h3>
-      <p>Paste this week’s diary or add a photo, then press <strong>Read and price this week</strong>. You’ll get:</p>
+      <p>Paste this week’s diary, add a photo or add voice memos, then press <strong>Read and price this week</strong>. You’ll get:</p>
       <ul>
         <li>notes to check before you invoice, with the exact sentence highlighted</li>
         <li>every shift as Gemma read it, so a wrong time is easy to spot</li>
@@ -540,7 +599,18 @@ const RP_LABELS = {
   physical: 'Physical restraint',
   environmental: 'Environmental restraint',
 };
-const TIMING_LABELS = { extract_s: 'read', pricing_s: 'priced', rp_s: 'flag check', total_s: 'total' };
+const TIMING_LABELS = { transcribe_s: 'listened', extract_s: 'read', pricing_s: 'priced', rp_s: 'flag check', total_s: 'total' };
+const MAX_MEMO_S = 5 * 60;
+const MAX_SEND_CHARS = 25 * 1024 * 1024 - 64 * 1024;
+const AUDIO_NAME = /\.(m4a|mp3|wav|ogg|oga|opus|webm|aac|flac|amr|3gp|caf)$/i;
+const MIC_MESSAGES = {
+  demo: 'Voice memos work in the local app on your laptop. This public demo cannot listen to them.',
+  insecure: 'This browser only allows the microphone on a secure page. Open Arvo at http://127.0.0.1:8765, or choose a recorded file.',
+  unsupported: 'This browser cannot record here. Record the memo on your phone and choose the file instead.',
+  denied: 'Microphone access is blocked. Allow the microphone for this page in your browser settings, or choose a recorded file.',
+  nomic: 'No microphone found. Plug one in, or choose a recorded file.',
+  failed: 'Recording could not start. Choose a recorded file instead.',
+};
 const FLAG_FOOTER = 'Arvo flags, it does not decide. Talk to your provider or the NDIS Commission.';
 const INVOICE_CSP = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:">';
 
@@ -551,6 +621,10 @@ const state = {
   people: new Map(),     // participant id -> roster entry
   order: [],             // roster order of participant ids
   image: null,           // { b64, name }
+  memos: [],             // { id, blob, name, duration, source, date, els }
+  memoSeq: 0,
+  lastMemoDate: '',      // the last date the worker picked for a memo
+  rec: null,             // { recorder, stream, t0, timer } while recording
   thumbUrl: '',
   running: false,
   result: null,
@@ -696,6 +770,8 @@ async function enterLocal(health) {
     setPill('ok', `Running on your laptop: ${state.model}`);
   }
   try { setRoster(await fetchJSON('/api/roster')); } catch (_) { /* names fall back to ids */ }
+  const mic = micSupport();
+  if (mic !== 'ok') disableRecording(mic);
 }
 
 async function enterDemo() {
@@ -704,6 +780,7 @@ async function enterDemo() {
   const btn = $('run-btn');
   btn.setAttribute('aria-disabled', 'true');
   btn.title = DEMO_TIP;
+  disableRecording('demo');
   setNote('This is a saved run on a public page. To read your own diary, run ',
     h('code', null, 'python -m arvo serve'), ' on your laptop and open the address it prints.');
 
@@ -761,13 +838,16 @@ async function imageToBase64(file) {
       if (bmp.close) bmp.close();
     } catch (_) { /* send the original file */ }
   }
-  const dataUrl = await new Promise((res, rej) => {
+  return blobToBase64(blob);
+}
+
+function blobToBase64(blob) {
+  return new Promise((res, rej) => {
     const fr = new FileReader();
-    fr.onload = () => res(String(fr.result));
+    fr.onload = () => { const s = String(fr.result); res(s.slice(s.indexOf(',') + 1)); };
     fr.onerror = () => rej(fr.error);
     fr.readAsDataURL(blob);
   });
-  return dataUrl.slice(dataUrl.indexOf(',') + 1);
 }
 
 async function setPhoto(file) {
@@ -805,15 +885,184 @@ function clearPhoto() {
   $('photo').focus();
 }
 
+// ------------------------------------------------------------------ voice memos
+function fmtDuration(secs) {
+  if (secs === null || secs === undefined) return 'measuring…';
+  if (!Number.isFinite(secs)) return 'length unknown';
+  const s = Math.max(0, Math.round(secs));
+  return `${Math.floor(s / 60)}:${pad(s % 60)}`;
+}
+function micSupport() {
+  if (state.mode === 'demo') return 'demo';
+  if (!window.isSecureContext) return 'insecure';
+  if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function' ||
+      typeof MediaRecorder === 'undefined') return 'unsupported';
+  return 'ok';
+}
+function setVoiceNote(key) {
+  const el = $('voice-note');
+  el.textContent = key ? MIC_MESSAGES[key] : '';
+  el.hidden = !key;
+}
+function disableRecording(key) {
+  const btn = $('rec-btn');
+  btn.setAttribute('aria-disabled', 'true');
+  btn.title = MIC_MESSAGES[key];
+  setVoiceNote(key);
+}
+function weekStart(we) {
+  const d = parseISO(we);
+  if (!d) return '';
+  d.setDate(d.getDate() - 6);
+  return isoDate(d);
+}
+function memoDefaultDate(name) {
+  const m = /(?:^|\D)(20\d\d)[-_.]?(0[1-9]|1[0-2])[-_.]?(0[1-9]|[12]\d|3[01])(?!\d)/.exec(name || '');
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  return state.lastMemoDate || isoDate(new Date());
+}
+
+function addMemo(blob, name, duration, source) {
+  const memo = { id: ++state.memoSeq, blob, name, duration, source, date: memoDefaultDate(source === 'file' ? name : ''), els: null };
+  state.memos.push(memo);
+  renderMemos();
+  if (duration === null) probeDuration(memo);
+}
+function addAudioFile(file) {
+  if (!file) return;
+  if (!/^audio\//.test(file.type) && !AUDIO_NAME.test(file.name)) {
+    showError(`${file.name} is not an audio file. Choose a voice memo (m4a, mp3, wav, ogg or webm).`);
+    return;
+  }
+  clearError();
+  addMemo(file, file.name, null, 'file');
+}
+function probeDuration(memo) {
+  const url = URL.createObjectURL(memo.blob);
+  const audio = new Audio();
+  audio.preload = 'metadata';
+  const done = (d) => {
+    URL.revokeObjectURL(url);
+    memo.duration = Number.isFinite(d) && d > 0 ? d : NaN;
+    if (memo.els) memo.els.len.textContent = fmtDuration(memo.duration);
+  };
+  audio.addEventListener('loadedmetadata', () => done(audio.duration), { once: true });
+  audio.addEventListener('error', () => done(NaN), { once: true });
+  audio.src = url;
+}
+function removeMemo(id) {
+  const i = state.memos.findIndex((m) => m.id === id);
+  if (i < 0) return;
+  state.memos.splice(i, 1);
+  renderMemos();
+  const next = state.memos[Math.min(i, state.memos.length - 1)];
+  if (next && next.els) next.els.remove.focus();
+  else $('rec-btn').focus();
+}
+function memoOutside(m) {
+  const we = $('week-ending').value;
+  return !!(m.date && we && (m.date > we || m.date < weekStart(we)));
+}
+function updateMemoWarnings() {
+  const we = $('week-ending').value;
+  for (const m of state.memos) {
+    if (!m.els) continue;
+    const out = memoOutside(m);
+    m.els.warn.hidden = !out;
+    m.els.warn.textContent = out ? `Not in the week ending ${fmtDate(we)}. Check the date.` : '';
+  }
+}
+function renderMemos() {
+  const list = $('memo-list');
+  list.replaceChildren(...state.memos.map((m, i) => {
+    const dateId = `memo-date-${m.id}`;
+    const len = h('span', { class: 'memo-len' }, fmtDuration(m.duration));
+    const warn = h('p', { class: 'memo-warn', hidden: true });
+    const remove = h('button', { type: 'button', class: 'link-btn', onclick: () => removeMemo(m.id) },
+      'Remove', h('span', { class: 'sr-only' }, ` ${m.name}`));
+    const input = h('input', { type: 'date', id: dateId, value: m.date || null,
+      onchange: (e) => { m.date = e.target.value; if (m.date) state.lastMemoDate = m.date; updateMemoWarnings(); } });
+    m.els = { len, warn, remove };
+    return h('li', { class: 'memo' },
+      h('span', { class: 'memo-name' }, `${i + 1}. ${m.name}`),
+      len,
+      h('div', { class: 'memo-row' }, h('label', { for: dateId }, 'Recorded on'), input, remove),
+      warn);
+  }));
+  list.hidden = !state.memos.length;
+  updateMemoWarnings();
+}
+
+function paintRecButton() {
+  const on = !!state.rec;
+  $('rec-btn').classList.toggle('is-recording', on);
+  $('rec-label').textContent = on ? 'Stop recording' : 'Record a memo';
+  $('rec-time').textContent = on ? fmtDuration(0) : '';
+}
+function stopRecording() {
+  if (state.rec && state.rec.recorder.state !== 'inactive') state.rec.recorder.stop();
+}
+async function toggleRecording() {
+  if (state.rec) { stopRecording(); return; }
+  const support = micSupport();
+  if (support !== 'ok') { setVoiceNote(support); return; }
+  setVoiceNote('');
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) {
+    const name = e && e.name;
+    setVoiceNote(name === 'NotAllowedError' || name === 'SecurityError' ? 'denied'
+      : name === 'NotFoundError' || name === 'OverconstrainedError' ? 'nomic' : 'failed');
+    return;
+  }
+  let recorder;
+  try {
+    recorder = new MediaRecorder(stream);
+  } catch (_) {
+    stream.getTracks().forEach((t) => t.stop());
+    setVoiceNote('failed');
+    return;
+  }
+  const chunks = [];
+  const t0 = performance.now();
+  recorder.addEventListener('dataavailable', (e) => { if (e.data && e.data.size) chunks.push(e.data); });
+  recorder.addEventListener('stop', () => {
+    stream.getTracks().forEach((t) => t.stop());
+    const secs = (performance.now() - t0) / 1000;
+    if (state.rec) clearInterval(state.rec.timer);
+    state.rec = null;
+    paintRecButton();
+    const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+    if (!blob.size) { $('rec-status').textContent = 'Nothing was recorded. Try again.'; return; }
+    const n = state.memos.filter((m) => m.source === 'recorded').length + 1;
+    addMemo(blob, `Recorded memo ${n}`, secs, 'recorded');
+    $('rec-status').textContent = `Memo saved (${fmtDuration(secs)}). Check its date below.`;
+  });
+  state.rec = {
+    recorder, stream, t0,
+    timer: setInterval(() => {
+      const s = (performance.now() - t0) / 1000;
+      $('rec-time').textContent = fmtDuration(s);
+      if (s >= MAX_MEMO_S) stopRecording();
+    }, 250),
+  };
+  recorder.start(1000);
+  paintRecButton();
+  $('rec-status').textContent = 'Recording. Press Stop recording when you are done.';
+}
+
 // ------------------------------------------------------------------ running
 let tick = null;
-function startProgress() {
+function startProgress(memoCount) {
   state.running = true;
   const btn = $('run-btn');
   const t0 = performance.now();
   btn.setAttribute('aria-busy', 'true');
   btn.textContent = 'Reading your diary…';
-  $('run-status').textContent = 'Gemma is reading your diary on this laptop. This usually takes 10 to 40 seconds.';
+  $('run-status').textContent = memoCount
+    ? `Gemma is listening to ${plural(memoCount, 'voice memo', 'voice memos')} and reading your diary on this laptop. Memos add time; keep this tab open.`
+    : 'Gemma is reading your diary on this laptop. This usually takes 10 to 40 seconds.';
   const paint = () => {
     const s = Math.floor((performance.now() - t0) / 1000);
     $('elapsed').textContent = `${s} s`;
@@ -841,19 +1090,39 @@ async function onRun(ev) {
   }
   if (state.running) return;
   clearError();
+  if (state.rec) { showError('Stop the recording first, then press Read and price this week.'); return; }
   const weekEnding = $('week-ending').value;
   const diary = $('diary').value;
   if (!weekEnding) { showError('Choose the week-ending date first.'); $('week-ending').focus(); return; }
-  if (!diary.trim() && !state.image) { showError('Paste your diary or add a photo first.'); $('diary').focus(); return; }
+  if (!diary.trim() && !state.image && !state.memos.length) {
+    showError('Paste your diary, add a photo or add a voice memo first.');
+    $('diary').focus();
+    return;
+  }
 
   const body = { diary_text: diary, week_ending: weekEnding };
   if (state.image) body.image_b64 = state.image.b64;
-  startProgress();
+  let payload;
+  try {
+    if (state.memos.length) {
+      body.audio_b64_list = await Promise.all(state.memos.map((m) => blobToBase64(m.blob)));
+      body.audio_dates = state.memos.map((m) => m.date || null);
+    }
+    payload = JSON.stringify(body);
+  } catch (_) {
+    showError('Arvo could not read one of the voice memos. Remove it and add it again.');
+    return;
+  }
+  if (payload.length > MAX_SEND_CHARS) {
+    showError('That is more than 25 MB to send. Remove a memo or use a smaller photo.');
+    return;
+  }
+  startProgress(state.memos.length);
   try {
     const data = await fetchJSON('/api/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: payload,
       timeout: 15 * 60 * 1000,
     });
     state.weekEnding = weekEnding;
@@ -973,9 +1242,11 @@ function renderShifts(shifts, warnings) {
   sec.hidden = false;
   const parts = [sectionHead('shifts-h', 'What Gemma read',
     'Read by the model from your diary. Check names, dates and times before you invoice.')];
-  if (warnings.length) {
+  const { heard, rest } = splitHeard(warnings);
+  if (heard.length) parts.push(renderHeard(heard));
+  if (rest.length) {
     parts.push(h('ul', { class: 'warn-list', 'aria-label': 'Things to check' },
-      warnings.map((w) => h('li', null, h('b', null, 'Check: '), String(w)))));
+      rest.map((w) => h('li', null, h('b', null, 'Check: '), w))));
   }
   if (!shifts.length) {
     parts.push(h('p', { class: 'muted' }, 'No shifts found. Check that the week-ending date matches the diary.'));
@@ -1005,6 +1276,36 @@ function renderShifts(shifts, warnings) {
         h('th', { scope: 'col', class: 'num' }, 'km'), h('th', { scope: 'col' }, 'From your diary'))),
       tbody)));
   sec.replaceChildren(...parts);
+}
+
+// pipeline: 'voice memo <file> (12.5 s, recorded 2026-10-06): heard "<transcript>"; check names, times and km'
+const HEARD_RE = /^voice memo \S+ \(([\d.]+) s(?:, recorded (\d{4}-\d{2}-\d{2}))?\): heard "([\s\S]*)"; check names, times and km\s*$/;
+const tidyMemoNames = (s) => String(s).replace(/arvo-memo-(\d{4}-\d{2}-\d{2}|nodate)-[\w-]*?\.audio/g,
+  (_, d) => (d === 'nodate' ? 'a voice memo' : `the memo from ${fmtDate(d)}`));
+
+function splitHeard(warnings) {
+  const heard = [];
+  const rest = [];
+  for (const w of warnings) {
+    const s = String(w);
+    const m = HEARD_RE.exec(s);
+    if (m) heard.push({ secs: Number(m[1]), recorded: m[2] || '', text: m[3] });
+    else if (/^heard\b/i.test(s)) heard.push({ secs: NaN, recorded: '', text: s.replace(/^heard\s*:?\s*/i, '') });
+    else rest.push(tidyMemoNames(s));
+  }
+  return { heard, rest };
+}
+
+function renderHeard(heard) {
+  return h('details', { class: 'heard', open: true },
+    h('summary', null, 'What Gemma heard', h('span', null, ` · ${plural(heard.length, 'voice memo', 'voice memos')}`)),
+    h('div', { class: 'heard-body' },
+      h('p', { class: 'hint' }, 'Written down by the model from your memos, then read like a typed diary. Check names, times and km.'),
+      h('ol', { class: 'heard-list' }, heard.map((x) => h('li', null,
+        h('p', { class: 'heard-meta' },
+          [x.recorded ? `Recorded ${fmtDate(x.recorded)}` : 'No recording date',
+            Number.isFinite(x.secs) ? fmtDuration(x.secs) : ''].filter(Boolean).join(' · ')),
+        h('blockquote', { class: 'heard-text' }, x.text))))));
 }
 
 function renderInvoices(lines) {
@@ -1191,7 +1492,13 @@ function openInvoice(id) {
 // ------------------------------------------------------------------ wiring
 function wire() {
   $('week-ending').value = lastSunday(new Date());
-  $('week-ending').addEventListener('change', updateWeekHint);
+  $('week-ending').addEventListener('change', () => { updateWeekHint(); updateMemoWarnings(); });
+  $('rec-btn').addEventListener('click', toggleRecording);
+  $('audio-files').addEventListener('change', (e) => {
+    const files = [...(e.target.files || [])];
+    e.target.value = '';
+    files.forEach(addAudioFile);
+  });
   $('sample-btn').addEventListener('click', () => {
     $('diary').value = SAMPLE_DIARY;
     $('week-ending').value = SAMPLE_WEEK;

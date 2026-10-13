@@ -47,12 +47,19 @@ class FakePipeline:
         self.gate: threading.Event | None = None
         self.started = threading.Event()
 
-    def run(self, diary_text, roster_path_or_dict, week_ending, model="gemma4:e4b", image_path=None):
+    def run(self, diary_text, roster_path_or_dict, week_ending, model="gemma4:e4b", image_path=None,
+            audio_paths=None, audio_use_mtime=True):
         call = {"diary_text": diary_text, "roster": roster_path_or_dict, "week_ending": week_ending,
-                "model": model, "image_path": image_path, "image_bytes": None}
+                "model": model, "image_path": image_path, "image_bytes": None,
+                "audio_paths": audio_paths, "audio_use_mtime": audio_use_mtime, "audio_bytes": None}
         if image_path:
             call["image_bytes"] = Path(image_path).read_bytes()  # must exist while run() is active
+        if audio_paths:
+            call["audio_bytes"] = [Path(a).read_bytes() for a in audio_paths]
         self.calls.append(call)
+        if diary_text == "bad audio":
+            from arvo.voice import VoiceError
+            raise VoiceError("ffmpeg could not read memo.audio: Invalid data found")
         self.started.set()
         if self.gate is not None:
             self.gate.wait(5)
@@ -206,6 +213,64 @@ def test_bad_json_and_content_type(live, fake_pipeline):
     assert resp.status == 415  # forces a CORS preflight, which this server never grants
 
 
+# ------------------------------------------------------------------ voice memos
+
+def b64(raw: bytes, prefix: str = "") -> str:
+    return prefix + base64.b64encode(raw).decode()
+
+
+def test_run_with_voice_memos(live, fake_pipeline):
+    memos = [b"memo-one", b"memo-two", b"memo-three"]
+    status, data = post_run(live, {
+        "diary_text": "", "week_ending": "2026-10-11",
+        "audio_b64_list": [b64(memos[0], "data:audio/webm;codecs=opus;base64,"), b64(memos[1]), b64(memos[2])],
+        "audio_dates": ["2026-10-06", None],  # shorter than the list: the third memo has no date
+    })
+    assert status == 200, data
+    call = fake_pipeline.calls[0]
+    assert call["diary_text"] == ""  # an empty diary is fine when memos are present
+    assert call["audio_use_mtime"] is False
+    assert call["audio_bytes"] == memos  # upload order kept, data: prefix stripped
+    names = [Path(a).name for a in call["audio_paths"]]
+    assert names[0].startswith("arvo-memo-2026-10-06-") and names[0].endswith(".audio")
+    assert names[1].startswith("arvo-memo-nodate-") and names[2].startswith("arvo-memo-nodate-")
+    assert not any(Path(a).exists() for a in call["audio_paths"])  # cleaned up after the run
+
+
+def test_run_without_memos_does_not_pass_audio(live, fake_pipeline):
+    status, _ = post_run(live, {"diary_text": "x", "week_ending": "2026-10-11"})
+    assert status == 200
+    assert fake_pipeline.calls[0]["audio_paths"] is None
+
+
+@pytest.mark.parametrize("extra, needle", [
+    ({"audio_b64_list": "abc"}, "audio_b64_list"),
+    ({"audio_b64_list": [b64(b"a")], "audio_dates": ["06/10/2026"]}, "audio_dates[0]"),
+    ({"audio_b64_list": [b64(b"a")], "audio_dates": "2026-10-06"}, "audio_dates"),
+    ({"audio_b64_list": [b64(b"a")], "audio_dates": ["2026-10-06", "2026-10-07"]}, "more audio_dates"),
+    ({"audio_b64_list": [""]}, "empty"),
+    ({"audio_b64_list": [123]}, "base64"),
+])
+def test_voice_memo_validation(live, fake_pipeline, extra, needle):
+    status, data = post_run(live, {"diary_text": "", "week_ending": "2026-10-11", **extra})
+    assert status == 400, data
+    assert needle in data["error"]
+    assert fake_pipeline.calls == []
+
+
+def test_voice_error_is_400(live, fake_pipeline):
+    status, data = post_run(live, {"diary_text": "bad audio", "week_ending": "2026-10-11",
+                                   "audio_b64_list": [b64(b"x")], "audio_dates": ["2026-10-06"]})
+    assert status == 400
+    assert data == {"ok": False, "error": "ffmpeg could not read memo.audio: Invalid data found"}
+    assert not Path(fake_pipeline.calls[0]["audio_paths"][0]).exists()
+
+
+def test_page_csp_allows_blob_audio(live):
+    resp, _ = request(live, "GET", "/")
+    assert "media-src blob:" in resp.getheader("Content-Security-Policy")
+
+
 def test_pipeline_error_is_json(live, fake_pipeline):
     status, data = post_run(live, {"diary_text": "boom", "week_ending": "2026-10-11"})
     assert status == 500
@@ -222,7 +287,8 @@ def test_body_size_limit(live, fake_pipeline):
     data = json.loads(resp.read())
     conn.close()
     assert resp.status == 413
-    assert "10 MB" in data["error"]
+    assert srv.MAX_BODY_BYTES == 25 * 1024 * 1024
+    assert "25 MB" in data["error"]
     assert fake_pipeline.calls == []
 
 
@@ -273,7 +339,8 @@ def test_page_never_writes_markup_from_strings():
 
 
 def test_page_has_required_copy():
-    for text in ("Running on your laptop: ", "Demo mode: showing a saved run",
+    for text in ("Running on your laptop: ", "Demo mode: showing a saved run", "Record a memo", "MediaRecorder",
+                 "What Gemma heard", "audio_b64_list", "audio_dates",
                  "Arvo flags, it does not decide. Talk to your provider or the NDIS Commission.",
                  "Nothing you type here leaves this computer.", "python -m arvo serve", "demo/run.json"):
         assert text in HTML, text

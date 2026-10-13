@@ -5,7 +5,7 @@ stdlib only (http.server). Binds to loopback only; nothing is reachable from the
     GET  /             web/index.html
     GET  /api/health   {ok, model, ollama_up, model_available}
     GET  /api/roster   the roster JSON (data/roster.example.json by default)
-    POST /api/run      {diary_text, week_ending, model?, image_b64?}
+    POST /api/run      {diary_text, week_ending, model?, image_b64?, audio_b64_list?, audio_dates?}
                        -> RunResult.to_dict() + {"invoices_html": {participant_id: html}}
 """
 
@@ -34,14 +34,15 @@ WEB_INDEX = ROOT / "web" / "index.html"
 DEFAULT_ROSTER = ROOT / "data" / "roster.example.json"
 FALLBACK_MODEL = "gemma4:e4b"
 FALLBACK_OLLAMA_URL = "http://localhost:11434"
-MAX_BODY_BYTES = 10 * 1024 * 1024
+MAX_BODY_BYTES = 25 * 1024 * 1024
+MAX_MEMOS = 60
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost"}
 
 # The page talks only to this server. The browser enforces it: no third-party
 # requests, no fonts or scripts from a CDN, no form posts elsewhere.
 PAGE_CSP = (
     "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; "
-    "img-src 'self' blob: data:; connect-src 'self'; font-src 'self'; "
+    "img-src 'self' blob: data:; media-src blob:; connect-src 'self'; font-src 'self'; "
     "base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 )
 
@@ -144,6 +145,55 @@ def _decode_image(image_b64: str) -> tuple[bytes, str]:
     if suffix is None:
         raise BadRequest("the photo must be a PNG, JPG, GIF or WebP image")
     return raw, suffix
+
+
+def _strip_b64(value) -> bytes:
+    if not isinstance(value, str):
+        raise BadRequest("audio_b64_list must be a list of base64 strings")
+    if value.startswith("data:"):
+        value = value.partition(",")[2]
+    try:
+        return base64.b64decode(value, validate=False)
+    except (binascii.Error, ValueError):
+        raise BadRequest("a voice memo is not valid base64")
+
+
+def _decode_memos(data: dict) -> list[tuple[bytes, str | None]]:
+    """[(audio bytes, 'YYYY-MM-DD' or None)] in upload order."""
+    memos = data.get("audio_b64_list") or []
+    dates = data.get("audio_dates") or []
+    if not isinstance(memos, list):
+        raise BadRequest("audio_b64_list must be a list of base64 strings")
+    if not isinstance(dates, list):
+        raise BadRequest("audio_dates must be a list of dates (YYYY-MM-DD)")
+    if len(memos) > MAX_MEMOS:
+        raise BadRequest(f"too many voice memos (at most {MAX_MEMOS} per run)")
+    if len(dates) > len(memos):
+        raise BadRequest("more audio_dates than voice memos")
+    out = []
+    for i, b64 in enumerate(memos):
+        raw = _strip_b64(b64)
+        if not raw:
+            raise BadRequest(f"voice memo {i + 1} is empty")
+        d = dates[i] if i < len(dates) else None
+        if d in (None, ""):
+            d = None
+        else:
+            try:
+                d = date.fromisoformat(d).isoformat() if isinstance(d, str) else None
+            except ValueError:
+                d = None
+            if d is None:
+                raise BadRequest(f"audio_dates[{i}] must be a date like 2026-10-06")
+        out.append((raw, d))
+    return out
+
+
+def _voice_error_class():
+    try:
+        return getattr(importlib.import_module("arvo.voice"), "VoiceError", None)
+    except Exception:
+        return None
 
 
 def render_invoices(result, roster: dict, week_ending: str) -> dict | None:
@@ -277,15 +327,18 @@ class ArvoHandler(BaseHTTPRequestHandler):
             return self._error(HTTPStatus.NOT_FOUND, f"no such endpoint: {path}")
         try:
             payload = self._read_json()
-            diary_text, week_ending, model, image = self._validate(payload)
+            diary_text, week_ending, model, image, memos = self._validate(payload)
         except BadRequest as e:
             return self._error(e.status, str(e))
 
         if not self.server.run_lock.acquire(blocking=False):
             return self._error(HTTPStatus.CONFLICT, "a run is already in progress; wait for it to finish")
         try:
-            out = self._run(diary_text, week_ending, model, image)
+            out = self._run(diary_text, week_ending, model, image, memos)
         except Exception as e:
+            voice_error = _voice_error_class() if memos else None
+            if voice_error is not None and isinstance(e, voice_error):
+                return self._error(HTTPStatus.BAD_REQUEST, str(e))  # unreadable audio: the user can fix it
             traceback.print_exc()
             return self._error(HTTPStatus.INTERNAL_SERVER_ERROR, f"{type(e).__name__}: {e}")
         finally:
@@ -309,7 +362,7 @@ class ArvoHandler(BaseHTTPRequestHandler):
         if n < 0 or n > MAX_BODY_BYTES:
             self.close_connection = True  # do not read a body we refuse
             raise BadRequest(f"request is larger than {MAX_BODY_BYTES // (1024 * 1024)} MB; "
-                             "try a smaller photo", HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
+                             "try a smaller photo or fewer voice memos", HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
         raw = self.rfile.read(n)
         try:
             data = json.loads(raw.decode("utf-8"))
@@ -334,25 +387,36 @@ class ArvoHandler(BaseHTTPRequestHandler):
         if not isinstance(model, str):
             raise BadRequest("model must be a string")
         image = _decode_image(data["image_b64"]) if data.get("image_b64") else None
-        if not diary_text.strip() and image is None:
-            raise BadRequest("paste the diary text or add a photo first")
-        return diary_text, week_ending, model, image
+        memos = _decode_memos(data)
+        if not diary_text.strip() and image is None and not memos:
+            raise BadRequest("paste the diary text, add a photo or add a voice memo first")
+        return diary_text, week_ending, model, image, memos
 
-    def _run(self, diary_text: str, week_ending: str, model: str, image) -> dict:
+    def _run(self, diary_text: str, week_ending: str, model: str, image, memos=()) -> dict:
         pipeline = importlib.import_module("arvo.pipeline")  # lazy: server starts even if the pipeline is mid-build
         roster = load_roster(self.server.roster_path)
-        tmp_path = None
+        tmp_paths: list[str] = []
+
+        def write_temp(raw: bytes, prefix: str, suffix: str) -> str:
+            fd, path = tempfile.mkstemp(prefix=prefix, suffix=suffix)
+            tmp_paths.append(path)
+            with os.fdopen(fd, "wb") as fh:
+                fh.write(raw)
+            return path
+
         try:
+            kwargs = {"model": model, "image_path": None}
             if image is not None:
-                raw, suffix = image
-                fd, tmp_path = tempfile.mkstemp(prefix="arvo-photo-", suffix=suffix)
-                with os.fdopen(fd, "wb") as fh:
-                    fh.write(raw)
-            result = pipeline.run(diary_text, roster, week_ending, model=model, image_path=tmp_path)
+                kwargs["image_path"] = write_temp(image[0], "arvo-photo-", image[1])
+            if memos:
+                # The date goes in the filename: voice.memo_date() reads it from there (mtime is off).
+                kwargs["audio_paths"] = [write_temp(raw, f"arvo-memo-{d or 'nodate'}-", ".audio") for raw, d in memos]
+                kwargs["audio_use_mtime"] = False
+            result = pipeline.run(diary_text, roster, week_ending, **kwargs)
         finally:
-            if tmp_path:
+            for path in tmp_paths:
                 try:
-                    os.unlink(tmp_path)
+                    os.unlink(path)
                 except OSError:
                     pass
         out = _to_dict(result)
