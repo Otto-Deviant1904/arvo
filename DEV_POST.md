@@ -27,7 +27,7 @@ Arvo does the Sunday-night job and asks the awkward question. Type, photograph o
 
 ## Demo
 
-https://otto-deviant1904.github.io/arvo/ [TODO: confirm live]
+https://otto-deviant1904.github.io/arvo/
 
 ![Screen recording: the week's diary goes in, "Read and price this week" is pressed, and the red restrictive-practice panel, the shifts Gemma read and the per-participant invoice lines appear](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/arvo-demo.gif)
 

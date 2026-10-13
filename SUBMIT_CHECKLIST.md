@@ -4,15 +4,10 @@ Deadline: Sunday 18 October 2026, 11:59 PM PDT = Monday 19 October, about 5:59 P
 
 ## Already done (by the agents, while you were out)
 - Code, tests, eval, demo page, draft post: all in this folder, committed in git.
-- GitHub repo created **private**, so nothing is public until you say so.
+- GitHub repo is public; GitHub Pages serves the demo from `docs/`.
 
-## 1. Make the repo public and turn on the demo page (2 min)
-The demo page is `docs/`. GitHub Pages needs the repo to be public on a free plan.
-```bash
-gh repo edit Otto-Deviant1904/arvo --visibility public --accept-visibility-change-consequences
-gh api -X POST repos/Otto-Deviant1904/arvo/pages -f "source[branch]=main" -f "source[path]=/docs"
-```
-After a minute or so the page will be at https://otto-deviant1904.github.io/arvo/
+## 1. Repo public + demo page: DONE (13 Oct)
+Repo: https://github.com/Otto-Deviant1904/arvo  Demo: https://otto-deviant1904.github.io/arvo/
 
 ## 2. Run the Gemma smoke test on GitHub Actions (optional, for the Copilot/Actions category, ~20-40 min of runner time)
 ```bash
