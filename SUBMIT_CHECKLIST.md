@@ -12,7 +12,10 @@ Repo: https://github.com/Otto-Deviant1904/arvo  Demo: https://otto-deviant1904.g
 ## 2. Gemma smoke test on GitHub Actions: DONE
 Run 38347559687 (gemma4:e2b on a CPU-only runner, passed) is linked in the post.
 
-## 3. Find a first user (this is where the bonus points are)
+## 3. Upload the video
+`video/arvo_silent.mp4` (3:35, silent, captions burned in). Title, description with chapters and tags: `video/YOUTUBE.md`. Thumbnail: `video/slides/thumbnail.png`. Paste the YouTube link into the Demo section of `DEV_POST.md`.
+
+## 4. Find a first user (this is where the bonus points are)
 Ideal: anyone you know who does NDIS support work on an ABN, or who used to. Lots of students in Melbourne do. Also good: a plan manager, a support coordinator, or someone who invoices for a family member's supports.
 
 A 15-minute session:

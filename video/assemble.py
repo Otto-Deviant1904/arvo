@@ -312,6 +312,8 @@ def main() -> None:
     ap.add_argument("--no-captions", action="store_true")
     ap.add_argument("--only", default="", help="comma-separated segment ids, for previews")
     ap.add_argument("--out", default=str(VIDEO / "arvo.mp4"))
+    ap.add_argument("--silent", action="store_true",
+                    help="no audio track: captions carry the story, no memo playback in s08")
     args = ap.parse_args()
     BUILD.mkdir(parents=True, exist_ok=True)
     script = json.loads((VIDEO / "script.json").read_text())
@@ -319,7 +321,9 @@ def main() -> None:
         keep = set(args.only.split(","))
         script = [seg for seg in script if seg["id"] in keep]
     memo = Path(args.memo) if args.memo else None
-    if memo is None:
+    if args.silent:
+        memo = None
+    elif memo is None:
         memos = sorted((ROOT / "eval" / "voice" / "heldout" / "audio").glob("*"))
         memo = memos[0] if memos else None
 
@@ -342,10 +346,11 @@ def main() -> None:
     total = duration(nocaps)
     fade = f"fade=t=in:st=0:d=0.6,fade=t=out:st={total - 0.9:.3f}:d=0.9"
     vf = fade if args.no_captions else f"ass={BUILD / 'arvo.ass'},{fade}"
+    audio = (["-an"] if args.silent else
+             ["-af", f"afade=t=in:st=0:d=0.4,afade=t=out:st={total - 0.9:.3f}:d=0.9", "-c:a", "aac", "-b:a", "192k"])
     run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(nocaps), "-vf", vf,
-         "-af", f"afade=t=in:st=0:d=0.4,afade=t=out:st={total - 0.9:.3f}:d=0.9",
          "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-         "-c:a", "aac", "-b:a", "192k", args.out])
+         *audio, args.out])
     if not args.only:
         write_youtube_text(timeline)
     print(f"wrote {args.out} ({total:.1f}s), {VIDEO / 'arvo.srt'} and {VIDEO / 'YOUTUBE.md'}")

@@ -27,7 +27,11 @@ Arvo does the Sunday-night job and asks the awkward question. Type, photograph o
 
 ## Demo
 
-https://otto-deviant1904.github.io/arvo/
+{% embed [TODO: YouTube link to video/arvo_silent.mp4] %}
+
+The video is silent; the captions tell the story.
+
+Live demo page (a saved real run, no install): https://otto-deviant1904.github.io/arvo/
 
 ![Screen recording: the week's diary goes in, "Read and price this week" is pressed, and the red restrictive-practice panel, the shifts Gemma read and the per-participant invoice lines appear](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/arvo-demo.gif)
 
