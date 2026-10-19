@@ -168,9 +168,7 @@ Open also means offline, where the memo gets recorded; $0 a week in tokens behin
 
 ## My Agent Session
 
-I gave Claude Code the challenge page and one instruction: pick an extremely niche idea with a "war council" of agents and build it end to end, with no input from me. Then I was away for the afternoon. Six seats brainstormed through different lenses (privacy, Australian paying customer, wild niche, story, small multimodal models, plus a scout of what was already entered); four of the five idea seats landed on the NDIS independently. Agents then built extraction, pricing, UI, eval and voice in parallel against one spec, ran the evals and drafted this post. When I got back I directed the video. Log: `JOURNEY.md`.
-
-When I got back I made the calls the agents couldn't: I rejected two animation styles as looking too AI-generated before this one, chose a silent cut with captions, and had this post rewritten tighter after reading a winning entry from an earlier week.
+I built Arvo with Claude Code as my coding agent. It wrote most of the code and the first draft of this post; I set the brief, directed the video, wrote and photographed the handwriting test, and edited the write-up. The decision log is in `JOURNEY.md`.
 
 ## Prize Categories
 
