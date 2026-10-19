@@ -27,7 +27,7 @@ Arvo does the Sunday-night job and asks the awkward question. Type, photograph o
 
 ## Demo
 
-{% embed [TODO: YouTube link to video/arvo_silent.mp4] %}
+{% embed https://youtu.be/dQX90blcKEU %}
 
 The video is silent; the captions tell the story.
 

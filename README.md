@@ -23,6 +23,8 @@ Everything runs on **Gemma 4** (`gemma4:e4b`, open weights) through [Ollama](htt
 
 ## Try it
 
+**Video (3:35, captions, no sound):** https://youtu.be/dQX90blcKEU
+
 **Demo (no install):** https://otto-deviant1904.github.io/arvo/ shows a saved run of Gemma on a real week.
 
 **Run it on your laptop:**
