@@ -50,9 +50,9 @@ The page is `docs/demo/run.json` rendered: `gemma4:e4b` on `docs/demo/diary.txt`
 
 That week is all right, and I had seen it while building; the held-out numbers are below.
 
-The same job from a photo of a paper diary. Gemma 4 reads the image directly. Note the last-but-one shift: I wrote "Boxing Day sles" and Gemma wrote "Boxing Day sleds", which is exactly why photo notes come back with a check banner instead of being trusted.
+Then I tried it on real handwriting. I copied one of the test weeks onto lined paper in my own writing, photographed it with my phone and ran it once. Gemma 4 did far worse than on the rendered test photos: 0 of 7 shifts fully right. It got every date and most times, but it read my "Jake" as "Jane" and my "Tom" as "7om", so 6 of 7 shifts matched nobody on the roster; my "km" reads as "pm", so every distance was lost; and "Thurs - nothing on" became an empty shift. What held: every one of those shifts came back with a check, the unmatched names were never priced, and the garage note was still flagged as seclusion. On my handwriting Arvo is a first draft for a human to fix, not an invoice.
 
-![Left, a photo of a handwritten-style paper diary for the week ending 27/12; right, the seven shifts Gemma read from it, with a banner saying photo notes could not be checked against typed text](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/post/photo-in.jpg)
+![Left, a phone photo of my handwritten diary for the week ending 27/12; right, what Gemma read: Jake read as Jane, six shifts not matched to the roster, every one with a check warning](https://raw.githubusercontent.com/Otto-Deviant1904/arvo/main/docs/img/post/handwriting.jpg)
 
 And from voice memos recorded in the car. Gemma 4 hears the audio itself, no separate speech model. Here it read "half 11" as 10:30, and the check after the fix put it back to 11:30 and told the worker why.
 
@@ -110,7 +110,8 @@ No real participant data anywhere. 24 template weeks come from `eval/gen_fixture
 | Test split: 16 template weeks, 119 shifts | 93.3% shifts exact; 10/16 weeks right to the cent | code-only parser 91.6%, 9/16; Gemma pricing the week itself 0/16, line recall 49.5% |
 | Wild diaries: 8 weeks, 58 shifts | 75.9% exact; $121 mean error per week; 2/8 to the cent | code-only 39.7%, $1,207 per week, 0/8; Gemma alone $366 per week, 0/8 |
 | Restrictive-practice notes: 42 (22 restraints, 20 innocent with trap words) | detection F1 88.9% (precision 87.0%, recall 90.9%); 1/20 innocent flagged | keyword list F1 45.7%, 5/20 flagged; `gemma4:e2b` F1 41.4% |
-| Photos of a paper diary: 4 weeks | 90.0% exact; 2/4 to the cent | `gemma4:e2b` 76.7%, 1/4 |
+| Rendered photos of a paper diary: 4 weeks | 90.0% exact; 2/4 to the cent | `gemma4:e2b` 76.7%, 1/4 |
+| My own handwriting: 1 week, 7 shifts, one run | 0/7 exact; dates 7/7, start 6/7, end 5/7, names 1/7, distances lost; all 7 misses flagged | |
 | Voice memos: 10, voice never used in development | 6/10 every field right; participant, date, start 10/10; word error rate 12.0% | (memos I tuned on: 11/12) |
 
 The first row embarrassed me: a hand-written parser with no model nearly matches Gemma on the template weeks (91.6% against 93.3%) with lower dollar error ($132 a week against $195). The templates were too regular to prove anything. The wild row is where the model earns its keep, and the notes are where size matters: e2b reads shifts almost as well as e4b (89.1% against 93.3%) and misses 16 of 22 restraints. Size buys judgement, not transcription.
